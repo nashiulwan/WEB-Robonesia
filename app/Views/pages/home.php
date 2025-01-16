@@ -188,7 +188,7 @@
               <p>Ilmu yang menghubungkan antara besaran, angka dan ruang yang hanya membutuhkan argumen logis tanpa atau di sertai dengan bukti empiris</p>
             </article>
           </div>
-          <a href="./program.html" class="btn">Program Belajar</a>
+          <a href="/pages/program" class="btn">Program Belajar</a>
         </div>
       </div>
     </section>

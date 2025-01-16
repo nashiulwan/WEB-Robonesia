@@ -1734,3 +1734,90 @@ a.text-primary:hover {
   }
 }
 /* ======================================== */
+/* ======================================== */
+
+
+/* ======================================== */
+/* HALAMAN PROGRAM BELAJAR */
+/* ======================================== */
+.program__header {
+  padding-inline: 3rem;
+}
+
+.program__header h1 {
+  font-size: 3rem;
+  font-weight: 400;
+  font-family: var(--header-font);
+  color: var(--text-dark);
+  line-height: 5rem;
+  text-align: center;
+}
+
+.program__header p {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.program__project-based-learning {
+  padding: 2rem;
+  border-radius: 5px;
+  background-color: var(--color-yellow);
+  color: var(--black);
+  border: 2px solid transparent;
+}
+
+.program__project-based-learning:hover {
+  background-color: var(--white);
+  color: var(--black);
+  border: 2px solid var(--color-blue);
+  transition: 500ms;
+}
+
+.program__project-based-learning h2 {
+  margin: 1rem 0;
+}
+
+.program__project-based-learning p {
+  text-align: justify;
+  line-height: 1rem;
+  margin-bottom: 2rem;
+}
+
+.program__stem-method {
+  padding: 2rem;
+  border-radius: 5px;
+  background-color: var(--color-blue);
+  color: var(--black);
+  border: 2px solid transparent;
+  position: relative;
+}
+
+.program__stem-method:hover {
+  background-color: var(--white);
+  color: var(--black);
+  border: 2px solid var(--color-yellow);
+  transition: 500ms;
+}
+
+.program__stem-method h2 {
+  margin: 1rem 0;
+}
+
+.program__stem-method p {
+  text-align: justify;
+  line-height: 1rem;
+  margin-bottom: 2rem;
+}
+
+.program__ul-stem {
+  
+}
+
+.program__li-stem {
+  list-style-type: none;
+}
+
+.program__learning-levels {
+
+}
