@@ -2,13 +2,13 @@
 <header class="program__header">
         <h1>Belajar Robotik bersama Robonesia</h1>
         <p>Berikan pengalaman belajar yang seru dan interaktif dengan metode modern yang dirancang khusus untuk anak-anak!</p>
-    </header>
+</header>
 
     <!-- Project-Based Learning Section -->
     <section class="program__project-based-learning">
         <h2>Project-Based Learning</h2>
         <p><strong>🎯 Metode pembelajaran yang menggunakan proyek/kegiatan sebagai media pembelajaran dan pengembangan dasar kurikulum. Peserta didik melakukan eksplorasi, penilaian, interpretasi, sintesis, dan informasi untuk memahami berbagai bentuk hasil kompetensi.
-</p>
+        </p>
         <ul>
             <li>Meningkatkan keterampilan berpikir kritis.</li>
             <li>Membangun kepercayaan diri dalam menyelesaikan masalah.</li>
@@ -101,14 +101,11 @@
         <h2>Fasilitas Robonesia</h2>
         <p><strong>🏢 Belajar dengan Sarana Terbaik</strong></p>
         <ul>
-            <li>Ruang kelas modern dan nyaman.</li>
-            <li>Robot dan perangkat lengkap untuk setiap siswa.</li>
-            <li>Perangkat lunak canggih untuk pembelajaran pemrograman.</li>
-        </ul>
-        <p><strong>💻 Dukungan Belajar Online</strong></p>
-        <ul>
-            <li>Video tutorial interaktif.</li>
-            <li>Akses aplikasi belajar khusus Robonesia.</li>
+            <li>WEEKLY PLAN</li>
+            <li>GUIDE BOOK</li>
+            <li>RAPOR</li>
+            <li>ROBOT</li>
+            <li>KOMPETISI ROBOTIK</li>
         </ul>
     </section>
 
@@ -116,25 +113,53 @@
     <section class="program__project">
         <h2>Proyek Akhir Semester</h2>
         <p>Anak-anak akan menghasilkan proyek robotik yang dipamerkan dalam <strong>"Robonesia Showcase Day"</strong>, di mana orang tua dapat melihat hasil karya anak-anak.</p>
+        <ul>
+          <li>
+            <h4>2 ROBOT</h4>
+            <ul>
+              <li>
+                <h4>SMART DUSTBIN</h4>
+                <p>Anak merakit tempat sampah otomatis yang akan terbuka apabila ada sampah yang akan dibuang dan terdeteksi oleh sensor ultrason</p>
+              </li>
+              <li>
+                <h4>ARTHUTO-BOT</h4>
+                <p>Anak mengenal dasardasar dan cara kerja robot melalui robot analog</p>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <h4>4 CODING</h4>
+            <h5>2 CODING GAMES DAN 2 CODING ANIMASI</h5>
+            <p>Melalui pembelajaran coding mampu meningkatkan
+            kemampuan logika, berfikir sistematis dan imajinasi anak</p>
+          </li>
+          <li>
+            <h4>2 SCIENCE</h4>
+            <ul>
+              <li>Sains Dapur Magma</li>
+              <li>Sains Roket</li>
+            </ul>
+          </li>
+        </ul>
     </section>
 
     <!-- Kompetisi Section -->
     <section class="program__kompetisi">
-        <h2>Kompetisi untuk Mengasah Kemampuan</h2>
-        <p><strong>🏆 Ikuti Kompetisi Robotik</strong></p>
-        <p>Anak-anak akan disiapkan untuk berkompetisi dalam lomba robotik tingkat lokal, nasional, hingga internasional.</p>
+      <img src="" alt="">
+      <h2>Kompetisi untuk Mengasah Kemampuan</h2>
+      <p><strong>🏆 Ikuti Kompetisi Robotik</strong></p>
+      <p>Anak-anak akan disiapkan untuk berkompetisi dalam lomba robotik tingkat lokal, nasional, hingga internasional.</p>
     </section>
 
     <!-- Ekstrakurikuler Section -->
     <section class="program__ekstrakurikuler">
         <h2>Kegiatan Ekstrakurikuler</h2>
         <p><strong>📚 Belajar Kapan Saja dan di Mana Saja</strong></p>
-        <p>Program belajar tatap muka dan virtual dengan berbagai aktivitas seperti:</p>
-        <ul>
-            <li>Pemrograman robot untuk gaming.</li>
-            <li>Teknologi Internet of Things (IoT).</li>
-            <li>Proyek inovasi komunitas.</li>
-        </ul>
+        <p>Program belajar dengan dukungan tatap muka dan virtual</p>
+        <h4>ONLINE</h4>
+        <img src="" alt="">
+        <h4>OFFLINE</h4>
+        <img src="" alt="">
     </section>
 
     <!-- Call-to-Action Section -->
@@ -147,4 +172,7 @@
             <li>Bimbingan berkelanjutan untuk pengembangan potensi anak.</li>
         </ul>
         <p><strong>📅 Ayo Mulai Perjalanan Anak Anda!</strong></p>
+
+        <a href="/" class="btn">Kembali ke Beranda</a>
+        <a href="/pages/hubungi" class="btn">Hubungi Sekarang</a>
     </section>
