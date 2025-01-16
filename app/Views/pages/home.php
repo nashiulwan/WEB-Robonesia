@@ -218,7 +218,7 @@
       <div class="container-lg text-center">
         <h1 class="mb-4">Sekolah yang Sudah Bermitra dengan Kami</h1>
         <div class="container text-center">
-          <div class="row row-cols-2 row-cols-md-4 g-4">
+          <div class="row row-cols-2 row-cols-md-4 g-4" id="home-partner-items">
             <div class="col">
               <div class="p-3 border rounded shadow-sm logo-card">
                 <img class="img-fluid mx-auto d-block" src="/image/logo_al_azhar.png" alt="Al Azhar" style="max-width: 100px; height: 100px;">

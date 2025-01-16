@@ -28,13 +28,13 @@
               <a target="_blank" href="https://www.instagram.com/robonesia_medan?igsh=OWdwc3RwOGMyenBh" class="social-link">
                 <i class="ri-instagram-fill"></i>
               </a>
-              <a href="#" class="social-link">
+              <a target="_blank" href="#" class="social-link">
                 <i class="ri-twitter-x-fill"></i>
               </a>
               <a target="_blank" href="https://www.tiktok.com/@robonesiamedan" class="social-link">
                 <i class="ri-tiktok-fill"></i>
               </a>
-              <a href="#" class="social-link">
+              <a target="_blank" href="#" class="social-link">
                 <i class="ri-youtube-fill"></i>
               </a>
             </div>
@@ -43,28 +43,28 @@
 
         <ul class="footer-list">
           <li>
-            <a href="./index.html" class="footer-link">Beranda</a>
+            <a href="/" class="footer-link">Beranda</a>
           </li>
 
           <li>
-            <a href="./tentang.html" class="footer-link">Tentang</a>
+            <a href="/pages/tentang" class="footer-link">Tentang</a>
           </li>
 
           <li>
-            <a href="./blog.html" class="footer-link">Blog</a>
+            <a href="/pages/blog" class="footer-link">Blog</a>
           </li>
 
           <li>
-            <a href="./galeri.html" class="footer-link">Galeri</a>
+            <a href="/pages/galeri" class="footer-link">Galeri</a>
           </li>
           <li>
-            <a href="./tim.html" class="footer-link">Tim</a>
+            <a href="/pages/tim" class="footer-link">Tim</a>
           </li>
           <li>
-            <a href="./partner.html" class="footer-link">Mitra</a>
+            <a href="/pages/partner" class="footer-link">Mitra</a>
           </li>
           <li>
-            <a href="./hubungi.html" class="footer-link">Hubungi</a>
+            <a href="/pages/hubungi" class="footer-link">Hubungi</a>
           </li>
         </ul>
         <ul class="footer-list">
@@ -72,10 +72,10 @@
             <a target="_blank" href="https://maps.app.goo.gl/YMDNkdntGCrHmixHA" class="footer-link">Maps</a>
           </li>
           <li>
-            <a href="./testimoni.html" class="footer-link">Testimoni</a>
+            <a target="_blank" href="/pages/testimoni" class="footer-link">Testimoni</a>
           </li>
           <li>
-            <a href="./program.html" class="footer-link">Program Belajar</a>
+            <a target="_blank" href="/pages/program" class="footer-link">Program Belajar</a>
           </li>
         </ul>
       </div>

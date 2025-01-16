@@ -52,7 +52,7 @@
   <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3981.8343700819023!2d98.7418369!3d3.6252872999999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x303133fbf0f76b0d%3A0x4926a9917e548920!2sKomplek%20Permata%20Jatian%20Indah!5e0!3m2!1sid!2sid!4v1736479793600!5m2!1sid!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 
   <!-- Tombol buka di maps -->
-  <a href="https://maps.app.goo.gl/YMDNkdntGCrHmixHA" target="_blank" class="btn">Buka di Maps</a>
+  <a href="https://maps.app.goo.gl/YMDNkdntGCrHmixHA" target="_blank" class="btn" id="btn_buka_di_map">Buka di Maps</a>
 
 </div>
 <!-- HUBUNGI END -->

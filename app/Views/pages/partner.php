@@ -16,7 +16,7 @@
           <!-- Row Utama -->
           <div class="row row-cols-1 row-cols-md-2 g-4">
             <div class="col">
-              <div class="d-flex align-items-center p-3 border rounded shadow-sm">
+              <div class="partner_items d-flex align-items-center p-3 border rounded shadow-sm">
                 <img class="img-fluid" src="/image/logo_al_azhar.png" alt="" style="max-width: 200px; height: 200px;">
                 <div class="ms-3 text-start">
                   <h4 class="mb-1">AL-AZHAR ASY SYARIF SUMATERA UTARA</h4>
@@ -25,7 +25,7 @@
               </div>
             </div>
             <div class="col">
-              <div class="d-flex align-items-center p-3 border rounded shadow-sm">
+              <div class="partner_items d-flex align-items-center p-3 border rounded shadow-sm">
                 <img class="img-fluid" src="/image/logo_avicenna.png" alt="" style="max-width: 200px; height: 200px;">
                 <div class="ms-3 text-start">
                   <h4 class="mb-1">Avicenna Childhood Homeschooling</h4>
@@ -35,7 +35,7 @@
               </div>
             </div>
             <div class="col">
-              <div class="d-flex align-items-center p-3 border rounded shadow-sm">
+              <div class="partner_items d-flex align-items-center p-3 border rounded shadow-sm">
                 <img class="img-fluid" src="/image/logo_hijau.png" alt="" style="max-width: 200px; height: 200px;">
                 <div class="ms-3 text-start">
                   <h4 class="mb-1">Sds Al-Washliyah 09</h4>
@@ -44,7 +44,7 @@
               </div>
             </div>
             <div class="col">
-              <div class="d-flex align-items-center p-3 border rounded shadow-sm">
+              <div class="partner_items d-flex align-items-center p-3 border rounded shadow-sm">
                 <img class="img-fluid" src="/image/logo_hsvg.png" alt="" style="max-width: 200px; height: 200px;">
                 <div class="ms-3 text-start">
                   <h4 class="mb-1">Homeschooling HSPG Medan</h4>
@@ -53,7 +53,7 @@
               </div>
             </div>
             <div class="col">
-              <div class="d-flex align-items-center p-3 border rounded shadow-sm">
+              <div class="partner_items d-flex align-items-center p-3 border rounded shadow-sm">
                 <img class="img-fluid" src="/image/logo_methodist.png" alt="" style="max-width: 200px; height: 200px;">
                 <div class="ms-3 text-start">
                   <h4 class="mb-1">Methodist Charles Wesley</h4>
@@ -62,7 +62,7 @@
               </div>
             </div>
             <div class="col">
-              <div class="d-flex align-items-center p-3 border rounded shadow-sm">
+              <div class="partner_items d-flex align-items-center p-3 border rounded shadow-sm">
                 <img class="img-fluid" src="/image/logo_pineapple.png" alt="" style="max-width: 200px; height: 200px;">
                 <div class="ms-3 text-start">
                   <h4 class="mb-1">
@@ -72,7 +72,7 @@
               </div>
             </div>
             <div class="col">
-              <div class="d-flex align-items-center p-3 border rounded shadow-sm">
+              <div class="partner_items d-flex align-items-center p-3 border rounded shadow-sm">
                 <img class="img-fluid" src="/image/logo_siti_hajar.png" alt="" style="max-width: 200px; height: 200px;">
                 <div class="ms-3 text-start">
                   <h4 class="mb-1">SDS IT Siti Hajar</h4>
@@ -81,7 +81,7 @@
               </div>
             </div>
             <div class="col">
-              <div class="d-flex align-items-center p-3 border rounded shadow-sm">
+              <div class="partner_items d-flex align-items-center p-3 border rounded shadow-sm">
                 <img class="img-fluid" src="/image/logo_tanjung_pura.png" alt="" style="max-width: 200px; height: 200px;">
                 <div class="ms-3 text-start">
                   <h4 class="mb-1">Nuur Ar Radiyah</h4>
@@ -90,7 +90,7 @@
               </div>
             </div>
             <div class="col">
-              <div class="d-flex align-items-center p-3 border rounded shadow-sm">
+              <div class="partner_items d-flex align-items-center p-3 border rounded shadow-sm">
                 <img class="img-fluid" src="/image/logo_ulul_ilmu.png" alt="" style="max-width: 200px; height: 200px;">
                 <div class="ms-3 text-start">
                   <h4 class="mb-1">SD Ulul Ilmi Islamic School</h4>
@@ -99,7 +99,7 @@
               </div>
             </div>
             <div class="col">
-              <div class="d-flex align-items-center p-3 border rounded shadow-sm">
+              <div class="partner_items d-flex align-items-center p-3 border rounded shadow-sm">
                 <img class="img-fluid" src="/image/logo_ypsa.png" alt="" style="max-width: 200px; height: 200px;">
                 <div class="ms-3 text-start">
                   <h4 class="mb-1">Yayasan Pendidikan Shafiyyatul Amaliyyah (YPSA)</h4>
@@ -108,7 +108,7 @@
               </div>
             </div>
             <div class="col">
-              <div class="d-flex align-items-center p-3 border rounded shadow-sm">
+              <div class="partner_items d-flex align-items-center p-3 border rounded shadow-sm">
                 <img class="img-fluid" src="/image/logo_zakiyah.png" alt="" style="max-width: 200px; height: 200px;">
                 <div class="ms-3 text-start">
                   <h4 class="mb-1">Az-Zakiyah Islamic Leadership</h4>
@@ -118,7 +118,7 @@
               </div>
             </div>
             <div class="col">
-              <div class="d-flex align-items-center p-3 border rounded shadow-sm">
+              <div class="partner_items d-flex align-items-center p-3 border rounded shadow-sm">
                 <img class="img-fluid" src="/image/logo_edu_global.png" alt="" style="max-width: 200px; height: 200px;">
                 <div class="ms-3 text-start">
                   <h4 class="mb-1">Edu Global Medan</h4>
@@ -128,7 +128,7 @@
               </div>
             </div>
             <div class="col">
-              <div class="d-flex align-items-center p-3 border rounded shadow-sm">
+              <div class="partner_items d-flex align-items-center p-3 border rounded shadow-sm">
                 <img class="img-fluid" src="/image/logo_sangkara.jpg" alt="" style="max-width: 200px; height: 200px;">
                 <div class="ms-3 text-start">
                   <h4 class="mb-1">Yayasan Pendidikan Sangkara</h4>

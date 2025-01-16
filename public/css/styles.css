@@ -248,12 +248,15 @@ h4 {
 .header__container {
   width: var(--max-width);
   margin: auto;
-  padding-block: 8rem 2rem;
+  padding-block: 2rem;
   padding-inline: 3rem;
   display: grid;
   gap: 2rem;
-  min-height: 100vh;
+  min-height: 80vh;
   /* overflow: hidden; */
+  /* padding-top: 4.5rem; */
+  grid-template-columns: 1.5fr 2fr;
+  align-items: center;
 }
 
 .header__image {
@@ -411,11 +414,6 @@ h4 {
   text-align: center;
 }
 
-  .header__container {
-    padding-top: 4.5rem;
-    grid-template-columns: 1.5fr 2fr;
-    align-items: center;
-  }
 
   .header__image {
     grid-area: 1/2/2/3;
@@ -619,11 +617,13 @@ h4 {
 
   .misi ul li {
     margin: 1rem 0;
+    line-height: normal;
   }
 
   .misi p {
     font-size: 1rem;
   }
+
   
 }
 /* VISI MISI END */
@@ -954,6 +954,24 @@ h4 {
 
 /* PARTNER */
 /* ================================================================ */
+.header__partner {
+  max-width: 85%;
+  margin: auto;
+  padding-block: 2rem 0rem;
+  margin-bottom: -2rem;
+  padding-inline: 3rem;
+  overflow: hidden;
+}
+
+.header__partner h1 {
+  font-size: 3rem;
+  font-weight: 400;
+  font-family: var(--header-font);
+  color: var(--text-dark);
+  line-height: 5rem;
+  text-align: center;
+}
+
 .partner {
   background-color: var(--white);
   padding: 4rem 2rem;
@@ -998,6 +1016,39 @@ h4 {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
   transform: translateY(-5px);
 }
+
+@media screen and (max-width: 800px) {
+  .partner__logos {
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .header__partner h1 {
+    font-size: 2rem;
+  }
+
+  .partner {
+    padding: 2rem 1rem;
+  }
+
+  .partner__title {
+    font-size: 1.5rem;
+  }
+
+  .partner__subtitle {
+    font-size: 0.9rem;
+  }
+}
+
+@media screen and (max-width: 350px) {
+  #home-partner-items {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+
 /* PARTNER END */
 /* ================================================================ */
 
@@ -1446,37 +1497,6 @@ h4 {
 /* ================================================================ */
 
 
-
-/* HALAMAN HUBUNGI */
-/* ================================================================ */
-/* ================================================================ */
-/* ================================================================ */
-
-.header__partner {
-  max-width: 85%;
-  margin: auto;
-  padding-block: 2rem 0rem;
-  margin-bottom: -2rem;
-  padding-inline: 3rem;
-  overflow: hidden;
-}
-
-.header__partner h1 {
-  font-size: 3rem;
-  font-weight: 400;
-  font-family: var(--header-font);
-  color: var(--text-dark);
-  line-height: 5rem;
-  text-align: center;
-}
-
-
-/* ================================================================ */
-/* ================================================================ */
-/* ================================================================ */
-
-
-
 /* HALAMAN HUBUNGI */
 /* ================================================================ */
 /* ================================================================ */
@@ -1544,6 +1564,16 @@ h4 {
 .kontak__container__bottom .btn:hover {
   background-color: var(--color-white);
   border: 2px solid var(--color-blue);
+}
+
+@media screen and (max-width: 800px) {
+  #btn_buka_di_map {
+    width: 100%;
+  }
+
+  .kontak__container__bottom {
+    padding: 1rem;
+  }
 }
 
 /* ================================================================ */
@@ -1691,3 +1721,16 @@ a.text-primary:hover {
   text-decoration: underline;
   text-decoration-color: var(--color-blue); /* Mengatur warna underline menjadi biru */
 }
+
+
+
+/* HALAMAN PARTNER */
+/* =========================================== */
+/* =========================================== */
+/* =========================================== */
+@media screen and (max-width: 440px) {
+  .partner_items {
+    flex-direction: column;
+  }
+}
+/* ======================================== */
