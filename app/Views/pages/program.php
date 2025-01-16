@@ -57,10 +57,43 @@
         <h2>Tahapan Pembelajaran Robotik</h2>
         <p>Kami membagi proses pembelajaran ke dalam beberapa level:</p>
         <ol>
-            <li><strong>Level Pemula (Explorers)</strong>: Belajar konsep dasar robotik dan mengenal komponen sederhana.</li>
-            <li><strong>Level Menengah (Innovators)</strong>: Merancang robot yang lebih kompleks dan memprogram robot untuk menjalankan tugas tertentu.</li>
-            <li><strong>Level Lanjutan (Creators)</strong>: Membangun robot multifungsi dan mengembangkan proyek teknologi berbasis kecerdasan buatan.</li>
+            <li><strong>LEVEL 1A</strong><p>
+              Tahapan pengenalan dan pembentukan minat
+            </p></li>
+            <li><strong>LEVEL 1B</strong><p>
+              Tahapan memperkuat minat dan perluasan minat terhadap robotika
+            </p></li>
+            <li><strong>LEVEL 2A</strong><p>
+              Tahapan pembentukan keterampilan dan pemahaman logika
+            </p></li>
+            <li><strong>LEVEL 2B</strong><p>
+              Tahapan pematangan keterampilan dan logika
+            </p></li>
+            <li><strong>LEVEL 3A</strong><p>
+              Tahapan eksplorasi dengan menitik beratkan pada pembuatan projek-projek kostum
+            </p></li>
+            <li><strong>LEVEL 3B</strong><p>
+              Tahapan eksplorasi dengan menitik beratkan pada pembuatan projek-projek mandiri
+            </p></li>
         </ol>
+
+        <div class="program__pembagian-kelas-card">
+          <div class="program__pembagian-kelas-card-item">
+            <img src="" alt="">
+            <h2>STARTER</h2>
+            <h4>1st & 2nd Grade</h4>
+          </div>
+          <div class="program__pembagian-kelas-card-item">
+            <img src="" alt="">
+            <h2>MOVER</h2>
+            <h4>3rd & 6th Grade</h4>
+          </div>
+          <div class="program__pembagian-kelas-card-item">
+            <img src="" alt="">
+            <h2>FLYER</h2>
+            <h4>High School</h4>
+          </div>
+        </div>
     </section>
 
     <!-- Fasilitas Section -->
