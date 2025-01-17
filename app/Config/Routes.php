@@ -5,7 +5,7 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-$routes->get('/', 'Pages::index');
+$routes->get('/beranda', 'Pages::index');
 $routes->get('/pages/hubungi', 'Pages::hubungi');
 $routes->get('/pages/galeri', 'Pages::galeri');
 $routes->get('/pages/partner', 'Pages::partner');
@@ -16,4 +16,7 @@ $routes->get('/pages/blog', 'Pages::blog');
 $routes->get('/pages/tim', 'Pages::tim');
 $routes->get('/pages/blogdetail', 'Pages::blogDetail');
 
-$routes->get('/login', 'Admin::index');
+
+$routes->get('/login', 'Login::login');
+$routes->get('/register', 'Login::register');
+$routes->get('/admin/index', 'Login::admin');
