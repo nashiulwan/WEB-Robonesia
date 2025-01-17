@@ -23,7 +23,7 @@
       <div class="nav__container">
         <!-- Logo -->
         <div class="nav__logo">
-          <a href="/"><img src="/image/logo.png" alt="Robonesia Logo"></a>
+          <a href="/beranda"><img src="/image/logo.png" alt="Robonesia Logo"></a>
         </div>
         <!-- Sidebar toggle button -->
         <input type="checkbox" id="sidebar-active">
@@ -33,7 +33,7 @@
         <!-- Link Container -->
         <div class="link-container">
             <ul class="nav__links" id="nav-links">
-            <li class="nav-beranda"><a href="/">Beranda</a></li>
+            <li class="nav-beranda"><a href="/pages/beranda">Beranda</a></li>
             <li><a href="/pages/tentang">Tentang</a></li>
             <li><a href="/pages/blog">Blog</a></li>
             <li><a href="/pages/galeri">Galeri</a></li>

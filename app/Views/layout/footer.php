@@ -43,7 +43,7 @@
 
         <ul class="footer-list">
           <li>
-            <a href="/" class="footer-link">Beranda</a>
+            <a href="/beranda" class="footer-link">Beranda</a>
           </li>
 
           <li>
