@@ -114,6 +114,70 @@
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#33cccc" fill-opacity="1" d="M0,32L60,48C120,64,240,96,360,106.7C480,117,600,107,720,106.7C840,107,960,117,1080,144C1200,171,1320,213,1380,234.7L1440,256L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"></path></svg>  </section>
   <!-- END KOMITMEN  -->
 
+  <section>
+    <div class="testimoni__container swiper">
+      <div class="testimoni-card-wrapper">
+        <ul class="testimoni-card-list swiper-wrapper">
+          <li class="testimoni-card-item swiper-slide">
+            <a href="#" class="testimoni-card-link">
+              <img src="image/testimoni-1.jpg" alt="" class="testimoni-card-image">
+              <h5 class="testimoni-card-title" style="color:black">Belajar Coding Seru Bersama Kakak Mentor</h5>
+              <p class="testimoni-badge">Siswa</p>
+              <p class="testimoni-card-text" style="color:black">Aku senang sekali bisa belajar robotik di Robonesia. Bisa belajar coding dari kecil dan kakak-kakak pengajarannya seru. Terutama KaK Ali dan Kak Susan. Semoga aku bisa ikut lomba di Rusia.</p>
+              <button class="testimoni-card-button material-symbols-rounded">arrow_forward</button>
+            </a> 
+          </li>
+
+          <li class="testimoni-card-item swiper-slide">
+            <a href="#" class="testimoni-card-link">
+              <img src="image/testimoni-1.jpg" alt="" class="testimoni-card-image">
+              <h5 class="testimoni-card-title" style="color:black">Belajar Coding Seru Bersama Kakak Mentor</h5>
+              <p class="testimoni-badge">Siswa</p>
+              <p class="testimoni-card-text" style="color:black">Aku senang sekali bisa belajar robotik di Robonesia. Bisa belajar coding dari kecil dan kakak-kakak pengajarannya seru. Terutama KaK Ali dan Kak Susan. Semoga aku bisa ikut lomba di Rusia.</p>
+              <button class="testimoni-card-button material-symbols-rounded">arrow_forward</button>
+            </a> 
+          </li>
+
+          <li class="testimoni-card-item swiper-slide">
+            <a href="#" class="testimoni-card-link">
+              <img src="image/testimoni-1.jpg" alt="" class="testimoni-card-image">
+              <h5 class="testimoni-card-title" style="color:black">Belajar Coding Seru Bersama Kakak Mentor</h5>
+              <p class="testimoni-badge">Siswa</p>
+              <p class="testimoni-card-text" style="color:black">Aku senang sekali bisa belajar robotik di Robonesia. Bisa belajar coding dari kecil dan kakak-kakak pengajarannya seru. Terutama KaK Ali dan Kak Susan. Semoga aku bisa ikut lomba di Rusia.</p>
+              <button class="testimoni-card-button material-symbols-rounded">arrow_forward</button>
+            </a> 
+          </li>
+
+          <li class="testimoni-card-item swiper-slide">
+            <a href="#" class="testimoni-card-link">
+              <img src="image/testimoni-1.jpg" alt="" class="testimoni-card-image">
+              <h5 class="testimoni-card-title" style="color:black">Belajar Coding Seru Bersama Kakak Mentor</h5>
+              <p class="testimoni-badge">Siswa</p>
+              <p class="testimoni-card-text" style="color:black">Aku senang sekali bisa belajar robotik di Robonesia. Bisa belajar coding dari kecil dan kakak-kakak pengajarannya seru. Terutama KaK Ali dan Kak Susan. Semoga aku bisa ikut lomba di Rusia.</p>
+              <button class="testimoni-card-button material-symbols-rounded">arrow_forward</button>
+            </a> 
+          </li>
+
+          <li class="testimoni-card-item swiper-slide">
+            <a href="#" class="testimoni-card-link">
+              <img src="image/testimoni-1.jpg" alt="" class="testimoni-card-image">
+              <h5 class="testimoni-card-title" style="color:black">Belajar Coding Seru Bersama Kakak Mentor</h5>
+              <p class="testimoni-badge">Siswa</p>
+              <p class="testimoni-card-text" style="color:black">Aku senang sekali bisa belajar robotik di Robonesia. Bisa belajar coding dari kecil dan kakak-kakak pengajarannya seru. Terutama KaK Ali dan Kak Susan. Semoga aku bisa ikut lomba di Rusia.</p>
+              <button class="testimoni-card-button material-symbols-rounded">arrow_forward</button>
+            </a> 
+          </li>
+
+          <div class="swiper-pagination"></div>
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+
+        </ul>
+      </div>
+    </div>
+    
+  </section>
+
   <!-- TESTIMONI -->
     <section>
       <div class="testimoni container-lg text-center">
