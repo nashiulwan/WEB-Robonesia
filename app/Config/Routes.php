@@ -5,6 +5,7 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
+$routes->get('/', 'Pages::index');
 $routes->get('/beranda', 'Pages::index');
 $routes->get('/pages/hubungi', 'Pages::hubungi');
 $routes->get('/pages/galeri', 'Pages::galeri');
