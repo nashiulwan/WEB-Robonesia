@@ -19,4 +19,4 @@ $routes->get('/pages/blogdetail', 'Pages::blogDetail');
 
 $routes->get('/login', 'Login::login');
 $routes->get('/register', 'Login::register');
-$routes->get('/admin/index', 'Login::admin');
+$routes->get('/admin/dashboard', 'Login::admin');
