@@ -21,7 +21,19 @@ $routes->get('/pages/blogdetail', 'Pages::blogDetail');
 $routes->get('/login', 'Login::login');
 $routes->get('/register', 'Login::register');
 $routes->get('/admin/dashboard', 'Login::admin');
-$routes->get('/admin/kategori', 'Admin::kategori');
-$routes->get('/admin/profil', 'Admin::profil');
-$routes->get('/admin/tambahkanArtikel', 'Admin::tambahkanArtikel');
-$routes->get('/admin/tambahkanArtikel', 'Admin::tambahkanArtikel');
+$routes->get('admin/dashboard', 'Admin::dashboard');
+$routes->get('admin/artikel', 'Admin::artikel');
+$routes->get('admin/artikel/tambah', 'Admin::tambah');
+$routes->get('admin/pengguna', 'Admin::pengguna');
+$routes->get('admin/seo', 'Admin::seo');
+$routes->get('admin/pengaturan', 'Admin::pengaturan');
+$routes->get('admin/analytics', 'Admin::analytics');
+$routes->get('logout', 'Admin::logout');
+
+
+$routes->group('admin', ['filter' => 'login'], function($routes) {
+    $routes->get('dashboard', 'Admin\Dashboard::index');
+    $routes->get('artikel', 'Admin\Artikel::index');
+    $routes->get('artikel/tambah', 'Admin\Artikel::tambah');
+    
+});
