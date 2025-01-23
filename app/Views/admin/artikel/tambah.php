@@ -6,7 +6,7 @@
     <h1 class="h3 mb-4 text-gray-800">Tambah Artikel</h1>
 
     <!-- Form Tambah Artikel -->
-    <form action="/admin/articles/store" method="post">
+    <form action="<?= base_url('/admin/artikel/simpan') ?>" method="post" enctype="multipart/form-data">
         <?= csrf_field() ?>
 
         <div class="form-group">
@@ -23,6 +23,12 @@
                 <?php endforeach; ?>
             </select>
         </div>
+
+        <div class="mb-3">
+            <label for="gambar" class="form-label">Upload Gambar</label>
+            <input type="file" class="form-control" id="gambar" name="gambar">
+        </div>
+
 
         <div class="form-group">
             <label for="konten">Konten Artikel</label>

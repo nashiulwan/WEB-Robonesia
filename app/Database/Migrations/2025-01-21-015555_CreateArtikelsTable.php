@@ -46,6 +46,10 @@ class CreateArtikelsTable extends Migration
                 'type' => 'TIMESTAMP',
                 'null' => true,
             ],
+            'gambar' => [
+                'type' => 'VARCHAR',
+                'constraint' => '255',
+            ],
         ]);
         $this->forge->addKey('id', true);
         $this->forge->createTable('artikels');

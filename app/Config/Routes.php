@@ -16,7 +16,9 @@ use CodeIgniter\Router\RouteCollection;
     $routes->get('/pages/program', 'Pages::program');
     $routes->get('/pages/tentang', 'Pages::tentang');
     $routes->get('/pages/testimoni', 'Pages::testimoni');
-    $routes->get('/pages/blog', 'Pages::blog');
+    $routes->get('/pages/blog', 'BlogController::index');
+    $routes->get('/pages/blog/(:any)', 'BlogController::detail/$1'); // Menampilkan detail artikel
+    // $routes->get('/pages/blog', 'Pages::blog');
     $routes->get('/pages/tim', 'Pages::tim');
     $routes->get('/pages/blogdetail', 'Pages::blogDetail');
     // $routes->get('/login', 'Login::login');
@@ -34,11 +36,18 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
     // Routes untuk admin area (protected dengan filter auth)
     $routes->get('dashboard', 'Admin::dashboard');
     $routes->get('artikel', 'Admin::artikel');
-    $routes->get('artikel/tambah', 'Admin::tambah');
     $routes->get('pengguna', 'Admin::pengguna');
     $routes->get('seo', 'Admin::seo');
     $routes->get('pengaturan', 'Admin::pengaturan');
     $routes->get('analytics', 'Admin::analytics');
+
+    // Routes untuk artikel
+    $routes->get('artikel/tambah', 'Admin::tambah'); // Menampilkan form tambah
+    $routes->post('artikel/simpan', 'Artikel::simpan'); // Menyimpan artikel
+    $routes->get('artikel/edit/(:num)', 'Artikel::edit/$1'); // Menampilkan form edit
+    $routes->post('artikel/update/(:num)', 'Artikel::update/$1'); // Mengupdate artikel
+    $routes->get('artikel/hapus/(:num)', 'Artikel::hapus/$1'); // Menghapus artikel
+
 });
 
 
