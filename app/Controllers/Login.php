@@ -22,6 +22,6 @@ class Login extends BaseController
   }
   public function admin(): string
   {
-    return view('admin/index');
+    return view('admin/dashboard');
   }
 }

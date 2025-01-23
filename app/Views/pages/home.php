@@ -43,7 +43,7 @@
                   </div>
                 </div>
                 <div class="button__row">
-                  <a target="_blank" href="https://wa.me/nomor_telepon" type="button" class="btn-a btn-whatsapp">
+                  <a target="_blank" href="https://wa.me/082118032898" type="button" class="btn-a btn-whatsapp">
                     <i class="ri-whatsapp-fill"></i>
                   </a>
                   <a target="_blank" href="https://maps.app.goo.gl/Cu246KuzoBk2Dvph8"  type="button" class="btn-a btn-maps">
@@ -210,7 +210,6 @@
             </div>
           </div>          
         </div>
-        <a href="./testimoni.html" class="btn">Lihat Selengkapnya</a>
       </div>      
     </section> 
     <!-- TESTIMONI END -->

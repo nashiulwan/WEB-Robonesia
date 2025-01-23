@@ -20,4 +20,8 @@ $routes->get('/pages/blogdetail', 'Pages::blogDetail');
 
 $routes->get('/login', 'Login::login');
 $routes->get('/register', 'Login::register');
-$routes->get('/admin/index', 'Login::admin');
+$routes->get('/admin/dashboard', 'Login::admin');
+$routes->get('/admin/kategori', 'Admin::kategori');
+$routes->get('/admin/profil', 'Admin::profil');
+$routes->get('/admin/tambahkanArtikel', 'Admin::tambahkanArtikel');
+$routes->get('/admin/tambahkanArtikel', 'Admin::tambahkanArtikel');

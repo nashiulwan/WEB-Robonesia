@@ -100,6 +100,23 @@ h4 {
   border-color: var(--white);
 }
 
+.btn_login {
+  display: inline-block;
+  background: var(--color-yellow);
+  color: var(--black);
+  border-radius: 10px;
+  padding: 0.5rem 2rem;
+  border: 1px solid transparent;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.btn_login:hover {
+  background: transparent;
+  color: var(--black);
+  border-color: var(--white);
+}
+
 /* BTN NAIK KEATAS */
 /* ================================================================ */
 .scroll-to-top {
@@ -139,11 +156,15 @@ h4 {
   width: 100%;
   background-color: white;
   gap: 1rem;
-  z-index: 2;
+  z-index: 999;
 }
 
 .nav__logo a img {
   width: 160px;
+}
+
+.nav__logo {
+  margin: auto 0;
 }
 
 .nav__links {
@@ -1892,4 +1913,100 @@ a.text-primary:hover {
 
 .program__learning-levels {
 
+}
+
+/* ======================================== */
+/* HALAMAN PROGRAM BELAJAR */
+/* ======================================== */
+.program__header {
+  padding-inline: 3rem;
+}
+
+.program__header h1 {
+  font-size: 3rem;
+  font-weight: 400;
+  font-family: var(--header-font);
+  color: var(--text-dark);
+  line-height: 5rem;
+  text-align: center;
+}
+
+.program__header p {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+}
+/* Project-Based Learning Section */
+.program__project-based-learning {
+  padding: 2rem;
+  border-radius: 5px;
+  color: var(--black);
+  border: 2px solid transparent;
+}
+
+.program__project-based-learning h2 {
+  margin: 1rem 0;
+}
+
+.program__project-based-learning p {
+  text-align: justify;
+  line-height: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+/* STEM Method Section */
+.program__stem-method {
+  padding: 2rem;
+  border-radius: 5px;
+  color: var(--black);
+  border: 2px solid transparent;
+  position: relative;
+}
+
+.program__stem-method h2 {
+  margin: 1rem 0;
+}
+
+.program__stem-method p {
+  text-align: justify;
+  line-height: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+/* STEM List */
+.program__ul-stem {
+  padding: 0;
+}
+
+.program__li-stem {
+  list-style-type: none;
+  padding: 1rem 0;
+}
+
+/* Learning Levels Section */
+.program__learning-levels {
+  padding: 2rem;
+  border-radius: 5px;
+  color: var(--black);
+}
+
+.call-to-action-image {
+  position: absolute;
+  top: 50%; /* Menempatkan gambar di tengah */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%; /* Menyesuaikan lebar gambar */
+  max-width: 600px; /* Menentukan lebar maksimum gambar */
+  z-index: -1; /* Agar gambar berada di belakang teks */
+}
+
+/* Teks Call-to-Action */
+.program__call-to-action {
+  position: relative;
+  background-color: var(--color-yellow);
+  padding-top: 60px; /* Menambahkan padding top untuk memberi ruang pada gambar dan SVG */
+}
+
+.container.text-center h2 {
+  margin-top: 20px;
 }
