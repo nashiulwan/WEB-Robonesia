@@ -21,7 +21,7 @@ use CodeIgniter\Router\RouteCollection;
     // $routes->get('/pages/blog', 'Pages::blog');
     $routes->get('/pages/tim', 'Pages::tim');
     $routes->get('/pages/blogdetail', 'Pages::blogDetail');
-    // $routes->get('/login', 'Login::login');
+    $routes->get('/login', 'Login::login');
     // $routes->get('/logout', 'Login::logout');
 });
 
@@ -40,6 +40,8 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
     $routes->get('seo', 'Admin::seo');
     $routes->get('pengaturan', 'Admin::pengaturan');
     $routes->get('analytics', 'Admin::analytics');
+    $routes->get('profil', 'Admin::profil');
+
 
     // Routes untuk artikel
     $routes->get('artikel/tambah', 'Admin::tambah'); // Menampilkan form tambah

@@ -71,4 +71,12 @@ class Admin extends BaseController
         // Tambahkan data pengguna di sini
         return view('admin/profil', $data);
     }
+
+    // Method untuk Profil Pengguna
+    public function pengguna()
+    {
+        $data['title'] = 'Data Pengguna';
+        // Tambahkan data pengguna di sini
+        return view('admin/pengguna', $data);
+    }
 }
