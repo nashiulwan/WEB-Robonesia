@@ -35,7 +35,6 @@ $routes->group('auth', function ($routes) {
 $routes->group('admin', ['filter' => 'auth'], function ($routes) {
     // Routes untuk admin area (protected dengan filter auth)
     $routes->get('dashboard', 'Admin::dashboard');
-    $routes->get('artikel', 'Admin::artikel');
     $routes->get('pengguna', 'Admin::pengguna');
     $routes->get('seo', 'Admin::seo');
     $routes->get('pengaturan', 'Admin::pengaturan');
@@ -44,7 +43,8 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
 
 
     // Routes untuk artikel
-    $routes->get('artikel/tambah', 'Admin::tambah'); // Menampilkan form tambah
+    $routes->get('artikel', 'Artikel::index'); // Menampilkan daftar artikel
+    $routes->get('artikel/tambah', 'Artikel::tambah'); // Menampilkan form tambah
     $routes->post('artikel/simpan', 'Artikel::simpan'); // Menyimpan artikel
     $routes->get('artikel/edit/(:num)', 'Artikel::edit/$1'); // Menampilkan form edit
     $routes->post('artikel/update/(:num)', 'Artikel::update/$1'); // Mengupdate artikel

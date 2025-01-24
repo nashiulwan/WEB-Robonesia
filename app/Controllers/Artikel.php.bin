@@ -3,12 +3,13 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use App\Models\KategoriModel; 
-use App\Models\ArtikelModel;
+use App\Models\KategoriModel; // Tambahkan ini
+use App\Models\ArtikelModel; // Tambahkan ini
 
 class Artikel extends BaseController
 {
     protected $artikelModel;
+
     public function __construct()
     {
         $this->artikelModel = new ArtikelModel();
@@ -16,17 +17,15 @@ class Artikel extends BaseController
 
     public function index()
     {
-
         if (!logged_in()) {
             return redirect()->to('/login');
         }   
 
         $data = [
             'title' => 'Daftar Artikel',
-            'artikel' => $this->artikelModel->getArtikelWithKategori(), // Data artikel dengan kategori
+            'artikel' => $this->artikelModel->getArtikelWithKategori(),
         ];
-
-        return view('admin/artikel/index', $data); // Kirim data ke view
+        return view('admin/artikel/index');
     }
 
     public function tambah()
@@ -35,15 +34,10 @@ class Artikel extends BaseController
             return redirect()->to('/login');
         }
 
-        $kategoriModel = new KategoriModel(); // Load kategori
-        $data = [
-            'title' => 'Tambah Artikel',
-            'kategori' => $kategoriModel->findAll(), // Kirim kategori ke view
-        ];
-
-        return view('admin/artikel/tambah', $data);
+        return view('admin/artikel/tambah');
     }
 
+    
     public function simpan()
     {
         // Validasi data
@@ -55,26 +49,28 @@ class Artikel extends BaseController
         ]);
 
         if (!$validation) {
+            // Log error validasi
+            log_message('error', 'Validasi gagal: ' . json_encode($this->validator->getErrors()));
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
 
         // Upload gambar
         $file = $this->request->getFile('gambar');
         $fileName = $file->getRandomName();
-        $file->move('uploads', $fileName); // Pindahkan ke folder public/uploads
+        $file->move(WRITEPATH . 'uploads', $fileName);
 
         $this->artikelModel->save([
             'judul' => $this->request->getPost('judul'),
             'slug' => url_title($this->request->getPost('judul'), '-', true),
             'konten' => $this->request->getPost('konten'),
             'kategori_id' => $this->request->getPost('kategori'),
-            'penulis_id' => session()->get('id'), // Ambil ID dari sesi
+            'penulis_id' => 1, // Ambil dari sesi pengguna yang login
             'status' => 'publish', // Default langsung publish
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s'),
             'gambar' => $fileName, // Simpan nama file gambar
         ]);
 
-        return redirect()->to('/admin/artikel')->with('success', 'Artikel berhasil ditambahkan!');
+        return redirect()->to('/admin/artikel/index')->with('success', 'Artikel berhasil ditambahkan!');
     }
 }
