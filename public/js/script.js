@@ -1,9 +1,12 @@
-new Swiper('.swiper', {
+new Swiper('.testimoni-card-wrapper', {
     loop: true,
+    spaceBetween: 30,
 
     // Pagination Bullet
     pagination: {
       el: '.swiper-pagination',
+      clickable: true,
+      dynamicBullets: true,
     },
   
     // Navigation arrows
@@ -11,4 +14,16 @@ new Swiper('.swiper', {
       nextEl: '.swiper-button-next',
       prevEl: '.swiper-button-prev',
     },
+
+    breakpoints: {
+      0: {
+        slidesPerView: 1
+      },
+      768: {
+        slidesPerView: 2
+      },
+      1024: {
+        slidesPerView: 3
+      },
+    }
   });

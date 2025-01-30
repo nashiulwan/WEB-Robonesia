@@ -114,16 +114,32 @@
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#33cccc" fill-opacity="1" d="M0,32L60,48C120,64,240,96,360,106.7C480,117,600,107,720,106.7C840,107,960,117,1080,144C1200,171,1320,213,1380,234.7L1440,256L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"></path></svg>  </section>
   <!-- END KOMITMEN  -->
 
+  
+<!-- TESTIMONI -->
+
   <section>
-    <div class="testimoni__container swiper">
+    <div class="testimoni__container swiper text-center">
+    <h1>Kata Mereka yang sudah</h1>
+    <h1>Belajar di <span class="gradient-text">Robonesia</span></h1>
       <div class="testimoni-card-wrapper">
         <ul class="testimoni-card-list swiper-wrapper">
+
           <li class="testimoni-card-item swiper-slide">
             <a href="#" class="testimoni-card-link">
-              <img src="image/testimoni-1.jpg" alt="" class="testimoni-card-image">
-              <h5 class="testimoni-card-title" style="color:black">Belajar Coding Seru Bersama Kakak Mentor</h5>
-              <p class="testimoni-badge">Siswa</p>
-              <p class="testimoni-card-text" style="color:black">Aku senang sekali bisa belajar robotik di Robonesia. Bisa belajar coding dari kecil dan kakak-kakak pengajarannya seru. Terutama KaK Ali dan Kak Susan. Semoga aku bisa ikut lomba di Rusia.</p>
+              <img src="image/testimoni-2.jpg" alt="" class="testimoni-card-image">
+              <h5 class="testimoni-card-title" style="color:black">Peluang Emas bagi Lulusan & PKL SMK untuk Berkembang di Dunia Robotik</h5>
+              <p class="testimoni-badge">Guru SMKN 11 Bandung</p>
+              <p class="testimoni-card-text" style="color:black">Alhamdulillah, Robonesia membuka peluang untuk siswa/i lulusan atau PKL SMK untuk menjadi bagian dari pendidikan robotik, membuka peluang untuk berkembang dan berinovasi sesuai perkembangan teknologi yang berjalan pesat</p>
+              <button class="testimoni-card-button material-symbols-rounded">arrow_forward</button>
+            </a> 
+          </li>
+
+          <li class="testimoni-card-item swiper-slide">
+            <a href="#" class="testimoni-card-link">
+              <img src="image/testimoni-3.jpg" alt="" class="testimoni-card-image">
+              <h5 class="testimoni-card-title" style="color:black">Dari Hobi Ngoprek hingga Prestasi Internasional bersama Robonesia</h5>
+              <p class="testimoni-badge">Orangtua Siswa</p>
+              <p class="testimoni-card-text" style="color:black">Alhamdulillah bisa kenal dengan Robonesia. Anak saya bisa menyalurkan hobinya yang suka "ngoprek" apalagi sering diadain lomba, jadi terus terasah. Alhamdulillah juga bisa menambah pengalaman di kancah internasional. Semoga bisa terus berkembang dan maju</p>
               <button class="testimoni-card-button material-symbols-rounded">arrow_forward</button>
             </a> 
           </li>
@@ -140,78 +156,43 @@
 
           <li class="testimoni-card-item swiper-slide">
             <a href="#" class="testimoni-card-link">
-              <img src="image/testimoni-1.jpg" alt="" class="testimoni-card-image">
-              <h5 class="testimoni-card-title" style="color:black">Belajar Coding Seru Bersama Kakak Mentor</h5>
-              <p class="testimoni-badge">Siswa</p>
-              <p class="testimoni-card-text" style="color:black">Aku senang sekali bisa belajar robotik di Robonesia. Bisa belajar coding dari kecil dan kakak-kakak pengajarannya seru. Terutama KaK Ali dan Kak Susan. Semoga aku bisa ikut lomba di Rusia.</p>
+              <img src="image/testimoni-4.jpg" alt="" class="testimoni-card-image">
+              <h5 class="testimoni-card-title" style="color:black">Ekskul Robotik di Roboneisa: Seru, Interaktif, dan Dinantikan!</h5>
+              <p class="testimoni-badge">Penanggung Jawab Ekskul Sekolah Alasba</p>
+              <p class="testimoni-card-text" style="color:black">Kami sekolah sangat berterimakasih kepada Robonesia, ekskul ini sangat bagus sekali terutama untuk anak yang memang senang dunia robotik. Untuk materinya juga sangat bagus. anak tidak bosan. Sangat ditunggu sekali kalau robotik ekskulnya offline.</p>
               <button class="testimoni-card-button material-symbols-rounded">arrow_forward</button>
             </a> 
           </li>
 
           <li class="testimoni-card-item swiper-slide">
             <a href="#" class="testimoni-card-link">
-              <img src="image/testimoni-1.jpg" alt="" class="testimoni-card-image">
-              <h5 class="testimoni-card-title" style="color:black">Belajar Coding Seru Bersama Kakak Mentor</h5>
-              <p class="testimoni-badge">Siswa</p>
-              <p class="testimoni-card-text" style="color:black">Aku senang sekali bisa belajar robotik di Robonesia. Bisa belajar coding dari kecil dan kakak-kakak pengajarannya seru. Terutama KaK Ali dan Kak Susan. Semoga aku bisa ikut lomba di Rusia.</p>
+              <img src="image/testimoni-5.jpg" alt="" class="testimoni-card-image">
+              <h5 class="testimoni-card-title" style="color:black">Ekskul Robotic telah sampai ke Lomba Internasional</h5>
+              <p class="testimoni-badge">Penanggung Jawab Ekskul Sekolah Alam Gaharu</p>
+              <p class="testimoni-card-text" style="color:black">Ekskul robotika di SAG berjalan dengan baik dan peserta setiap tahun selalu bertambah, kegiatan ekskul dikemas menarik melalui proyek bervariatif. Anak anak berkesempatan mengikuti lomba Internasional IYRC 2018 Thailand.</p>
               <button class="testimoni-card-button material-symbols-rounded">arrow_forward</button>
-            </a> 
+            </a>
           </li>
 
           <li class="testimoni-card-item swiper-slide">
             <a href="#" class="testimoni-card-link">
-              <img src="image/testimoni-1.jpg" alt="" class="testimoni-card-image">
-              <h5 class="testimoni-card-title" style="color:black">Belajar Coding Seru Bersama Kakak Mentor</h5>
+              <img src="image/testimoni-6.jpg" alt="" class="testimoni-card-image">
+              <h5 class="testimoni-card-title" style="color:black">Belajar Robotik Seru, Bermimpi ke Rusia!</h5>
               <p class="testimoni-badge">Siswa</p>
-              <p class="testimoni-card-text" style="color:black">Aku senang sekali bisa belajar robotik di Robonesia. Bisa belajar coding dari kecil dan kakak-kakak pengajarannya seru. Terutama KaK Ali dan Kak Susan. Semoga aku bisa ikut lomba di Rusia.</p>
+              <p class="testimoni-card-text" style="color:black">Aku senang sekali bisa belajar robotik di Robonesia. Bisa belajar coding dari kecil dan kakak-kakak pengajarnya seru. Harapannya bisa mengikuti lomba di Rusia</p>
               <button class="testimoni-card-button material-symbols-rounded">arrow_forward</button>
-            </a> 
+            </a>
           </li>
 
-          <div class="swiper-pagination"></div>
-          <div class="swiper-button-prev"></div>
-          <div class="swiper-button-next"></div>
 
         </ul>
+          <div class="swiper-pagination"></div>
+          <div class="swipper-slide-button swiper-button-prev"></div>
+          <div class="swipper-slide-button swiper-button-next"></div>
       </div>
     </div>
     
   </section>
-
-  <!-- TESTIMONI -->
-    <section>
-      <div class="testimoni container-lg text-center">
-        <h1>Kata Mereka yang sudah</h1>
-        <h1>Belajar di <span class="gradient-text">Robonesia</span></h1>
-        <div class="d-flex justify-content-center gap-3 flex-wrap mt-4">
-          <div class="d-flex justify-content-center gap-3 flex-wrap mt-4">
-            <div class="card" style="width: 18rem;">
-              <div class="card-body">
-                <h5 class="card-title mb-3">Belajar Coding Seru Bersama Kakak Mentor</h5>
-                <p class="card-text">Aku senang sekali bisa belajar robotik di Robonesia. Bisa belajar coding dari kecil dan kakak-kakak pengajarannya seru. Terutama KaK Ali dan Kak Susan. Semoga aku bisa ikut lomba di Rusia.</p>
-                <h6 class="card-subtitle mb-2 text-body-secondary">-Siswa-</h6>
-              </div>
-            </div>
-          
-            <div class="card" style="width: 18rem;">
-              <div class="card-body">
-                <h5 class="card-title mb-3">Menyalurkan Hobi, Mengasah Bakat, dan Mewujudkan Mimpi Internasional</h5> 
-                <p class="card-text">Alhamdulillah bisa kenal Robonesia, anak saya bisa menyalurkan hobinya yang suka 'ngoprek' apalagi sering diadain lomba, jadi terus terasah. Alhamdulillah juga bisa menambah pengalaman di kancah internasional. Semoga bisa terus berkembang dan maju</p>
-                <h6 class="card-subtitle mb-2 text-body-secondary">-Orangtua Siswa-</h6>
-              </div>
-            </div>
-          
-            <div class="card" style="width: 18rem;">
-              <div class="card-body">
-                <h5 class="card-title mb-3">Tempat Siswa SMK Melangkah di Dunia Teknologi</h5> 
-                <p class="card-text">Alhamdulillah, Robonesia membuka peluang untuk siswa/i lulusan atau PKL SMK untuk menjadi bagian dari pendidikan robotik, membuka peluang untuk berkembang dan berinovasi sesuai perkembangan teknologi yang berjalan pesat.</p>
-                <h6 class="card-subtitle mb-2 text-body-secondary">-Guru SMKN 11 Bandung-</h6>
-              </div>
-            </div>
-          </div>          
-        </div>
-      </div>      
-    </section> 
     <!-- TESTIMONI END -->
 
     <!-- KEUNGGULAN KAMI -->
