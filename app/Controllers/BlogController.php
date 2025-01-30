@@ -27,4 +27,26 @@ class BlogController extends BaseController
         echo view('pages/blog');
         echo view('layout/footer');
     }
+    
+    public function detail($slug)
+    {
+        // Mencari artikel berdasarkan slug
+        $artikel = $this->artikelModel->where('slug', $slug)->first();
+
+        // Jika artikel tidak ditemukan
+        if (!$artikel) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
+
+        // Kirim data artikel ke view
+        $data = [
+            'title' => $artikel['judul'],
+            'artikel' => $artikel,
+        ];
+
+        echo view('layout/header', $data);
+        echo view('pages/blog/detail');
+        echo view('layout/footer');
+    }
+
 }

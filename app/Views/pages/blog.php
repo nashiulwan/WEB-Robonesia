@@ -1,5 +1,5 @@
 <div class="container mt-5">
-    <h1 class="text-center mb-4">Blog Artikel</h1>
+    <h1 class="text-center mb-4">BLOG</h1>
 
     <div class="row">
         <?php if (!empty($artikel)) : ?>
