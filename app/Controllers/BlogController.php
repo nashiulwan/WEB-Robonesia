@@ -16,13 +16,15 @@ class BlogController extends BaseController
     public function index()
     {   
         $data = [
-            'title' => 'BLOG',
+            'title' => 'Robonesia | BLOG',
             'artikel' => $this->artikelModel
                 ->where('status', 'publish')
                 ->orderBy('created_at', 'DESC')
                 ->findAll(), // Mengambil artikel yang sudah dipublish
         ];
 
-        return view('pages/blog', $data);
+        echo view('layout/header', $data);
+        echo view('pages/blog');
+        echo view('layout/footer');
     }
 }
