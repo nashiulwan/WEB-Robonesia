@@ -45,7 +45,6 @@
             <li><a href="/pages/tim">Tim</a></li>
             <li><a href="/pages/partner">Mitra</a></li>
             <li><a href="/pages/hubungi">Hubungi</a></li>
-            <li><a href="/pages/login_akad" class="btn_login" style="height: fit-content">Login</a></li>
           </ul>
         </div>
       </div>

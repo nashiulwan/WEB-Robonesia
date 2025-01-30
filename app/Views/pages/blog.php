@@ -1,14 +1,23 @@
-<!-- Header -->
-<div class="header__blog">
+ini contoh artikel
+<?php foreach ($artikel as $post): ?>
+    <div class="blog-post">
+        <h2><?= $post['judul']; ?></h2>
+        <img src="<?= base_url('uploads/' . $post['gambar']); ?>" alt="<?= $post['judul']; ?>" style="max-width: 100%;">
+        <p><?= word_limiter($post['konten'], 50); ?></p>
+        <a href="<?= base_url('/blog/' . $post['slug']); ?>">Baca selengkapnya...</a>
+    </div>
+<?php endforeach; ?>
+
+
+
+<!-- <div class="header__blog">
             <div class="blog__container">
               <div class="container my-5">
                 <div class="row align-items-center">
-                  <!-- Bagian Kiri: Foto/Video -->
                   <div class="col-md-4">
                     <img src="/image/galeri_dok1.jpg" alt="Foto" class="img-fluid" />
                   </div>
 
-                  <!-- Bagian Kanan: Judul, Ringkasan, Nama Penulis, Tanggal dan Tahun -->
                   <div class="col-md-8 d-flex flex-column justify-content-center">
                     <a href="/pages/blogdetail" style="text-decoration: none; color: inherit;">
                       <h3 class="fw-bold">Robonesia Sukses Gelar Medan Robotic Competition 2024</h3>
@@ -20,4 +29,4 @@
                 </div>
               </div>                 
             </div>
-</div>
+</div> -->
