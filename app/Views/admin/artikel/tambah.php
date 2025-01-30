@@ -14,15 +14,7 @@
             <input type="text" name="judul" id="judul" class="form-control" placeholder="Masukkan judul artikel" required>
         </div>
 
-        <div class="form-group">
-            <label for="kategori_id">Kategori</label>
-            <select name="kategori_id" id="kategori_id" class="form-control" required>
-                <option value="">Pilih Kategori</option>
-                <?php foreach ($kategoris as $kategori): ?>
-                    <option value="<?= $kategori['id'] ?>"><?= $kategori['nama'] ?></option>
-                <?php endforeach; ?>
-            </select>
-        </div>
+        
 
         <div class="mb-3">
             <label for="gambar" class="form-label">Upload Gambar</label>
