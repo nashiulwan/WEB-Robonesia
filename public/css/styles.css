@@ -743,36 +743,6 @@ h4 {
 
 /* TESTIMONI */
 /* ================================================================ */
-.gradient-text {
-  font-size: 3rem; 
-  font-weight: bold;
-  background: linear-gradient(100deg, var(--color-blue), var(--color-yellow)); 
-  -webkit-background-clip: text; 
-  -webkit-text-fill-color: transparent; 
-  -webkit-text-fill-color: transparent;
-}
-
-.testimoni-card {
-  color: #ffdd00;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-
-}
-
-.testimoni-card {
-  flex: 0 0 33.33%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 1.5rem;
-  margin: 1rem;
-  background: #fff;
-  border-radius: 10px;
-}
-
-.testimoni .btn {
-  margin: 2rem 0;
-}
-.testimoni .btn:hover{
-  border: 2px solid var(--black);
-}
 
 .testimoni__container {
   justify-content: center;
@@ -780,8 +750,15 @@ h4 {
   background: linear-gradient(white, var(--color-blue));
 }
 
+.testimoni-card-wrapper {
+  max-width: 1100px;
+  margin: 0 60px 35px;
+  padding: 20px 10px;
+  overflow: hidden;
+}
+
 .testimoni-card-list .testimoni-card-item .testimoni-card-link {
-  width: 300px;
+  user-select: none;
   display: block;
   background: #fff;
   padding: 10px;
@@ -790,6 +767,11 @@ h4 {
   border: 2px solid transparent;
   box-shadow: 0 10px 10px rgb(0, 0, 0, 0.05);
   transition: 0.2s ease;
+}
+
+.testimoni-card-list .testimoni-card-item .testimoni-card-link:active {
+  cursor: grabbing;
+
 }
 
 .testimoni-card-list .testimoni-card-item .testimoni-card-link:hover{
@@ -842,8 +824,39 @@ h4 {
 .testimoni-card-list .testimoni-card-link:hover .testimoni-card-button{
   color: #fff;
   background: var(--color-blue);
-
 }
+
+.testimoni-card-list {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.testimoni-card-wrapper .swiper-pagination-bullet {
+  height: 13px;
+  width: 13px;
+  opacity: 0.5;
+  background: var(--color-blue);
+}
+
+.testimoni-card-wrapper .swiper-pagination-bullet-active {
+  opacity: 1;
+}
+
+.testimoni-card-wrapper .swipper-slide-button {
+  color: var(--color-blue);
+  margin-top: -35px;
+}
+
+@media screen and (max-width: 760px) {
+  .testimoni-card-wrapper {
+    margin: 0 10px 25px;
+  }
+
+  .testimoni-card-wrapper .swiper-slide-button {
+    display: none;
+  }
+}
+
 
 /* TESTIMONI END */
 /* ================================================================ */
