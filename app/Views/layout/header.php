@@ -39,12 +39,12 @@
         <div class="link-container">
             <ul class="nav__links" id="nav-links">
             <li class="nav-beranda"><a href="/beranda">Beranda</a></li>
-            <li><a href="/pages/tentang">Tentang</a></li>
-            <li><a href="/pages/blog">Blog</a></li>
-            <li><a href="/pages/galeri">Galeri</a></li>
-            <li><a href="/pages/tim">Tim</a></li>
-            <li><a href="/pages/partner">Mitra</a></li>
-            <li><a href="/pages/hubungi">Hubungi</a></li>
+            <li><a href="/tentang">Tentang</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/galeri">Galeri</a></li>
+            <li><a href="/tim">Tim</a></li>
+            <li><a href="/partner">Mitra</a></li>
+            <li><a href="/hubungi">Hubungi</a></li>
           </ul>
         </div>
       </div>

@@ -47,24 +47,24 @@
           </li>
 
           <li>
-            <a href="/pages/tentang" class="footer-link">Tentang</a>
+            <a href="/tentang" class="footer-link">Tentang</a>
           </li>
 
           <li>
-            <a href="/pages/blog" class="footer-link">Blog</a>
+            <a href="/blog" class="footer-link">Blog</a>
           </li>
 
           <li>
-            <a href="/pages/galeri" class="footer-link">Galeri</a>
+            <a href="/galeri" class="footer-link">Galeri</a>
           </li>
           <li>
-            <a href="/pages/tim" class="footer-link">Tim</a>
+            <a href="/tim" class="footer-link">Tim</a>
           </li>
           <li>
-            <a href="/pages/partner" class="footer-link">Mitra</a>
+            <a href="/partner" class="footer-link">Mitra</a>
           </li>
           <li>
-            <a href="/pages/hubungi" class="footer-link">Hubungi</a>
+            <a href="/hubungi" class="footer-link">Hubungi</a>
           </li>
         </ul>
         <ul class="footer-list">
@@ -72,10 +72,10 @@
             <a target="_blank" href="https://maps.app.goo.gl/YMDNkdntGCrHmixHA" class="footer-link">Maps</a>
           </li>
           <li>
-            <a target="_blank" href="/pages/testimoni" class="footer-link">Testimoni</a>
+            <a target="_blank" href="/testimoni" class="footer-link">Testimoni</a>
           </li>
           <li>
-            <a target="_blank" href="/pages/program" class="footer-link">Program Belajar</a>
+            <a target="_blank" href="/program" class="footer-link">Program Belajar</a>
           </li>
         </ul>
       </div>

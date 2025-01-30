@@ -28,7 +28,7 @@ class BlogController extends BaseController
         echo view('layout/footer');
     }
     
-    public function detail($slug)
+    public function artikel($slug)
     {
         // Mencari artikel berdasarkan slug
         $artikel = $this->artikelModel->where('slug', $slug)->first();
@@ -45,7 +45,7 @@ class BlogController extends BaseController
         ];
 
         echo view('layout/header', $data);
-        echo view('pages/blog/detail');
+        echo view('pages/blog/artikel');
         echo view('layout/footer');
     }
 

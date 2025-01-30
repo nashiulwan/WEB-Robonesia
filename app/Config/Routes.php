@@ -10,19 +10,34 @@ use CodeIgniter\Router\RouteCollection;
     // Routes untuk halaman utama dan public
     $routes->get('/', 'Pages::index');
     $routes->get('/beranda', 'Pages::index');
+
     $routes->get('/pages/hubungi', 'Pages::hubungi');
+    $routes->get('/hubungi', 'Pages::hubungi');
+
     $routes->get('/pages/galeri', 'Pages::galeri');
+    $routes->get('/galeri', 'Pages::galeri');
+    
     $routes->get('/pages/partner', 'Pages::partner');
+    $routes->get('/partner', 'Pages::partner');
+
     $routes->get('/pages/program', 'Pages::program');
+    $routes->get('/program', 'Pages::program');
+
     $routes->get('/pages/tentang', 'Pages::tentang');
+    $routes->get('/tentang', 'Pages::tentang');
+
     $routes->get('/pages/testimoni', 'Pages::testimoni');
-    $routes->get('/pages/blog', 'BlogController::index');
-    $routes->get('/blog/detail/(:segment)', 'BlogController::detail/$1'); // Menampilkan detail artikel
-    // $routes->get('/pages/blog', 'Pages::blog');
+    $routes->get('/testimoni', 'Pages::testimoni');
+
     $routes->get('/pages/tim', 'Pages::tim');
-    // $routes->get('/pages/blogdetail', 'Pages::blogDetail');
+    $routes->get('/tim', 'Pages::tim');
+
+    $routes->get('/pages/blog', 'BlogController::index');
+    $routes->get('/blog', 'BlogController::index');
+
+    $routes->get('/(:segment)', 'BlogController::artikel/$1'); // Menampilkan detail artikel
+
     $routes->get('/login', 'Login::login');
-    // $routes->get('/logout', 'Login::logout');
 });
 
 $routes->group('auth', function ($routes) {
@@ -48,7 +63,7 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
     $routes->post('artikel/simpan', 'Artikel::simpan'); // Menyimpan artikel
     $routes->get('artikel/edit/(:num)', 'Artikel::edit/$1'); // Menampilkan form edit
     $routes->post('artikel/update/(:num)', 'Artikel::update/$1'); // Mengupdate artikel
-    $routes->get('artikel/hapus/(:num)', 'Artikel::hapus/$1'); // Menghapus artikel
+    $routes->post('artikel/hapus/(:num)', 'Artikel::hapus/$1'); // Menghapus artikel
     
 
 });
