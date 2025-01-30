@@ -83,25 +83,4 @@ class Pages extends BaseController
         echo view('pages/tim');
         echo view('layout/footer');
     }
-
-    public function blog()
-    {
-        $data = [
-            'title' => 'Robonesia | Blog'
-        ];
-        echo view('layout/header', $data);
-        echo view('pages/blog');
-        echo view('layout/footer');
-}
-
-    public function blogDetail()
-    {
-        $data = [
-            'title' => 'Robonesia | Artikel Blog'
-        ];
-        echo view('layout/header', $data);
-        echo view('pages/blogdetail');
-        echo view('layout/footer');
-    }
-
 }

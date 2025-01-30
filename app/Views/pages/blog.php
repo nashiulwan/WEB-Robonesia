@@ -1,12 +1,37 @@
-ini contoh artikel
-<?php foreach ($artikel as $post): ?>
-    <div class="blog-post">
-        <h2><?= $post['judul']; ?></h2>
-        <img src="<?= base_url('uploads/' . $post['gambar']); ?>" alt="<?= $post['judul']; ?>" style="max-width: 100%;">
-        <p><?= word_limiter($post['konten'], 50); ?></p>
-        <a href="<?= base_url('/blog/' . $post['slug']); ?>">Baca selengkapnya...</a>
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Blog Artikel</h1>
+
+    <div class="row">
+        <?php if (!empty($artikel)) : ?>
+            <?php foreach ($artikel as $row) : ?>
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm">
+                        <?php if (!empty($row['gambar'])) : ?>
+                          <img src="<?= base_url('uploads/' . esc($row['gambar'])); ?>" class="card-img-top img-fluid" style="height: 200px; object-fit: cover;" alt="<?= esc($row['judul']); ?>">
+                        <?php else : ?>
+                            <img src="<?= base_url('uploads/default.jpg'); ?>" class="card-img-top" alt="No Image">
+                        <?php endif; ?>
+
+                        <div class="card-body">
+                            <h5 class="card-title"><?= esc($row['judul']); ?></h5>
+                            <p class="card-text"><?= esc(substr($row['konten'], 0, 100)); ?>...</p>
+                            <a href="<?= base_url('blog/detail/' . esc($row['slug'])); ?>" class="btn btn-primary">Baca Selengkapnya</a>
+                        </div>
+
+                        <div class="card-footer text-muted">
+                            <small>Kategori : <?= esc($row['kategori']); ?> | <?= date('d M Y', strtotime($row['created_at'])); ?></small>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        <?php else : ?>
+            <div class="col-12 text-center">
+                <p class="alert alert-warning">Belum ada artikel yang dipublikasikan.</p>
+            </div>
+        <?php endif; ?>
     </div>
-<?php endforeach; ?>
+</div>
+
 
 
 

@@ -49,9 +49,11 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
     $routes->get('artikel/edit/(:num)', 'Artikel::edit/$1'); // Menampilkan form edit
     $routes->post('artikel/update/(:num)', 'Artikel::update/$1'); // Mengupdate artikel
     $routes->get('artikel/hapus/(:num)', 'Artikel::hapus/$1'); // Menghapus artikel
+    
 
 });
 
+$routes->get('/testcrudcontroller', 'TestCrudController::index');
 
 
 

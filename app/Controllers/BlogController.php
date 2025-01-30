@@ -3,7 +3,6 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use App\Models\KategoriModel;
 use App\Models\ArtikelModel;
 
 class BlogController extends BaseController
@@ -16,13 +15,16 @@ class BlogController extends BaseController
 
     public function index()
     {   
-        // $this->load->model('ArtikelModel'); // Memuat model
         $data = [
-            'title' => 'BLOG',
-            'artikel' => $this->artikelModel->getArtikelWithKategori(), // Data artikel dengan kategori
+            'title' => 'Robonesia | BLOG',
+            'artikel' => $this->artikelModel
+                ->where('status', 'publish')
+                ->orderBy('created_at', 'DESC')
+                ->findAll(), // Mengambil artikel yang sudah dipublish
         ];
-        // $data['artikel'] = $model->where('status', 'publish')->orderBy('created_at', 'DESC')->findAll();
-        
-        // return view('/pages/blog', $data);
+
+        echo view('layout/header', $data);
+        echo view('pages/blog');
+        echo view('layout/footer');
     }
 }

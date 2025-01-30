@@ -6,7 +6,7 @@
     <h1 class="h3 mb-4 text-gray-800">Tambah Artikel</h1>
 
     <!-- Form Tambah Artikel -->
-    <form action="<?= base_url('/admin/artikel/simpan') ?>" method="post" enctype="multipart/form-data">
+    <form action="<?= base_url('admin/artikel/simpan') ?>" method="post" enctype="multipart/form-data">
         <?= csrf_field() ?>
 
         <div class="form-group">
@@ -15,14 +15,14 @@
         </div>
 
         <div class="form-group">
-            <label for="kategori_id">Kategori</label>
-            <select name="kategori_id" id="kategori_id" class="form-control" required>
-                <option value="">Pilih Kategori</option>
-                <?php foreach ($kategoris as $kategori): ?>
-                    <option value="<?= $kategori['id'] ?>"><?= $kategori['nama'] ?></option>
+            <label for="kategori">Kategori</label>
+            <select name="kategori" id="kategori" class="form-control" required>
+                <?php foreach ($kategoriList as $kategori): ?>
+                <option value="<?= esc($kategori) ?>"><?= esc($kategori) ?></option>
                 <?php endforeach; ?>
             </select>
         </div>
+        
 
         <div class="mb-3">
             <label for="gambar" class="form-label">Upload Gambar</label>

@@ -4,7 +4,6 @@ namespace App\Controllers;
 
 use App\Models\ArtikelModel;
 use CodeIgniter\Controller;
-use App\Models\KategoriModel;
 
 class Admin extends BaseController
 {
@@ -14,7 +13,6 @@ class Admin extends BaseController
     public function __construct()
     {
         $this->artikelModel = new ArtikelModel(); // Contoh penggunaan model
-        $this->kategoriModel = new KategoriModel();
     }
 
     // Method untuk dashboard
@@ -52,7 +50,6 @@ class Admin extends BaseController
     public function tambah()
     {
         $data['title'] = 'Tambah Artikel';
-        $data['kategoris'] = $this->kategoriModel->findAll(); // Semua data kategori
         return view('admin/artikel/tambah', $data);
     }
 
