@@ -55,7 +55,7 @@
                         <td>
                             <a style="margin-bottom: 5px"href="<?= base_url('admin/artikel/edit/' . esc($row['id'])); ?>" class="btn btn-warning btn-sm">Edit</a>
                             
-                            <form action="<?= base_url('admin/artikel/hapus/' . esc($row['id'])); ?>" method="post" class="d-inline">
+                            <form action="<?= base_url('admin/artikel/delete/' . esc($row['id'])); ?>" method="post" class="d-inline">
                                 <?= csrf_field(); ?>
                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus artikel ini?');">
                                     Hapus

@@ -205,9 +205,7 @@ class Artikel extends BaseController
         $validationRules = [
             'judul' => [
                 'rules' => 'required',
-                'errors' => [
-                    'required' => 'Judul artikel wajib diisi.'
-                ]
+                'errors' => ['required' => 'Judul artikel wajib diisi.']
             ],
             'kategori' => [
                 'rules' => 'required|in_list[Berita,Kompetisi,Event,Belajar,Lainnya]',
@@ -218,9 +216,7 @@ class Artikel extends BaseController
             ],
             'konten' => [
                 'rules' => 'required',
-                'errors' => [
-                    'required' => 'Konten artikel tidak boleh kosong.'
-                ]
+                'errors' => ['required' => 'Konten artikel tidak boleh kosong.']
             ],
             'gambar' => [
                 'rules' => 'max_size[gambar,5000]|is_image[gambar]|mime_in[gambar,image/jpg,image/jpeg,image/png]',
@@ -236,19 +232,8 @@ class Artikel extends BaseController
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
 
-        // Upload gambar
-        $file = $this->request->getFile('gambar');
-        if ($file->isValid() && !$file->hasMoved()) {
-            $fileName = $file->getRandomName();
-            $file->move(FCPATH . 'uploads/', $fileName);
-            $data['gambar'] = $fileName;
-        } else {
-            return redirect()->back()->withInput()->with('error', 'Gagal mengunggah gambar.');
-        }
-
-        // Simpan artikel menggunakan instance model langsung
-        $success = $artikelModel->save([
-            'id' => $id,
+        // Ambil inputan dari form
+        $data = [
             'judul' => $this->request->getPost('judul'),
             'slug' => url_title($this->request->getPost('judul'), '-', true),
             'konten' => $this->request->getPost('konten'),
@@ -256,15 +241,58 @@ class Artikel extends BaseController
             'penulis_id' => 1,
             'status' => 'publish',
             'updated_at' => date('Y-m-d H:i:s'),
-            'gambar' => $fileName,
-        ]);
+        ];
 
-        if ($success) {
-            return redirect()->to('/admin/artikel')->with('success', 'Artikel berhasil disimpan!');
+        // Cek jika ada gambar baru yang diunggah
+        $file = $this->request->getFile('gambar');
+        if ($file && $file->isValid() && !$file->hasMoved()) {
+            // Hapus gambar lama jika ada
+            if (!empty($artikel['gambar']) && file_exists(FCPATH . 'uploads/' . $artikel['gambar'])) {
+                unlink(FCPATH . 'uploads/' . $artikel['gambar']);
+            }
+
+            // Upload gambar baru
+            $fileName = $file->getRandomName();
+            $file->move(FCPATH . 'uploads/', $fileName);
+            $data['gambar'] = $fileName;
+        }
+
+        // Cek apakah ada perubahan data sebelum update
+        if ($artikel == $data) {
+            return redirect()->back()->with('error', 'Tidak ada perubahan yang dilakukan.');
+        }
+
+        // Jalankan update
+        if ($artikelModel->update($id, $data)) {
+            return redirect()->to('/admin/artikel')->with('success', 'Artikel berhasil diperbarui!');
         } else {
             return redirect()->back()->withInput()->with('error', 'Gagal menyimpan artikel, silakan coba lagi.');
         }
     }
 
+    public function delete($id)
+    {
+        if (!logged_in()) {
+            return redirect()->to('/login');
+        }
+    
+        $artikelModel = new ArtikelModel();
+        $artikel = $artikelModel->find($id);
+    
+        if (empty($artikel)) {
+            return redirect()->to('/admin/artikel')->with('error', 'Artikel tidak ditemukan.');
+        }
+    
+        // Hapus gambar jika ada
+        if (!empty($artikel['gambar']) && file_exists(FCPATH . 'uploads/' . $artikel['gambar'])) {
+            unlink(FCPATH . 'uploads/' . $artikel['gambar']);
+        }
+    
+        // Hapus artikel
+        $artikelModel->delete($id);
+    
+        return redirect()->to('/admin/artikel')->with('success', 'Artikel berhasil dihapus!');
+    }
+    
 
 }
