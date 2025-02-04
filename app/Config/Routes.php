@@ -6,7 +6,7 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 
- $routes->group('', function ($routes) {
+$routes->group('', function ($routes) {
     // Routes untuk halaman utama dan public
     $routes->get('/', 'Pages::index');
     $routes->get('/beranda', 'Pages::index');
@@ -16,7 +16,7 @@ use CodeIgniter\Router\RouteCollection;
 
     $routes->get('/pages/galeri', 'Pages::galeri');
     $routes->get('/galeri', 'Pages::galeri');
-    
+
     $routes->get('/pages/partner', 'Pages::partner');
     $routes->get('/partner', 'Pages::partner');
 

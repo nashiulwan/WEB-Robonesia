@@ -17,13 +17,13 @@ class Login extends BaseController
   }
 
   public function logout()
-    {
-        // Memanggil fungsi logout bawaan Myth:Auth
-        service('authentication')->logout();
+  {
+    // Memanggil fungsi logout bawaan Myth:Auth
+    service('authentication')->logout();
 
-        // Redirect ke halaman login atau halaman lain sesuai kebutuhan
-        return redirect()->to('auth/login')->with('success', 'Anda berhasil logout.');
-    }
+    // Redirect ke halaman login atau halaman lain sesuai kebutuhan
+    return redirect()->to('auth/login')->with('success', 'Anda berhasil logout.');
+  }
 
   public function register(): string
   {
