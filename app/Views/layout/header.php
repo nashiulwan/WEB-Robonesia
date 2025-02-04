@@ -45,6 +45,9 @@
             <li><a href="/tim">Tim</a></li>
             <li><a href="/partner">Mitra</a></li>
             <li><a href="/hubungi">Hubungi</a></li>
+            <!-- TOMBOL LOGIN -->
+            <li class="nav__login">
+              <a style="padding: 0 2rem;"href="auth/login" class="btn btn-login">Login</a>
           </ul>
         </div>
       </div>

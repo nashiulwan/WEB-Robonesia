@@ -165,5 +165,106 @@ class Artikel extends BaseController
 
     }
 
+    public function edit($id)
+    {
+        if (!logged_in()) {
+            return redirect()->to('/login');
+        }
+
+        $artikelModel = new ArtikelModel();
+        $artikel = $artikelModel->find($id);
+
+        if (empty($artikel)) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
+
+        $kategoriList = ['Berita', 'Kompetisi', 'Event', 'Belajar', 'Lainnya'];
+
+        $data = [
+            'title' => 'Edit Artikel',
+            'artikel' => $artikel,
+            'kategoriList' => $kategoriList,
+        ];
+
+        return view('admin/artikel/edit', $data);
+    }
+
+    public function update($id)
+    {
+        if (!logged_in()) {
+            return redirect()->to('/login');
+        }
+
+        $artikelModel = new ArtikelModel();
+        $artikel = $artikelModel->find($id);
+
+        if (empty($artikel)) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
+
+        $validationRules = [
+            'judul' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Judul artikel wajib diisi.'
+                ]
+            ],
+            'kategori' => [
+                'rules' => 'required|in_list[Berita,Kompetisi,Event,Belajar,Lainnya]',
+                'errors' => [
+                    'required' => 'Kategori harus dipilih.',
+                    'in_list' => 'Kategori yang dipilih tidak valid.'
+                ]
+            ],
+            'konten' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Konten artikel tidak boleh kosong.'
+                ]
+            ],
+            'gambar' => [
+                'rules' => 'max_size[gambar,5000]|is_image[gambar]|mime_in[gambar,image/jpg,image/jpeg,image/png]',
+                'errors' => [
+                    'max_size' => 'Ukuran gambar maksimal adalah 5MB.',
+                    'is_image' => 'File harus berupa gambar.',
+                    'mime_in' => 'Format gambar harus JPG, JPEG, atau PNG.'
+                ]
+            ]
+        ];
+
+        if (!$this->validate($validationRules)) {
+            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        }
+
+        // Upload gambar
+        $file = $this->request->getFile('gambar');
+        if ($file->isValid() && !$file->hasMoved()) {
+            $fileName = $file->getRandomName();
+            $file->move(FCPATH . 'uploads/', $fileName);
+            $data['gambar'] = $fileName;
+        } else {
+            return redirect()->back()->withInput()->with('error', 'Gagal mengunggah gambar.');
+        }
+
+        // Simpan artikel menggunakan instance model langsung
+        $success = $artikelModel->save([
+            'id' => $id,
+            'judul' => $this->request->getPost('judul'),
+            'slug' => url_title($this->request->getPost('judul'), '-', true),
+            'konten' => $this->request->getPost('konten'),
+            'kategori' => $this->request->getPost('kategori'),
+            'penulis_id' => 1,
+            'status' => 'publish',
+            'updated_at' => date('Y-m-d H:i:s'),
+            'gambar' => $fileName,
+        ]);
+
+        if ($success) {
+            return redirect()->to('/admin/artikel')->with('success', 'Artikel berhasil disimpan!');
+        } else {
+            return redirect()->back()->withInput()->with('error', 'Gagal menyimpan artikel, silakan coba lagi.');
+        }
+    }
+
 
 }
