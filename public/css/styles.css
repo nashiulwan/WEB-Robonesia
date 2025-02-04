@@ -89,7 +89,7 @@ h4 {
   background: var(--color-yellow);
   color: var(--black);
   padding: 1rem 2rem;
-  border: 1px solid transparent;
+  border: 2px solid transparent;
   font-weight: 500;
   transition: var(--transition);
 }
@@ -97,7 +97,7 @@ h4 {
 .btn:hover {
   background: transparent;
   color: var(--black);
-  border-color: var(--white);
+  border-color: var(--color-yellow);
 }
 
 .btn_login {
