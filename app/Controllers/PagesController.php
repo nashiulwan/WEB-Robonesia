@@ -5,10 +5,18 @@ use App\Models\KontakModel;
 
 class PagesController extends BaseController
 {
+    protected $kontakModel;
+
+    public function __construct()
+    {
+        $this->kontakModel = new KontakModel();
+    }
+
     public function index()
     {
         $data = [
             'title' => 'Robonesia | Rumah Robot Indonesia'
+            // Untuk mengambil kontak dari database
         ];
         echo view('layout/header', $data);
         echo view('pages/home');
@@ -17,11 +25,16 @@ class PagesController extends BaseController
 
     public function hubungi()
     {
+        // Ambil data kontak (asumsi hanya ada satu data)
+        $kontak = $this->kontakModel->first();
+
         $data = [
-            'title' => 'Robonesia | Hubungi Kami'
+            'title' => 'Robonesia | Hubungi Kami',
+            'kontak' => $kontak // Kirim data kontak ke view
         ];
+        
         echo view('layout/header', $data);
-        echo view('pages/hubungi');
+        echo view('pages/hubungi', $data);
         echo view('layout/footer');
     }
 
