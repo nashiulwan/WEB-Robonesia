@@ -742,8 +742,6 @@ h4 {
 
 
 /* TESTIMONI */
-/* ================================================================ */
-
 .testimoni__container {
   justify-content: center;
   min-height: 100vh;
@@ -757,9 +755,15 @@ h4 {
   overflow: hidden;
 }
 
+.testimoni-card-item.swiper-slide {
+  height: auto;
+}
+
 .testimoni-card-list .testimoni-card-item .testimoni-card-link {
   user-select: none;
-  display: block;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   background: #fff;
   padding: 10px;
   border-radius: 12px;
@@ -767,16 +771,6 @@ h4 {
   border: 2px solid transparent;
   box-shadow: 0 10px 10px rgb(0, 0, 0, 0.05);
   transition: 0.2s ease;
-}
-
-.testimoni-card-list .testimoni-card-item .testimoni-card-link:active {
-  cursor: grabbing;
-
-}
-
-.testimoni-card-list .testimoni-card-item .testimoni-card-link:hover{
-  border-color: var(--color-blue);
-
 }
 
 .testimoni-card-list .testimoni-card-link .testimoni-card-image {
@@ -798,22 +792,17 @@ h4 {
   border-radius: 50px;
 }
 
-.parent-class .testimoni-card-title, .parent-class .testimoni-card-text {
+.testimoni-card-list .testimoni-card-link .testimoni-card-text {
+  flex-grow: 1;
   color: var(--color-black);
 }
 
-.testimoni-list .testimoni-card-link .testimoni-card-title {
-  font-size: 1.19rem;
-  color: #000;
-  font-weight: 600;
-}
-
 .testimoni-card-list .testimoni-card-link .testimoni-card-button {
+  margin-top: auto;
   height: 35px;
   width: 35px;
   color: var(--color-blue);
   border-radius: 50%;
-  margin: 30px 0 5px;
   background: none;
   cursor: pointer;
   border: 2px solid var(--color-blue);
