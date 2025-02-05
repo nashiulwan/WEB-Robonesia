@@ -52,11 +52,11 @@ class CreateArtikelsTable extends Migration
             ],
         ]);
         $this->forge->addKey('id', true);
-        $this->forge->createTable('artikels');
+        $this->forge->createTable('artikel');
     }
 
     public function down()
     {
-        $this->forge->dropTable('artikels');
+        $this->forge->dropTable('artikel');
     }
 }
