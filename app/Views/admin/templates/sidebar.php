@@ -58,10 +58,19 @@
 
     <!-- Nav Item - Pengaturan -->
     <li class="nav-item">
-        <a class="nav-link" href="<?= base_url('admin/pengaturan'); ?>">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePengaturan" aria-expanded="true" aria-controls="collapsePengaturan">
             <i class="fas fa-fw fa-cogs"></i>
             <span>Pengaturan</span>
         </a>
+        <div id="collapsePengaturan" class="collapse" aria-labelledby="headingPengaturan" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item" href="<?= base_url('admin/pengaturan/kontak') ?>"><i class="fas fa-address-book"></i>  Kontak</a>
+                <a class="collapse-item" href="<?= base_url('admin/pengaturan/galeri') ?>"><i class="fas fa-images"></i>  Galeri</a>
+                <a class="collapse-item" href="<?= base_url('admin/pengaturan/mitra') ?>"><i class="fas fa-handshake"></i>  Mitra</a>
+                <a class="collapse-item" href="<?= base_url('admin/pengaturan/tim') ?>"><i class="fas fa-users"></i>  Tim</a>
+                <a class="collapse-item" href="<?= base_url('admin/pengaturan/prestasi') ?>"><i class="fas fa-trophy"></i>  Prestasi</a>
+            </div>
+        </div>
     </li>
 
     <!-- Divider -->

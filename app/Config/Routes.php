@@ -64,6 +64,16 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
     $routes->get('artikel/edit/(:num)', 'Artikel::edit/$1'); // Menampilkan form edit
     $routes->post('artikel/update/(:num)', 'Artikel::update/$1'); // Mengupdate artikel
     $routes->post('artikel/delete/(:num)', 'Artikel::delete/$1'); // Menghapus artikel
+
+
+    // Routes untuk pengaturan
+    $routes->get('pengaturan', 'PengaturanController::index');
+    $routes->get('pengaturan/kontak', 'PengaturanController::kontak');
+    $routes->get('pengaturan/galeri', 'PengaturanController::galeri');
+    $routes->get('pengaturan/mitra', 'PengaturanController::mitra');
+    $routes->get('pengaturan/tim', 'PengaturanController::tim');
+    $routes->get('pengaturan/prestasi', 'PengaturanController::prestasi');
+
 });
 
 // $routes->get('/testcrudcontroller', 'TestCrudController::index');
