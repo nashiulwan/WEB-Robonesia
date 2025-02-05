@@ -226,17 +226,6 @@
                       </div>
                     </div>
                     <div class="form-group">
-                      <select name="user_role" class="form-control form-control-user" <?php if (session('errors.user_role')) : ?>is-invalid<?php endif ?>">
-                        <option value="" disabled selected><?= lang('Auth.selectRole') ?></option>
-                        <option value="admin"><?= lang('Auth.admin') ?></option>
-                        <option value="teacher"><?= lang('Auth.teacher') ?></option>
-                        <option value="student"><?= lang('Auth.student') ?></option>
-                      </select>
-                      <div class="invalid-feedback">
-                        <?= session('errors.user_role') ?>
-                      </div>
-                    </div>
-                    <div class="form-group">
                       <label type="text" class="form-control form-control-user" <?php if (session('errors.login')) : ?>is-invalid<?php endif ?>"
                         name="login" placeholder="<?= lang('Auth.emailOrUsername') ?>">
                         <div class="invalid-feedback">
