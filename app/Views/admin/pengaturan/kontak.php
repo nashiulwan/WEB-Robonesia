@@ -30,7 +30,7 @@
                         <tr>
                             <td><?= esc($kontak['no_hp']) ?></td>
                             <td><?= esc($kontak['email']) ?></td>
-                            <td><?= esc($kontak['alamat']) ?></td>
+                            <td><?= esc(strlen($kontak['alamat']) > 50 ? substr($kontak['alamat'], 0, 50) . '...' : $kontak['alamat']) ?></td>
                             <td><a href="<?= esc($kontak['maps']) ?>" target="_blank">Lihat Maps</a></td>
                             <td><a href="<?= esc($kontak['facebook']) ?>" target="_blank">Facebook</a></td>
                             <td><a href="<?= esc($kontak['instagram']) ?>" target="_blank">Instagram</a></td>
@@ -75,7 +75,7 @@
                         </div>
                         
                         <div class="mb-3">
-                            <label class="form-label"><i class="fas fa-map"></i> Google Maps Link</label>
+                            <label class="form-label"><i class="fas fa-map"></i> Google Maps Embed Link</label>
                             <input type="url" name="maps" class="form-control" value="<?= esc($kontak['maps'] ?? '') ?>" required>
                         </div>
                     </div>

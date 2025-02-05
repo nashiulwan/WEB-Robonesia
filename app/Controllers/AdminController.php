@@ -5,10 +5,11 @@ namespace App\Controllers;
 use App\Models\ArtikelModel;
 use CodeIgniter\Controller;
 
-class Admin extends BaseController
+
+class AdminController extends BaseController
 {
     protected $artikelModel;
-    protected $kategoriModel;
+    // protected $kategoriModel;
 
     public function __construct()
     {
