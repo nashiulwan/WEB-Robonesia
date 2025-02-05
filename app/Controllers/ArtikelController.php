@@ -6,7 +6,7 @@ use App\Controllers\BaseController;
 // use App\Models\KategoriModel; 
 use App\Models\ArtikelModel;
 
-class Artikel extends BaseController
+class ArtikelController extends BaseController
 {
     // protected $artikelModel;
     // public function __construct()

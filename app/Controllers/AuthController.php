@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use Myth\Auth\Config\Auth;
 
-class Login extends BaseController
+class AuthController extends BaseController
 {
   public function login(): string
   {

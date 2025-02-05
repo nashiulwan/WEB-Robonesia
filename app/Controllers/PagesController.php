@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Controllers;
+use App\Models\KontakModel;
 
-class Pages extends BaseController
+class PagesController extends BaseController
 {
     public function index()
     {
