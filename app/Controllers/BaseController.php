@@ -65,8 +65,12 @@ abstract class BaseController extends Controller
         $partnerCount   = $db->table('pengaturan_partner')->countAll();
 
         if ($artikelCount == 0 || $kontakCount == 0 || $partnerCount == 0) {
-            $seeder = \Config\Services::seeder();
-            $seeder->call('DatabaseSeeder');
+            $seeder = \Config\Database::seeder();
+            if ($seeder instanceof \CodeIgniter\Database\Seeder) {
+                $seeder->call('DatabaseSeeder');
+            } else {
+                log_message('error', 'Seeder service tidak tersedia atau tidak valid.');
+            }
         }
 
         // E.g.: $this->session = service('session');
@@ -88,7 +92,7 @@ abstract class BaseController extends Controller
     {
         $data['kontak'] = $this->kontak; // Menyediakan data kontak untuk semua view
         $data['partner'] = $this->partner; // Menambahkan data partner
-        
+
         echo view('layout/header', $data);
         echo view($view, $data);
         echo view('layout/footer', $data);
