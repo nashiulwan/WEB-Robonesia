@@ -9,6 +9,7 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
 use App\Models\KontakModel;
+use App\Models\PartnerModel;
 
 /**
  * Class BaseController
@@ -54,21 +55,38 @@ abstract class BaseController extends Controller
         parent::initController($request, $response, $logger);
 
         // Preload any models, libraries, etc, here.
+        $db = \Config\Database::connect();
+
+        // Cek apakah tabel masih kosong
+        $artikelCount   = $db->table('artikel')->countAll();
+        $kontakCount    = $db->table('pengaturan_kontak')->countAll();
+        $partnerCount   = $db->table('pengaturan_partner')->countAll();
+
+        if ($artikelCount == 0 || $kontakCount == 0 || $partnerCount == 0) {
+            $seeder = \Config\Services::seeder();
+            $seeder->call('DatabaseSeeder');
+        }
 
         // E.g.: $this->session = service('session');
     }
 
     protected $kontak;
+    protected $partner;
 
     public function __construct()
     {
         $kontakModel = new KontakModel();
+        $partnerModel = new PartnerModel();
+
+        $this->partner = $partnerModel->findAll();
         $this->kontak = $kontakModel->first(); // Mengambil data kontak pertama dari tabel
     }
 
     protected function renderView($view, $data = [])
     {
         $data['kontak'] = $this->kontak; // Menyediakan data kontak untuk semua view
+        $data['partner'] = $this->partner; // Menambahkan data partner
+        
         echo view('layout/header', $data);
         echo view($view, $data);
         echo view('layout/footer', $data);
