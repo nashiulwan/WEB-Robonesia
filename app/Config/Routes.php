@@ -44,6 +44,7 @@ $routes->group('', function ($routes) {
 $routes->group('auth', function ($routes) {
     // Routes untuk otentikasi
     $routes->get('login', 'AuthController::login');
+    $routes->post('login', 'AuthController::attemptLogin');
     $routes->get('register', 'AuthController::register');
     $routes->get('logout', 'AuthController::logout');
 });
@@ -70,7 +71,7 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
 
     // Routes untuk pengaturan
     $routes->get('pengaturan', 'PengaturanController::index', ['filter' => 'role:admin']);
-    
+
     // Pengaturan mitra
     $routes->get('pengaturan/mitra', 'PengaturanController::mitra', ['filter' => 'role:admin']);
     $routes->get('pengaturan/mitra/tambah', 'PengaturanController::tambahMitra', ['filter' => 'role:admin']);
@@ -83,12 +84,11 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
 
     $routes->get('pengaturan/tim', 'PengaturanController::tim', ['filter' => 'role:admin']);
     $routes->get('pengaturan/prestasi', 'PengaturanController::prestasi', ['filter' => 'role:admin']);
-    
+
     $routes->get('pengaturan/kontak', 'PengaturanController::kontak', ['filter' => 'role:admin']);
     $routes->post('pengaturan/kontak/update', 'PengaturanController::updateKontak', ['filter' => 'role:admin']);
 
     $routes->get('pengaturan/galeri', 'PengaturanController::galeri', ['filter' => 'role:admin']);
-
 });
 
 

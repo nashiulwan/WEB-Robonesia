@@ -248,9 +248,10 @@ use Myth\Auth\Config\Auth; ?>
                       <img src="<?= $captcha_image; ?>" alt="Captcha">
                       <input type="text" name="captcha_answer" class="form-control form-control-user" autocomplete="off" placeholder="Jawaban">
                       <div class="invalid-feedback">
-                        Hasil perhitungan salah
+                        <?= session('errors.captcha_answer') ?>
                       </div>
                     </div>
+
                     <button type="submit" class="btn btn-primary btn-user btn-block"><?= lang('Auth.loginAction') ?></button>
                     <hr>
                     <div class="text-center">
