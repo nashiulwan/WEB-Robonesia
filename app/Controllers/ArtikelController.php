@@ -36,15 +36,7 @@ class ArtikelController extends BaseController
             return redirect()->to('/login');
         }
 
-        // $kategoriModel = new artikelModel(); // Load kategori
-        // $kategoriList = $kategoriModel->select('kategori')->distinct()->findAll();
         $kategoriList = ['Berita', 'Kompetisi', 'Event', 'Belajar', 'Lainnya'];
-
-
-        // Jika tidak ada kategori sama sekali, set default ke kategori Lainnya
-        // if (empty($kategoriList)) {
-        //     $kategoriList = [['kategori'=>'Lainnya']];
-        // }
 
         $data = [
             'title' => 'Tambah Artikel',
@@ -53,43 +45,6 @@ class ArtikelController extends BaseController
 
         return view('admin/artikel/tambah', $data); // Kirim data ke view
     }
-
-    // public function simpan()
-    // {
-    //     $artikelModel = new ArtikelModel();
-    //     $validKategori = ['Berita', 'Kompetisi', 'Event', 'Belajar', 'Lainnya'];
-
-    //     $validation = $this->validate([
-    //         'judul' => 'required',
-    //         'kategori' => 'required|in_list[Berita,Kompetisi,Event,Belajar,Lainnya]',
-    //         'konten' => 'required',
-    //         'gambar' => 'uploaded[gambar]|max_size[gambar,2048]|is_image[gambar]|mime_in[gambar,image/jpg,image/jpeg,image/png]',
-    //     ]);
-
-    //     if (!$validation) {
-    //         return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
-    //     }
-
-    //     // Upload gambar
-    //     $file = $this->request->getFile('gambar');
-    //     $fileName = $file->getRandomName();
-    //     $file->move(WRITEPATH . 'uploads', $fileName);
-
-    //     // Simpan artikel
-    //     artikelModel->save([
-    //         'judul' => $this->request->getPost('judul'),
-    //         'slug' => url_title($this->request->getPost('judul'), '-', true),
-    //         'konten' => $this->request->getPost('konten'),
-    //         'kategori' => $this->request->getPost('kategori'),
-    //         // 'penulis_id' => 1,
-    //         'status' => 'publish',
-    //         'created_at' => date('Y-m-d H:i:s'),
-    //         'updated_at' => date('Y-m-d H:i:s'),
-    //         'gambar' => $fileName,
-    //     ]);
-
-    //     return redirect()->to('/admin/artikel')->with('success', 'Artikel berhasil ditambahkan!');
-    // }
 
     public function simpan()
     {

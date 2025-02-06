@@ -1,100 +1,55 @@
 <?php
 
 namespace App\Controllers;
-use App\Models\KontakModel;
 
 class PagesController extends BaseController
 {
-    protected $kontakModel;
-
-    public function __construct()
-    {
-        $this->kontakModel = new KontakModel();
-    }
 
     public function index()
     {
-        $data = [
-            'title' => 'Robonesia | Rumah Robot Indonesia'
-            // Untuk mengambil kontak dari database
-        ];
-        echo view('layout/header', $data);
-        echo view('pages/home');
-        echo view('layout/footer');
+        $data = ['title' => 'Robonesia | Rumah Robot Indonesia'];
+        $this->renderView('pages/home', $data);
     }
 
     public function hubungi()
     {
-        // Ambil data kontak (asumsi hanya ada satu data)
-        $kontak = $this->kontakModel->first();
-
-        $data = [
-            'title' => 'Robonesia | Hubungi Kami',
-            'kontak' => $kontak // Kirim data kontak ke view
-        ];
-        
-        echo view('layout/header', $data);
-        echo view('pages/hubungi', $data);
-        echo view('layout/footer');
+        $data = ['title' => 'Robonesia | Hubungi Kami',];
+        $this->renderView('pages/hubungi', $data);
     }
 
     public function galeri()
     {
-        $data = [
-            'title' => 'Robonesia | Galeri'
-        ];
-        echo view('layout/header', $data);
-        echo view('pages/galeri');
-        echo view('layout/footer');
+        $data = ['title' => 'Robonesia | Galeri'];
+        $this->renderView('pages/galeri', $data);
     }
 
     public function partner()
     {
-        $data = [
-            'title' => 'Robonesia | Mitra Kami'
-        ];
-        echo view('layout/header', $data);
-        echo view('pages/partner');
-        echo view('layout/footer');
+        $data = ['title' => 'Robonesia | Mitra Kami'];
+        $this->renderView('pages/partner', $data);
     }
 
     public function program()
     {
-        $data = [
-            'title' => 'Robonesia | Program Belajar'
-        ];
-        echo view('layout/header', $data);
-        echo view('pages/program');
-        echo view('layout/footer');
+        $data = ['title' => 'Robonesia | Program Belajar'];
+        $this->renderView('pages/program', $data);
     }
 
     public function tentang()
     {
-        $data = [
-            'title' => 'Robonesia | Tentang Kami'
-        ];
-        echo view('layout/header', $data);
-        echo view('pages/tentang');
-        echo view('layout/footer');
+        $data = ['title' => 'Robonesia | Tentang Kami'];
+        $this->renderView('pages/tentang', $data);
     }
 
     public function testimoni()
     {
-        $data = [
-            'title' => 'Robonesia | Testimoni'
-        ];
-        echo view('layout/header', $data);
-        echo view('pages/testimoni');
-        echo view('layout/footer');
+        $data = ['title' => 'Robonesia | Testimoni'];
+        $this->renderView('pages/testimoni', $data);
     }
 
     public function tim()
     {
-        $data = [
-            'title' => 'Robonesia | Tim Kami'
-        ];
-        echo view('layout/header', $data);
-        echo view('pages/tim');
-        echo view('layout/footer');
+        $data = ['title' => 'Robonesia | Tim Kami'];
+        $this->renderView('pages/tim', $data);
     }
 }
