@@ -1,13 +1,35 @@
 <div class="container mt-5">
     <h1 class="text-center mb-4">BLOG</h1>
 
+    <!-- Daftar Kategori -->
+    <div class="d-flex justify-content-center mb-4">
+        <div class="btn-group" role="group">
+            <a href="<?= base_url('blog/kategori/berita'); ?>" class="btn btn-outline-primary">
+                <i class="fas fa-newspaper"></i> Berita
+            </a>
+            <a href="<?= base_url('blog/kategori/kompetisi'); ?>" class="btn btn-outline-success">
+                <i class="fas fa-trophy"></i> Kompetisi
+            </a>
+            <a href="<?= base_url('blog/kategori/event'); ?>" class="btn btn-outline-warning">
+                <i class="fas fa-calendar-alt"></i> Event
+            </a>
+            <a href="<?= base_url('blog/kategori/belajar'); ?>" class="btn btn-outline-info">
+                <i class="fas fa-book"></i> Belajar
+            </a>
+            <a href="<?= base_url('blog/kategori/lainnya'); ?>" class="btn btn-outline-secondary">
+                <i class="fas fa-ellipsis-h"></i> Lainnya
+            </a>
+        </div>
+    </div>
+
+    <!-- Daftar Artikel -->
     <div class="row">
         <?php if (!empty($artikel)) : ?>
             <?php foreach ($artikel as $row) : ?>
                 <div class="col-md-4 mb-4">
-                    <div class="card shadow-sm">
+                    <div class="card shadow-sm border-0">
                         <?php if (!empty($row['gambar'])) : ?>
-                          <img src="<?= base_url('uploads/' . esc($row['gambar'])); ?>" class="card-img-top img-fluid" style="height: 200px; object-fit: cover;" alt="<?= esc($row['judul']); ?>">
+                            <img src="<?= base_url('uploads/' . esc($row['gambar'])); ?>" class="card-img-top img-fluid" style="height: 200px; object-fit: cover;" alt="<?= esc($row['judul']); ?>">
                         <?php else : ?>
                             <img src="<?= base_url('uploads/default.jpg'); ?>" class="card-img-top" alt="No Image">
                         <?php endif; ?>
@@ -18,8 +40,11 @@
                             <a href="<?= base_url('/' . esc($row['slug'])); ?>" class="btn btn-primary">Baca Selengkapnya</a>
                         </div>
 
-                        <div class="card-footer text-muted">
-                            <small>Kategori : <?= esc($row['kategori']); ?> | <?= date('d M Y', strtotime($row['created_at'])); ?></small>
+                        <div class="card-footer text-muted text-center">
+                            <small>
+                                <i class="fas fa-folder"></i> <?= esc(ucfirst($row['kategori'])); ?> | 
+                                <i class="fas fa-calendar"></i> <?= date('d M Y', strtotime($row['created_at'])); ?>
+                            </small>
                         </div>
                     </div>
                 </div>
@@ -31,27 +56,3 @@
         <?php endif; ?>
     </div>
 </div>
-
-
-
-
-<!-- <div class="header__blog">
-            <div class="blog__container">
-              <div class="container my-5">
-                <div class="row align-items-center">
-                  <div class="col-md-4">
-                    <img src="/image/galeri_dok1.jpg" alt="Foto" class="img-fluid" />
-                  </div>
-
-                  <div class="col-md-8 d-flex flex-column justify-content-center">
-                    <a href="/pages/blogdetail" style="text-decoration: none; color: inherit;">
-                      <h3 class="fw-bold">Robonesia Sukses Gelar Medan Robotic Competition 2024</h3>
-                    </a>
-                    <h6 style="color: var(--color-blue)">By: Robonesia <span style="color: var(--color-yellow)">|</span> 29 Februari 2024</h6>
-                    <p class="truncate">Medan Robotic Competition 2024 diikuti oleh 48 peserta dari berbagai sekolah dasar di Kota Medan dengan 6 kategori lomba: Basic Assembly Starter, Basic Animation Starter, Creative Robot, Basic Animation Mover, Creative Animation, dan Soccer Bot.</p>
-                    <a href="./pages/blogdetail" class="text-primary">Baca selengkapnya...</a>
-                  </div>
-                </div>
-              </div>                 
-            </div>
-</div> -->

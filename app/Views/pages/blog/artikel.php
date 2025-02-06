@@ -23,11 +23,11 @@
                 <!-- Daftar Artikel Terbaru -->
                 <h4 class="mb-3">Artikel Terbaru</h4>
                 <ul class="list-unstyled">
-                    <?php if (!empty($artikel_terbaru)) : ?>
-                        <?php foreach ($artikel_terbaru as $artikel) : ?>
+                    <?php if (!empty($artikelTerbaru)) : ?>
+                        <?php foreach ($artikelTerbaru as $item) : ?>
                             <li class="mb-2">
-                                <a href="<?= base_url('blog/' . esc($artikel['slug'])) ?>" class="text-decoration-none text-dark">
-                                    <?= esc($artikel['judul']) ?>
+                                <a href="<?= base_url('blog/' . esc($item['slug'])) ?>" class="text-decoration-none text-dark">
+                                    <?= esc($item['judul']) ?>
                                 </a>
                             </li>
                         <?php endforeach; ?>
@@ -36,20 +36,34 @@
                     <?php endif; ?>
                 </ul>
 
-                <!-- Daftar Kategori -->
+                <!-- Daftar Kategori Manual -->
                 <h4 class="mt-4 mb-3">Kategori</h4>
                 <ul class="list-unstyled">
-                    <?php if (!empty($kategori)) : ?>
-                        <?php foreach ($kategori as $kat) : ?>
-                            <li class="mb-2">
-                                <a href="<?= base_url('blog/kategori/' . esc($kat['slug'])) ?>" class="text-decoration-none text-dark">
-                                    <?= esc($kat['nama_kategori']) ?>
-                                </a>
-                            </li>
-                        <?php endforeach; ?>
-                    <?php else : ?>
-                        <li>Tidak ada kategori.</li>
-                    <?php endif; ?>
+                    <li class="mb-2">
+                        <a href="<?= base_url('blog/kategori/berita') ?>" class="text-decoration-none text-dark">
+                            Berita
+                        </a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="<?= base_url('blog/kategori/kompetisi') ?>" class="text-decoration-none text-dark">
+                            Kompetisi
+                        </a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="<?= base_url('blog/kategori/event') ?>" class="text-decoration-none text-dark">
+                            Event
+                        </a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="<?= base_url('blog/kategori/belajar') ?>" class="text-decoration-none text-dark">
+                            Belajar
+                        </a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="<?= base_url('blog/kategori/lainnya') ?>" class="text-decoration-none text-dark">
+                            Lainnya
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>

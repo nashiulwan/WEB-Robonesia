@@ -36,6 +36,7 @@ $routes->group('', function ($routes) {
     $routes->get('/blog', 'BlogController::index');
 
     $routes->get('/(:segment)', 'BlogController::artikel/$1'); // Menampilkan detail artikel
+    $routes->get('blog/kategori/(:segment)', 'BlogController::kategori/$1');
 
     $routes->get('/login', 'AuthController::login');
 });
@@ -57,7 +58,7 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
     $routes->get('profil', 'AdminController::profil', ['filter' => 'role:admin']);
 
 
-    // Routes untuk artikel
+    // Routes untuk manage artikel
     $routes->get('artikel', 'ArtikelController::index', ['filter' => 'role:admin']); // Menampilkan daftar artikel
     $routes->get('artikel/tambah', 'ArtikelController::tambah', ['filter' => 'role:admin']); // Menampilkan form tambah
     $routes->post('artikel/simpan', 'ArtikelController::simpan', ['filter' => 'role:admin']); // Menyimpan artikel
@@ -66,15 +67,19 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
     $routes->post('artikel/delete/(:num)', 'ArtikelController::delete/$1', ['filter' => 'role:admin']); // Menghapus artikel
 
 
+
     // Routes untuk pengaturan
     $routes->get('pengaturan', 'PengaturanController::index', ['filter' => 'role:admin']);
-    $routes->get('pengaturan/galeri', 'PengaturanController::galeri', ['filter' => 'role:admin']);
+    
     $routes->get('pengaturan/mitra', 'PengaturanController::mitra', ['filter' => 'role:admin']);
     $routes->get('pengaturan/tim', 'PengaturanController::tim', ['filter' => 'role:admin']);
     $routes->get('pengaturan/prestasi', 'PengaturanController::prestasi', ['filter' => 'role:admin']);
-
+    
     $routes->get('pengaturan/kontak', 'PengaturanController::kontak', ['filter' => 'role:admin']);
     $routes->post('pengaturan/kontak/update', 'PengaturanController::updateKontak', ['filter' => 'role:admin']);
+
+    $routes->get('pengaturan/galeri', 'PengaturanController::galeri', ['filter' => 'role:admin']);
+
 });
 
 
