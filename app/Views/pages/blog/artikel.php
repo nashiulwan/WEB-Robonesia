@@ -25,7 +25,10 @@
                 <ul class="list-unstyled">
                     <?php if (!empty($artikelTerbaru)) : ?>
                         <?php foreach ($artikelTerbaru as $item) : ?>
-                            <li class="mb-2">
+                            <li class="mb-4">
+                                <?php if (!empty($item['gambar'])) : ?>
+                                <img src="<?= base_url('uploads/' . esc($item['gambar'])) ?>" class="card-img-top" alt="Gambar Artikel" style="height: 200px; object-fit: cover;">
+                                <?php endif; ?>
                                 <a href="<?= base_url('blog/' . esc($item['slug'])) ?>" class="text-decoration-none text-dark">
                                     <?= esc($item['judul']) ?>
                                 </a>

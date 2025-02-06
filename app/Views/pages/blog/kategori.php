@@ -10,7 +10,7 @@
             <div class="col-md-4 mb-4">
                 <div class="card">
                     <?php if (!empty($item['gambar'])) : ?>
-                        <img src="<?= base_url('uploads/' . esc($item['gambar'])) ?>" class="card-img-top" alt="Gambar Artikel">
+                        <img src="<?= base_url('uploads/' . esc($item['gambar'])) ?>" class="card-img-top" alt="Gambar Artikel" style="height: 200px; object-fit: cover;">
                     <?php endif; ?>
                     <div class="card-body">
                         <h5 class="card-title"><?= esc($item['judul']) ?></h5>
