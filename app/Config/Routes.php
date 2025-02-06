@@ -71,7 +71,16 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
     // Routes untuk pengaturan
     $routes->get('pengaturan', 'PengaturanController::index', ['filter' => 'role:admin']);
     
+    // Pengaturan mitra
     $routes->get('pengaturan/mitra', 'PengaturanController::mitra', ['filter' => 'role:admin']);
+    $routes->get('pengaturan/mitra/tambah', 'PengaturanController::tambahMitra', ['filter' => 'role:admin']);
+    $routes->post('pengaturan/mitra/simpan', 'PengaturanController::simpanMitra', ['filter' => 'role:admin']);
+    $routes->get('pengaturan/mitra/edit/(:num)', 'PengaturanController@editMitra/$1', ['filter' => 'role:admin']);
+    $routes->post('pengaturan/mitra/update/(:num)', 'PengaturanController::updateMitra/$1', ['filter' => 'role:admin']);
+    $routes->get('pengaturan/mitra/hapus/(:num)', 'PengaturanController@delete/$1', ['filter' => 'role:admin']);
+
+
+
     $routes->get('pengaturan/tim', 'PengaturanController::tim', ['filter' => 'role:admin']);
     $routes->get('pengaturan/prestasi', 'PengaturanController::prestasi', ['filter' => 'role:admin']);
     
