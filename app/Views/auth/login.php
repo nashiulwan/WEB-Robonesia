@@ -1,5 +1,9 @@
 <?= $this->extend('auth/templates/index'); ?>
 <?= $this->section('content'); ?>
+<?php
+
+use Myth\Auth\Config\Auth; ?>
+<?php $config = new Auth(); ?>
 <style>
   .login__container {
     width: var(--max-width);
@@ -168,6 +172,24 @@
     display: flex;
     gap: 10px;
   }
+
+  .captcha-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .captcha-container img {
+    width: 40%;
+    /* Setengah dari total luas kontainer */
+    height: auto;
+  }
+
+  .captcha-container input {
+    width: 100%;
+    flex: 1;
+  }
 </style>
 <section>
   <div class="login__container">
@@ -186,12 +208,9 @@
         </div>
       </div>
 
-
-      <!-- Kolom Kanan: Form Login -->
       <div class="col-md-5">
         <div class="card o-hidden border-0 shadow-lg my-4">
           <div class="card-body p-0">
-            <!-- Nested Row within Card Body -->
             <div class="row">
               <div class="col-lg">
                 <div class="p-5">
@@ -199,7 +218,7 @@
                     <h2 class="mb-4" style="color:black">Masuk</h2>
                   </div>
                   <?= view('Myth\Auth\Views\_message_block') ?>
-                  <form class="user" action="<?= url_to('login') ?>" method="post">
+                  <form class="user" action="<?= url_to('auth/login') ?>" method="post">
                     <?= csrf_field() ?>
 
                     <?php if ($config->validFields === ['email']): ?>
@@ -225,23 +244,17 @@
                         <?= session('errors.password') ?>
                       </div>
                     </div>
-                    <div class="form-group">
-                      <label type="text" class="form-control form-control-user" <?php if (session('errors.login')) : ?>is-invalid<?php endif ?>"
-                        name="login" placeholder="<?= lang('Auth.emailOrUsername') ?>">
-                        <div class="invalid-feedback">
-                          <?= session('errors.login') ?>
-                        </div>
-                        <div class="invalid-feedback">
-                          <?= session('errors.user_role') ?>
-                        </div>
+                    <div class="form-group captcha-container">
+                      <img src="<?= $captcha_image; ?>" alt="Captcha">
+                      <input type="text" name="captcha_answer" class="form-control form-control-user" autocomplete="off" placeholder="Jawaban">
+                      <div class="invalid-feedback">
+                        Hasil perhitungan salah
+                      </div>
                     </div>
                     <button type="submit" class="btn btn-primary btn-user btn-block"><?= lang('Auth.loginAction') ?></button>
                     <hr>
                     <div class="text-center">
-                      <a class="small" href="forgot-password.html">Lupa kata sandi?</a>
-                    </div>
-                    <div class="text-center">
-                      <a class="small" href="https://wa.me/082118032898">Hubungi admin?</a>
+                      <a class="small" target="_blank" href="https://wa.me/082118032898">Hubungi admin?</a>
                     </div>
                   </form>
                 </div>
@@ -251,7 +264,6 @@
         </div>
       </div>
     </div>
-
   </div>
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" style="position: absolute; bottom:0; left:0; z-index: -1">
     <path fill="#33cccc" fill-opacity="1" d="M0,224L48,229.3C96,235,192,245,288,245.3C384,245,480,235,576,224C672,213,768,203,864,181.3C960,160,1056,128,1152,101.3C1248,75,1344,53,1392,42.7L1440,32L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>

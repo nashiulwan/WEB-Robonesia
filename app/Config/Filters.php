@@ -106,9 +106,10 @@ class Filters extends BaseFilters
     public array $filters = [
         'auth' => [
             'before' => [
-                'admin/*',  // Proteksi semua route di dalam grup admin
+                'admin/*',
+                'guru/*',
+                'siswa/*',
             ],
         ],
     ];
-    
 }
