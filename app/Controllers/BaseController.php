@@ -8,6 +8,7 @@ use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
+use App\Models\KontakModel;
 
 /**
  * Class BaseController
@@ -19,6 +20,8 @@ use Psr\Log\LoggerInterface;
  *
  * For security be sure to declare any new methods as protected or private.
  */
+
+
 abstract class BaseController extends Controller
 {
     /**
@@ -53,5 +56,21 @@ abstract class BaseController extends Controller
         // Preload any models, libraries, etc, here.
 
         // E.g.: $this->session = service('session');
+    }
+
+    protected $kontak;
+
+    public function __construct()
+    {
+        $kontakModel = new KontakModel();
+        $this->kontak = $kontakModel->first(); // Mengambil data kontak pertama dari tabel
+    }
+
+    protected function renderView($view, $data = [])
+    {
+        $data['kontak'] = $this->kontak; // Menyediakan data kontak untuk semua view
+        echo view('layout/header', $data);
+        echo view($view, $data);
+        echo view('layout/footer', $data);
     }
 }

@@ -12,12 +12,12 @@ class PengaturanKontakSeeder extends Seeder
             'no_hp'     => '082118032898',
             'email'     => 'robonesia.medan@gmail.com',
             'alamat'    => 'Komplek Permata Jatian Indah, Jl. Jatian Gg. Pribadi, Tembung, Kec. Percut Sei Tuan, Kab. Deli Serdang, Sumatera Utara',
-            'maps'      => 'https://www.google.com/maps/embed?...',
+            'maps'      => 'https://maps.app.goo.gl/AwN3DJPqsmCvnd5Z8',
             'facebook'  => 'https://facebook.com/robonesia',
-            'instagram' => 'https://instagram.com/robonesia',
-            'x'         => '#',
-            'tiktok'    => '#',
-            'youtube'   => '#'
+            'instagram' => 'https://instagram.com/robonesia_medan',
+            'x'         => 'https://x.com',
+            'tiktok'    => 'https://tiktok.com',
+            'youtube'   => 'https://youtube.com/'
         ];
 
         $this->db->table('pengaturan_kontak')->insert($data);
