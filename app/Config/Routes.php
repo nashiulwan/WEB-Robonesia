@@ -77,7 +77,7 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
     $routes->post('pengaturan/mitra/simpan', 'PengaturanController::simpanMitra', ['filter' => 'role:admin']);
     $routes->get('pengaturan/mitra/edit/(:num)', 'PengaturanController@editMitra/$1', ['filter' => 'role:admin']);
     $routes->post('pengaturan/mitra/update/(:num)', 'PengaturanController::updateMitra/$1', ['filter' => 'role:admin']);
-    $routes->get('pengaturan/mitra/hapus/(:num)', 'PengaturanController@delete/$1', ['filter' => 'role:admin']);
+    $routes->get('pengaturan/mitra/hapus/(:num)', 'PengaturanController::hapusMitra/$1', ['filter' => 'role:admin']);
 
 
 

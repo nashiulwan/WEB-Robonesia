@@ -144,9 +144,9 @@ class PengaturanController extends BaseController
             'logo' => [
                 'rules' => 'uploaded[logo]|max_size[logo,5000]|is_image[logo]|mime_in[logo,image/jpg,image/jpeg,image/png]',
                 'errors' => [
-                    'uploaded' => 'logo harus diunggah.',
+                    'uploaded' => 'Logo harus diunggah.',
                     'max_size' => 'Ukuran logo maksimal adalah 5MB.',
-                    'is_image' => 'File harus berupa logo.',
+                    'is_image' => 'File harus berupa gambar.',
                     'mime_in' => 'Format logo harus JPG, JPEG, atau PNG.'
                 ]
             ]
@@ -158,40 +158,61 @@ class PengaturanController extends BaseController
 
         $file = $this->request->getFile('logo');
         if ($file->isValid() && !$file->hasMoved()) {
+            $filePath = $file->getTempName();
+            list($width, $height) = getimagesize($filePath); // Mendapatkan dimensi gambar
+
+            if ($width !== $height) {
+                return redirect()->back()->withInput()->with('error', 'Logo harus memiliki rasio aspek 1:1 (persegi).');
+            }
+
             $fileName = $file->getRandomName();
             $file->move(FCPATH . 'uploads/', $fileName);
-            $data['logo'] = $fileName;
+
+            $data = [
+                'partner' => $this->request->getPost('partner'),
+                'alamat' => $this->request->getPost('alamat'),
+                'maps' => $this->request->getPost('maps'),
+                'logo' => $fileName,
+            ];
+
+            if ($model->save($data)) {
+                return redirect()->to('/admin/pengaturan/mitra')->with('success', 'Mitra berhasil ditambahkan!');
+            } else {
+                return redirect()->back()->withInput()->with('error', 'Gagal menyimpan mitra, silakan coba lagi.');
+            }
         } else {
             return redirect()->back()->withInput()->with('error', 'Gagal mengunggah logo.');
         }
-
-        // Simpan artikel menggunakan instance model langsung
-        $success = $artikelModel->save([
-            'partner' => $this->request->getPost('partner'),
-            'alamat' => $this->request->getPost('alamat'),
-            'maps' => $this->request->getPost('maps'),
-            'logo' => $fileName,
-        ]);
-
-        if ($success) {
-            return redirect()->to('/admin/pengaturan/mitra')->with('success', 'Artikel berhasil ditambahkan!');
-        } else {
-            return redirect()->back()->withInput()->with('error', 'Gagal menyimpan artikel, silakan coba lagi.');
-        }
-
-        $model->update(1, $data);
-
-        return redirect()->back()->with('success', 'Pengaturan partner berhasil diperbarui!');
     }
 
-    public function deleteMitra()
+
+    public function hapusMitra($id)
     {
         if (!logged_in()) {
             return redirect()->to('/login');
-        }   
-
-
+        }
+    
+        $model = new PartnerModel();
+    
+        // Cek apakah data mitra ada
+        $mitra = $model->find($id);
+        if (!$mitra) {
+            return redirect()->to('/admin/pengaturan/mitra')->with('error', 'Mitra tidak ditemukan.');
+        }
+    
+        // Hapus logo jika ada
+        if (!empty($mitra['logo']) && file_exists(FCPATH . 'uploads/' . $mitra['logo'])) {
+            unlink(FCPATH . 'uploads/' . $mitra['logo']);
+        }
+    
+        // Hapus data mitra dari database
+        if ($model->delete($id)) {
+            return redirect()->to('/admin/pengaturan/mitra')->with('success', 'Mitra berhasil dihapus.');
+        } else {
+            return redirect()->to('/admin/pengaturan/mitra')->with('error', 'Gagal menghapus mitra.');
+        }
     }
+    
 
     // ==================================================
     // EDIT TIM

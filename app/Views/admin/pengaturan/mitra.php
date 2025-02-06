@@ -47,7 +47,7 @@
                                     <i class="fas fa-edit"></i> Edit
                                 </a>
                                 <!-- Button Hapus -->
-                                <a href="<?= base_url('pengaturan/mitra/hapus/' . esc($row['id'])); ?>" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus partner ini?');">
+                                <a href="<?= base_url('admin/pengaturan/mitra/hapus/' . esc($row['id'])); ?>" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus partner ini?');">
                                     <i class="fas fa-trash"></i> Hapus
                                 </a>
                             </td>
