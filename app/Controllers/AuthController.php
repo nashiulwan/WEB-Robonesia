@@ -54,7 +54,7 @@ class AuthController extends Controller
 
     $captchaLib = new CaptchaLib();
     if (!$captchaLib->validateCaptcha($captchaInput)) {
-      return redirect()->back()->withInput()->with('error', 'Captcha salah. Silakan coba lagi.');
+      return redirect()->back()->withInput()->with('error', 'Jawaban tidak sesuai. Silakan coba kembali.');
     }
 
     $rules = [

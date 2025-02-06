@@ -161,16 +161,7 @@ function navigateTeam(direction) {
 //
 const totalPhotos = 14;
 const gallery = document.querySelector('.galleryimage');
-const textContainer = document.querySelector('.text-container');
 const bulletsContainer = document.querySelector('.bullets');
-
-// Array deskripsi untuk setiap foto
-const photoDescriptions = [
-  "Foto ketika A", "Foto ketika B", "Foto ketika C", "Foto ketika D",
-  "Foto ketika E", "Foto ketika F", "Foto ketika G", "Foto ketika H",
-  "Foto ketika I", "Foto ketika J", "Foto ketika K", "Foto ketika L",
-  "Foto ketika M", "Foto ketika N"
-];
 
 let currentIndex = 0;
 
@@ -234,6 +225,3 @@ setInterval(nextPhoto, 3000);
 
 // Panggil updateGallery untuk inisialisasi awal
 updateGallery();
-
-
-
