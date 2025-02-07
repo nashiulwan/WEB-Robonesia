@@ -267,79 +267,23 @@
 
 <!-- SCHOOL PARTNER -->
 <section class="py-5">
-  <div class="container-lg text-center">
-    <h1 class="mb-4">Sekolah yang Sudah Bermitra dengan Kami</h1>
-    <div class="container text-center">
-      <div class="row row-cols-2 row-cols-md-4 g-4" id="home-partner-items">
-        <div class="col">
-          <div class="p-3 border rounded shadow-sm logo-card">
-            <img class="img-fluid mx-auto d-block" src="/image/logo_al_azhar.png" alt="Al Azhar" style="max-width: 100px; height: 100px;">
-          </div>
+    <div class="container-lg text-center">
+        <h1 class="mb-4">Sekolah yang Sudah Bermitra dengan Kami</h1>
+        <div class="container text-center">
+            <div class="row row-cols-2 row-cols-md-4 g-4" id="home-partner-items">
+                <?php foreach ($partner as $item) : ?>
+                    <div class="col">
+                        <div class="p-3 border rounded shadow-sm logo-card">
+                            <img class="img-fluid mx-auto d-block" src="<?=base_url('uploads/' . $item['logo']); ?>" 
+                                alt="<?= esc($item['partner']); ?>" style="max-width: 100px; height: 100px;">
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
         </div>
-        <div class="col">
-          <div class="p-3 border rounded shadow-sm logo-card">
-            <img class="img-fluid mx-auto d-block" src="/image/logo_avicenna.png" alt="Avicenna" style="max-width: 100px; height: 100px;">
-          </div>
-        </div>
-        <div class="col">
-          <div class="p-3 border rounded shadow-sm logo-card">
-            <img class="img-fluid mx-auto d-block" src="/image/logo_hijau.png" alt="Sekolah 3" style="max-width: 100px; height: 100px;">
-          </div>
-        </div>
-        <div class="col">
-          <div class="p-3 border rounded shadow-sm logo-card">
-            <img class="img-fluid mx-auto d-block" src="/image/logo_hsvg.png" alt="HSVG" style="max-width: 100px; height: 100px;">
-          </div>
-        </div>
-        <div class="col">
-          <div class="p-3 border rounded shadow-sm logo-card">
-            <img class="img-fluid mx-auto d-block" src="/image/logo_methodist.png" alt="Methodist" style="max-width: 100px; height: 100px;">
-          </div>
-        </div>
-        <div class="col">
-          <div class="p-3 border rounded shadow-sm logo-card">
-            <img class="img-fluid mx-auto d-block" src="/image/logo_pineapple.png" alt="Pineapple" style="max-width: 100px; height: 100px;">
-          </div>
-        </div>
-        <div class="col">
-          <div class="p-3 border rounded shadow-sm logo-card">
-            <img class="img-fluid mx-auto d-block" src="/image/logo_siti_hajar.png" alt="Siti Hajar" style="max-width: 100px; height: 100px;">
-          </div>
-        </div>
-        <div class="col">
-          <div class="p-3 border rounded shadow-sm logo-card">
-            <img class="img-fluid mx-auto d-block" src="/image/logo_tanjung_pura.png" alt="Tanjung Pura" style="max-width: 100px; height: 100px;">
-          </div>
-        </div>
-        <div class="col">
-          <div class="p-3 border rounded shadow-sm logo-card">
-            <img class="img-fluid mx-auto d-block" src="/image/logo_ulul_ilmu.png" alt="Ulul Ilmu" style="max-width: 100px; height: 100px;">
-          </div>
-        </div>
-        <div class="col">
-          <div class="p-3 border rounded shadow-sm logo-card">
-            <img class="img-fluid mx-auto d-block" src="/image/logo_ypsa.png" alt="YPSA" style="max-width: 100px; height: 100px;">
-          </div>
-        </div>
-        <div class="col">
-          <div class="p-3 border rounded shadow-sm logo-card">
-            <img class="img-fluid mx-auto d-block" src="/image/logo_zakiyah.png" alt="Zakiyah" style="max-width: 100px; height: 100px;">
-          </div>
-        </div>
-        <div class="col">
-          <div class="p-3 border rounded shadow-sm logo-card">
-            <img class="img-fluid mx-auto d-block" src="/image/logo_edu_global.png" alt="Edu Global" style="max-width: 100px; height: 100px;">
-          </div>
-        </div>
-        <div class="col">
-          <div class="p-3 border rounded shadow-sm logo-card">
-            <img class="img-fluid mx-auto d-block" src="/image/logo_sangkara.jpg" alt="Sangkara" style="max-width: 100px; height: 100px;">
-          </div>
-        </div>
-      </div>
     </div>
-  </div>
 </section>
+
 <!-- SCHOOL PARTNER END -->
 
 <!-- PRESTASI -->
@@ -379,3 +323,5 @@
   </div>
 </section>
 <!-- PRESTASI END -->
+
+

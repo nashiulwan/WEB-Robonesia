@@ -19,7 +19,7 @@
                 <div class="col">
                   <div class="partner_items d-flex align-items-center p-3 border rounded shadow-sm">
                     <?php if (!empty($row['logo'])) : ?>
-                      <img src="<?= base_url(esc($row['logo'])); ?>" class="card-img-top img-fluid" style="height: 200px; object-fit: cover;" alt="<?= esc($row['partner']); ?>">
+                      <img src="<?= base_url('uploads/' . esc($row['logo'])); ?>" class="card-img-top img-fluid" style="width: 150px; height: 150px; object-fit: cover;" alt="<?= esc($row['partner']); ?>">
                     <?php else : ?>
                       <img src="<?= base_url('uploads/default.jpg'); ?>" class="card-img-top" alt="No Image">
                     <?php endif; ?>  

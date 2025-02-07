@@ -16,10 +16,11 @@
     <?php endif; ?>
 
     <!-- TABEL ARTIKEL -->
+    <?php $no = 1; // Inisialisasi nomor ?>
     <table class="table table-bordered table-striped table-auto">
         <thead class="table-dark">
             <tr>
-                <th style="width: 5%;">ID</th>
+                <th style="width: 5%;">NO</th>
                 <th style="width: 15%;">Judul</th>
                 <th style="width: 10%;">Slug</th>
                 <th style="width: 25%;">Konten</th>
@@ -36,7 +37,8 @@
             <?php if (!empty($artikel)) : ?>
                 <?php foreach ($artikel as $row) : ?>
                     <tr>
-                        <td><?= esc($row['id']); ?></td>
+                        <!-- no auto increment -->
+                        <td><?= $no++; ?></td> <!-- Nomor otomatis -->
                         <td class="text-break"><?= esc($row['judul']); ?></td>
                         <td class="text-break"><?= esc($row['slug']); ?></td>
                         <td class="text-break"><?= esc(substr($row['konten'], 0, 100)); ?>...</td>

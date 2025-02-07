@@ -1,13 +1,22 @@
 <?php
 
 namespace App\Controllers;
+// use App\Models\PartnerModel;
 
 class PagesController extends BaseController
 {
+    // protected $partnerModel;
+
+    // public function __construct() {
+    //     $this->partnerModel = new PartnerModel();
+    // }
 
     public function index()
     {
-        $data = ['title' => 'Robonesia | Rumah Robot Indonesia'];
+        $data = [
+            'title' => 'Robonesia | Rumah Robot Indonesia', 
+            // 'partner' => $this->partnerModel->findAll()
+        ];
         $this->renderView('pages/home', $data);
     }
 
