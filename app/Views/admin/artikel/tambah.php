@@ -39,4 +39,15 @@
     </form>
 
 </div>
+
+<!-- CKEditor 5 -->
+<script src="https://cdn.ckeditor.com/ckeditor5/41.3.1/classic/ckeditor.js"></script>
+<script>
+    ClassicEditor
+        .create(document.querySelector('#konten'))
+        .catch(error => {
+            console.error(error);
+        });
+</script>
+
 <?= $this->endSection() ?>

@@ -10,8 +10,8 @@
                 <img src="<?= base_url('uploads/' . esc($artikel['gambar'])) ?>" alt="Gambar Artikel" class="img-fluid mb-4">
             <?php endif; ?>
 
-            <div class="content">
-                <?= esc($artikel['konten']) ?>
+            <div class="content lh-lg">
+                <?= htmlspecialchars_decode($artikel['konten']) ?>
             </div>
 
             <a href="<?= base_url('blog') ?>" class="btn btn-secondary mt-3 mb-5">Kembali ke Blog</a>

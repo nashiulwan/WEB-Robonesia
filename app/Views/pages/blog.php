@@ -36,7 +36,7 @@
 
                         <div class="card-body">
                             <h5 class="card-title"><?= esc($row['judul']); ?></h5>
-                            <p class="card-text"><?= esc(substr($row['konten'], 0, 100)); ?>...</p>
+                            <p class="card-text"><?= htmlspecialchars_decode(substr($row['konten'], 0, 100)) ?>...</p>
                             <a href="<?= base_url('/' . esc($row['slug'])); ?>" class="btn btn-primary">Baca Selengkapnya</a>
                         </div>
 
