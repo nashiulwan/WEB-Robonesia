@@ -96,7 +96,7 @@ class AuthController extends Controller
   {
     // Memanggil fungsi logout bawaan Myth/Auth
     service('authentication')->logout();
-
+    cache()->clean();
     // Redirect ke halaman login atau halaman lain sesuai kebutuhan
     return redirect()->to('auth/login')->with('success', 'Anda berhasil logout.');
   }

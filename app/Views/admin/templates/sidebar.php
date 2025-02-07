@@ -32,7 +32,7 @@
             </a>
             <div id="collapseManage_akun" class="collapse" aria-labelledby="headingManage_akun" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="<?= base_url('admin/manage_akun'); ?>">Semua Artikel</a>
+                    <a class="collapse-item" href="<?= base_url('admin/manage_akun'); ?>">Daftar Akun</a>
                     <a class="collapse-item" href="<?= base_url('admin/manage_akun'); ?>">Tambahkan Akun</a>
                 </div>
             </div>

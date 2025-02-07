@@ -4,7 +4,7 @@
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1 class="h3 text-gray-800"><?= esc($title) ?></h1>
-        <a href="<?= base_url('admin/artikel/tambah'); ?>" class="btn btn-primary">Tambahkan Artikel</a>
+        <a href="<?= base_url('admin/artikel/tambah'); ?>" class="btn btn-primary">Tambahkan Akun</a>
     </div>
 
     <!-- Tampilkan Flash Message -->
@@ -16,48 +16,56 @@
     <?php endif; ?>
 
     <!-- TABEL ARTIKEL -->
-    <table class="table table-bordered table-striped table-auto">
-        <thead class="table-dark">
+
+    <?php $no = 1; ?>
+    <table class="table table-bordered table-hover">
+        <thead class="table" style="color: black; background-color:#2222">
             <tr>
                 <th style="width: 5%;">No</th>
-                <th style="width: 5%;">Id</th>
                 <th style="width: 15%;">Nama pengguna</th>
-                <th style="width: 10%;"></th>
+                <th style="width: 30%;">Email</th>
+                <th style="width: 31%;">Nama Lengkap</th>
+                <th style="width: 10%;">Hak Akses</th>
+                <th style="width: 9%">Aksi</th>
             </tr>
         </thead>
-        <tbody>
-            <?php if (!empty($artikel)) : ?>
-                <?php foreach ($artikel as $row) : ?>
+        <tbody class="table-group-divider" style="color: black;">
+            <?php if (!empty($users)) : ?>
+                <?php foreach ($users as $row) : ?>
                     <tr>
-                        
-                    <td><?= esc($row['id']); ?></td>
-                        <td><?= esc($row['id']); ?></td>
-                        <td class="text-break"><?= esc($row['judul']); ?></td>
-                        <td class="text-break"><?= esc($row['slug']); ?></td>
-                        <td class="text-break"><?= esc(substr($row['konten'], 0, 100)); ?>...</td>
-                        <td><?= esc($row['kategori']); ?></td>
-                        <td><?= esc($row['penulis_id']); ?></td>
-                        <td><?= esc($row['status']); ?></td>
-                        <td><?= esc($row['created_at']); ?></td>
-                        <td><?= esc($row['updated_at']); ?></td>
-                        <td>
-                            <?php if (!empty($row['gambar'])) : ?>
-                                <img src="<?= base_url('/uploads/' . $row['gambar']); ?>" alt="Gambar Artikel" class="img-fluid" style="max-width: 100px; height: auto;" onerror="this.onerror=null; this.src='<?= base_url('/images/no-image.png'); ?>'">
-                            <?php else : ?>
-                                <span class="text-muted">Tidak ada gambar</span>
-                            <?php endif; ?>
+                        <td><?= $no++; ?></td> <!-- Nomor otomatis -->
+                        <td class="text-break"><?= esc($row['username']); ?></td>
+                        <td class="text-break"><?= esc($row['email']); ?></td>
+                        <td class="text-break"><?= esc($row['fullname']); ?></td>
+                        <td class="text-break">
+                            <select class="form-select form-select-sm change-role" data-id="<?= $row['id']; ?>">
+                                <option value="1" <?= ($row['role'] == '1') ? 'selected' : '' ?>>Admin</option>
+                                <option value="3" <?= ($row['role'] == '3') ? 'selected' : '' ?>>Guru</option>
+                                <option value="2" <?= ($row['role'] == '2') ? 'selected' : '' ?>>Siswa</option>
+                                <option value="0" <?= (!in_array($row['role'], ['3', '1', '2'])) ? 'selected' : '' ?>>-</option>
+                            </select>
                         </td>
+
                         <td>
-                            <div class="d-flex flex-column">
-                                <a href="<?= base_url('admin/artikel/edit/' . esc($row['id'])); ?>" class="btn btn-warning btn-sm w-100 mb-2">Edit</a>
+                            <div class="d-flex flex-wrap gap-2" style="justify-content: space-between;">
+                                <a href="<?= base_url('admin/manage-akun/edit/' . esc($row['id'])); ?>"
+                                    class="btn btn-warning btn-sm  d-flex align-items-center justify-content-center"
+                                    style="width: 30px; height: 30px; margin: 2px">
+                                    <i class="fas fa-pen"></i> <!-- Ikon Hapus -->
+                                </a>
+
                                 <form action="<?= base_url('admin/artikel/delete/' . esc($row['id'])); ?>" method="post">
                                     <?= csrf_field(); ?>
-                                    <button type="submit" class="btn btn-danger btn-sm w-100" onclick="return confirm('Apakah Anda yakin ingin menghapus artikel ini?');">
-                                        Hapus
+                                    <button type="submit"
+                                        class="btn btn-danger btn-sm  d-flex align-items-center justify-content-center"
+                                        style="width: 30px; height: 30px; margin: 2px"
+                                        onclick="return confirm('Apakah Anda yakin ingin menghapus artikel ini?');">
+                                        <i class="fas fa-trash-alt"></i> <!-- Ikon Hapus -->
                                     </button>
                                 </form>
                             </div>
                         </td>
+
 
                     </tr>
                 <?php endforeach; ?>
@@ -69,4 +77,40 @@
         </tbody>
     </table>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $(".change-role").on("change", function() {
+            var userId = $(this).data("id");
+            var newRole = $(this).val();
+            var csrfToken = '<?= csrf_token() ?>';
+            var csrfHash = '<?= csrf_hash() ?>';
+
+            $.ajax({
+                url: "<?= base_url('admin/manage_akun/updateRole'); ?>",
+                type: "POST",
+                data: {
+                    id: userId,
+                    role: newRole
+                },
+                headers: {
+                    [csrfToken]: csrfHash // Memasukkan CSRF ke dalam header
+                },
+                success: function(response) {
+                    if (response.status === 'success') {
+                        alert(response.message);
+                    } else {
+                        alert("Gagal mengubah role.");
+                    }
+                },
+                error: function(xhr, status, error) {
+                    alert("Terjadi kesalahan: " + error);
+                }
+            });
+        });
+    });
+</script>
+
 <?= $this->endSection() ?>

@@ -16,19 +16,39 @@ class Manage_akunController extends BaseController
 
     public function index()
     {
-
         if (!logged_in()) {
             return redirect()->to('/login');
         }
 
         $manage_akunModel = new Manage_akunModel();
+        $users = $manage_akunModel->getAllUsersWithRoles();
+
         $data = [
             'title' => 'Daftar Akun',
-            'artikel' => $manage_akunModel->findAll(),
+            'users' => $users,
         ];
 
-        return view('admin/artikel/index', $data);
+        return view('admin/manage_akun/index', $data);
     }
+
+    public function updateRole()
+    {
+        if ($this->request->isAJAX()) {
+            $userId = $this->request->getPost('id');
+            $newRole = $this->request->getPost('role');
+
+            $manage_akunModel = new Manage_akunModel();
+            $update = $manage_akunModel->updateUserRole($userId, $newRole);
+
+            if ($update) {
+                return $this->response->setJSON(['status' => 'success', 'message' => 'Role berhasil diperbarui']);
+            } else {
+                return $this->response->setJSON(['status' => 'error', 'message' => 'Gagal memperbarui role']);
+            }
+        }
+    
+    }
+
 
     // public function tambah()
     // {
