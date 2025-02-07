@@ -33,7 +33,7 @@
                             <td><?= $no++; ?></td>
                             <td>
                                 <?php if (!empty($row['logo'])) : ?>
-                                    <img src="<?= base_url(esc($row['logo'])); ?>" alt="<?= esc($row['partner']); ?>" style="height: 50px; object-fit: contain;">
+                                    <img src="<?= base_url('uploads/' . esc($row['logo'])); ?>" alt="<?= esc($row['partner']); ?>" style="height: 50px; object-fit: contain;">
                                 <?php else : ?>
                                     <img src="<?= base_url('uploads/default.jpg'); ?>" alt="No Logo" style="height: 50px; object-fit: contain;">
                                 <?php endif; ?>
@@ -43,11 +43,12 @@
                             <td><a href="<?= esc($row['maps']); ?>" target="_blank">Lihat Map</a></td>
                             <td>
                                 <!-- Button Edit -->
-                                <a href="<?= base_url('pengaturan/mitra/edit/' . esc($row['id'])); ?>" class="btn btn-warning btn-sm">
+                                <a href="<?= base_url('pengaturan/mitra/edit/' . esc($row['id'])); ?>" class="btn btn-warning btn-sm w-100 mb-2">
                                     <i class="fas fa-edit"></i> Edit
                                 </a>
+
                                 <!-- Button Hapus -->
-                                <a href="<?= base_url('admin/pengaturan/mitra/hapus/' . esc($row['id'])); ?>" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus partner ini?');">
+                                <a href="<?= base_url('admin/pengaturan/mitra/hapus/' . esc($row['id'])); ?>" class="btn btn-danger btn-sm w-100" onclick="return confirm('Yakin ingin menghapus partner ini?');">
                                     <i class="fas fa-trash"></i> Hapus
                                 </a>
                             </td>

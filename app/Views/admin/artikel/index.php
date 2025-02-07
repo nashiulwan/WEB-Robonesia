@@ -41,7 +41,7 @@
                         <td><?= $no++; ?></td> <!-- Nomor otomatis -->
                         <td class="text-break"><?= esc($row['judul']); ?></td>
                         <td class="text-break"><?= esc($row['slug']); ?></td>
-                        <td class="text-break"><?= esc(substr($row['konten'], 0, 100)); ?>...</td>
+                        <td class="text-break"><?= htmlspecialchars_decode(substr($row['konten'], 0, 100)) ?>...</td>
                         <td><?= esc($row['kategori']); ?></td>
                         <td><?= esc($row['penulis_id']); ?></td>
                         <td><?= esc($row['status']); ?></td>
@@ -57,6 +57,7 @@
                         <td>
                             <div class="d-flex flex-column">
                                 <a href="<?= base_url('admin/artikel/edit/' . esc($row['id'])); ?>" class="btn btn-warning btn-sm w-100 mb-2">Edit</a>
+                                
                                 <form action="<?= base_url('admin/artikel/delete/' . esc($row['id'])); ?>" method="post">
                                     <?= csrf_field(); ?>
                                     <button type="submit" class="btn btn-danger btn-sm w-100" onclick="return confirm('Apakah Anda yakin ingin menghapus artikel ini?');">
