@@ -56,12 +56,14 @@
                         </td>
                         <td>
                             <div class="d-flex flex-column">
-                                <a href="<?= base_url('admin/artikel/edit/' . esc($row['id'])); ?>" class="btn btn-warning btn-sm w-100 mb-2">Edit</a>
+                                <a href="<?= base_url('admin/artikel/edit/' . esc($row['id'])); ?>" class="btn btn-warning btn-sm w-100 mb-2">
+                                    <i class="fas fa-edit"></i>
+                                </a>
                                 
                                 <form action="<?= base_url('admin/artikel/delete/' . esc($row['id'])); ?>" method="post">
                                     <?= csrf_field(); ?>
                                     <button type="submit" class="btn btn-danger btn-sm w-100" onclick="return confirm('Apakah Anda yakin ingin menghapus artikel ini?');">
-                                        Hapus
+                                        <i class="fas fa-trash"></i>
                                     </button>
                                 </form>
                             </div>

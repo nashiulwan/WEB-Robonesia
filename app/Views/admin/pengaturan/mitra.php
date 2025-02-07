@@ -44,12 +44,12 @@
                             <td>
                                 <!-- Button Edit -->
                                 <a href="<?= base_url('pengaturan/mitra/edit/' . esc($row['id'])); ?>" class="btn btn-warning btn-sm w-100 mb-2">
-                                    <i class="fas fa-edit"></i> Edit
+                                    <i class="fas fa-edit"></i>
                                 </a>
 
                                 <!-- Button Hapus -->
                                 <a href="<?= base_url('admin/pengaturan/mitra/hapus/' . esc($row['id'])); ?>" class="btn btn-danger btn-sm w-100" onclick="return confirm('Yakin ingin menghapus partner ini?');">
-                                    <i class="fas fa-trash"></i> Hapus
+                                    <i class="fas fa-trash"></i>
                                 </a>
                             </td>
                         </tr>
