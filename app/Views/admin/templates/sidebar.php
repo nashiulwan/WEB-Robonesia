@@ -24,6 +24,20 @@
             </a>
         </li>
 
+        <!-- Nav Item - Manage_akun -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseManage_akun" aria-expanded="true" aria-controls="collapseArtikel">
+                <i class="fas fa-fw fa-user"></i>
+                <span>Kelola Akun</span>
+            </a>
+            <div id="collapseManage_akun" class="collapse" aria-labelledby="headingManage_akun" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="<?= base_url('admin/manage_akun'); ?>">Semua Artikel</a>
+                    <a class="collapse-item" href="<?= base_url('admin/manage_akun'); ?>">Tambahkan Akun</a>
+                </div>
+            </div>
+        </li>
+
         <!-- Nav Item - Artikel -->
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseArtikel" aria-expanded="true" aria-controls="collapseArtikel">
