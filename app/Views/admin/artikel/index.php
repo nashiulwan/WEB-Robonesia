@@ -16,7 +16,8 @@
     <?php endif; ?>
 
     <!-- TABEL ARTIKEL -->
-    <?php $no = 1; // Inisialisasi nomor ?>
+    <?php $no = 1; // Inisialisasi nomor 
+    ?>
     <table class="table table-bordered table-striped table-auto">
         <thead class="table-dark">
             <tr>
@@ -57,9 +58,9 @@
                         <td>
                             <div class="d-flex flex-column">
                                 <a href="<?= base_url('admin/artikel/edit/' . esc($row['id'])); ?>" class="btn btn-warning btn-sm w-100 mb-2">
-                                    <i class="fas fa-edit"></i>
+                                    <i class="fas fa-pen"></i>
                                 </a>
-                                
+
                                 <form action="<?= base_url('admin/artikel/delete/' . esc($row['id'])); ?>" method="post">
                                     <?= csrf_field(); ?>
                                     <button type="submit" class="btn btn-danger btn-sm w-100" onclick="return confirm('Apakah Anda yakin ingin menghapus artikel ini?');">

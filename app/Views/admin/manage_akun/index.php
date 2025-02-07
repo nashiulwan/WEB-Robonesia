@@ -24,9 +24,9 @@
                 <th style="width: 5%;">No</th>
                 <th style="width: 15%;">Nama pengguna</th>
                 <th style="width: 30%;">Email</th>
-                <th style="width: 31%;">Nama Lengkap</th>
+                <th style="width: 30%;">Nama Lengkap</th>
                 <th style="width: 10%;">Hak Akses</th>
-                <th style="width: 9%">Aksi</th>
+                <th style="width: 10%">Aksi</th>
             </tr>
         </thead>
         <tbody class="table-group-divider" style="color: black;">
@@ -50,15 +50,15 @@
                             <div class="d-flex flex-wrap gap-2" style="justify-content: space-between;">
                                 <a href="<?= base_url('admin/manage-akun/edit/' . esc($row['id'])); ?>"
                                     class="btn btn-warning btn-sm  d-flex align-items-center justify-content-center"
-                                    style="width: 30px; height: 30px; margin: 2px">
+                                    style="width: 32px; height: 32px; margin: 2px">
                                     <i class="fas fa-pen"></i> <!-- Ikon Hapus -->
                                 </a>
 
-                                <form action="<?= base_url('admin/artikel/delete/' . esc($row['id'])); ?>" method="post">
+                                <form action="<?= base_url('admin/manage_akun/delete/' . esc($row['id'])); ?>" method="post">
                                     <?= csrf_field(); ?>
                                     <button type="submit"
                                         class="btn btn-danger btn-sm  d-flex align-items-center justify-content-center"
-                                        style="width: 30px; height: 30px; margin: 2px"
+                                        style="width: 32px; height: 32px; margin: 2px"
                                         onclick="return confirm('Apakah Anda yakin ingin menghapus artikel ini?');">
                                         <i class="fas fa-trash-alt"></i> <!-- Ikon Hapus -->
                                     </button>
