@@ -84,11 +84,11 @@
             </a>
             <div id="collapsePengaturan" class="collapse" aria-labelledby="headingPengaturan" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="<?= base_url('admin/pengaturan/kontak') ?>"><i class="fas fa-address-book"></i> Kontak</a>
-                    <a class="collapse-item" href="<?= base_url('admin/pengaturan/galeri') ?>"><i class="fas fa-images"></i> Galeri</a>
-                    <a class="collapse-item" href="<?= base_url('admin/pengaturan/mitra') ?>"><i class="fas fa-handshake"></i> Mitra</a>
-                    <a class="collapse-item" href="<?= base_url('admin/pengaturan/tim') ?>"><i class="fas fa-users"></i> Tim</a>
-                    <a class="collapse-item" href="<?= base_url('admin/pengaturan/prestasi') ?>"><i class="fas fa-trophy"></i> Prestasi</a>
+                    <a class="collapse-item" href="<?= base_url('admin/pengaturan/kontak') ?>">Kontak</a>
+                    <a class="collapse-item" href="<?= base_url('admin/pengaturan/galeri') ?>">Galeri</a>
+                    <a class="collapse-item" href="<?= base_url('admin/pengaturan/mitra') ?>">Mitra</a>
+                    <a class="collapse-item" href="<?= base_url('admin/pengaturan/tim') ?>">Tim</a>
+                    <a class="collapse-item" href="<?= base_url('admin/pengaturan/prestasi') ?>">Prestasi</a>
                 </div>
             </div>
         </li>

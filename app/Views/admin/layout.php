@@ -20,6 +20,8 @@
 
   <link href="<?= base_url(); ?>/css/sb-admin-2.min.css" rel="stylesheet">
 
+  <!-- CK EDITOR BUAT CMS -->
+  <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/44.1.0/ckeditor5.css" />
 </head>
 
 <body id="page-top">
@@ -98,6 +100,7 @@
 
   <!-- Custom scripts for all pages-->
   <script src="<?= base_url(); ?>/js/sb-admin-2.min.js"></script>
+
 
 </body>
 
