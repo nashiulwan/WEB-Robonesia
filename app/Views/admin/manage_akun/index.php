@@ -1,6 +1,7 @@
 <?= $this->extend('admin/layout') ?>
 
 <?= $this->section('content') ?>
+<!-- Custom CSS untuk menghilangkan efek fokus pada button filter -->
 <style>
     .btn-filter-role:focus,
     .btn-filter-role:active {
@@ -8,6 +9,11 @@
         border: none !important;
         box-shadow: none !important;
         outline: none !important;
+    }
+
+    /* Hilangkan caret default pada dropdown button */
+    #filterRoleButton::after {
+        display: none;
     }
 </style>
 
@@ -25,6 +31,16 @@
         <div class="alert alert-danger"><?= esc(session()->getFlashdata('error')) ?></div>
     <?php endif; ?>
 
+    <!-- Form Pencarian -->
+    <div class="mb-3 d-flex align-items-center justify-content-between">
+        <div class="flex-grow-1 me-3" style="margin-right:1rem">
+            <input type="text" id="searchInput" class="form-control" placeholder="Cari akun berdasarkan username, nama, atau email">
+        </div>
+        <i class="fas fa-search text-muted" style="margin-right:1rem"></i>
+    </div>
+
+
+
     <!-- TABEL -->
     <?php $no = 1; ?>
     <table class="table table-bordered table-hover">
@@ -40,33 +56,36 @@
                     <div class="dropdown d-inline">
                         <button class="btn btn-sm btn-secondary dropdown-toggle btn-filter-role" type="button" id="filterRoleButton" data-bs-toggle="dropdown" aria-expanded="false" style="width: 30px; height:30px; color:black; background-color:transparent; border:none; margin:-5px">
                             <i class="fas fa-bars" style="font-size: 1em; margin-right: 0.5rem;"></i>
-
                         </button>
-                        <ul class="dropdown-menu" aria-labelledby="filterRoleButton"">
+                        <ul class="dropdown-menu" aria-labelledby="filterRoleButton">
                             <li>
-                                <a class=" dropdown-item filter-option" href="#" data-role="all">
-                            <i class="fas fa-bars" style="font-size: 1em; margin-right: 0.5rem;"></i>
-                            Semua
-                            </a>
+                                <a class="dropdown-item filter-option" href="#" data-role="all">
+                                    <i class="fas fa-bars" style="font-size: 1em; margin-right: 0.5rem;"></i>
+                                    Semua
+                                </a>
                             </li>
                             <li>
                                 <a class="dropdown-item filter-option" href="#" data-role="1">
-                                    <i class="fab fa-black-tie" style="font-size: 1em; margin-right: 0.5rem;"></i> Admin
+                                    <i class="fab fa-black-tie" style="font-size: 1em; margin-right: 0.5rem;"></i>
+                                    Admin
                                 </a>
                             </li>
                             <li>
                                 <a class="dropdown-item filter-option" href="#" data-role="3">
-                                    <i class=" fas fa-user-tie" style=" font-size: 1em; margin-right: 0.5rem;"></i> Guru
+                                    <i class="fas fa-user-tie" style="font-size: 1em; margin-right: 0.5rem;"></i>
+                                    Guru
                                 </a>
                             </li>
                             <li>
-                                <a class=" dropdown-item filter-option" href="#" data-role="2">
-                                    <i class="fas fa-user-graduate" style="font-size: 1em; margin-right: 0.5rem;"></i> Siswa
+                                <a class="dropdown-item filter-option" href="#" data-role="2">
+                                    <i class="fas fa-user-graduate" style="font-size: 1em; margin-right: 0.5rem;"></i>
+                                    Siswa
                                 </a>
                             </li>
                             <li>
                                 <a class="dropdown-item filter-option" href="#" data-role="0">
-                                    <i class="fas fa-question-circle" style="font-size: 1em; margin-right: 0.5rem;"></i> Lainnya
+                                    <i class="fas fa-question-circle" style="font-size: 1em; margin-right: 0.5rem;"></i>
+                                    Lainnya
                                 </a>
                             </li>
                         </ul>
@@ -94,7 +113,7 @@
                         </td>
                         <td>
                             <div class="d-flex flex-wrap gap-2" style="justify-content: space-between;">
-                                <a href="<?= base_url('admin/manage-akun/edit/' . esc($row['id'])); ?>" class="btn btn-warning btn-sm d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; margin: 2px; ">
+                                <a href="<?= base_url('admin/manage-akun/edit/' . esc($row['id'])); ?>" class="btn btn-warning btn-sm d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; margin: 2px;">
                                     <i class="fas fa-pen"></i>
                                 </a>
                                 <form action="<?= base_url('admin/manage_akun/delete/' . esc($row['id'])); ?>" method="post">
@@ -115,12 +134,6 @@
         </tbody>
     </table>
 </div>
-
-<style>
-    #filterRoleButton::after {
-        display: none;
-    }
-</style>
 
 <!-- Pastikan jQuery dan Bootstrap JS telah dimuat -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -173,6 +186,23 @@
                 }
             });
         });
+
+        // Fitur pencarian: filter baris tabel berdasarkan username, email, atau fullname
+        $("#searchInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("table tbody tr").each(function() {
+                var username = $(this).find("td:nth-child(2)").text().toLowerCase();
+                var email = $(this).find("td:nth-child(3)").text().toLowerCase();
+                var fullname = $(this).find("td:nth-child(4)").text().toLowerCase();
+
+                if (username.includes(value) || email.includes(value) || fullname.includes(value)) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
+
     });
 </script>
 
