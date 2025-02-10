@@ -22,6 +22,12 @@
         </div>
     <?php endif; ?>
 
+    <?php if (session()->getFlashdata('success')) : ?>
+        <div class="alert alert-success">
+            <?= session()->getFlashdata('success'); ?>
+        </div>
+    <?php endif; ?>
+
     <!-- Menampilkan pesan error umum -->
     <?php if (session()->getFlashdata('error')) : ?>
         <div class="alert alert-danger">
@@ -32,16 +38,6 @@
     <!-- Form Tambah Akun -->
     <form action="<?= base_url('admin/manage_akun/simpan') ?>" method="post" enctype="multipart/form-data" autocomplete="off">
         <?= csrf_field() ?>
-
-        <div class="form-group">
-            <label for="email">Alamat Email</label>
-            <input type="email" name="email" id="email" class="form-control <?= (session()->getFlashdata('errors') && array_key_exists('email', session()->getFlashdata('errors'))) ? 'is-invalid' : '' ?>" value="<?= old('email') ?>" placeholder="Masukkan alamat email" autocomplete="off">
-            <?php if (session()->getFlashdata('errors') && array_key_exists('email', session()->getFlashdata('errors'))) : ?>
-                <div class="invalid-feedback">
-                    <?= session()->getFlashdata('errors')['email'] ?>
-                </div>
-            <?php endif; ?>
-        </div>
 
         <div class="form-group">
             <label for="username">Nama Pengguna</label>
@@ -61,6 +57,26 @@
                     <?= session()->getFlashdata('errors')['fullname'] ?>
                 </div>
             <?php endif; ?>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Alamat Email</label>
+            <input type="email" name="email" id="email" class="form-control <?= (session()->getFlashdata('errors') && array_key_exists('email', session()->getFlashdata('errors'))) ? 'is-invalid' : '' ?>" value="<?= old('email') ?>" placeholder="Masukkan alamat email" autocomplete="off">
+            <?php if (session()->getFlashdata('errors') && array_key_exists('email', session()->getFlashdata('errors'))) : ?>
+                <div class="invalid-feedback">
+                    <?= session()->getFlashdata('errors')['email'] ?>
+                </div>
+            <?php endif; ?>
+        </div>
+        <div class="form-group">
+            <label for="role">Hak Akses</label>
+            <select class="custom-select" name="role" required>
+                <option value="" disabled selected>Pilih Role</option>
+                <option value="1">Admin</option>
+                <option value="3">Guru</option>
+                <option value="2">Siswa</option>
+                <option value="0">-</option>
+            </select>
         </div>
 
         <div class="mb-3">
@@ -96,6 +112,5 @@
         <button type="submit" class="btn btn-primary">Tambah Akun</button>
     </form>
 </div>
-
 
 <?= $this->endSection() ?>

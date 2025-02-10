@@ -3,8 +3,9 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-// use App\Models\KategoriModel; 
 use App\Models\Manage_akunModel;
+use Myth\Auth\Models\UserModel;
+use Myth\Auth\Password;
 
 class Manage_akunController extends BaseController
 {
@@ -67,78 +68,217 @@ class Manage_akunController extends BaseController
             return redirect()->to('/login');
         }
 
+        $users = model(UserModel::class);
+        $userModel = new UserModel();
         $manage_akunModel = new Manage_akunModel();
 
-        // Validation rules
-        $validationRules = [
-            'email' => [
-                'rules' => 'valid_email|is_unique[users.email]',
-                'errors' => [
-                    'valid_email' => 'Format email tidak valid.',
-                    'is_unique' => 'Email sudah digunakan.'
-                ]
-            ],
-            'username' => [
-                'rules' => 'required|is_unique[users.username]',
-                'errors' => [
-                    'required' => 'Nama pengguna wajib diisi.',
-                    'is_unique' => 'Nama pengguna sudah digunakan.'
-                ]
-            ],
-            'password' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Kata sandi wajib diisi.',
-                ]
-            ],
-            'confirm_password' => [
-                'rules' => 'matches[password]',
-                'errors' => [
-                    'matches' => 'Konfirmasi kata sandi tidak sesuai.'
-                ]
-            ],
-            'user_image' => [
-                'rules' => 'uploaded[user_image]|max_size[user_image,5000]|is_image[user_image]|mime_in[user_image,image/jpg,image/jpeg,image/png]',
-                'errors' => [
-                    'uploaded' => 'Foto profil harus diunggah.',
-                    'max_size' => 'Ukuran gambar maksimal 5MB.',
-                    'is_image' => 'File harus berupa gambar.',
-                    'mime_in' => 'Format gambar harus JPG, JPEG, atau PNG.'
-                ]
-            ]
+        $role = $this->request->getPost('role');
+        $username = $this->request->getPost('username');
+        $email = $this->request->getPost('email');
+
+        // Jika email kosong, buat email dari username
+        if (empty($email)) {
+            $email = strtolower($username) . '@gmail.com';
+
+            // Cek apakah email sudah ada di database
+            while ($users->where('email', $email)->countAllResults() > 0) {
+                // Jika email sudah ada, tambahkan angka acak agar unik
+                $email = strtolower($username) . rand(100, 999) . '@gmail.com';
+            }
+        }
+
+        $rules = [
+            'username' => 'required|alpha_numeric_space|min_length[3]|max_length[30]|is_unique[users.username]',
+            'password' => 'required',
+            'confirm_password' => 'required|matches[password]',
         ];
 
-        if (!$this->validate($validationRules)) {
+        if (!$this->validate($rules)) {
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
 
-
+        // Cek apakah ada file gambar yang diunggah
         $file = $this->request->getFile('user_image');
-        if ($file->isValid() && !$file->hasMoved()) {
+        $fileName = 'default.png'; // Nama default jika tidak ada gambar diunggah
+
+        if ($file && $file->isValid() && !$file->hasMoved()) {
             $fileName = $file->getRandomName();
             $file->move(FCPATH . 'uploads/', $fileName);
-        } else {
-            return redirect()->back()->withInput()->with('error', 'Gagal mengunggah gambar.');
         }
 
+        // Hash password sebelum disimpan
+        $hashedPassword = Password::hash($this->request->getPost('password'));
+
+        // Buat data user
         $data = [
-            'email' => $this->request->getPost('email'),
-            'username' => $this->request->getPost('username'),
-            'fullname' => $this->request->getPost('fullname'),
-            'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
+            'username'   => $username,
+            'email'      => $email,
+            'password_hash'   => $hashedPassword,
+            'fullname'   => $this->request->getPost('fullname'),
             'user_image' => $fileName,
+            'active'     => 1,
             'created_at' => date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s')
+            'updated_at' => date('Y-m-d H:i:s'),
         ];
 
 
+        // Simpan user baru ke database
+        if ($userModel->insert($data)) {
+            $userId = $userModel->getInsertID(); // Ambil ID user yang baru dibuat
 
-        if ($manage_akunModel->insert($data)) {
-            return redirect()->to('/admin/manage_akun/tambah')->with('success', 'Akun berhasil ditambahkan!');
+            // Ambil role yang dipilih dari form
+            $role = $this->request->getPost('role');
+
+            // Jika role valid (misal: 1 = Admin, 2 = Moderator, 3 = User)
+            if (in_array($role, [1, 2, 3])) {
+                $groupModel = new Manage_akunModel();
+                $groupModel->updateUserRole($userId, $role);
+            }
+
+            return redirect()->to('/admin/manage_akun')->with('success', 'Akun berhasil ditambahkan dan role diberikan.');
         } else {
-            return redirect()->back()->withInput()->with('error', 'Gagal menyimpan akun, silakan coba lagi.');
+            return redirect()->back()->with('error', 'Gagal menambahkan akun.');
         }
+
+        return redirect()->to('/admin/manage_akun')->with('success', 'Akun berhasil ditambahkan.');
     }
+
+    // public function simpan()
+    // {
+    //     if (!logged_in()) {
+    //         return redirect()->to('/login');
+    //     }
+
+    //     $manage_akunModel = new Manage_akunModel();
+    //     $users = model(UserModel::class);
+    //     $role = $this->request->getPost('role');
+
+    //     $rules = [
+    //         'username' => 'required|alpha_numeric_space|min_length[3]|max_length[30]|is_unique[users.username]',
+    //         'email'    => 'required|valid_email|is_unique[users.email]',
+    //         'password' => 'required',
+    //         'confirm_password' => 'required|matches[password]',
+    //     ];
+
+    //     if (!$this->validate($rules)) {
+    //         return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+    //     }
+
+    //     // Cek apakah ada file gambar yang diunggah
+    //     $file = $this->request->getFile('user_image');
+    //     $fileName = 'default.png'; // Nama default jika tidak ada gambar diunggah
+
+    //     if ($file && $file->isValid() && !$file->hasMoved()) {
+    //         $fileName = $file->getRandomName();
+    //         $file->move(FCPATH . 'uploads/', $fileName);
+    //     }
+
+    //     // Hash password sebelum disimpan
+    //     $hashedPassword = Password::hash($this->request->getPost('password'));
+
+    //     // Buat data user
+    //     $data = [
+    //         'username'   => $this->request->getPost('username'),
+    //         'email'      => $this->request->getPost('email'),
+    //         'password_hash'   => $hashedPassword,
+    //         'fullname'   => $this->request->getPost('fullname'),
+    //         'user_image' => $fileName,
+    //         'active'     => 1,
+    //         'created_at' => date('Y-m-d H:i:s'),
+    //         'updated_at' => date('Y-m-d H:i:s'),
+    //     ];
+
+
+    //     $userId = $manage_akunModel->insert($data); // Simpan data
+
+    //     if ($userId) {
+    //         // Update role sesuai pilihan
+    //         if (in_array($role, ['1', '2', '3'])) {
+    //             $manage_akunModel->updateUserRole($userId, $role);
+    //         }
+
+    //         session()->setFlashdata('success', 'Akun berhasil ditambahkan');
+    //         return redirect()->to(base_url('admin/manage_akun'));
+    //     } else {
+    //         session()->setFlashdata('error', 'Gagal menambahkan akun');
+    //         return redirect()->back()->withInput();
+    //     }
+    //     if (!$users->insert($data)) {
+    //         return redirect()->back()->withInput()->with('errors', $users->errors());
+    //     }
+
+    //     return redirect()->to('/admin/manage_akun/tambah')->with('success', 'Akun berhasil ditambahkan!');
+    // }
+
+    // public function simpan()
+    // {
+    //     if (!logged_in()) {
+    //         return redirect()->to('/login');
+    //     }
+
+    //     $users = model(UserModel::class);
+    //     $manage_akunModel = new Manage_akunModel();
+
+    //     $role = $this->request->getPost('role');
+    //     $email = $this->request->getPost('email');
+
+    //     $rules = [
+    //         'username' => 'required|alpha_numeric_space|min_length[3]|max_length[30]|is_unique[users.username]',
+    //         'email'    => 'valid_email|is_unique[users.email]',
+    //         'password' => 'required',
+    //         'confirm_password' => 'required|matches[password]',
+    //     ];
+
+    //     if (!$this->validate($rules)) {
+    //         return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+    //     }
+
+    //     // Jika email kosong, buat email otomatis dengan format <username>@gmail.com
+    //     if (empty($email)) {
+    //         $email = strtolower($username) . '@gmail.com'; // email dibuat otomatis
+    //     }
+
+
+    //     // Cek apakah ada file gambar yang diunggah
+    //     $file = $this->request->getFile('user_image');
+    //     $fileName = 'default.png'; // Nama default jika tidak ada gambar diunggah
+
+    //     if ($file && $file->isValid() && !$file->hasMoved()) {
+    //         $fileName = $file->getRandomName();
+    //         $file->move(FCPATH . 'uploads/', $fileName);
+    //     }
+
+    //     // Hash password sebelum disimpan
+    //     $hashedPassword = Password::hash($this->request->getPost('password'));
+
+    //     // Buat data user
+    //     $data = [
+    //         'username'   => $this->request->getPost('username'),
+    //         'email'      => $this->request->getPost('email'),
+    //         'password_hash'   => $hashedPassword,
+    //         'fullname'   => $this->request->getPost('fullname'),
+    //         'user_image' => $fileName,
+    //         'active'     => 1,
+    //         'created_at' => date('Y-m-d H:i:s'),
+    //         'updated_at' => date('Y-m-d H:i:s'),
+    //     ];
+
+    //     // Simpan user baru ke dalam database
+    //     $userId = $users->insert($data);
+
+    //     if ($userId) {
+    //         // Tambahkan role seperti di updateRole()
+    //         if (in_array($role, ['1', '2', '3'])) {
+    //             $manage_akunModel->updateUserRole($userId, $role);
+    //         }
+
+    //         session()->setFlashdata('success', 'Akun berhasil ditambahkan');
+    //         return redirect()->to(base_url('admin/manage_akun'));
+    //     } else {
+    //         session()->setFlashdata('error', 'Gagal menambahkan akun');
+    //         return redirect()->back()->withInput();
+    //     }
+    // }
 
 
     // public function edit($id)

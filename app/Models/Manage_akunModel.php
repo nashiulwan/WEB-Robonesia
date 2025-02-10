@@ -8,7 +8,7 @@ class Manage_akunModel extends Model
 {
     protected $table = 'users';
     protected $primaryKey = 'id';
-    protected $allowedFields = ['email', 'username', 'fullname', 'password', 'user_image', 'created_at', 'updated_at'];
+    protected $allowedFields = ['email', 'username', 'fullname', 'password_hash', 'user_image', 'created_at', 'updated_at', 'active'];
 
     public function getAllUsersWithRoles()
     {
