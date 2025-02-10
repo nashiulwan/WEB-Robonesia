@@ -62,13 +62,100 @@ class Manage_akunController extends BaseController
         return view('admin/manage_akun/tambah', $data);
     }
 
+    // public function simpan()
+    // {
+    //     if (!logged_in()) {
+    //         return redirect()->to('/login');
+    //     }
+
+    //     $userModel = new UserModel();
+    //     $manage_akunModel = new Manage_akunModel();
+
+    //     $role = $this->request->getPost('role');
+    //     $username = $this->request->getPost('username');
+    //     $email = $this->request->getPost('email');
+    //     $fullname = $this->request->getPost('fullname');
+
+    //     // Jika email kosong, buat email dari username
+    //     if (empty($email)) {
+    //         $email = strtolower($username) . '@gmail.com';
+
+    //         // Cek apakah email sudah ada di database
+    //         while ($userModel->where('email', $email)->countAllResults() > 0) {
+    //             // Jika email sudah ada, tambahkan angka acak agar unik
+    //             $email = strtolower($username) . rand(100, 999) . '@gmail.com';
+    //         }
+    //     }
+
+    //     $rules = [
+    //         'username' => 'required|alpha_numeric_space|min_length[3]|max_length[30]|is_unique[users.username]',
+    //         'password' => 'required',
+    //         'confirm_password' => 'required|matches[password]',
+    //     ];
+
+    //     if (!$this->validate($rules)) {
+    //         return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+    //     }
+
+    //     // Tentukan gambar default
+    //     $fileName = 'profil_devault.svg';
+
+    //     // Proses file gambar jika ada yang diunggah
+    //     $file = $this->request->getFile('user_image');
+    //     if ($file->isValid() && !$file->hasMoved()) {
+    //         // Validasi jenis file (hanya menerima JPG, PNG, SVG)
+    //         $allowedTypes = ['image/jpeg', 'image/png', 'image/svg+xml'];
+    //         if (!in_array($file->getMimeType(), $allowedTypes)) {
+    //             return redirect()->back()->withInput()->with('error', 'Format file tidak diizinkan. Hanya JPG, PNG, dan SVG yang diperbolehkan.');
+    //         }
+
+    //         // Validasi ukuran file (maksimal 2MB)
+    //         if ($file->getSize() > 2 * 1024 * 1024) {
+    //             return redirect()->back()->withInput()->with('error', 'Ukuran file terlalu besar. Maksimum 2MB.');
+    //         }
+
+    //         // Generate nama file acak dan simpan
+    //         $fileName = $file->getRandomName();
+    //         $file->move(FCPATH . 'uploads/', $fileName);
+    //     }
+
+    //     // Hash password sebelum disimpan
+    //     $hashedPassword = Password::hash($this->request->getPost('password'));
+
+    //     // Buat data user
+    //     $data = [
+    //         'username'       => $username,
+    //         'email'          => $email,
+    //         'password_hash'  => $hashedPassword,
+    //         'fullname'       => $fullname,
+    //         'user_image'     => $fileName,
+    //         'active'         => 1,
+    //         'created_at'     => date('Y-m-d H:i:s'),
+    //         'updated_at'     => date('Y-m-d H:i:s'),
+    //     ];
+
+    //     // Simpan user baru ke database
+    //     if ($userModel->insert($data)) {
+    //         $userId = $userModel->getInsertID(); // Ambil ID user yang baru dibuat
+
+    //         // Jika role valid (misal: 1 = Admin, 2 = Moderator, 3 = User)
+    //         if (in_array($role, [1, 2, 3])) {
+    //             // Update role untuk user
+    //             $manage_akunModel->updateUserRole($userId, $role);
+    //         }
+
+    //         return redirect()->to('/admin/manage_akun')->with('success', 'Akun berhasil ditambahkan dan role diberikan.');
+    //     } else {
+    //         return redirect()->back()->with('error', 'Gagal menambahkan akun.');
+    //     }
+    // }
+
     public function simpan()
     {
         if (!logged_in()) {
             return redirect()->to('/login');
         }
 
-        $userModel = new UserModel();
         $manage_akunModel = new Manage_akunModel();
 
         $role = $this->request->getPost('role');
@@ -79,19 +166,18 @@ class Manage_akunController extends BaseController
         // Jika email kosong, buat email dari username
         if (empty($email)) {
             $email = strtolower($username) . '@gmail.com';
-
-            // Cek apakah email sudah ada di database
-            while ($userModel->where('email', $email)->countAllResults() > 0) {
-                // Jika email sudah ada, tambahkan angka acak agar unik
+            while ($manage_akunModel->where('email', $email)->countAllResults() > 0) {
                 $email = strtolower($username) . rand(100, 999) . '@gmail.com';
             }
         }
 
+        if (empty($fullname)) {
+            $fullname = $username;
+        }
         $rules = [
             'username' => 'required|alpha_numeric_space|min_length[3]|max_length[30]|is_unique[users.username]',
             'password' => 'required',
             'confirm_password' => 'required|matches[password]',
-            'fullname' => 'required'
         ];
 
         if (!$this->validate($rules)) {
@@ -100,27 +186,19 @@ class Manage_akunController extends BaseController
 
         // Tentukan gambar default
         $fileName = 'profil_devault.svg';
-
-        // Proses file gambar jika ada yang diunggah
         $file = $this->request->getFile('user_image');
         if ($file->isValid() && !$file->hasMoved()) {
-            // Validasi jenis file (hanya menerima JPG, PNG, SVG)
             $allowedTypes = ['image/jpeg', 'image/png', 'image/svg+xml'];
             if (!in_array($file->getMimeType(), $allowedTypes)) {
                 return redirect()->back()->withInput()->with('error', 'Format file tidak diizinkan. Hanya JPG, PNG, dan SVG yang diperbolehkan.');
             }
-
-            // Validasi ukuran file (maksimal 2MB)
             if ($file->getSize() > 2 * 1024 * 1024) {
                 return redirect()->back()->withInput()->with('error', 'Ukuran file terlalu besar. Maksimum 2MB.');
             }
-
-            // Generate nama file acak dan simpan
             $fileName = $file->getRandomName();
             $file->move(FCPATH . 'uploads/', $fileName);
         }
 
-        // Hash password sebelum disimpan
         $hashedPassword = Password::hash($this->request->getPost('password'));
 
         // Buat data user
@@ -133,24 +211,16 @@ class Manage_akunController extends BaseController
             'active'         => 1,
             'created_at'     => date('Y-m-d H:i:s'),
             'updated_at'     => date('Y-m-d H:i:s'),
+            'role'           => in_array($role, [1, 2, 3]) ? $role : 3, // Default ke User jika role tidak valid
         ];
 
         // Simpan user baru ke database
-        if ($userModel->insert($data)) {
-            $userId = $userModel->getInsertID(); // Ambil ID user yang baru dibuat
-
-            // Jika role valid (misal: 1 = Admin, 2 = Moderator, 3 = User)
-            if (in_array($role, [1, 2, 3])) {
-                // Update role untuk user
-                $manage_akunModel->updateUserRole($userId, $role);
-            }
-
+        if ($manage_akunModel->insert($data)) {
             return redirect()->to('/admin/manage_akun')->with('success', 'Akun berhasil ditambahkan dan role diberikan.');
         } else {
             return redirect()->back()->with('error', 'Gagal menambahkan akun.');
         }
     }
-
 
 
     public function edit($id)
