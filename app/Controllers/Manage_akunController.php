@@ -91,7 +91,7 @@ class Manage_akunController extends BaseController
             'username' => 'required|alpha_numeric_space|min_length[3]|max_length[30]|is_unique[users.username]',
             'password' => 'required',
             'confirm_password' => 'required|matches[password]',
-            'fullname' => 'required',
+            'fullname' => 'required'
         ];
 
         if (!$this->validate($rules)) {
