@@ -113,7 +113,7 @@
                         </td>
                         <td>
                             <div class="d-flex flex-wrap gap-2" style="justify-content: space-between;">
-                                <a href="<?= base_url('admin/manage-akun/edit/' . esc($row['id'])); ?>" class="btn btn-warning btn-sm d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; margin: 2px;">
+                                <a href="<?= base_url('admin/manage_akun/edit/' . esc($row['id'])); ?>" class="btn btn-warning btn-sm d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; margin: 2px;">
                                     <i class="fas fa-pen"></i>
                                 </a>
                                 <form action="<?= base_url('admin/manage_akun/delete/' . esc($row['id'])); ?>" method="post">

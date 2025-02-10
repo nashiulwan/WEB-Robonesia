@@ -63,7 +63,7 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
     $routes->post('manage_akun/updateRole', 'Manage_akunController::updateRole', ['filter' => 'role:admin']);
     $routes->get('manage_akun/tambah', 'Manage_akunController::tambah', ['filter' => 'role:admin']);
     $routes->post('manage_akun/simpan', 'Manage_akunController::simpan', ['filter' => 'role:admin']);
-    // $routes->get('artikel/edit/(:num)', 'ArtikelController::edit/$1', ['filter' => 'role:admin']);
+    $routes->get('manage_akun/edit/(:num)', 'Manage_akunController::edit/$1', ['filter' => 'role:admin']);
     // $routes->post('artikel/update/(:num)', 'ArtikelController::update/$1', ['filter' => 'role:admin']);
     $routes->post('manage_akun/delete/(:num)', 'Manage_akunController::delete/$1', ['filter' => 'role:admin']);
 
