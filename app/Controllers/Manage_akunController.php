@@ -96,14 +96,27 @@ class Manage_akunController extends BaseController
         if (!$this->validate($rules)) {
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
-
-        // Cek apakah ada file gambar yang diunggah
         $file = $this->request->getFile('user_image');
-        $fileName = 'default.png'; // Nama default jika tidak ada gambar diunggah
+        $fileName = 'profil_devault.svg';
 
-        if ($file && $file->isValid() && !$file->hasMoved()) {
+        if ($file->isValid() && !$file->hasMoved()) {
+            // Validasi jenis file (hanya menerima JPG, PNG, SVG)
+            $allowedTypes = ['image/jpeg', 'image/png', 'image/svg+xml'];
+            if (!in_array($file->getMimeType(), $allowedTypes)) {
+                return redirect()->back()->withInput()->with('error', 'Format file tidak diizinkan. Hanya JPG, PNG, dan SVG yang diperbolehkan.');
+            }
+
+            // Validasi ukuran file (maksimal 2MB)
+            if ($file->getSize() > 2 * 1024 * 1024) {
+                return redirect()->back()->withInput()->with('error', 'Ukuran file terlalu besar. Maksimum 2MB.');
+            }
+
+            // Generate nama file acak dan simpan
             $fileName = $file->getRandomName();
             $file->move(FCPATH . 'uploads/', $fileName);
+            $data['gambar'] = $fileName;
+        } else {
+            return redirect()->back()->withInput()->with('error', 'Gagal mengunggah gambar.');
         }
 
         // Hash password sebelum disimpan
