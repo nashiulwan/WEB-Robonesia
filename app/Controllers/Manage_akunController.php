@@ -399,27 +399,33 @@ class Manage_akunController extends BaseController
     //     }
     // }
 
-    // public function delete($id)
-    // {
-    //     if (!logged_in()) {
-    //         return redirect()->to('/login');
-    //     }
+    public function delete($id)
+    {
+        if (!logged_in()) {
+            return redirect()->to('/login');
+        }
 
-    //     $artikelModel = new ArtikelModel();
-    //     $artikel = $artikelModel->find($id);
+        $manageModel = new Manage_akunModel();
+        $users = $manageModel->find($id);
 
-    //     if (empty($artikel)) {
-    //         return redirect()->to('/admin/artikel')->with('error', 'Artikel tidak ditemukan.');
-    //     }
+        if (empty($users)) {
+            return redirect()->to('/admin/manage_akun')->with('error', 'Akun tidak ditemukan.');
+        }
 
-    //     // Hapus gambar jika ada
-    //     if (!empty($artikel['gambar']) && file_exists(FCPATH . 'uploads/' . $artikel['gambar'])) {
-    //         unlink(FCPATH . 'uploads/' . $artikel['gambar']);
-    //     }
+        $username = $users['username'];
 
-    //     // Hapus artikel
-    //     $artikelModel->delete($id);
+        if (
+            !empty($users['gambar']) &&
+            $users['gambar'] !== 'profil_devault.svg' &&
+            file_exists(FCPATH . 'uploads/' . $users['gambar'])
+        ) {
 
-    //     return redirect()->to('/admin/artikel')->with('success', 'Artikel berhasil dihapus!');
-    // }
+            unlink(FCPATH . 'uploads/' . $users['gambar']);
+        }
+
+        // Hapus 
+        $manageModel->delete($id);
+
+        return redirect()->to('/admin/manage_akun')->with('success', "Akun $username berhasil dihapus!");
+    }
 }

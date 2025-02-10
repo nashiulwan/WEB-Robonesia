@@ -19,7 +19,7 @@ class ArtikelController extends BaseController
 
         if (!logged_in()) {
             return redirect()->to('/login');
-        }   
+        }
 
         $artikelModel = new ArtikelModel();
         $data = [
@@ -117,7 +117,6 @@ class ArtikelController extends BaseController
         } else {
             return redirect()->back()->withInput()->with('error', 'Gagal menyimpan artikel, silakan coba lagi.');
         }
-
     }
 
     public function edit($id)
@@ -230,24 +229,22 @@ class ArtikelController extends BaseController
         if (!logged_in()) {
             return redirect()->to('/login');
         }
-    
+
         $artikelModel = new ArtikelModel();
         $artikel = $artikelModel->find($id);
-    
+
         if (empty($artikel)) {
             return redirect()->to('/admin/artikel')->with('error', 'Artikel tidak ditemukan.');
         }
-    
+
         // Hapus gambar jika ada
         if (!empty($artikel['gambar']) && file_exists(FCPATH . 'uploads/' . $artikel['gambar'])) {
             unlink(FCPATH . 'uploads/' . $artikel['gambar']);
         }
-    
+
         // Hapus artikel
         $artikelModel->delete($id);
-    
+
         return redirect()->to('/admin/artikel')->with('success', 'Artikel berhasil dihapus!');
     }
-    
-
 }
