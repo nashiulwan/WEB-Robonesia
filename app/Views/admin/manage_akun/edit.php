@@ -1,11 +1,19 @@
 <?= $this->extend('admin/layout') ?>
 
 <?= $this->section('content') ?>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+
 <style>
     .custom_file::-webkit-file-upload-button {
         margin-top: -10px;
         margin-left: -5px;
     }
+
+    .image-preview-cut-save {
+        width: 50vw;
+        max-height: 50vw;
+    }
+
 
     .user-image-now {
         margin-right: 1rem;
@@ -24,6 +32,12 @@
 
         .profile-container img {
             margin-bottom: 5px;
+        }
+
+
+        .image-preview-cut-save {
+            max-height: 50vw;
+            width: 70vw;
         }
 
         .user-image-now {
@@ -102,7 +116,14 @@
                     <small class="text-muted"><span class="text-danger">*</span> Pilih foto baru jika ingin mengganti foto profil saat ini. Jika tidak, biarkan kosong.</small>
                 </div>
 
-
+                <!-- Tempat Preview dan Crop -->
+                <div id="image-preview-container" class="image-preview-cut-save-group" style="display: none;">
+                    <img id="image-preview" class="image-preview-cut-save">
+                    <div id="crop-buttons-container" style="display: flex; gap: 1rem; margin-top: 1rem;">
+                        <button type="button" id="crop-button" class="btn btn-primary">Pangkas & Simpan</button>
+                        <button type="button" id="cancel-crop-button" class="btn btn-warning">Batal Pangkas</button>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -150,6 +171,8 @@
             <input type="password" name="confirm_password" id="confirm_password" class="form-control" placeholder="Masukkan kembali kata sandi baru" autocomplete="new-password">
         </div>
         <button type="submit" class="btn btn-primary">Update Akun</button>
+        <a href="<?= base_url('admin/manage_akun') ?>" class="btn btn-warning" style="margin-left:10px; width:7rem">Kembali</a>
+
     </form>
 </div>
 
@@ -178,7 +201,84 @@
             fileNameInput.value = "Pilih file gambar";
         }
     });
+
+    let cropper;
+    let previousImageSrc = document.querySelector(".user-image-now img").src;
+
+    document.getElementById("user_image").addEventListener("change", function(event) {
+        let file = event.target.files[0];
+
+        if (file) {
+            let reader = new FileReader();
+            reader.onload = function(e) {
+                let imagePreview = document.getElementById("image-preview");
+                imagePreview.src = e.target.result;
+                document.getElementById("image-preview-container").style.display = "block";
+
+                // Hapus cropper sebelumnya jika ada
+                if (cropper) {
+                    cropper.destroy();
+                }
+
+                // Simpan gambar sebelumnya sebelum diubah
+                previousImageSrc = document.querySelector(".user-image-now img").src;
+
+                // Inisialisasi Cropper.js dengan rasio 1:1
+                cropper = new Cropper(imagePreview, {
+                    aspectRatio: 1,
+                    viewMode: 2,
+                    autoCropArea: 1,
+                });
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    document.getElementById("crop-button").addEventListener("click", function() {
+        let canvas = cropper.getCroppedCanvas();
+
+        if (canvas) {
+            canvas.toBlob((blob) => {
+                let fileInput = document.getElementById("user_image");
+                let fileName = fileInput.files[0].name;
+                let croppedFile = new File([blob], fileName, {
+                    type: "image/jpeg"
+                });
+
+                // Buat objek FileList baru (agar bisa dikirim ke form)
+                let dataTransfer = new DataTransfer();
+                dataTransfer.items.add(croppedFile);
+                fileInput.files = dataTransfer.files;
+
+                // Perbarui tampilan gambar profil sebelumnya dengan hasil crop
+                let profileImage = document.querySelector(".user-image-now img");
+                profileImage.src = URL.createObjectURL(blob);
+
+                // Sembunyikan preview setelah crop selesai
+                document.getElementById("image-preview-container").style.display = "none";
+            }, "image/jpeg");
+        }
+    });
+
+    // Event listener untuk tombol "Batal Pangkas"
+    document.getElementById("cancel-crop-button").addEventListener("click", function() {
+        document.getElementById("image-preview-container").style.display = "none";
+
+        // Kembalikan gambar sebelumnya
+        let profileImage = document.querySelector(".user-image-now img");
+        profileImage.src = previousImageSrc;
+
+        // Hapus file yang baru dipilih dari input file
+        document.getElementById("user_image").value = "";
+
+        // Hapus instance cropper jika ada
+        if (cropper) {
+            cropper.destroy();
+            cropper = null;
+        }
+    });
 </script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
 
 <?= $this->endSection() ?>
