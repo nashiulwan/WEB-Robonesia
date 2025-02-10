@@ -11,7 +11,7 @@
 
     .image-preview-cut-save {
         width: 50vw;
-        max-height: 50vw;
+        max-height: 30vw;
     }
 
 
