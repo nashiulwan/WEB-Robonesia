@@ -33,7 +33,7 @@ if ($hour >= 5 && $hour < 12) {
 
       <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <span class="mr-2 d-none d-lg-inline text-gray-800 " style="font-size:16px; margin-bottom:-2px"><?= user()->fullname; ?></span>
-        <img class="img-profile rounded-circle" style="width:45px; height:45px; margin-top:-10px;  margin-bottom:-10px; margin-left:5px"" src="<?= base_url(); ?>/uploads/<?= user()->user_image; ?>">
+        <img class="img-profile rounded-circle" style="width:40px; height:40px; margin-top:-10px;  margin-bottom:-10px; margin-left:5px"" src="<?= base_url(); ?>/uploads/<?= user()->user_image; ?>">
       </a>
       <!-- Dropdown - User Information -->
       <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
