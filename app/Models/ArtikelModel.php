@@ -14,4 +14,5 @@ class ArtikelModel extends Model
     {
         return $this->where('status', 'publish')->orderBy('created_at', 'DESC')->findAll();
     }
+
 }

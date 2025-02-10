@@ -6,9 +6,9 @@ use CodeIgniter\Model;
 
 class Manage_akunModel extends Model
 {
-    protected $table = 'users';  // Tabel utama
+    protected $table = 'users';
     protected $primaryKey = 'id';
-    protected $allowedFields = ['username', 'email', 'fullname'];
+    protected $allowedFields = ['email', 'username', 'fullname', 'password', 'user_image', 'created_at', 'updated_at'];
 
     public function getAllUsersWithRoles()
     {
@@ -42,5 +42,10 @@ class Manage_akunModel extends Model
             return $this->db->table('auth_groups_users')
                 ->insert(['user_id' => $userId, 'group_id' => $newRole]);
         }
+    }
+
+    public function simpan($data)
+    {
+        return $this->insert($data);
     }
 }

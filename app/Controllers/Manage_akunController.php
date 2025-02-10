@@ -46,98 +46,100 @@ class Manage_akunController extends BaseController
                 return $this->response->setJSON(['status' => 'error', 'message' => 'Gagal memperbarui role']);
             }
         }
-    
     }
 
+    public function tambah()
+    {
+        if (!logged_in()) {
+            return redirect()->to('/login');
+        }
 
-    // public function tambah()
-    // {
-    //     if (!logged_in()) {
-    //         return redirect()->to('/login');
-    //     }
+        $data = [
+            'title' => 'Tambah Akun',
+        ];
 
-    //     $kategoriList = ['Berita', 'Kompetisi', 'Event', 'Belajar', 'Lainnya'];
+        return view('admin/manage_akun/tambah', $data);
+    }
 
-    //     $data = [
-    //         'title' => 'Tambah Artikel',
-    //         'kategoriList' => $kategoriList,
-    //     ];
+    public function simpan()
+    {
+        if (!logged_in()) {
+            return redirect()->to('/login');
+        }
 
-    //     return view('admin/artikel/tambah', $data); // Kirim data ke view
-    // }
+        $manage_akunModel = new Manage_akunModel();
 
-    // public function simpan()
-    // {
-    //     if (!logged_in()) {
-    //         return redirect()->to('/login');
-    //     }
+        // Validation rules
+        $validationRules = [
+            'email' => [
+                'rules' => 'valid_email|is_unique[users.email]',
+                'errors' => [
+                    'valid_email' => 'Format email tidak valid.',
+                    'is_unique' => 'Email sudah digunakan.'
+                ]
+            ],
+            'username' => [
+                'rules' => 'required|is_unique[users.username]',
+                'errors' => [
+                    'required' => 'Nama pengguna wajib diisi.',
+                    'is_unique' => 'Nama pengguna sudah digunakan.'
+                ]
+            ],
+            'password' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Kata sandi wajib diisi.',
+                ]
+            ],
+            'confirm_password' => [
+                'rules' => 'matches[password]',
+                'errors' => [
+                    'matches' => 'Konfirmasi kata sandi tidak sesuai.'
+                ]
+            ],
+            'user_image' => [
+                'rules' => 'uploaded[user_image]|max_size[user_image,5000]|is_image[user_image]|mime_in[user_image,image/jpg,image/jpeg,image/png]',
+                'errors' => [
+                    'uploaded' => 'Foto profil harus diunggah.',
+                    'max_size' => 'Ukuran gambar maksimal 5MB.',
+                    'is_image' => 'File harus berupa gambar.',
+                    'mime_in' => 'Format gambar harus JPG, JPEG, atau PNG.'
+                ]
+            ]
+        ];
 
-    //     $artikelModel = new ArtikelModel();
+        if (!$this->validate($validationRules)) {
+            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        }
 
-    //     $validationRules = [
-    //         'judul' => [
-    //             'rules' => 'required',
-    //             'errors' => [
-    //                 'required' => 'Judul artikel wajib diisi.'
-    //             ]
-    //         ],
-    //         'kategori' => [
-    //             'rules' => 'required|in_list[Berita,Kompetisi,Event,Belajar,Lainnya]',
-    //             'errors' => [
-    //                 'required' => 'Kategori harus dipilih.',
-    //                 'in_list' => 'Kategori yang dipilih tidak valid.'
-    //             ]
-    //         ],
-    //         'konten' => [
-    //             'rules' => 'required',
-    //             'errors' => [
-    //                 'required' => 'Konten artikel tidak boleh kosong.'
-    //             ]
-    //         ],
-    //         'gambar' => [
-    //             'rules' => 'uploaded[gambar]|max_size[gambar,5000]|is_image[gambar]|mime_in[gambar,image/jpg,image/jpeg,image/png]',
-    //             'errors' => [
-    //                 'uploaded' => 'Gambar harus diunggah.',
-    //                 'max_size' => 'Ukuran gambar maksimal adalah 5MB.',
-    //                 'is_image' => 'File harus berupa gambar.',
-    //                 'mime_in' => 'Format gambar harus JPG, JPEG, atau PNG.'
-    //             ]
-    //         ]
-    //     ];
 
-    //     if (!$this->validate($validationRules)) {
-    //         return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
-    //     }
+        $file = $this->request->getFile('user_image');
+        if ($file->isValid() && !$file->hasMoved()) {
+            $fileName = $file->getRandomName();
+            $file->move(FCPATH . 'uploads/', $fileName);
+        } else {
+            return redirect()->back()->withInput()->with('error', 'Gagal mengunggah gambar.');
+        }
 
-    //     // Upload gambar
-    //     $file = $this->request->getFile('gambar');
-    //     if ($file->isValid() && !$file->hasMoved()) {
-    //         $fileName = $file->getRandomName();
-    //         $file->move(FCPATH . 'uploads/', $fileName);
-    //         $data['gambar'] = $fileName;
-    //     } else {
-    //         return redirect()->back()->withInput()->with('error', 'Gagal mengunggah gambar.');
-    //     }
+        $data = [
+            'email' => $this->request->getPost('email'),
+            'username' => $this->request->getPost('username'),
+            'fullname' => $this->request->getPost('fullname'),
+            'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
+            'user_image' => $fileName,
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s')
+        ];
 
-    //     // Simpan artikel menggunakan instance model langsung
-    //     $success = $artikelModel->save([
-    //         'judul' => $this->request->getPost('judul'),
-    //         'slug' => url_title($this->request->getPost('judul'), '-', true),
-    //         'konten' => $this->request->getPost('konten'),
-    //         'kategori' => $this->request->getPost('kategori'),
-    //         'penulis_id' => 1,
-    //         'status' => 'publish',
-    //         'created_at' => date('Y-m-d H:i:s'),
-    //         'updated_at' => date('Y-m-d H:i:s'),
-    //         'gambar' => $fileName,
-    //     ]);
 
-    //     if ($success) {
-    //         return redirect()->to('/admin/artikel')->with('success', 'Artikel berhasil ditambahkan!');
-    //     } else {
-    //         return redirect()->back()->withInput()->with('error', 'Gagal menyimpan artikel, silakan coba lagi.');
-    //     }
-    // }
+
+        if ($manage_akunModel->insert($data)) {
+            return redirect()->to('/admin/manage_akun/tambah')->with('success', 'Akun berhasil ditambahkan!');
+        } else {
+            return redirect()->back()->withInput()->with('error', 'Gagal menyimpan akun, silakan coba lagi.');
+        }
+    }
+
 
     // public function edit($id)
     // {

@@ -1,6 +1,12 @@
 <?= $this->extend('admin/layout') ?>
 
 <?= $this->section('content') ?>
+<style>
+    .custom_file::-webkit-file-upload-button {
+        margin-top: -10px;
+        margin-left: -5px;
+    }
+</style>
 <div class="container-fluid">
 
     <h1 class="h3 mb-4 text-gray-800">Tambah Artikel</h1>
@@ -18,15 +24,15 @@
             <label for="kategori">Kategori</label>
             <select name="kategori" id="kategori" class="form-control" required>
                 <?php foreach ($kategoriList as $kategori): ?>
-                <option value="<?= esc($kategori) ?>"><?= esc($kategori) ?></option>
+                    <option value="<?= esc($kategori) ?>"><?= esc($kategori) ?></option>
                 <?php endforeach; ?>
             </select>
         </div>
-        
+
 
         <div class="mb-3">
-            <label for="gambar" class="form-label">Upload Gambar</label>
-            <input type="file" class="form-control" id="gambar" name="gambar">
+            <label for="gambar" class="form-label ">Upload Gambar</label>
+            <input type="file" class="form-control custom_file" id="gambar" name="gambar">
         </div>
 
 

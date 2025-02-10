@@ -61,9 +61,8 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
     // Routes untuk manage akun
     $routes->get('manage_akun', 'Manage_akunController::index', ['filter' => 'role:admin']);
     $routes->post('manage_akun/updateRole', 'Manage_akunController::updateRole', ['filter' => 'role:admin']);
-
-    // $routes->get('artikel/tambah', 'ArtikelController::tambah', ['filter' => 'role:admin']); // Menampilkan form tambah
-    // $routes->post('artikel/simpan', 'ArtikelController::simpan', ['filter' => 'role:admin']); // Menyimpan artikel
+    $routes->get('manage_akun/tambah', 'Manage_akunController::tambah', ['filter' => 'role:admin']);
+    $routes->post('manage_akun/simpan', 'Manage_akunController::simpan', ['filter' => 'role:admin']);
     // $routes->get('artikel/edit/(:num)', 'ArtikelController::edit/$1', ['filter' => 'role:admin']); // Menampilkan form edit
     // $routes->post('artikel/update/(:num)', 'ArtikelController::update/$1', ['filter' => 'role:admin']); // Mengupdate artikel
     // $routes->post('artikel/delete/(:num)', 'ArtikelController::delete/$1', ['filter' => 'role:admin']); // Menghapus artikel
