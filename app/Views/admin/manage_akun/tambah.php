@@ -75,7 +75,6 @@
                 <option value="1">Admin</option>
                 <option value="3">Guru</option>
                 <option value="2">Siswa</option>
-                <option value="0">-</option>
             </select>
         </div>
 

@@ -46,6 +46,55 @@ class Manage_akunModel extends Model
 
     public function simpan($data)
     {
-        return $this->insert($data);
+        $role = isset($data['role']) ? $data['role'] : null;
+        unset($data['role']); // Hapus role dari data yang akan disimpan di tabel users
+
+        if ($this->insert($data)) {
+            $userId = $this->insertID();
+
+            // Simpan role jika tersedia
+            if ($role !== null) {
+                return $this->assignUserRole($userId, $role);
+            }
+            return true;
+        }
+
+        return false;
+    }
+
+    public function assignUserRole($userId, $groupId)
+    {
+        // Pastikan nilai group_id benar (1 = Admin, 2 = Siswa, 3 = Guru)
+        if (!in_array($groupId, [1, 2, 3])) {
+            return false;
+        }
+
+        // Periksa apakah user sudah memiliki role
+        $existing = $this->db->table('auth_groups_users')
+            ->where('user_id', $userId)
+            ->get()
+            ->getRow();
+
+        if ($existing) {
+            // Jika sudah ada, update role
+            return $this->db->table('auth_groups_users')
+                ->where('user_id', $userId)
+                ->update(['group_id' => $groupId]);
+        } else {
+            // Jika belum ada, tambahkan role baru
+            return $this->db->table('auth_groups_users')
+                ->insert(['user_id' => $userId, 'group_id' => $groupId]);
+        }
+    }
+
+    public function getUserRole($userId)
+    {
+        $result = $this->db->table('auth_groups_users')
+            ->select('group_id')
+            ->where('user_id', $userId)
+            ->get()
+            ->getRow();
+
+        return $result ? $result->group_id : null; // Jika tidak ditemukan, kembalikan null
     }
 }
