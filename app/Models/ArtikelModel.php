@@ -12,7 +12,7 @@ class ArtikelModel extends Model
 
     public function getPublishedArticles()
     {
+
         return $this->where('status', 'publish')->orderBy('created_at', 'DESC')->findAll();
     }
-
 }

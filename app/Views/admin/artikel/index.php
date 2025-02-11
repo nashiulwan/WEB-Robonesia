@@ -18,8 +18,8 @@
     <!-- TABEL ARTIKEL -->
     <?php $no = 1; // Inisialisasi nomor 
     ?>
-    <table class="table table-bordered table-striped table-auto">
-        <thead class="table-dark">
+    <table class="table table-bordered table-auto">
+        <thead class="table" style="color: black; background-color:#2222">
             <tr>
                 <th style="width: 5%;">NO</th>
                 <th style="width: 15%;">Judul</th>
