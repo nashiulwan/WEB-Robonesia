@@ -10,5 +10,6 @@ class DatabaseSeeder extends Seeder
     {
         $this->call('PengaturanKontakSeeder');
         $this->call('PengaturanPartnerSeeder');
+        $this->call('PengaturanTimSeeder');
     }
 }

@@ -89,10 +89,18 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
     $routes->get('pengaturan/mitra/hapus/(:num)', 'PengaturanController::hapusMitra/$1', ['filter' => 'role:admin']);
 
 
-
+    // Pengaturan tim
     $routes->get('pengaturan/tim', 'PengaturanController::tim', ['filter' => 'role:admin']);
+    $routes->get('pengaturan/tim/tambah', 'PengaturanController::tambahTim', ['filter' => 'role:admin']);
+    $routes->post('pengaturan/tim/simpan', 'PengaturanController::simpanTim', ['filter' => 'role:admin']);
+    $routes->get('pengaturan/tim/edit/(:num)', 'PengaturanController::editTim/$1', ['filter' => 'role:admin']);
+    $routes->post('pengaturan/tim/update/(:num)', 'PengaturanController::updateTim/$1', ['filter' => 'role:admin']);
+    $routes->get('pengaturan/tim/hapus/(:num)', 'PengaturanController::hapusTim/$1', ['filter' => 'role:admin']);
+
+
     $routes->get('pengaturan/prestasi', 'PengaturanController::prestasi', ['filter' => 'role:admin']);
 
+    // Pengaturan kontak
     $routes->get('pengaturan/kontak', 'PengaturanController::kontak', ['filter' => 'role:admin']);
     $routes->post('pengaturan/kontak/update', 'PengaturanController::updateKontak', ['filter' => 'role:admin']);
 

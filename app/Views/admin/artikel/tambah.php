@@ -89,11 +89,15 @@
 <!-- CKEditor 5 -->
 <script src="https://cdn.ckeditor.com/ckeditor5/41.3.1/classic/ckeditor.js"></script>
 <script>
-    ClassicEditor
-        .create(document.querySelector('#konten'))
-        .catch(error => {
-            console.error(error);
-        });
+    document.addEventListener("DOMContentLoaded", function () {
+        setTimeout(() => {
+            ClassicEditor
+                .create(document.querySelector('#konten'))
+                .catch(error => {
+                    console.error(error);
+                });
+        }, 500);
+    });
 </script>
 
 <!-- Sertakan JS Cropper.js -->

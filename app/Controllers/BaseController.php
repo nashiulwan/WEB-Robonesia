@@ -10,6 +10,8 @@ use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
 use App\Models\KontakModel;
 use App\Models\PartnerModel;
+use App\Models\ArtikelModel;
+use App\Models\TimModel;
 
 /**
  * Class BaseController
@@ -63,8 +65,9 @@ abstract class BaseController extends Controller
         $artikelCount   = $db->table('artikel')->countAll();
         $kontakCount    = $db->table('pengaturan_kontak')->countAll();
         $partnerCount   = $db->table('pengaturan_partner')->countAll();
+        $timCount       = $db->table('pengaturan_tim')->countAll();
 
-        if ($artikelCount == 0 || $kontakCount == 0 || $partnerCount == 0) {
+        if ($artikelCount == 0 || $kontakCount == 0 || $partnerCount == 0 || $timCount == 0) {
             $seeder = \Config\Database::seeder();
             if ($seeder instanceof \CodeIgniter\Database\Seeder) {
                 $seeder->call('DatabaseSeeder');
