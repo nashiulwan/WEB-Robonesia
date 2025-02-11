@@ -247,4 +247,23 @@ class ArtikelController extends BaseController
 
         return redirect()->to('/admin/artikel')->with('success', 'Artikel berhasil dihapus!');
     }
+
+    public function upload()
+    {
+        $file = $this->request->getFile('upload');
+
+        if ($file->isValid() && !$file->hasMoved()) {
+            $newName = $file->getRandomName();
+            $file->move('uploads/artikel/', $newName);
+            
+            return $this->response->setJSON([
+                'url' => base_url('uploads/artikel/' . $newName)
+            ]);
+        }
+
+        return $this->response->setJSON([
+            'error' => 'Gagal mengunggah gambar.'
+        ]);
+    }
+
 }

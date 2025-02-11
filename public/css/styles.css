@@ -44,7 +44,7 @@ html {
 
 img {
   display: flex;
-  width: 100%;
+  /* width: 100%; */
 }
 
 a {
@@ -1827,6 +1827,29 @@ a.text-primary:hover {
   text-decoration-color: var(--color-blue); /* Mengatur warna underline menjadi biru */
 }
 
+/* HALAMAN ARTIKEL BLOG */
+/* =========================================== */
+/* =========================================== */
+/* =========================================== */
+
+/* Gambar di dalam paragraph tanpa class tambahan (bisa dikustom) */
+.content img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Gambar dengan class .image-style-side (biasanya untuk gambar di kanan) */
+.content .image-style-side {
+  float: right;
+  margin-left: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Untuk memastikan gambar tidak melampaui container */
+
+/* ======================================== */
+/* ======================================== */
 
 
 /* HALAMAN PARTNER */

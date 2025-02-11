@@ -75,6 +75,8 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
     $routes->get('artikel/edit/(:num)', 'ArtikelController::edit/$1', ['filter' => 'role:admin']); // Menampilkan form edit
     $routes->post('artikel/update/(:num)', 'ArtikelController::update/$1', ['filter' => 'role:admin']); // Mengupdate artikel
     $routes->post('artikel/delete/(:num)', 'ArtikelController::delete/$1', ['filter' => 'role:admin']); // Menghapus artikel
+    $routes->post('artikel/upload', 'ArtikelController::upload');
+
 
 
 

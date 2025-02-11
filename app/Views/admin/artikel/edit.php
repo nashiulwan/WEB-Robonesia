@@ -81,13 +81,228 @@
 
 <!-- CKEditor 5 -->
 <script src="https://cdn.ckeditor.com/ckeditor5/41.3.1/classic/ckeditor.js"></script>
+<!-- <script>
+    class MyUploadAdapter {
+        constructor(loader) {
+            this.loader = loader;
+        }
+
+        upload() {
+            return this.loader.file.then(file => {
+                return new Promise((resolve, reject) => {
+                    if (!file) {
+                        reject('File tidak valid.');
+                        return;
+                    }
+
+                    const reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = () => {
+                        this.showCropperModal(reader.result, file, resolve, reject);
+                    };
+
+                    reader.onerror = error => reject(error);
+                });
+            });
+        }
+
+        showCropperModal(imageSrc, file, resolve, reject) {
+            // Hapus modal sebelumnya jika ada
+            let existingModal = document.getElementById('cropperModal');
+            if (existingModal) {
+                document.body.removeChild(existingModal);
+            }
+
+            // Buat modal
+            let modal = document.createElement('div');
+            modal.id = 'cropperModal';
+            modal.innerHTML = `
+                <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); display: flex; align-items: center; justify-content: center; z-index: 999;">
+                    <div style="background: white; padding: 20px; border-radius: 10px; box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2); width: 40%; max-width: 600px; position: relative;">
+                        <h3 style="margin: 0 0 10px;">Crop Gambar</h3>
+                        <img id="cropperImage" src="${imageSrc}" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"/>
+                        <div style="margin-top: 10px; text-align: right;">
+                            <button id="cancelCrop" style="background: #ccc; border: none; padding: 8px 12px; cursor: pointer; margin-right: 10px; border-radius: 5px;">Batal</button>
+                            <button id="confirmCrop" style="background: #28a745; color: white; border: none; padding: 8px 12px; cursor: pointer; border-radius: 5px;">Crop & Upload</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+            const cropperImage = modal.querySelector("#cropperImage");
+            const cropper = new Cropper(cropperImage, {
+                viewMode: 2,
+                autoCropArea: 1,
+            });
+
+            // Tombol Crop & Upload
+            modal.querySelector("#confirmCrop").onclick = () => {
+                cropper.getCroppedCanvas().toBlob(blob => {
+                    this.uploadCroppedImage(blob, file.name, resolve, reject);
+                    document.body.removeChild(modal);
+                });
+            };
+
+            // Tombol Batal
+            modal.querySelector("#cancelCrop").onclick = () => {
+                document.body.removeChild(modal);
+                reject('User membatalkan crop.');
+            };
+        }
+
+        uploadCroppedImage(blob, filename, resolve, reject) {
+            const formData = new FormData();
+            formData.append('upload', blob, filename);
+
+            fetch('<?= base_url('admin/artikel/upload') ?>', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.url) {
+                    resolve({ default: result.url });
+                } else {
+                    reject(result.error || 'Upload gagal.');
+                }
+            })
+            .catch(error => reject(error));
+        }
+    }
+
+    function CustomUploadAdapterPlugin(editor) {
+        editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+            return new MyUploadAdapter(loader);
+        };
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        ClassicEditor
+            .create(document.querySelector('#konten'), {
+                extraPlugins: [CustomUploadAdapterPlugin]
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    });
+</script> -->
 <script>
-    ClassicEditor
-        .create(document.querySelector('#konten'))
-        .catch(error => {
-            console.error(error);
-        });
+    class MyUploadAdapter {
+        constructor(loader) {
+            this.loader = loader;
+        }
+
+        upload() {
+            return this.loader.file.then(file => {
+                return new Promise((resolve, reject) => {
+                    if (!file) {
+                        reject('File tidak valid.');
+                        return;
+                    }
+
+                    const reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = () => {
+                        this.showCropperModal(reader.result, file, resolve, reject);
+                    };
+
+                    reader.onerror = error => reject(error);
+                });
+            });
+        }
+
+        showCropperModal(imageSrc, file, resolve, reject) {
+            // Hapus modal sebelumnya jika ada
+            let existingModal = document.getElementById('cropperModal');
+            if (existingModal) {
+                document.body.removeChild(existingModal);
+            }
+
+            // Buat modal
+            let modal = document.createElement('div');
+            modal.id = 'cropperModal';
+            modal.innerHTML = `
+                <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); display: flex; align-items: center; justify-content: center; z-index: 999;">
+                    <div style="background: white; padding: 20px; border-radius: 10px; box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2); width: 90%; max-width: 500px; position: relative; text-align: center;">
+                        <h3 style="margin: 0 0 10px;">Crop Gambar</h3>
+                        <div style="max-width: 100%; max-height: 400px; overflow: hidden; display: flex; justify-content: center; align-items: center;">
+                            <img id="cropperImage" src="${imageSrc}" style="max-width: 100%; max-height: 100%; display: block;"/>
+                        </div>
+                        <div style="margin-top: 10px; text-align: right;">
+                            <button id="cancelCrop" style="background: #ccc; border: none; padding: 8px 12px; cursor: pointer; margin-right: 10px; border-radius: 5px;">Batal</button>
+                            <button id="confirmCrop" style="background: #28a745; color: white; border: none; padding: 8px 12px; cursor: pointer; border-radius: 5px;">Crop & Upload</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+            const cropperImage = modal.querySelector("#cropperImage");
+
+            // Perbaikan Cropper agar sesuai modal
+            const cropper = new Cropper(cropperImage, {
+                viewMode: 2,
+                autoCropArea: 1,
+                responsive: true,
+                restore: false,
+                modal: true,
+                background: false
+            });
+
+            // Tombol Crop & Upload
+            modal.querySelector("#confirmCrop").onclick = () => {
+                cropper.getCroppedCanvas().toBlob(blob => {
+                    this.uploadCroppedImage(blob, file.name, resolve, reject);
+                    document.body.removeChild(modal);
+                });
+            };
+
+            // Tombol Batal
+            modal.querySelector("#cancelCrop").onclick = () => {
+                document.body.removeChild(modal);
+                reject('User membatalkan crop.');
+            };
+        }
+
+        uploadCroppedImage(blob, filename, resolve, reject) {
+            const formData = new FormData();
+            formData.append('upload', blob, filename);
+
+            fetch('<?= base_url('admin/artikel/upload') ?>', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.url) {
+                    resolve({ default: result.url });
+                } else {
+                    reject(result.error || 'Upload gagal.');
+                }
+            })
+            .catch(error => reject(error));
+        }
+    }
+
+    function CustomUploadAdapterPlugin(editor) {
+        editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+            return new MyUploadAdapter(loader);
+        };
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        ClassicEditor
+            .create(document.querySelector('#konten'), {
+                extraPlugins: [CustomUploadAdapterPlugin]
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    });
 </script>
+
+
 
 <!-- Sertakan JS Cropper.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>

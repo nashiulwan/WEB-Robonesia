@@ -42,7 +42,7 @@
                         <td><?= $no++; ?></td> <!-- Nomor otomatis -->
                         <td class="text-break"><?= esc($row['judul']); ?></td>
                         <td class="text-break"><?= esc($row['slug']); ?></td>
-                        <td class="text-break"><?= htmlspecialchars_decode(substr($row['konten'], 0, 100)) ?>...</td>
+                        <td class="text-break"><?= strip_tags(substr($row['konten'], 0, 100)) ?>...</td>
                         <td><?= esc($row['kategori']); ?></td>
                         <td><?= esc($row['penulis_id']); ?></td>
                         <td><?= esc($row['status']); ?></td>

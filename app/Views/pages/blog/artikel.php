@@ -11,7 +11,7 @@
             <?php endif; ?>
 
             <div class="content lh-lg">
-                <?= htmlspecialchars_decode($artikel['konten']) ?>
+                <?= html_entity_decode($artikel['konten']) ?>
             </div>
 
             <a href="<?= base_url('blog') ?>" class="btn btn-secondary mt-3 mb-5">Kembali ke Blog</a>
