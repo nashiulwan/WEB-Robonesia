@@ -81,18 +81,22 @@ abstract class BaseController extends Controller
 
     protected $kontak;
     protected $partner;
+    protected $tim;
 
     public function __construct()
     {
         $kontakModel = new KontakModel();
         $partnerModel = new PartnerModel();
+        $timModel = new TimModel();
 
         $this->partner = $partnerModel->findAll();
         $this->kontak = $kontakModel->first(); // Mengambil data kontak pertama dari tabel
+        $this->tim = $timModel->findAll();
     }
 
     protected function renderView($view, $data = [])
     {
+        $data['tim'] = $this->tim; // Menyediakan data tim untuk semua view
         $data['kontak'] = $this->kontak; // Menyediakan data kontak untuk semua view
         $data['partner'] = $this->partner; // Menambahkan data partner
 

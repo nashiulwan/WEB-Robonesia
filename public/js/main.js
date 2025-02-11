@@ -38,121 +38,48 @@ function scrollToTop() {
 }
 
 
-
 // HALAMAN TIM
-// ======================================
-// Data Anggota Tim
-// script.js
-
-// Data Anggota Tim
-const teamMembers = [
-  {
-      photo: '/image/tim1.jpg',
-      name: 'Anggota 1',
-      role: 'Peran 1',
-      social: {
-          facebook: 'https://facebook.com/anggota1',
-          whatsapp: 'https://wa.me/1234567890',
-          twitter: 'https://twitter.com/anggota1',
-          instagram: 'https://instagram.com/anggota1'
-      }
-  },
-  {
-      photo: '/image/tim2.jpg',
-      name: 'Anggota 2',
-      role: 'Peran 2',
-      social: {
-          facebook: 'https://facebook.com/anggota2',
-          whatsapp: 'https://wa.me/0987654321',
-          twitter: 'https://twitter.com/anggota2',
-          instagram: 'https://instagram.com/anggota2'
-      }
-  },
-  {
-      photo: '/image/tim3.jpg',
-      name: 'Anggota 3',
-      role: 'Peran 3',
-      social: {
-          facebook: 'https://facebook.com/anggota3',
-          whatsapp: 'https://wa.me/1122334455',
-          twitter: 'https://twitter.com/anggota3',
-          instagram: 'https://instagram.com/anggota3'
-      }
-  },
-  {
-      photo: '/image/tim4.jpg',
-      name: 'Anggota 4',
-      role: 'Peran 4',
-      social: {
-          facebook: 'https://facebook.com/anggota4',
-          whatsapp: 'https://wa.me/5544332211',
-          twitter: 'https://twitter.com/anggota4',
-          instagram: 'https://instagram.com/anggota4'
-      }
-  }
-];
-
-// Fungsi untuk Mengganti Foto dan Informasi di Bagian Atas
-function updateTopSection(member) {
-  // Ganti foto
-  const topPhoto = document.getElementById('timPhoto');
-  topPhoto.src = member.photo;
-
-  // Ganti nama
-  const topName = document.getElementById('timTopName');
-  topName.textContent = member.name;
-
-  // Ganti peran
-  const topRole = document.getElementById('timTopRole');
-  topRole.textContent = member.role;
-
-  // Ganti tautan sosial
-  const socialIcons = document.getElementById('timSocialIcon');
-  socialIcons.children[0].href = member.social.facebook;
-  socialIcons.children[1].href = member.social.whatsapp;
-  socialIcons.children[2].href = member.social.twitter;
-  socialIcons.children[3].href = member.social.instagram;
-}
-
-// Tambahkan Event Listener pada Foto di Bagian Bawah
-document.addEventListener('DOMContentLoaded', () => {
-  //FUNGSI GANTI TOP SECTION DARI GAMBAR
-  const bottomPhotos = document.querySelectorAll('.tim__container__bottom img');
-  bottomPhotos.forEach((img, index) => {
-      img.addEventListener('click', () => {
-          updateTopSection(teamMembers[index]);
-      });
-  });
-
-
-  const arrowLeft = document.getElementById('arrowLeft');
-  const arrowRight = document.getElementById('arrowRight');
-
-  arrowLeft.addEventListener('click', () => {
-    navigateTeam('left');
-  });
-
-  arrowRight.addEventListener('click', () => {
-    navigateTeam('right');
-  });
-
+// ==================================================
+document.addEventListener('DOMContentLoaded', function () {
+  fetch('/api/tim')
+      .then(response => response.json())
+      .then(data => {
+          populateTeam(data);
+      })
+      .catch(error => console.error('Error fetching team data:', error));
 });
 
-let timSaatIni = 0;
+let teamMembers = [];
 
-function navigateTeam(direction) {
+function populateTeam(data) {
+  teamMembers = data;
+  updateTopSection(teamMembers[0]); // Tampilkan anggota pertama
 
-  const totalMembers = teamMembers.length;
+  const bottomPhotosContainer = document.getElementById('timContainerBottom');
+  bottomPhotosContainer.innerHTML = ''; // Hapus isi sebelumnya
 
-  if (direction === 'left') {
-    timSaatIni = (timSaatIni - 1 + totalMembers) % totalMembers;
-  } else if (direction === 'right') {
-    timSaatIni = (timSaatIni + 1) % totalMembers;
-  }
-
-  updateTopSection(teamMembers[timSaatIni]);
-  console.log("tim saat ini: " + timSaatIni);
+  teamMembers.forEach((member, index) => {
+      const img = document.createElement('img');
+      img.src = 'uploads/tim/' + member.foto;
+      img.alt = `Foto ${member.nama}`;
+      img.addEventListener('click', () => updateTopSection(teamMembers[index]));
+      bottomPhotosContainer.appendChild(img);
+  });
 }
+
+function updateTopSection(member) {
+  document.getElementById('timPhoto').src = 'uploads/tim/' + member.foto;
+  document.getElementById('timTopName').textContent = member.nama;
+  document.getElementById('timTopRole').textContent = member.peran;
+
+  const socialIcons = document.getElementById('timSocialIcon');
+  socialIcons.children[0].href = member.facebook;
+  socialIcons.children[1].href = member.whatsapp;
+  socialIcons.children[2].href = member.twitter;
+  socialIcons.children[3].href = member.instagram;
+}
+
+// ==================================================
 
 
 

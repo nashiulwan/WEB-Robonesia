@@ -31,6 +31,7 @@ $routes->group('', function ($routes) {
 
     $routes->get('/pages/tim', 'PagesController::tim');
     $routes->get('/tim', 'PagesController::tim');
+    $routes->get('/api/tim', 'PagesController::getTim');
 
     $routes->get('/pages/blog', 'BlogController::index');
     $routes->get('/blog', 'BlogController::index');

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controllers;
+use App\Models\TimModel;
 // use App\Models\PartnerModel;
 
 class PagesController extends BaseController
@@ -60,5 +61,13 @@ class PagesController extends BaseController
     {
         $data = ['title' => 'Robonesia | Tim Kami'];
         $this->renderView('pages/tim', $data);
+    }
+
+    public function getTim()
+    {
+        $timModel = new TimModel();
+        $timData = $timModel->findAll();
+
+        return $this->response->setJSON($timData);
     }
 }
