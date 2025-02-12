@@ -93,7 +93,7 @@
             <!-- Kolom Foto Profil Lama -->
             <?php if (!empty($user['user_image'])): ?>
                 <div class="me-3 user-image-now">
-                    <img src="<?= base_url('/uploads/' . $user['user_image']) ?>" alt="Gambar Profil" width="150" class="img-thumbnail">
+                    <img src="<?= base_url('/uploads/' . $user['user_image']) ?>" alt="Gambar Profil" width="200" class="img-thumbnail">
                     <label for="user_image" class="form-label form-label-now-img">Foto Profil Sekarang</label>
                 </div>
             <?php endif; ?>
@@ -108,7 +108,7 @@
                     <label for="user_image" class="form-label">Unggah Foto Profil Baru <span class="text-danger">*</span></label>
                     <input type="file" class="form-control custom_file" id="user_image" name="user_image" accept="image/*">
                     <small class="text-muted">
-                        <span class="text-danger">*</span> Pilih foto baru jika ingin mengganti foto profil saat ini. Jika tidak, biarkan kosong.
+                        <span class="text-danger">*</span> Pilih foto baru jika Anda ingin mengganti foto profil saat ini. Jika tidak, biarkan kosong.
                     </small>
                 </div>
 
@@ -150,11 +150,10 @@
         </div>
 
         <!-- Bagian Ganti Password -->
-        <h4 class="mt-4">Ganti Password<span class="text-danger">*</span></h4>
+        <h4 class="mt-4">Ganti Password <span class="text-danger">*</span></h4>
         <div class="form-group mb-3">
             <label for="old_password">Password Lama</label>
             <input type="password" name="old_password" id="old_password" class="form-control" placeholder="Masukkan password lama">
-            
         </div>
         <div class="form-group mb-3">
             <label for="new_password">Password Baru</label>
@@ -164,25 +163,30 @@
             <label for="confirm_password">Konfirmasi Password Baru</label>
             <input type="password" name="confirm_password" id="confirm_password" class="form-control" placeholder="Konfirmasi password baru">
         </div>
-        <small><span class="text-danger">*</span>masukkan password lama anda untuk memverifikasi dan menganti password anda ke password yang baru</small>
-        <small><span class="text-danger">**</span>bagian ini hanya akan diisi jika ingin melakukan perganti password</small>
-        <small><span class="text-danger">***</span>jika lupa ingin mengganti password namun lupa passwordlama hubungi admin (adminnya diarahakn ke wa +6282118032898)</small>
-        <!-- tambahkan kalimat hubungin admin yang jika di klik diarahkan ke wa-->
+        <small>
+            <span class="text-danger">*</span> Silakan masukkan password lama Anda untuk melakukan verifikasi sebelum mengganti dengan password baru.
+        </small><br>
+        <small>
+            <span class="text-danger">**</span> Bagian ini hanya perlu diisi jika Anda ingin mengganti password.
+        </small><br>
+        <small>
+            <span class="text-danger">***</span> Jika Anda lupa password lama dan ingin menggantinya, silakan hubungi administrator melalui
+            <a href="https://wa.me/6282118032898" target="_blank">WhatsApp</a>.
+        </small>
 
-        <button type="submit" class="btn btn-success">Simpan</button>
-        <a href="<?= base_url('admin/profil') ?>" class="btn btn-secondary ms-2">Batal</a>
+        <br><br>
+        <button type="submit" class="btn btn-primary" style="width:7rem">Simpan</button>
+        <a href="<?= base_url('admin/profil') ?>" class="btn btn-warning ms-2" style="margin-left:10px; width:7rem">Batal</a>
     </form>
 </div>
 
 <!-- JavaScript untuk Preview & Crop Foto -->
 <script>
-    // Update nama file pada input teks saat file dipilih
     document.getElementById("user_image").addEventListener("change", function() {
         var fileName = this.files[0] ? this.files[0].name : "Pilih file gambar";
         document.getElementById("file-name").value = fileName;
     });
 
-    // Update preview gambar profil pada elemen image
     document.getElementById("user_image").addEventListener("change", function(event) {
         var file = event.target.files[0];
         var preview = document.querySelector(".user-image-now img");
@@ -191,10 +195,11 @@
         if (file) {
             var reader = new FileReader();
             reader.onload = function(e) {
-                preview.src = e.target.result;
+                preview.src = e.target.result; // Ganti src dengan gambar yang baru dipilih
             };
             reader.readAsDataURL(file);
-            fileNameInput.value = file.name;
+
+            fileNameInput.value = file.name; // Perbarui input teks dengan nama file
         } else {
             fileNameInput.value = "Pilih file gambar";
         }
@@ -203,7 +208,6 @@
     let cropper;
     let previousImageSrc = document.querySelector(".user-image-now img").src;
 
-    // Inisialisasi Cropper saat file baru dipilih
     document.getElementById("user_image").addEventListener("change", function(event) {
         let file = event.target.files[0];
 
@@ -214,15 +218,15 @@
                 imagePreview.src = e.target.result;
                 document.getElementById("image-preview-container").style.display = "block";
 
-                // Hapus instance Cropper sebelumnya jika ada
+                // Hapus cropper sebelumnya jika ada
                 if (cropper) {
                     cropper.destroy();
                 }
 
-                // Simpan src gambar sebelumnya
+                // Simpan gambar sebelumnya sebelum diubah
                 previousImageSrc = document.querySelector(".user-image-now img").src;
 
-                // Inisialisasi Cropper dengan rasio 1:1
+                // Inisialisasi Cropper.js dengan rasio 1:1
                 cropper = new Cropper(imagePreview, {
                     aspectRatio: 1,
                     viewMode: 2,
@@ -233,7 +237,6 @@
         }
     });
 
-    // Tombol "Pangkas & Simpan"
     document.getElementById("crop-button").addEventListener("click", function() {
         let canvas = cropper.getCroppedCanvas();
 
@@ -245,32 +248,33 @@
                     type: "image/jpeg"
                 });
 
-                // Buat objek FileList baru agar file crop dapat dikirim melalui form
+                // Buat objek FileList baru (agar bisa dikirim ke form)
                 let dataTransfer = new DataTransfer();
                 dataTransfer.items.add(croppedFile);
                 fileInput.files = dataTransfer.files;
 
-                // Perbarui tampilan foto profil dengan hasil crop
+                // Perbarui tampilan gambar profil sebelumnya dengan hasil crop
                 let profileImage = document.querySelector(".user-image-now img");
                 profileImage.src = URL.createObjectURL(blob);
 
-                // Sembunyikan preview crop
+                // Sembunyikan preview setelah crop selesai
                 document.getElementById("image-preview-container").style.display = "none";
             }, "image/jpeg");
         }
     });
 
-    // Tombol "Batal Pangkas"
+    // Event listener untuk tombol "Batal Pangkas"
     document.getElementById("cancel-crop-button").addEventListener("click", function() {
         document.getElementById("image-preview-container").style.display = "none";
 
-        // Kembalikan foto profil ke gambar sebelumnya
+        // Kembalikan gambar sebelumnya
         let profileImage = document.querySelector(".user-image-now img");
         profileImage.src = previousImageSrc;
 
-        // Hapus file yang baru dipilih
+        // Hapus file yang baru dipilih dari input file
         document.getElementById("user_image").value = "";
 
+        // Hapus instance cropper jika ada
         if (cropper) {
             cropper.destroy();
             cropper = null;

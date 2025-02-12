@@ -98,7 +98,7 @@
             <!-- Menampilkan gambar profil lama jika ada -->
             <?php if (!empty($users['user_image'])): ?>
                 <div class="me-3 user-image-now">
-                    <img src=" <?= base_url('/uploads/' . $users['user_image']) ?>" alt="Gambar Profil" width="150" class="img-thumbnail">
+                    <img src=" <?= base_url('/uploads/' . $users['user_image']) ?>" alt="Gambar Profil" width="200" class="img-thumbnail">
                     <label for="user_image" class="form-label form-label-now-img">Foto Profil Sekarang</label>
                 </div>
             <?php endif; ?>
