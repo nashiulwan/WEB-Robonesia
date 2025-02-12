@@ -39,37 +39,6 @@ class AdminController extends BaseController
         return view('admin/seo', $data);
     }
 
-    // Method untuk Artikel/Posting
-    public function artikel()
-    {
-        $data['title'] = 'Semua Artikel';
-        $data['artikels'] = $this->artikelModel->findAll(); // Ambil semua artikel
-        return view('admin/artikel', $data);
-    }
-
-    // Method untuk Tambah Artikel
-    public function tambah()
-    {
-        $data['title'] = 'Tambah Artikel';
-        return view('admin/artikel/tambah', $data);
-    }
-
-    // Method untuk Pengaturan
-    public function pengaturan()
-    {
-        $data['title'] = 'Pengaturan Sistem';
-        // Tambahkan data untuk pengaturan di sini
-        return view('admin/pengaturan', $data);
-    }
-
-    // Method untuk Profil Pengguna
-    public function profil()
-    {
-        $data['title'] = 'Profil Pengguna';
-        // Tambahkan data pengguna di sini
-        return view('admin/profil', $data);
-    }
-
     // Method untuk Profil Pengguna
     public function pengguna()
     {
