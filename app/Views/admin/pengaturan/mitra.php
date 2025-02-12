@@ -43,7 +43,7 @@
                             <td><a href="<?= esc($row['maps']); ?>" target="_blank">Lihat Map</a></td>
                             <td>
                                 <!-- Button Edit -->
-                                <a href="<?= base_url('pengaturan/mitra/edit/' . esc($row['id'])); ?>" class="btn btn-warning btn-sm w-100 mb-2">
+                                <a href="<?= base_url('admin/pengaturan/mitra/edit/' . esc($row['id'])); ?>" class="btn btn-warning btn-sm w-100 mb-2">
                                     <i class="fas fa-edit"></i>
                                 </a>
 

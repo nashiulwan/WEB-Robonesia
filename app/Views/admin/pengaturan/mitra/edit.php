@@ -1,7 +1,6 @@
 <?= $this->extend('admin/layout') ?>
 
 <?= $this->section('content') ?>
-
 <!-- Sertakan CSS Cropper.js -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
 
@@ -18,36 +17,46 @@
     }
 </style>
 
+
 <div class="container-fluid">
 
-    <h1 class="h3 mb-4 text-gray-800">Tambah Mitra</h1>
+    <h1 class="h3 mb-4 text-gray-800">Edit Mitra</h1>
 
-    <!-- Form Tambah Mitra -->
-    <form action="<?= base_url('admin/pengaturan/mitra/simpan') ?>" method="post" enctype="multipart/form-data">
+    <!-- Form Edit Mitra -->
+    <form action="<?= base_url('admin/pengaturan/mitra/update/' . $mitra['id']) ?>" method="post" enctype="multipart/form-data">
         <?= csrf_field() ?>
 
         <!-- Nama Mitra -->
         <div class="form-group">
             <label for="partner">Nama Mitra</label>
-            <input type="text" name="partner" id="partner" class="form-control" placeholder="Masukkan nama sekolah/partner" required>
+            <input type="text" name="partner" id="partner" class="form-control" placeholder="Masukkan nama sekolah/partner" value="<?= $mitra['partner'] ?>" required>
         </div>
 
         <!-- Alamat -->
         <div class="form-group">
             <label for="alamat">Alamat</label>
-            <input type="text" name="alamat" id="alamat" class="form-control" placeholder="Masukkan alamat sekolah/partner" required>
+            <input type="text" name="alamat" id="alamat" class="form-control" placeholder="Masukkan alamat sekolah/partner" value="<?= $mitra['alamat'] ?>" required>
         </div>
 
         <!-- Link Google Maps -->
         <div class="form-group">
             <label for="maps">Link Google Maps</label>
-            <input type="url" name="maps" id="maps" class="form-control" placeholder="Masukkan link Google Maps sekolah/partner" required>
+            <input type="url" name="maps" id="maps" class="form-control" placeholder="Masukkan link Google Maps sekolah/partner" value="<?= $mitra['maps'] ?>" required>
         </div>
 
         <!-- Upload Logo -->
         <div class="mb-3">
             <label for="logo" class="form-label">Upload Logo</label>
-            <input type="file" class="form-control" id="logo" name="logo" required>
+            <input type="file" class="form-control" id="logo" name="logo">
+            <small class="text-muted">Biarkan kosong jika tidak ingin mengganti logo.</small>
+
+            <!-- Preview Logo Saat Ini -->
+            <?php if ($mitra['logo']) : ?>
+                <div class="mt-3">
+                    <label>Logo Saat Ini:</label>
+                    <img src="<?= base_url('uploads/' . $mitra['logo']) ?>" alt="Logo Saat Ini" style="max-width: 150px;">
+                </div>
+            <?php endif; ?>
         </div>
 
         <!-- Preview Gambar Tercrop yang ditampilkan di bawah input file -->
@@ -65,7 +74,8 @@
             </div>
         </div>
 
-        <button type="submit" class="btn btn-primary">Tambah Partner</button>
+        <button type="submit" class="btn btn-primary">Update Partner</button>
+        <a href="<?= base_url('admin/pengaturan/mitra') ?>" class="btn btn-secondary">Batal</a>
     </form>
 </div>
 
@@ -145,6 +155,5 @@
         document.getElementById("cropped-preview-container").style.display = "none";
     });
 </script>
-
 
 <?= $this->endSection() ?>

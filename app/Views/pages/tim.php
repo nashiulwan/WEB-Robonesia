@@ -3,7 +3,7 @@
   <?php if (!empty($tim)) : ?>
     <!-- Section Top -->
     <div class="tim__container__top" id="timContainerTop">
-      <h1 id="timTopTitle">ANGGOTA TIM</h1>
+      <h1 id="timTopTitle">TIM KAMI</h1>
       
       <!-- Tampilkan anggota pertama sebagai default -->
       <?php $firstTim = $tim[0]; ?>

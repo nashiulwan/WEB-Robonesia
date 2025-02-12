@@ -3,14 +3,11 @@
 namespace App\Controllers;
 
 use CodeIgniter\Controller;
-use CodeIgniter\HTTP\CLIRequest;
-use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
 use App\Models\KontakModel;
 use App\Models\PartnerModel;
-use App\Models\ArtikelModel;
 use App\Models\TimModel;
 
 /**
@@ -23,85 +20,134 @@ use App\Models\TimModel;
  *
  * For security be sure to declare any new methods as protected or private.
  */
-
-
 abstract class BaseController extends Controller
 {
     /**
      * Instance of the main Request object.
      *
-     * @var CLIRequest|IncomingRequest
+     * @var RequestInterface
      */
     protected $request;
 
     /**
-     * An array of helpers to be loaded automatically upon
-     * class instantiation. These helpers will be available
-     * to all other controllers that extend BaseController.
+     * Instance of the Session object.
      *
-     * @var list<string>
-     */
-    protected $helpers = ['auth'];
-    /**
-     * Be sure to declare properties for any property fetch you initialized.
-     * The creation of dynamic property is deprecated in PHP 8.2.
-     */
-    // protected $session;
-
-    /**
-     * @return void
+     * @var \CodeIgniter\Session\Session
      */
     protected $session;
+
+    /**
+     * Lazy-loaded model instances.
+     */
+    protected $kontakModel;
+    protected $partnerModel;
+    protected $timModel;
+
+    /**
+     * Global data for views.
+     */
+    protected $kontak;
+    protected $partner;
+    protected $tim;
+
+    /**
+     * Helpers to be loaded automatically.
+     *
+     * @var array
+     */
+    protected $helpers = ['auth'];
+
+    /**
+     * Constructor
+     */
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
     {
         // Do Not Edit This Line
         parent::initController($request, $response, $logger);
 
-        $this->session = service('session');
-        // Preload any models, libraries, etc, here.
+        // Load session service
+        $this->session = session();
+        
+        // Database connection
         $db = \Config\Database::connect();
 
         // Cek apakah tabel masih kosong
-        $artikelCount   = $db->table('artikel')->countAll();
-        $kontakCount    = $db->table('pengaturan_kontak')->countAll();
-        $partnerCount   = $db->table('pengaturan_partner')->countAll();
-        $timCount       = $db->table('pengaturan_tim')->countAll();
+        $artikelCount   = $db->table('artikel')->countAllResults();
+        $kontakCount    = $db->table('pengaturan_kontak')->countAllResults();
+        $partnerCount   = $db->table('pengaturan_partner')->countAllResults();
+        $timCount       = $db->table('pengaturan_tim')->countAllResults();
 
+        // Jalankan seeder jika tabel kosong
         if ($artikelCount == 0 || $kontakCount == 0 || $partnerCount == 0 || $timCount == 0) {
+            $db->transStart();
             $seeder = \Config\Database::seeder();
-            if ($seeder instanceof \CodeIgniter\Database\Seeder) {
+            
+            // Cek apakah DatabaseSeeder ada
+            if (class_exists('App\Database\Seeds\DatabaseSeeder')) {
                 $seeder->call('DatabaseSeeder');
             } else {
-                log_message('error', 'Seeder service tidak tersedia atau tidak valid.');
+                log_message('error', 'Seeder DatabaseSeeder tidak ditemukan.');
+            }
+
+            $db->transComplete();
+
+            if ($db->transStatus() === false) {
+                log_message('error', 'Gagal menjalankan seeder.');
             }
         }
 
-        // E.g.: $this->session = service('session');
+        // Inisialisasi data global untuk views
+        $this->kontak = $this->getKontakModel()->first();
+        $this->partner = $this->getPartnerModel()->findAll();
+        $this->tim = $this->getTimModel()->findAll();
     }
 
-    protected $kontak;
-    protected $partner;
-    protected $tim;
-
-    public function __construct()
+    /**
+     * Lazy Load KontakModel
+     */
+    protected function getKontakModel()
     {
-        $kontakModel = new KontakModel();
-        $partnerModel = new PartnerModel();
-        $timModel = new TimModel();
-
-        $this->partner = $partnerModel->findAll();
-        $this->kontak = $kontakModel->first(); // Mengambil data kontak pertama dari tabel
-        $this->tim = $timModel->findAll();
+        if ($this->kontakModel === null) {
+            $this->kontakModel = new KontakModel();
+        }
+        return $this->kontakModel;
     }
 
+    /**
+     * Lazy Load PartnerModel
+     */
+    protected function getPartnerModel()
+    {
+        if ($this->partnerModel === null) {
+            $this->partnerModel = new PartnerModel();
+        }
+        return $this->partnerModel;
+    }
+
+    /**
+     * Lazy Load TimModel
+     */
+    protected function getTimModel()
+    {
+        if ($this->timModel === null) {
+            $this->timModel = new TimModel();
+        }
+        return $this->timModel;
+    }
+
+    /**
+     * Render View with Global Data
+     */
     protected function renderView($view, $data = [])
     {
-        $data['tim'] = $this->tim; // Menyediakan data tim untuk semua view
-        $data['kontak'] = $this->kontak; // Menyediakan data kontak untuk semua view
-        $data['partner'] = $this->partner; // Menambahkan data partner
+        $data = array_merge($data, [
+            'tim' => $this->tim,
+            'kontak' => $this->kontak,
+            'partner' => $this->partner
+        ]);
 
-        echo view('layout/header', $data);
-        echo view($view, $data);
-        echo view('layout/footer', $data);
+        echo view('layout/header', $data)
+            . view($view, $data)
+            . view('layout/footer', $data);
     }
-}
+}   
