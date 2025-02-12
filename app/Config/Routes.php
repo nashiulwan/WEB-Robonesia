@@ -57,7 +57,11 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
     $routes->get('seo', 'AdminController::seo', ['filter' => 'role:admin']);
     $routes->get('pengaturan', 'AdminController::pengaturan', ['filter' => 'role:admin']);
     $routes->get('analytics', 'AdminController::analytics', ['filter' => 'role:admin']);
-    $routes->get('profil', 'AdminController::profil', ['filter' => 'role:admin']);
+
+    // Routes untuk profil
+    $routes->get('profil', 'ProfilController::index', ['filter' => 'role:admin']);
+    $routes->get('profil/edit', 'ProfilController::edit', ['filter' => 'role:admin']);
+    $routes->post('profil/update', 'ProfilController::update', ['filter' => 'role:admin']);
 
     // Routes untuk manage akun
     $routes->get('manage_akun', 'Manage_akunController::index', ['filter' => 'role:admin']);
