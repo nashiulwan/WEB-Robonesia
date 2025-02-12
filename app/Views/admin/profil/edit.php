@@ -3,6 +3,8 @@
 <?= $this->section('content') ?>
 <!-- Sertakan Cropper CSS dari CDN -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+<!-- Sertakan Bootstrap Icons (jika belum disertakan di layout) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
 <style>
     .custom_file::-webkit-file-upload-button {
@@ -21,6 +23,13 @@
 
     .form-label-now-img {
         display: none;
+    }
+
+    /* Styling tambahan untuk ikon toggle password */
+    .input-group-eye .input-group-text i {
+
+        cursor: pointer;
+        /* Ubah cursor menjadi pointer saat hover */
     }
 
     @media (max-width: 720px) {
@@ -112,7 +121,7 @@
                     </small>
                 </div>
 
-                <!-- Container Preview & Crop (disembunyikan awalnya) -->
+                <!-- Container Preview & Crop (ditampilkan saat proses crop aktif) -->
                 <div id="image-preview-container" class="image-preview-cut-save-group" style="display: none;">
                     <img id="image-preview" class="image-preview-cut-save" alt="Preview">
                     <div id="crop-buttons-container" style="display: flex; gap: 1rem; margin-top: 1rem;">
@@ -151,17 +160,29 @@
 
         <!-- Bagian Ganti Password -->
         <h4 class="mt-4">Ganti Password <span class="text-danger">*</span></h4>
+        <!-- Password Lama -->
         <div class="form-group mb-3">
             <label for="old_password">Password Lama</label>
-            <input type="password" name="old_password" id="old_password" class="form-control" placeholder="Masukkan password lama">
+            <div class="input-group input-group-eye">
+                <input type="password" name="old_password" id="old_password" class="form-control form-control-eye" placeholder="Masukkan password lama">
+                <span class="input-group-text"><i class="bi bi-eye" id="toggleOldPassword"></i></span>
+            </div>
         </div>
+        <!-- Password Baru -->
         <div class="form-group mb-3">
             <label for="new_password">Password Baru</label>
-            <input type="password" name="new_password" id="new_password" class="form-control" placeholder="Masukkan password baru">
+            <div class="input-group input-group-eye">
+                <input type="password" name="new_password" id="new_password" class="form-control form-control-eye" placeholder="Masukkan password baru">
+                <span class="input-group-text"><i class="bi bi-eye" id="togglePassword"></i></span>
+            </div>
         </div>
+        <!-- Konfirmasi Password Baru -->
         <div class="form-group mb-3">
             <label for="confirm_password">Konfirmasi Password Baru</label>
-            <input type="password" name="confirm_password" id="confirm_password" class="form-control" placeholder="Konfirmasi password baru">
+            <div class="input-group input-group-eye">
+                <input type="password" name="confirm_password" id="confirm_password" class="form-control form-control-eye" placeholder="Konfirmasi password baru">
+                <span class="input-group-text"><i class="bi bi-eye" id="toggleConfirmPassword"></i></span>
+            </div>
         </div>
         <small>
             <span class="text-danger">*</span> Silakan masukkan password lama Anda untuk melakukan verifikasi sebelum mengganti dengan password baru.
@@ -180,53 +201,37 @@
     </form>
 </div>
 
-<!-- JavaScript untuk Preview & Crop Foto -->
+<!-- Sertakan Cropper JS dari CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
 <script>
-    document.getElementById("user_image").addEventListener("change", function() {
-        var fileName = this.files[0] ? this.files[0].name : "Pilih file gambar";
-        document.getElementById("file-name").value = fileName;
-    });
-
-    document.getElementById("user_image").addEventListener("change", function(event) {
-        var file = event.target.files[0];
-        var preview = document.querySelector(".user-image-now img");
-        var fileNameInput = document.getElementById("file-name");
-
-        if (file) {
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                preview.src = e.target.result; // Ganti src dengan gambar yang baru dipilih
-            };
-            reader.readAsDataURL(file);
-
-            fileNameInput.value = file.name; // Perbarui input teks dengan nama file
-        } else {
-            fileNameInput.value = "Pilih file gambar";
-        }
-    });
-
     let cropper;
-    let previousImageSrc = document.querySelector(".user-image-now img").src;
+    let previousImageSrc;
 
+    // Saat file gambar dipilih untuk crop
     document.getElementById("user_image").addEventListener("change", function(event) {
         let file = event.target.files[0];
-
         if (file) {
+            if (!file.type.startsWith('image/')) {
+                alert("File yang dipilih bukan gambar!");
+                return;
+            }
             let reader = new FileReader();
             reader.onload = function(e) {
                 let imagePreview = document.getElementById("image-preview");
                 imagePreview.src = e.target.result;
+                // Tampilkan container preview crop
                 document.getElementById("image-preview-container").style.display = "block";
-
-                // Hapus cropper sebelumnya jika ada
+                // Sembunyikan preview final (jika ada)
+                // Simpan src gambar profil sebelumnya (untuk opsi batal crop)
+                let currentProfile = document.querySelector(".user-image-now img");
+                if (currentProfile) {
+                    previousImageSrc = currentProfile.src;
+                }
+                // Hancurkan instance cropper yang sudah ada (jika ada)
                 if (cropper) {
                     cropper.destroy();
                 }
-
-                // Simpan gambar sebelumnya sebelum diubah
-                previousImageSrc = document.querySelector(".user-image-now img").src;
-
-                // Inisialisasi Cropper.js dengan rasio 1:1
+                // Inisialisasi Cropper.js dengan aspect ratio 1:1 untuk foto profil
                 cropper = new Cropper(imagePreview, {
                     aspectRatio: 1,
                     viewMode: 2,
@@ -237,51 +242,92 @@
         }
     });
 
+    // Tombol "Pangkas & Simpan"
     document.getElementById("crop-button").addEventListener("click", function() {
-        let canvas = cropper.getCroppedCanvas();
-
-        if (canvas) {
-            canvas.toBlob((blob) => {
-                let fileInput = document.getElementById("user_image");
-                let fileName = fileInput.files[0].name;
-                let croppedFile = new File([blob], fileName, {
-                    type: "image/jpeg"
-                });
-
-                // Buat objek FileList baru (agar bisa dikirim ke form)
-                let dataTransfer = new DataTransfer();
-                dataTransfer.items.add(croppedFile);
-                fileInput.files = dataTransfer.files;
-
-                // Perbarui tampilan gambar profil sebelumnya dengan hasil crop
-                let profileImage = document.querySelector(".user-image-now img");
-                profileImage.src = URL.createObjectURL(blob);
-
-                // Sembunyikan preview setelah crop selesai
-                document.getElementById("image-preview-container").style.display = "none";
-            }, "image/jpeg");
+        if (cropper) {
+            let canvas = cropper.getCroppedCanvas();
+            if (canvas) {
+                canvas.toBlob((blob) => {
+                    let fileInput = document.getElementById("user_image");
+                    let fileName = fileInput.files[0].name;
+                    let croppedFile = new File([blob], fileName, {
+                        type: "image/jpeg"
+                    });
+                    // Buat objek FileList baru menggunakan DataTransfer
+                    let dataTransfer = new DataTransfer();
+                    dataTransfer.items.add(croppedFile);
+                    fileInput.files = dataTransfer.files;
+                    // Perbarui tampilan gambar profil dengan hasil crop
+                    let profileImage = document.querySelector(".user-image-now img");
+                    profileImage.src = URL.createObjectURL(blob);
+                    // Sembunyikan container preview crop
+                    document.getElementById("image-preview-container").style.display = "none";
+                }, "image/jpeg");
+            }
         }
     });
 
-    // Event listener untuk tombol "Batal Pangkas"
+    // Tombol "Batal Pangkas"
     document.getElementById("cancel-crop-button").addEventListener("click", function() {
+        // Sembunyikan container preview crop
         document.getElementById("image-preview-container").style.display = "none";
-
-        // Kembalikan gambar sebelumnya
-        let profileImage = document.querySelector(".user-image-now img");
-        profileImage.src = previousImageSrc;
-
-        // Hapus file yang baru dipilih dari input file
+        // Reset input file
         document.getElementById("user_image").value = "";
-
         // Hapus instance cropper jika ada
         if (cropper) {
             cropper.destroy();
             cropper = null;
         }
+        // Jika ada, kembalikan gambar profil ke kondisi semula
+        let profileImage = document.querySelector(".user-image-now img");
+        if (profileImage && previousImageSrc) {
+            profileImage.src = previousImageSrc;
+        }
+    });
+
+    // Toggle password untuk "Password Lama"
+    document.getElementById("toggleOldPassword").addEventListener("click", function() {
+        var field = document.getElementById("old_password");
+        var icon = this;
+        if (field.type === "password") {
+            field.type = "text";
+            icon.classList.remove("bi-eye");
+            icon.classList.add("bi-eye-slash");
+        } else {
+            field.type = "password";
+            icon.classList.remove("bi-eye-slash");
+            icon.classList.add("bi-eye");
+        }
+    });
+
+    // Toggle password untuk "Password Baru"
+    document.getElementById("togglePassword").addEventListener("click", function() {
+        var field = document.getElementById("new_password");
+        var icon = this;
+        if (field.type === "password") {
+            field.type = "text";
+            icon.classList.remove("bi-eye");
+            icon.classList.add("bi-eye-slash");
+        } else {
+            field.type = "password";
+            icon.classList.remove("bi-eye-slash");
+            icon.classList.add("bi-eye");
+        }
+    });
+
+    // Toggle password untuk "Konfirmasi Password Baru"
+    document.getElementById("toggleConfirmPassword").addEventListener("click", function() {
+        var field = document.getElementById("confirm_password");
+        var icon = this;
+        if (field.type === "password") {
+            field.type = "text";
+            icon.classList.remove("bi-eye");
+            icon.classList.add("bi-eye-slash");
+        } else {
+            field.type = "password";
+            icon.classList.remove("bi-eye-slash");
+            icon.classList.add("bi-eye");
+        }
     });
 </script>
-
-<!-- Sertakan Cropper JS dari CDN -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
 <?= $this->endSection() ?>
