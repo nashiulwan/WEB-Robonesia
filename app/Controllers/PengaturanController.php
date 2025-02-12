@@ -96,13 +96,28 @@ class PengaturanController extends BaseController
         return view('admin/pengaturan/mitra', $data);
     }
 
-    public function editMitra()
+    public function editMitra($id = null)
     {
         if (!logged_in()) {
             return redirect()->to('/login');
         }   
 
+        if ($id === null) {
+            return redirect()->to('/admin/pengaturan/mitra')->with('error', 'ID tidak ditemukan');
+        }
 
+        $model = new PartnerModel();
+        $mitra = $model->find($id);
+
+        if (!$mitra) {
+            return redirect()->to('/admin/pengaturan/mitra')->with('error', 'Anggota tim tidak ditemukan');
+        }
+
+        $data = [
+            'title' => 'Edit Partner',
+            'mitra' => $mitra
+        ];
+        return view('admin/pengaturan/mitra/edit', $data);
     }
 
     public function tambahMitra()
