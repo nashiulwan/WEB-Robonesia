@@ -5,7 +5,7 @@
 
     <!-- HEADER PARTNER -->
     <header class="header__partner">
-      <h1 class="mb-4">Daftar Mitra Robonesia</h1>
+      <h1 class="mb-4" data-aos="fade-up" data-aos-duration="1000">Daftar Mitra Robonesia</h1>
     </header>
     <!-- HEADER PARTNER END -->
 
@@ -17,7 +17,7 @@
             <?php if (!empty($partner)) : ?>
               <?php foreach ($partner as $row) : ?>
                 <div class="col">
-                  <div class="partner_items d-flex align-items-center p-3 border rounded shadow-sm">
+                  <div class="partner_items d-flex align-items-center p-3 border rounded shadow-sm"  data-aos="fade-up" data-aos-duration="1000">
                     <?php if (!empty($row['logo'])) : ?>
                       <img src="<?= base_url('uploads/' . esc($row['logo'])); ?>" class="card-img-top img-fluid" style="width: 150px; height: 150px; object-fit: cover;" alt="<?= esc($row['partner']); ?>">
                     <?php else : ?>

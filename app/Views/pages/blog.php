@@ -1,8 +1,8 @@
-<div class="container mt-5">
-    <h1 class="text-center mb-4">BLOG</h1>
+<div class="container mt-5" style="padding-block: 10%;">
+    <h1 class="text-center mb-4" data-aos="fade-up" data-aos-duration="1000">BLOG</h1>
 
     <!-- Daftar Kategori -->
-    <div class="d-flex justify-content-center mb-4">
+    <div class="d-flex justify-content-center mb-4" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
         <div class="btn-group" role="group">
             <a href="<?= base_url('blog/kategori/berita'); ?>" class="btn btn-outline-primary">
                 <i class="fas fa-newspaper"></i> Berita
@@ -26,7 +26,7 @@
     <div class="row">
         <?php if (!empty($artikel)) : ?>
             <?php foreach ($artikel as $row) : ?>
-                <div class="col-md-4 mb-4">
+                <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-duration="1000">
                     <div class="card shadow-sm border-0">
                         <?php if (!empty($row['gambar'])) : ?>
                             <img src="<?= base_url('uploads/' . esc($row['gambar'])); ?>" class="card-img-top img-fluid" style="height: 200px; object-fit: cover;" alt="<?= esc($row['judul']); ?>">
@@ -56,3 +56,82 @@
         <?php endif; ?>
     </div>
 </div>
+
+
+<script>
+    // SMOOTH SCROLL
+    {
+    function init() {
+        new SmoothScroll(document, 120, 12)
+    }
+
+    function SmoothScroll(target, speed, smooth) {
+        if (target === document)
+        target = (document.scrollingElement
+            || document.documentElement
+            || document.body.parentNode
+            || document.body) // cross browser support for document scrolling
+
+        var moving = false
+        var pos = target.scrollTop
+        var frame = target === document.body
+        && document.documentElement
+        ? document.documentElement
+        : target // safari is the new IE
+
+        target.addEventListener('mousewheel', scrolled, { passive: false })
+        target.addEventListener('DOMMouseScroll', scrolled, { passive: false })
+
+        function scrolled(e) {
+        e.preventDefault(); // disable default scrolling
+
+        var delta = normalizeWheelDelta(e)
+
+        pos += -delta * speed
+        pos = Math.max(0, Math.min(pos, target.scrollHeight - frame.clientHeight)) // limit scrolling
+
+        if (!moving) update()
+        }
+
+        function normalizeWheelDelta(e) {
+        if (e.detail) {
+            if (e.wheelDelta)
+            return e.wheelDelta / e.detail / 40 * (e.detail > 0 ? 1 : -1) // Opera
+            else
+            return -e.detail / 3 // Firefox
+        } else
+            return e.wheelDelta / 120 // IE,Safari,Chrome
+        }
+
+        function update() {
+        moving = true
+
+        var delta = (pos - target.scrollTop) / smooth
+
+        target.scrollTop += delta
+
+        if (Math.abs(delta) > 0.5)
+            requestFrame(update)
+        else
+            moving = false
+        }
+
+        var requestFrame = function () { // requestAnimationFrame cross browser
+        return (
+            window.requestAnimationFrame ||
+            window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame ||
+            window.oRequestAnimationFrame ||
+            window.msRequestAnimationFrame ||
+            function (func) {
+            window.setTimeout(func, 1000 / 50);
+            }
+        );
+        }()
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        init();
+    })
+    }
+</script>

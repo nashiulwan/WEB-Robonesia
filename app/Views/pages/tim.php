@@ -3,17 +3,17 @@
   <?php if (!empty($tim)) : ?>
     <!-- Section Top -->
     <div class="tim__container__top" id="timContainerTop">
-      <h1 id="timTopTitle">TIM KAMI</h1>
+      <h1 id="timTopTitle" data-aos="fade-up" data-aos-duration="1000">TIM KAMI</h1>
       
       <!-- Tampilkan anggota pertama sebagai default -->
       <?php $firstTim = $tim[0]; ?>
       <section>
-        <img src="<?= esc("/uploads/tim/" . $firstTim['foto']) ?>" alt="Foto <?= esc($firstTim['nama']) ?>" id="timPhoto">
+        <img src="<?= esc("/uploads/tim/" . $firstTim['foto']) ?>" alt="Foto <?= esc($firstTim['nama']) ?>" id="timPhoto" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
       </section>
       <section>
-        <h1 id="timTopName"><?= esc($firstTim['nama']) ?></h1>
-        <h2 id="timTopRole"><?= esc($firstTim['peran']) ?></h2>
-        <div class="tim__social__icon" id="timSocialIcon">
+        <h1 id="timTopName" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400"><?= esc($firstTim['nama']) ?></h1>
+        <h2 id="timTopRole" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="600"><?= esc($firstTim['peran']) ?></h2>
+        <div class="tim__social__icon" id="timSocialIcon" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="800">
           <a href="<?= esc($firstTim['facebook']) ?>" target="_blank" id="icon1"><i class="ri-facebook-fill"></i></a>
           <a href="https://wa.me/<?= esc($firstTim['whatsapp']) ?>" target="_blank" id="icon2"><i class="ri-whatsapp-fill"></i></a>
           <a href="<?= esc($firstTim['twitter']) ?>" target="_blank" id="icon3"><i class="ri-twitter-x-fill"></i></a>
@@ -24,8 +24,8 @@
 
     <!-- Section Bottom -->
     <div class="tim__container__bottom" id="timContainerBottom">
-      <i class="tim_arrow ri-arrow-left-s-line arrow" id="arrowLeft"></i>
-      <i class="tim_arrow ri-arrow-right-s-line arrow" id="arrowRight"></i> 
+      <!-- <i class="tim_arrow ri-arrow-left-s-line arrow" id="arrowLeft"></i>
+      <i class="tim_arrow ri-arrow-right-s-line arrow" id="arrowRight"></i>  -->
 
       <!-- Looping untuk menampilkan semua anggota tim -->
       <?php foreach ($tim as $member) : ?>

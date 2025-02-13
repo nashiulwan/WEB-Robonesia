@@ -1,28 +1,28 @@
 <section>
   <header class="header__container">
     <div class="header__image">
-      <div class="header__image__card header__image__card-1">
+      <div class="header__image__card header__image__card-1" data-aos="fade-right">
         SCIENCE
       </div>
-      <div class="header__image__card header__image__card-2">
+      <div class="header__image__card header__image__card-2"data-aos="fade-left" data-aos-delay="200">
         <!-- <span><i class="ri-passport-line"></i></span> -->
         TECH
       </div>
-      <div class="header__image__card header__image__card-3">
+      <div class="header__image__card header__image__card-3" data-aos="fade-right" data-aos-delay="300">
         <!-- <span><i class="ri-map-2-line"></i></span> -->
         ENGINEERING
       </div>
-      <div class="header__image__card header__image__card-4">
+      <div class="header__image__card header__image__card-4"data-aos="fade-left" data-aos-delay="400">
         <!-- <span><i class="ri-guide-line"></i></span> -->
         MATH
       </div>
       <img src="image/header.png" alt="header" />
     </div>
     <div class="header__content">
-      <h1>SELAMAT DATANG DI <span>ROBONESIA!</span>
+      <h1 data-aos="fade-right" data-aos-duration="300">SELAMAT DATANG DI <span>ROBONESIA!</span>
         <br>RUMAH ROBOT INDONESIA
       </h1>
-      <p>
+      <p data-aos="fade-right" data-aos-duration="600" data-aos-delay="300">
         Robonesia adalah Lembaga yang konsen
         dalam dunia pendidikan khususnya robotika.
         Basis pembelajarannya berupa ekstrakurikuler
@@ -34,7 +34,7 @@
         menjadi salah satu negara dengan sumber
         daya manusia teknologi yang handal.
       </p>
-      <form action="/">
+      <form action="/" data-aos="fade-right" data-aos-duration="600" data-aos-delay="500">
         <div class="input__row">
           <div class="input__group">
             <h5>Lokasi</h5>
@@ -62,13 +62,15 @@
 <!-- VISI DAN MISI -->
 <section>
   <div class="visi-misi__container">
-    <h1>VISI</h1>
-    <div class="visi">
+    <h1 data-aos="fade-up">VISI</h1>
+    <div class="visi" data-aos="fade-up"
+     data-aos-anchor-placement="bottom-bottom" data-aos-delay="100">
       <p>Learning Robotic for better education</p>
     </div>
 
-    <h1 class="misi-tittle">MISI</h1>
-    <div class="misi">
+    <h1 class="misi-tittle" data-aos="fade-up" data-aos-delay="200">MISI</h1>
+    <div class="misi" data-aos="fade-up"
+     data-aos-anchor-placement="bottom-bottom" data-aos-delay="200">
       <ul>
         <li>Menumbuhkan integritas dalam diri anak
           anak dengan mengarahkan potensi anak
@@ -92,24 +94,24 @@
   </svg>
   <div class="commitment__container">
     <div class="commitment__left">
-      <h1>KOMITMEN KAMI</h1>
-      <p class="intro">Kami berdedikasi untuk mendukung pendidikan anak-anak melalui teknologi dan robotik, menciptakan masa depan yang lebih cerah.</p>
-      <a href="/tentang" class="btn">Pelajari Lebih Lanjut</a>
+      <h1 data-aos="fade-right" data-aos-duration="300">KOMITMEN KAMI</h1>
+      <p class="intro" data-aos="fade-right" data-aos-duration="500" data-aos-delay="200">Kami berdedikasi untuk mendukung pendidikan anak-anak melalui teknologi dan robotik, menciptakan masa depan yang lebih cerah.</p>
+      <a href="/tentang" class="btn" data-aos="fade-right" data-aos-duration="700" data-aos-delay="300">Pelajari Lebih Lanjut</a>
     </div>
     <div class="commitment__right">
-      <article class="commitment">
+      <article class="commitment" data-aos="zoom-in" data-aos-duration="500">
         <p>Mengembangkan program robotik untuk anak usia dini</p>
       </article>
-      <article class="commitment">
+      <article class="commitment" data-aos="zoom-in" data-aos-duration="750">
         <p>Membimbing anak Indonesia untuk mengenal teknologi sejak usia dini</p>
       </article>
-      <article class="commitment">
+      <article class="commitment" data-aos="zoom-in" data-aos-duration="1000">
         <p>Kami mencintai anak-anak dan meyakini bahwa mereka adalah aset tak ternilai untuk masa depan</p>
       </article>
-      <article class="commitment">
+      <article class="commitment" data-aos="zoom-in" data-aos-duration="1250">
         <p>Menyediakan layanan belajar yang relevan</p>
       </article>
-      <article class="commitment">
+      <article class="commitment" data-aos="zoom-in" data-aos-duration="1500">
         <p>Membuat sistem belajar alternatif yang menyenangkan</p>
       </article>
     </div>
@@ -125,11 +127,10 @@
 
 <section>
   <div class="testimoni__container swiper text-center">
-    <h1>Kata Mereka yang sudah</h1>
-    <h1>Belajar di <span class="gradient-text">Robonesia</span></h1>
+    <h1 data-aos="fade-up" data-aos-anchor-placement="bottom-bottom">Kata Mereka yang sudah</h1>
+    <h1 data-aos="fade-up" data-aos-anchor-placement="bottom-bottom">Belajar di <span class="gradient-text">Robonesia</span></h1>
     <div class="testimoni-card-wrapper">
       <ul class="testimoni-card-list swiper-wrapper">
-
         <li class="testimoni-card-item swiper-slide">
           <a href="#" class="testimoni-card-link">
             <img src="image/testimoni-2.jpg" alt="" class="testimoni-card-image">
@@ -204,8 +205,8 @@
 <!-- KEUNGGULAN KAMI -->
 <section>
   <div class="keunggulan-kami__container">
-    <h1>KEUNGGULAN KAMI</h1>
-    <div class="project-based-learning">
+    <h1 data-aos="fade-up" data-aos-anchor-placement="bottom-bottom" data-aos-duration="500">KEUNGGULAN KAMI</h1>
+    <div class="project-based-learning" data-aos="fade-up" data-aos-anchor-placement="bottom-bottom" data-aos-duration="700">
       <h2>Project Based Learning</h2>
       <p>Metode pembelajaran yang menggunakan
         proyek/kegiatan sebagai media pembelajaran
@@ -215,30 +216,30 @@
         memahami berbagai bentuk hasil kompetensi</p>
     </div>
     <div class="stem">
-      <h2>STEM METHOD</h2>
+      <h2 data-aos="fade-up" data-aos-anchor-placement="bottom-bottom" data-aos-duration="300">STEM METHOD</h2>
       <div class="stem-grid">
         <article class="keunggulan-kami">
           <!-- <img src="/image/keunggulan-kami-1.png" alt=""> -->
-          <h4>Science</h4>
-          <p>Memberikan pengetahuan kepada peserta didik mengenai hukum-hukum dan konsep-konsep yang berlaku di alam</p>
+          <h4 data-aos="fade-right" data-aos-duration="300">Science</h4>
+          <p data-aos="fade-right" data-aos-duration="300">Memberikan pengetahuan kepada peserta didik mengenai hukum-hukum dan konsep-konsep yang berlaku di alam</p>
         </article>
         <article class="keunggulan-kami">
           <!-- <img src="./assets/keunggulan-kami-1.png" alt=""> -->
-          <h4>Tech</h4>
-          <p>Keterampilan atau sebuah sistem yang digunakan dalam mengatur masyarakat, organisasi, pengetahuan atau mendesain serta menggunakan sebuah alat buatan yang dapat memudahkan pekerjaan</p>
+          <h4 data-aos="fade-left" data-aos-duration="300">Tech</h4>
+          <p data-aos="fade-left" data-aos-duration="300">Keterampilan atau sebuah sistem yang digunakan dalam mengatur masyarakat, organisasi, pengetahuan atau mendesain serta menggunakan sebuah alat buatan yang dapat memudahkan pekerjaan</p>
         </article>
         <article class="keunggulan-kami">
           <!-- <img src="./assets/keunggulan-kami-1.png" alt=""> -->
-          <h4>Engineering</h4>
-          <p>Pengetahuan untuk mengoperasikan atau mendesain sebuah prosedur untuk menyelesaikan sebuah masalah</p>
+          <h4 data-aos="fade-right" data-aos-duration="300">Engineering</h4>
+          <p data-aos="fade-right" data-aos-duration="300">Pengetahuan untuk mengoperasikan atau mendesain sebuah prosedur untuk menyelesaikan sebuah masalah</p>
         </article>
         <article class="keunggulan-kami">
           <!-- <img src="./assets/keunggulan-kami-1.png" alt=""> -->
-          <h4>Math</h4>
-          <p>Ilmu yang menghubungkan antara besaran, angka dan ruang yang hanya membutuhkan argumen logis tanpa atau di sertai dengan bukti empiris</p>
+          <h4 data-aos="fade-left" data-aos-duration="300">Math</h4>
+          <p data-aos="fade-left" data-aos-duration="300">Ilmu yang menghubungkan antara besaran, angka dan ruang yang hanya membutuhkan argumen logis tanpa atau di sertai dengan bukti empiris</p>
         </article>
       </div>
-      <a href="/pages/program" class="btn">Program Belajar</a>
+      <a href="/pages/program" class="btn" data-aos="fade-up" data-aos-duration="300">Program Belajar</a>
     </div>
   </div>
 </section>
@@ -251,7 +252,7 @@
   </svg>
   <div class="gallery__container">
     <div class="background-image"></div>
-    <h1 class="gallery__title">Galeri Dokumentasi</h1>
+    <h1 class="gallery__title" data-aos="fade-up" data-aos-duration="800">Galeri Dokumentasi</h1>
     <div class="galleryimage">
       <!-- Foto akan dimuat secara dinamis dengan JavaScript -->
     </div>
@@ -268,9 +269,9 @@
 <!-- SCHOOL PARTNER -->
 <section class="py-5">
     <div class="container-lg text-center">
-        <h1 class="mb-4">Sekolah yang Sudah Bermitra dengan Kami</h1>
+        <h1 class="mb-4" data-aos="fade-up" data-aos-duration="500">Sekolah yang Sudah Bermitra dengan Kami</h1>
         <div class="container text-center">
-            <div class="row row-cols-2 row-cols-md-4 g-4" id="home-partner-items">
+            <div class="row row-cols-2 row-cols-md-4 g-4" id="home-partner-items"  data-aos="fade-up" data-aos-duration="600">
                 <?php foreach ($partner as $item) : ?>
                     <div class="col">
                         <div class="p-3 border rounded shadow-sm logo-card">
@@ -289,32 +290,32 @@
 <!-- PRESTASI -->
 <section class="py-5">
   <div class="container-lg text-center">
-    <h1 class="mb-4">Prestasi Siswa Kami</h1>
+    <h1 class="mb-4"  data-aos="fade-up" data-aos-duration="500">Prestasi Siswa Kami</h1>
     <div class="table-responsive mx-auto" style="max-width: 800px;">
       <table class="table table-striped table-hover text-start">
         <tbody>
-          <tr>
+          <tr data-aos="fade-up" data-aos-delay="200">
             <td><span class="me-2">🏆</span>Juara Umum Walikota Bandung Robo Expo & Competition 2018 <span class="badge bg-primary ms-2">20 Kategori</span></td>
           </tr>
-          <tr>
+          <tr data-aos="fade-up" data-aos-delay="200">
             <td><span class="me-2">🥇</span>Juara Gemilang RoboCompetition 2018 - Bandung <span class="badge bg-success ms-2">14 Kategori</span></td>
           </tr>
-          <tr>
+          <tr data-aos="fade-up" data-aos-delay="200">
             <td><span class="me-2">🏆</span>Juara Umum Piala Gubernur Jawa Barat 2019 <span class="badge bg-warning text-dark ms-2">32 Kategori</span></td>
           </tr>
-          <tr>
+          <tr data-aos="fade-up" data-aos-delay="200">
             <td><span class="me-2">💻</span>Juara 1 Kategori Coding Mission Padjajaran Robotics Competition 2021</td>
           </tr>
-          <tr>
+          <tr data-aos="fade-up" data-aos-delay="200">
             <td><span class="me-2">🌍</span>Juara Umum Science & Robotics Fair Medan 2022 <span class="badge bg-info text-dark ms-2">Internasional</span></td>
           </tr>
-          <tr>
+          <tr data-aos="fade-up" data-aos-delay="200">
             <td><span class="me-2">🇹🇭</span>Youth Robot Competition (IYRC) 2018, Thailand <span class="badge bg-danger ms-2">Juara 2 Internasional</span></td>
           </tr>
-          <tr>
+          <tr data-aos="fade-up" data-aos-delay="200">
             <td><span class="me-2">🇰🇷</span>Youth Robot Competition (IYRC) 2019, Korea Selatan</td>
           </tr>
-          <tr>
+          <tr data-aos="fade-up" data-aos-delay="200">
             <td><span class="me-2">🤖</span>Juara Umum Medan Robotics Competition 2024</td>
           </tr>
         </tbody>

@@ -149,7 +149,8 @@ h4 {
 /* NAVBAR */
 /* ================================================================ */
 .nav__container {
-  position: relative;
+  position: fixed;
+  top: 0;
   padding: 2rem 1rem;
   display: flex;
   justify-content: space-between;
@@ -190,9 +191,7 @@ h4 {
 }
 
 .nav__container.scrolled {
-  position: fixed;
   padding: 1rem;
-  top: 0;
   background-color: white;
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
   transition: var(--transition);
@@ -269,7 +268,7 @@ h4 {
 .header__container {
   width: var(--max-width);
   margin: auto;
-  padding-block: 2rem;
+  padding-block: 10%;
   padding-inline: 3rem;
   display: grid;
   gap: 2rem;
@@ -552,9 +551,7 @@ h4 {
 .visi-misi__container {
   justify-content: center;
   padding: 3rem;
-  margin: 3rem 0;
   align-items: center;
-  /* height: 100vh; */
 }
 
 .visi-misi__container h1 {
@@ -1288,8 +1285,8 @@ h4 {
 .header__tentang {
   max-width: 85%;
   margin: auto;
-  padding-block: 8rem 2rem;
-  padding-inline: 3rem;
+  padding-block: 10%;
+  padding-inline: 1rem;
   overflow: hidden;
 }
 
@@ -1366,11 +1363,6 @@ h4 {
     font-size: 1rem;
   }
 
-  .header__tentang {
-    padding-block: 4rem 1rem;
-    padding-inline: 1rem;
-  }
-
 /* VISI MISI END */
 
 /* SEJARAH */
@@ -1421,7 +1413,8 @@ h4 {
 /* ================================================================ */
 /* ================================================================ */
 .gallery__section {
-  padding: 8rem 2rem;
+  /* padding: 8rem 2rem; */
+  padding-block: 10%;
   gap: 2rem;
   
 }
@@ -1694,17 +1687,18 @@ h4 {
 .tim__container {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: 100vh;
 }
 
 .tim__container__top {
+  padding-top: 10%;
+  padding-bottom: 5%;
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: var(--white);
-  padding: 2rem;
 }
 
 .tim__container__top section h1 {
