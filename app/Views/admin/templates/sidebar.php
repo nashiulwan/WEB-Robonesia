@@ -85,10 +85,8 @@
             <div id="collapsePengaturan" class="collapse" aria-labelledby="headingPengaturan" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item" href="<?= base_url('admin/pengaturan/kontak') ?>">Kontak</a>
-                    <a class="collapse-item" href="<?= base_url('admin/pengaturan/galeri') ?>">Galeri</a>
                     <a class="collapse-item" href="<?= base_url('admin/pengaturan/mitra') ?>">Mitra</a>
                     <a class="collapse-item" href="<?= base_url('admin/pengaturan/tim') ?>">Tim</a>
-                    <a class="collapse-item" href="<?= base_url('admin/pengaturan/prestasi') ?>">Prestasi</a>
                 </div>
             </div>
         </li>

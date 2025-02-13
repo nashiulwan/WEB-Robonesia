@@ -3,23 +3,30 @@
 namespace App\Controllers;
 
 use App\Models\ArtikelModel;
+use App\Models\Manage_akunModel;
 use CodeIgniter\Controller;
 
 
 class AdminController extends BaseController
 {
     protected $artikelModel;
+    protected $manage_akunModel;
     // protected $kategoriModel;
 
     public function __construct()
     {
         $this->artikelModel = new ArtikelModel(); // Contoh penggunaan model
+        $this->manage_akunModel = new Manage_akunModel(); // Contoh penggunaan model
     }
 
     // Method untuk dashboard
     public function dashboard()
     {
-        $data['title'] = 'Dashboard';
+        $data = [
+            'title' => 'Dashboard',
+            'jumlahArtikel' => $this->artikelModel->countAll(),
+            'jumlahPengguna' => $this->manage_akunModel->countAll(),
+        ];
         return view('admin/dashboard', $data);
     }
 

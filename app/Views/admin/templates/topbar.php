@@ -22,7 +22,7 @@ if ($hour >= 5 && $hour < 12) {
   <div
     class="d-none d-sm-inline-block form-inline mr-auto ml-md-6 my-2 my-md-0" ">
     <div class="input-group">   
-  <h1 class="d-none d-lg-inline text-gray-800" style="font-size:18px; margin-bottom:-2px">
+  <h1 class="d-none d-lg-inline text-gray-800" style="font-size:18px; margin-bottom:-2px; margin-left: 1rem;">
     <?= $greeting ?>
   </h1>
     </div>

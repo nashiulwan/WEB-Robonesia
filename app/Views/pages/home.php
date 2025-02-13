@@ -94,7 +94,7 @@
     <div class="commitment__left">
       <h1>KOMITMEN KAMI</h1>
       <p class="intro">Kami berdedikasi untuk mendukung pendidikan anak-anak melalui teknologi dan robotik, menciptakan masa depan yang lebih cerah.</p>
-      <a href="./tentang.html" class="btn">Pelajari Lebih Lanjut</a>
+      <a href="/tentang" class="btn">Pelajari Lebih Lanjut</a>
     </div>
     <div class="commitment__right">
       <article class="commitment">
