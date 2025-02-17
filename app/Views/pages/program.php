@@ -16,15 +16,15 @@
 </style>
 
 <!-- Header Section -->
-<header class="program__header text-center py-5">
+<header class="program__header text-center py-5" style="margin-top: 10%;">
   <div class="container">
     <h1>Belajar Robotik bersama Robonesia</h1>
     <p class="lead">Berikan pengalaman belajar yang seru dan interaktif dengan metode modern yang dirancang khusus untuk anak-anak!</p>
   </div>
 </header>
-
 <!-- Project-Based Learning Section -->
-<section class="program__project-based-learning py-5 bg-light">
+<section class="program__project-based-learning py-5 bg-light"
+  data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
   <div class="container">
     <div class="row align-items-center">
       <div class="col-md-4">
@@ -44,7 +44,8 @@
 </section>
 
 <!-- STEM Method Section -->
-<section class="program__stem-method py-5">
+<section class="program__stem-method py-5"
+  data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
   <div class="container">
     <div class="row align-items-center flex-md-row-reverse">
       <div class="col-md-4">
@@ -65,7 +66,8 @@
 </section>
 
 <!-- Tahapan Pembelajaran Section -->
-<section class="program__learning-levels py-5 bg-light">
+<section class="program__learning-levels py-5 bg-light"
+  data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
   <div class="container">
     <div class="row align-items-center">
       <div class="col-md-4">
@@ -86,7 +88,8 @@
 </section>
 
 <!-- Fasilitas Section -->
-<section class="program__fasilitas py-5">
+<section class="program__fasilitas py-5"
+  data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
   <div class="container">
     <div class="row align-items-center flex-md-row-reverse">
       <div class="col-md-4">
@@ -107,7 +110,8 @@
 </section>
 
 <!-- Proyek Akhir Section -->
-<section class="program__project py-5 bg-light">
+<section class="program__project py-5 bg-light"
+  data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
   <div class="container">
     <div class="row align-items-center">
       <div class="col-md-4">
@@ -127,7 +131,8 @@
 </section>
 
 <!-- Kompetisi Section -->
-<section class="program__kompetisi py-5">
+<section class="program__kompetisi py-5"
+  data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
   <div class="container">
     <div class="row align-items-center flex-md-row-reverse">
       <div class="col-md-4">
@@ -141,19 +146,105 @@
   </div>
 </section>
 <!-- Call-to-Action Section -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" style="margin-bottom: -80px;">
-  <path fill="#ffdd00" fill-opacity="1" d="M0,32L120,58.7C240,85,480,139,720,165.3C960,192,1200,192,1320,192L1440,192L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"></path>
-</svg>
-<section class="program__call-to-action py-5">
-  <!-- Gambar dan SVG -->
-  <img src="program_call.jpg" alt="Call-to-Action Image" class="call-to-action-image">
-  <!-- Teks Call-to-Action -->
-  <div class="container text-center">
-    <h2>Kenapa Memilih Robonesia?</h2>
-    <ul>
-      <li>Mentor profesional di bidang STEM.</li>
-      <li>Lingkungan positif dan mendukung.</li>
-      <li>Bimbingan berkelanjutan untuk pengembangan potensi anak.</li>
-    </ul>
-  </div>
-</section>
+<div data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" style="margin-bottom: -80px;">
+    <path fill="#ffdd00" fill-opacity="1" d="M0,32L120,58.7C240,85,480,139,720,165.3C960,192,1200,192,1320,192L1440,192L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"></path>
+  </svg>
+  <section class="program__call-to-action py-5">
+    <!-- Gambar dan SVG -->
+    <img src="program_call.jpg" alt="Call-to-Action Image" class="call-to-action-image">
+    <!-- Teks Call-to-Action -->
+    <div class="container text-center">
+      <h2>Kenapa Memilih Robonesia?</h2>
+      <ul>
+        <li>Mentor profesional di bidang STEM.</li>
+        <li>Lingkungan positif dan mendukung.</li>
+        <li>Bimbingan berkelanjutan untuk pengembangan potensi anak.</li>
+      </ul>
+    </div>
+  </section>
+</div>
+
+
+
+
+<script>
+  // SMOOTH SCROLL
+  {
+    function init() {
+      new SmoothScroll(document, 120, 12)
+    }
+
+    function SmoothScroll(target, speed, smooth) {
+      if (target === document)
+        target = (document.scrollingElement ||
+          document.documentElement ||
+          document.body.parentNode ||
+          document.body) // cross browser support for document scrolling
+
+      var moving = false
+      var pos = target.scrollTop
+      var frame = target === document.body &&
+        document.documentElement ?
+        document.documentElement :
+        target // safari is the new IE
+
+      target.addEventListener('mousewheel', scrolled, {
+        passive: false
+      })
+      target.addEventListener('DOMMouseScroll', scrolled, {
+        passive: false
+      })
+
+      function scrolled(e) {
+        e.preventDefault(); // disable default scrolling
+
+        var delta = normalizeWheelDelta(e)
+
+        pos += -delta * speed
+        pos = Math.max(0, Math.min(pos, target.scrollHeight - frame.clientHeight)) // limit scrolling
+
+        if (!moving) update()
+      }
+
+      function normalizeWheelDelta(e) {
+        if (e.detail) {
+          if (e.wheelDelta)
+            return e.wheelDelta / e.detail / 40 * (e.detail > 0 ? 1 : -1) // Opera
+          else
+            return -e.detail / 3 // Firefox
+        } else
+          return e.wheelDelta / 120 // IE,Safari,Chrome
+      }
+
+      function update() {
+        moving = true
+
+        var delta = (pos - target.scrollTop) / smooth
+
+        target.scrollTop += delta
+
+        if (Math.abs(delta) > 0.5)
+          requestFrame(update)
+        else
+          moving = false
+      }
+
+      var requestFrame = function() { // requestAnimationFrame cross browser
+        return (
+          window.requestAnimationFrame ||
+          window.webkitRequestAnimationFrame ||
+          window.mozRequestAnimationFrame ||
+          window.oRequestAnimationFrame ||
+          window.msRequestAnimationFrame ||
+          function(func) {
+            window.setTimeout(func, 1000 / 50);
+          }
+        );
+      }()
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      init();
+    })
+  }
+</script>

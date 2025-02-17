@@ -9,7 +9,7 @@ class PengaturanKontakSeeder extends Seeder
     public function run()
     {
         $data = [
-            'no_hp'     => '082118032898',
+            'no_hp'     => '+6282118032898',
             'email'     => 'robonesia.medan@gmail.com',
             'alamat'    => 'Komplek Permata Jatian Indah, Jl. Jatian Gg. Pribadi, Tembung, Kec. Percut Sei Tuan, Kab. Deli Serdang, Sumatera Utara',
             'maps'      => 'https://maps.app.goo.gl/AwN3DJPqsmCvnd5Z8',

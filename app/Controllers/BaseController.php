@@ -67,7 +67,7 @@ abstract class BaseController extends Controller
 
         // Load session service
         $this->session = session();
-        
+
         // Database connection
         $db = \Config\Database::connect();
 
@@ -81,7 +81,7 @@ abstract class BaseController extends Controller
         if ($artikelCount == 0 || $kontakCount == 0 || $partnerCount == 0 || $timCount == 0) {
             $db->transStart();
             $seeder = \Config\Database::seeder();
-            
+
             // Cek apakah DatabaseSeeder ada
             if (class_exists('App\Database\Seeds\DatabaseSeeder')) {
                 $seeder->call('DatabaseSeeder');
@@ -150,4 +150,4 @@ abstract class BaseController extends Controller
             . view($view, $data)
             . view('layout/footer', $data);
     }
-}   
+}

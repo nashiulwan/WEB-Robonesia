@@ -4,7 +4,7 @@
       <div class="header__image__card header__image__card-1" data-aos="fade-right">
         SCIENCE
       </div>
-      <div class="header__image__card header__image__card-2"data-aos="fade-left" data-aos-delay="200">
+      <div class="header__image__card header__image__card-2" data-aos="fade-left" data-aos-delay="200">
         <!-- <span><i class="ri-passport-line"></i></span> -->
         TECH
       </div>
@@ -12,7 +12,7 @@
         <!-- <span><i class="ri-map-2-line"></i></span> -->
         ENGINEERING
       </div>
-      <div class="header__image__card header__image__card-4"data-aos="fade-left" data-aos-delay="400">
+      <div class="header__image__card header__image__card-4" data-aos="fade-left" data-aos-delay="400">
         <!-- <span><i class="ri-guide-line"></i></span> -->
         MATH
       </div>
@@ -44,7 +44,7 @@
             </div>
           </div>
           <div class="button__row">
-            <a target="_blank" href="https://wa.me/082118032898" type="button" class="btn-a btn-whatsapp">
+            <a target="_blank" href="<?= esc('https://wa.me/' . $kontak['no_hp']) ?>" type="button" class="btn-a btn-whatsapp">
               <i class="ri-whatsapp-fill"></i>
             </a>
             <a target="_blank" href="https://maps.app.goo.gl/Cu246KuzoBk2Dvph8" type="button" class="btn-a btn-maps">
@@ -64,13 +64,13 @@
   <div class="visi-misi__container">
     <h1 data-aos="fade-up">VISI</h1>
     <div class="visi" data-aos="fade-up"
-     data-aos-anchor-placement="bottom-bottom" data-aos-delay="100">
+      data-aos-anchor-placement="bottom-bottom" data-aos-delay="100">
       <p>Learning Robotic for better education</p>
     </div>
 
     <h1 class="misi-tittle" data-aos="fade-up" data-aos-delay="200">MISI</h1>
     <div class="misi" data-aos="fade-up"
-     data-aos-anchor-placement="bottom-bottom" data-aos-delay="200">
+      data-aos-anchor-placement="bottom-bottom" data-aos-delay="200">
       <ul>
         <li>Menumbuhkan integritas dalam diri anak
           anak dengan mengarahkan potensi anak
@@ -268,21 +268,21 @@
 
 <!-- SCHOOL PARTNER -->
 <section class="py-5">
-    <div class="container-lg text-center">
-        <h1 class="mb-4" data-aos="fade-up" data-aos-duration="500">Sekolah yang Sudah Bermitra dengan Kami</h1>
-        <div class="container text-center">
-            <div class="row row-cols-2 row-cols-md-4 g-4" id="home-partner-items"  data-aos="fade-up" data-aos-duration="600">
-                <?php foreach ($partner as $item) : ?>
-                    <div class="col">
-                        <div class="p-3 border rounded shadow-sm logo-card">
-                            <img class="img-fluid mx-auto d-block" src="<?=base_url('uploads/' . $item['logo']); ?>" 
-                                alt="<?= esc($item['partner']); ?>" style="max-width: 100px; height: 100px;">
-                        </div>
-                    </div>
-                <?php endforeach; ?>
+  <div class="container-lg text-center">
+    <h1 class="mb-4" data-aos="fade-up" data-aos-duration="500">Sekolah yang Sudah Bermitra dengan Kami</h1>
+    <div class="container text-center">
+      <div class="row row-cols-2 row-cols-md-4 g-4" id="home-partner-items" data-aos="fade-up" data-aos-duration="600">
+        <?php foreach ($partner as $item) : ?>
+          <div class="col">
+            <div class="p-3 border rounded shadow-sm logo-card">
+              <img class="img-fluid mx-auto d-block" src="<?= base_url('uploads/' . $item['logo']); ?>"
+                alt="<?= esc($item['partner']); ?>" style="max-width: 100px; height: 100px;">
             </div>
-        </div>
+          </div>
+        <?php endforeach; ?>
+      </div>
     </div>
+  </div>
 </section>
 
 <!-- SCHOOL PARTNER END -->
@@ -290,7 +290,7 @@
 <!-- PRESTASI -->
 <section class="py-5">
   <div class="container-lg text-center">
-    <h1 class="mb-4"  data-aos="fade-up" data-aos-duration="500">Prestasi Siswa Kami</h1>
+    <h1 class="mb-4" data-aos="fade-up" data-aos-duration="500">Prestasi Siswa Kami</h1>
     <div class="table-responsive mx-auto" style="max-width: 800px;">
       <table class="table table-striped table-hover text-start">
         <tbody>
@@ -324,5 +324,3 @@
   </div>
 </section>
 <!-- PRESTASI END -->
-
-
