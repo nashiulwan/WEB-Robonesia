@@ -8,108 +8,119 @@ use CodeIgniter\Session\Session;
 use Myth\Auth\Config\Auth as AuthConfig;
 use App\Libraries\CaptchaLib;
 use Myth\Auth\Controllers\AuthController as MythAuthController;
-
+use Myth\Auth\Authorization\GroupModel;
 
 class AuthController extends Controller
 {
+    protected $auth;
 
-  protected $auth;
+    /**
+     * @var AuthConfig
+     */
+    protected $config;
 
-  /**
-   * @var AuthConfig
-   */
-  protected $config;
+    /**
+     * @var Session
+     */
+    protected $session;
 
-  /**
-   * @var Session
-   */
-  protected $session;
+    public function __construct()
+    {
+        // Most services in this controller require
+        // the session to be started - so fire it up!
+        $this->session = service('session');
 
-  public function __construct()
-  {
-    // Most services in this controller require
-    // the session to be started - so fire it up!
-    $this->session = service('session');
-
-    $this->config = config('Auth');
-    $this->auth   = service('authentication');
-  }
-
-  public function login()
-  {
-    $captchaLib = new CaptchaLib();
-    $captchaImage = $captchaLib->generateCaptcha();
-
-    $data = [
-      'title' => 'Robonesia | Login',
-      'captcha_image' => $captchaImage,
-    ];
-
-    return view('auth/login', $data);
-  }
-
-  public function attemptLogin()
-  {
-    $captchaInput = $this->request->getPost('captcha_answer');
-
-    $captchaLib = new CaptchaLib();
-    if (!$captchaLib->validateCaptcha($captchaInput)) {
-      return redirect()->back()->withInput()->with('error', 'Jawaban tidak sesuai. Silakan coba kembali.');
+        $this->config = config('Auth');
+        $this->auth   = service('authentication');
     }
 
-    $rules = [
-      'login'    => 'required',
-      'password' => 'required',
-    ];
-    if ($this->config->validFields === ['email']) {
-      $rules['login'] .= '|valid_email';
+    public function login()
+    {
+        $captchaLib = new CaptchaLib();
+        $captchaImage = $captchaLib->generateCaptcha();
+
+        $data = [
+            'title' => 'Robonesia | Login',
+            'captcha_image' => $captchaImage,
+        ];
+
+        return view('auth/login', $data);
     }
 
-    if (! $this->validate($rules)) {
-      return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+    public function attemptLogin()
+    {
+        $captchaInput = $this->request->getPost('captcha_answer');
+    
+        $captchaLib = new CaptchaLib();
+        if (!$captchaLib->validateCaptcha($captchaInput)) {
+            return redirect()->back()->withInput()->with('error', 'Jawaban tidak sesuai. Silakan coba kembali.');
+        }
+    
+        $rules = [
+            'login'    => 'required',
+            'password' => 'required',
+        ];
+        if ($this->config->validFields === ['email']) {
+            $rules['login'] .= '|valid_email';
+        }
+    
+        if (! $this->validate($rules)) {
+            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        }
+    
+        $login    = $this->request->getPost('login');
+        $password = $this->request->getPost('password');
+        $remember = (bool) $this->request->getPost('remember');
+    
+        // Determine credential type
+        $type = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+    
+        // Try to log them in...
+        if (! $this->auth->attempt([$type => $login, 'password' => $password], $remember)) {
+            return redirect()->back()->withInput()->with('error', $this->auth->error() ?? lang('Auth.badAttempt'));
+        }
+    
+        // Is the user being forced to reset their password?
+        if ($this->auth->user()->force_pass_reset === true) {
+            return redirect()->to(route_to('reset-password') . '?token=' . $this->auth->user()->reset_hash)->withCookies();
+        }
+    
+        // Cek Role Pengguna Setelah Login
+        $userId = $this->auth->user()->id;
+        $authz = service('authorization'); // Panggil layanan authorization
+    
+        if ($authz->inGroup('admin', $userId)) {
+            $redirectURL = site_url('/admin/dashboard');
+        } elseif ($authz->inGroup('siswa', $userId)) {
+            $redirectURL = site_url('/siswa/dashboard');
+        } else {
+            $redirectURL = site_url('/'); // Redirect ke halaman utama jika role tidak dikenal
+        }
+    
+        unset($_SESSION['redirect_url']);
+        return redirect()->to($redirectURL)->withCookies()->with('message', lang('Auth.loginSuccess'));
+    }
+    
+
+
+    public function logout()
+    {
+        // Memanggil fungsi logout bawaan Myth/Auth
+        service('authentication')->logout();
+        cache()->clean();
+        // Redirect ke halaman login atau halaman lain sesuai kebutuhan
+        return redirect()->to('auth/login')->with('success', 'Anda berhasil logout.');
     }
 
-    $login    = $this->request->getPost('login');
-    $password = $this->request->getPost('password');
-    $remember = (bool) $this->request->getPost('remember');
-
-    // Determine credential type
-    $type = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
-
-    // Try to log them in...
-    if (! $this->auth->attempt([$type => $login, 'password' => $password], $remember)) {
-      return redirect()->back()->withInput()->with('error', $this->auth->error() ?? lang('Auth.badAttempt'));
+    public function register(): string
+    {
+        // Menampilkan halaman registrasi, pastikan view register ada
+        return view('auth/register');
     }
 
-    // Is the user being forced to reset their password?
-    if ($this->auth->user()->force_pass_reset === true) {
-      return redirect()->to(route_to('reset-password') . '?token=' . $this->auth->user()->reset_hash)->withCookies();
+    public function admin(): string
+    {
+        // Menampilkan halaman dashboard admin setelah login berhasil
+        return view('admin/dashboard');
     }
-
-    $redirectURL = session('redirect_url') ?? site_url('/admin/dashboard');
-    unset($_SESSION['redirect_url']);
-
-    return redirect()->to($redirectURL)->withCookies()->with('message', lang('Auth.loginSuccess'));
-  }
-
-  public function logout()
-  {
-    // Memanggil fungsi logout bawaan Myth/Auth
-    service('authentication')->logout();
-    cache()->clean();
-    // Redirect ke halaman login atau halaman lain sesuai kebutuhan
-    return redirect()->to('auth/login')->with('success', 'Anda berhasil logout.');
-  }
-
-  public function register(): string
-  {
-    // Menampilkan halaman registrasi, pastikan view register ada
-    return view('auth/register');
-  }
-
-  public function admin(): string
-  {
-    // Menampilkan halaman dashboard admin setelah login berhasil
-    return view('admin/dashboard');
-  }
 }
