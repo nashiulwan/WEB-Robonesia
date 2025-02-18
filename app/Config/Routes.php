@@ -83,7 +83,6 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
 
 
 
-
     // Routes untuk pengaturan
     $routes->get('pengaturan', 'PengaturanController::index', ['filter' => 'role:admin']);
 
@@ -114,7 +113,7 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
     $routes->get('pengaturan/galeri', 'PengaturanController::galeri', ['filter' => 'role:admin']);
 });
 
-$routes->group('siswa', ['filter' => 'auth'], function($routes) {
+$routes->group('siswa', ['filter' => 'auth'], function ($routes) {
     $routes->get('dashboard', 'SiswaController::dashboard', ['filter' => 'role:siswa']);
 });
 
