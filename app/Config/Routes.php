@@ -81,9 +81,6 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
     $routes->post('artikel/delete/(:num)', 'ArtikelController::delete/$1', ['filter' => 'role:admin']); // Menghapus artikel
     $routes->post('artikel/upload', 'ArtikelController::upload');
 
-
-
-
     // Routes untuk pengaturan
     $routes->get('pengaturan', 'PengaturanController::index', ['filter' => 'role:admin']);
 
@@ -113,6 +110,11 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
 
     $routes->get('pengaturan/galeri', 'PengaturanController::galeri', ['filter' => 'role:admin']);
 });
+
+$routes->group('siswa', ['filter' => 'auth'], function($routes) {
+    $routes->get('dashboard', 'SiswaController::dashboard', ['filter' => 'role:siswa']);
+});
+
 
 
 $routes->group('guru', ['filter' => 'auth'], function ($routes) {});
