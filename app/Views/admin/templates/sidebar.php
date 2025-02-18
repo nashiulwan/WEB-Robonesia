@@ -27,7 +27,7 @@
         <!-- Nav Item - Manage_akun -->
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseManage_akun" aria-expanded="true" aria-controls="collapseArtikel">
-                <i class="fas fa-fw fa-user"></i>
+                <i class="fas fa-fw fa-users"></i>
                 <span>Kelola Akun</span>
             </a>
             <div id="collapseManage_akun" class="collapse" aria-labelledby="headingManage_akun" data-parent="#accordionSidebar">
@@ -52,13 +52,22 @@
             </div>
         </li>
 
-        <!-- Nav Item - Pengguna -->
+        <!-- Nav Item - Manage_Kelas -->
         <li class="nav-item">
-            <a class="nav-link" href="<?= base_url('admin/pengguna'); ?>">
-                <i class="fas fa-fw fa-users"></i>
-                <span>Pengguna</span>
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseManage_kelas" aria-expanded="true" aria-controls="collapseManage_kelas">
+                <i class="fas fa-chalkboard-teacher"></i>
+                <span>Manajemen Kelas</span>
             </a>
+            <div id="collapseManage_kelas" class="collapse" aria-labelledby="headingManage_kelas" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="<?= base_url('admin/manage_kelas'); ?>">Daftar Kelas</a>
+                    <a class="collapse-item" href="<?= base_url('admin/manage_kelas/tambah'); ?>">Tambah Kelas</a>
+                    <a class="collapse-item" href="<?= base_url('admin/manage_kelas/kelola_anggota'); ?>">Kelola Anggota</a>
+                    <a class="collapse-item" href="<?= base_url('admin/manage_kelas/evaluasi'); ?>">Evaluasi Pembelajaran</a>
+                </div>
+            </div>
         </li>
+        
 
         <!-- Nav Item - Analytics -->
         <li class="nav-item">
