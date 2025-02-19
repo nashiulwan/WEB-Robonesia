@@ -10,10 +10,8 @@
         background-color: white !important;
     }
 
-    /* Container untuk deskripsi: maksimal 4 baris dan scroll vertical jika lebih */
     .desc-container {
         max-height: 6em;
-        /* Sesuaikan dengan line-height; misalnya jika line-height 1.5, 1.5 x 4 = 6em */
         overflow-y: auto;
         line-height: 1.5em;
     }
@@ -48,60 +46,71 @@
         </tr>
     </table>
 
-    <!-- Pencarian Anggota -->
-    <div class="mt-4 mb-3 d-flex align-items-center justify-content-between">
-        <div class="flex-grow-1 me-3">
-            <input type="text" id="searchMemberInput" class="form-control" placeholder="Cari anggota berdasarkan nama">
-        </div>
-        <i class="fas fa-search text-muted" style="margin-right:1rem"></i>
-    </div>
-
     <!-- Daftar Anggota Kelas -->
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h5 class="mb-3">Daftar Anggota Kelas</h5>
+    <div class="d-flex justify-content-between align-items-center mb-3" style="padding-top: 1rem;">
+        <h4 class="mb-2">Daftar Anggota Kelas</h4>
         <a href="<?= base_url('admin/manage_kelas/kelola_anggota/tambah/' . esc($class['id'])); ?>" class="btn btn-primary">Tambahkan Anggota</a>
     </div>
 
-    <table class="table table-bordered table-hover">
-        <thead>
+    <!-- Search Box -->
+    <div class="mb-3">
+        <input type="text" id="searchMemberInput" class="form-control" placeholder="Cari anggota berdasarkan username, nama, atau email">
+    </div>
+
+    <table class="table table-bordered table-hover tabel-akun">
+        <thead style="color: black; background-color:#2222">
             <tr>
                 <th style="width: 5%;">No</th>
-                <th style="width: 45%;">Nama</th>
-                <th style="width: 25%;">Email</th>
-                <th style="width: 25%;">Aksi</th>
+                <th style="width: 25%;">Username</th>
+                <th style="width: 35%;">Nama</th>
+                <th style="width: 30%;">Email</th>
+                <th style="width: 5%;">Aksi</th>
             </tr>
         </thead>
         <tbody>
             <?php $no = 1; ?>
             <?php if (!empty($members)) : ?>
                 <?php foreach ($members as $member) : ?>
-                    <tr>
+                    <tr class="bg-green">
                         <td><?= $no++; ?></td>
-                        <td><?= esc($member['nama']); ?></td>
+                        <td><?= esc($member['username']); ?></td>
+                        <td><?= esc($member['fullname']); ?></td>
                         <td><?= esc($member['email']); ?></td>
                         <td>
-                            <a href="<?= base_url('admin/manage_kelas/remove_member/' . esc($member['id'])); ?>" class="btn btn-danger btn-sm" onclick="return confirm('Hapus anggota ini?');">
-                                <i class="fas fa-user-times"></i>
-                            </a>
+                            <form action="<?= base_url('admin/manage_kelas/kelola_anggota/hapus/' . esc($member['anggota_id'])); ?>" method="post" style="display:inline;" onsubmit="return confirm('Hapus anggota ini?');">
+                                <?= csrf_field(); ?>
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                    <i class="fas fa-user-times"></i>
+                                </button>
+                            </form>
                         </td>
                     </tr>
                 <?php endforeach; ?>
             <?php else : ?>
                 <tr>
-                    <td colspan="4" class="text-center">Tidak ada anggota ditemukan</td>
+                    <td colspan="5" class="text-center">Tidak ada anggota ditemukan</td>
                 </tr>
             <?php endif; ?>
         </tbody>
     </table>
 </div>
 
+<!-- jQuery dan Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     $(document).ready(function() {
         $("#searchMemberInput").on("keyup", function() {
             var value = $(this).val().toLowerCase();
-            $("table tbody tr").each(function() {
-                var memberName = $(this).find("td:nth-child(2)").text().toLowerCase();
-                $(this).toggle(memberName.includes(value));
+            $(".tabel-akun tbody tr").each(function() {
+                var username = $(this).find("td:nth-child(2)").text().toLowerCase();
+                var fullname = $(this).find("td:nth-child(3)").text().toLowerCase();
+                var email = $(this).find("td:nth-child(4)").text().toLowerCase();
+                if (username.includes(value) || fullname.includes(value) || email.includes(value)) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
             });
         });
     });

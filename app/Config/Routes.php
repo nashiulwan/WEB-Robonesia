@@ -80,15 +80,20 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
     $routes->get('manage_kelas/edit/(:num)', 'Manage_kelasController::edit/$1', ['filter' => 'role:admin']);
     $routes->post('manage_kelas/update/(:num)', 'Manage_kelasController::update/$1', ['filter' => 'role:admin']);
     $routes->post('manage_kelas/delete/(:num)', 'Manage_kelasController::delete/$1', ['filter' => 'role:admin']);
+
     //  Manage kelas (kelola anggota)
     $routes->get('manage_kelas/kelola_anggota', 'Manage_kelasController::kelola_anggota', ['filter' => 'role:admin']);
     $routes->get('manage_kelas/kelola_anggota/detail/(:num)', 'Manage_kelasController::detail/$1', ['filter' => 'role:admin']);
-    $routes->get('manage_kelas/kelola_anggota/tambah/(:num)', 'Manage_kelasController::tambah_anggota/$id', ['filter' => 'role:admin']);
+    $routes->get('manage_kelas/kelola_anggota/tambah/(:num)', 'Manage_kelasController::tambah_anggota/$1', ['filter' => 'role:admin']);
     $routes->post('manage_kelas/kelola_anggota/simpan', 'Manage_kelasController::simpan_anggota', ['filter' => 'role:admin']);
+    $routes->post('manage_kelas/kelola_anggota/tambah_anggota', 'Manage_kelasController::addMemberToClass', ['filter' => 'role:admin']);
     $routes->post('manage_kelas/kelola_anggota/hapus/(:num)', 'Manage_kelasController::hapus_anggota/$1', ['filter' => 'role:admin']);
+    $routes->post('manage_kelas/kelola_anggota/hapus_anggota/(:num)/(:num)', 'Manage_kelasController::hapus_anggota_kelas/$1/$2', ['filter' => 'role:admin']);
+
+
     //  Manage kelas (evaluasi pembelajaran)
     $routes->get('manage_kelas/evaluasi', 'Manage_kelasController::evaluasi', ['filter' => 'role:admin']);
-    $routes->post('manage_kelas/evaluasi/update', 'Manage_kelasController::update_evaluasi', ['filter' => 'role:admin']);
+    $routes->post('manage_kelas/evaluasi/update', 'Manage_kelasController::up   date_evaluasi', ['filter' => 'role:admin']);
 
 
     // Routes untuk manage artikel

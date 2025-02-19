@@ -222,8 +222,6 @@ class Manage_kelasController extends BaseController
         $this->manageKelasModel->deleteKelas($id);
         return redirect()->to('admin/manage_kelas');
     }
-
-    // Kelola Anggota
     public function kelola_anggota()
     {
         if (!logged_in()) {
@@ -232,28 +230,39 @@ class Manage_kelasController extends BaseController
 
         // Mengambil semua kelas beserta jumlah anggota
         $classes = $this->manageKelasModel->getAllClassesWithMemberCount();
+
+        // Filter hanya kelas dengan status aktif (status = 1)
+        $activeClasses = array_filter($classes, function ($kelas) {
+            return $kelas['status'] == 1; // Pastikan tipe data sesuai (integer atau string)
+        });
+
         $data = [
-            'title' => 'Kelola Anggota Kelas',
-            'classes' => $classes,
+            'title'   => 'Kelola Anggota Kelas',
+            'classes' => $activeClasses,
         ];
 
         return view('admin/manage_kelas/kelola_anggota', $data);
     }
-
     public function detail($id)
     {
         if (!logged_in()) {
             return redirect()->to('/login');
         }
 
+        // Ambil detail kelas (termasuk jumlah anggota)
         $class = $this->manageKelasModel->getClassWithMemberCountById($id);
+        // Ambil data anggota kelas
+        $members = $this->manageKelasModel->getAnggotaByKelas($id);
+
         $data = [
-            'title' => 'Detail Anggota Kelas',
-            'class' => $class,
+            'title'   => 'Detail Anggota Kelas',
+            'class'   => $class,
+            'members' => $members,
         ];
 
         return view('admin/manage_kelas/detail_kelas', $data);
     }
+
 
     // public function tambah_anggota($id)
     // {
@@ -299,17 +308,6 @@ class Manage_kelasController extends BaseController
     // }
 
 
-    // // Hapus Anggota dari Kelas
-    // public function hapus_anggota($id)
-    // {
-    //     if (!logged_in()) {
-    //         return redirect()->to('/login');
-    //     }
-
-    //     $this->manageKelasModel->removeAnggota($id);
-    //     return redirect()->to('/manage_kelas/kelola_anggota');
-    // }
-
     // // Evaluasi Pembelajaran
     // public function evaluasi()
     // {
@@ -344,37 +342,67 @@ class Manage_kelasController extends BaseController
     //     return redirect()->to('/manage_kelas/evaluasi');
     // }
 
-    // Show Class Details
-
     public function tambah_anggota($id)
     {
         $manage_akunModel = new Manage_akunModel();
 
-        // Get all users with roles, but filter only the ones with role "Siswa" (role == 2)
+        // Ambil semua user dengan role "siswa" (role == 2)
         $users = $manage_akunModel->getAllUsersWithRoles();
         $filteredUsers = array_filter($users, function ($user) {
-            return $user['role'] == 2; // Only include users with role "Siswa"
+            return $user['role'] == 2;
         });
 
+        // Ambil anggota yang sudah terdaftar di kelas ini
+        $members = $this->manageKelasModel->getAnggotaByKelas($id);
+        // Buat array dari kolom 'id_user'
+        $member_ids = array_column($members, 'id_user');
+
+        // (Opsional) Debugging: Log isi $member_ids
+        log_message('debug', 'Member IDs: ' . print_r($member_ids, true));
+
         $data = [
-            'title' => 'Daftar Akun',
-            'users' => $filteredUsers, // Pass the filtered list of users
+            'title'      => 'Daftar Akun',
+            'users'      => $filteredUsers,
+            'class_id'   => $id,
+            'member_ids' => $member_ids,
         ];
-        $data['class_id'] = $id;
 
         return view('admin/manage_kelas/tambah_anggota', $data);
     }
 
-    // Add Member to Class
+
     public function addMemberToClass()
     {
         $kelasId = $this->request->getPost('kelas_id');
-        $userId = $this->request->getPost('user_id');
+        $userId  = $this->request->getPost('user_id');
 
-        if ($this->manageKelasModel->addMember($kelasId, $userId)) {
-            return redirect()->to('/admin/manage_kelas/detail/' . $kelasId)->with('success', 'Anggota berhasil ditambahkan.');
+        $result = $this->manageKelasModel->addAnggota($kelasId, $userId);
+
+        if ($result === 'already_joined') {
+            return redirect()->to('/admin/manage_kelas/kelola_anggota/tambah/' . $kelasId)
+                ->with('error', 'Akun telah bergabung di kelas ini.');
+        } elseif ($result) {
+            return redirect()->to('/admin/manage_kelas/kelola_anggota/tambah/' . $kelasId)
+                ->with('success', 'Anggota berhasil ditambahkan.');
         } else {
             return redirect()->back()->with('error', 'Gagal menambahkan anggota.');
         }
+    }
+
+    public function hapus_anggota($id)
+    {
+        // $id di sini adalah ID record dari tabel kelas_anggota
+        if ($this->manageKelasModel->removeMemberById($id)) {
+            return redirect()->back()->with('success', 'Anggota berhasil dihapus.');
+        } else {
+            return redirect()->back()->with('error', 'Gagal menghapus anggota.');
+        }
+    }
+
+    public function removeMember($kelas_id, $user_id)
+    {
+        return $this->db->table('kelas_anggota')
+            ->where(['kelas_id' => $kelas_id, 'user_id' => $user_id])
+            ->delete();
     }
 }

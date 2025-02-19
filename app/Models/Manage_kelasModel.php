@@ -56,15 +56,16 @@ class Manage_kelasModel extends Model
             ->delete();
     }
 
-    // Mendapatkan semua anggota kelas
     public function getAnggotaByKelas($kelasId)
     {
         return $this->db->table($this->tableAnggota)
-            ->join('users', 'users.id = kelas_anggota.user_id')
-            ->where('kelas_anggota.kelas_id', $kelasId)
+            ->select('kelas_anggota.id as anggota_id, kelas_anggota.id_user, users.username, users.fullname, users.email')
+            ->join('users', 'users.id = kelas_anggota.id_user')
+            ->where('kelas_anggota.id_kelas', $kelasId)
             ->get()
             ->getResultArray();
     }
+
 
     // Mendapatkan semua kelas yang tersedia
     public function getAllKelas()
@@ -107,32 +108,64 @@ class Manage_kelasModel extends Model
             ->get()
             ->getRowArray();
     }
-
     public function addAnggota($kelasId, $userId)
     {
-        // Ambil data user berdasarkan id dari tabel 'users'
-        $user = $this->getUserById($userId);
+        // Log nilai yang diterima
+        log_message('debug', 'addAnggota: Received kelasId = ' . $kelasId . ', userId = ' . $userId);
 
-        // Jika user tidak ditemukan, kembalikan false atau lakukan penanganan error
-        if (!$user) {
+        // Cek apakah kelas dengan ID tersebut ada
+        if (!$this->find($kelasId)) {
+            log_message('error', 'addAnggota: Kelas dengan ID ' . $kelasId . ' tidak ditemukan.');
             return false;
         }
 
-        // Siapkan data untuk insert ke tabel kelas_anggota
+        // Ambil data user dari tabel 'users'
+        $user = $this->getUserById($userId);
+        if (!$user) {
+            log_message('error', 'addAnggota: User dengan ID ' . $userId . ' tidak ditemukan.');
+            return false;
+        }
+
+        // Cek apakah pasangan kelas dan user sudah ada di tabel kelas_anggota
+        $existing = $this->db->table($this->tableAnggota)
+            ->where('id_kelas', $kelasId)
+            ->where('id_user', $userId)
+            ->get()
+            ->getRow();
+        if ($existing) {
+            log_message('debug', 'addAnggota: User ' . $userId . ' sudah bergabung di kelas ' . $kelasId);
+            // Mengembalikan string khusus agar controller bisa menampilkan pesan bahwa user sudah bergabung
+            return 'already_joined';
+        }
+
         $data = [
             'id_kelas'   => $kelasId,
             'id_user'    => $userId,
             'created_at' => date('Y-m-d H:i:s')
         ];
 
-        // Insert data ke tabel kelas_anggota
-        $this->db->table($this->tableAnggota)->insert($data);
+        // Lakukan insert ke tabel kelas_anggota
+        $insert = $this->db->table($this->tableAnggota)->insert($data);
+        if (!$insert) {
+            log_message('error', 'addAnggota: Gagal melakukan insert ke kelas_anggota. Data: ' . json_encode($data));
+            return false;
+        }
 
-        // Kembalikan data user yang diperlukan
+        log_message('debug', 'addAnggota: Insert berhasil. Data: ' . json_encode($data));
+
         return [
             'username'     => $user['username'],
             'fullname'     => $user['fullname'],
             'asal_sekolah' => $user['asal_sekolah']
         ];
+    }
+
+    public function removeMemberById($id)
+    {
+        $this->db->table($this->tableAnggota)
+            ->where('id', $id)
+            ->delete();
+        log_message('debug', 'Affected rows: ' . $this->db->affectedRows());
+        return $this->db->affectedRows() > 0;
     }
 }
