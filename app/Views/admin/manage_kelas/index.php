@@ -39,53 +39,55 @@
 
     <!-- Table for Displaying Classes -->
     <?php $no = 1; ?>
-    <table class="table table-bordered table-hover">
-        <thead class="table" style="color: black; background-color:#2222">
-            <tr>
-                <th style="width: 5%;">No</th>
-                <th style="width: 20%;">Nama Kelas</th>
-                <th style="width: 15%;">Kode Kelas</th> <!-- Added Kode Kelas Column -->
-                <th style="width: 10%;">Jumlah Anggota</th>
-                <th style="width: 10%;">Status Kelas</th>
-                <th style="width: 10%;">Aksi</th>
-            </tr>
-        </thead>
-        <tbody class="table-group-divider" style="color: black;">
-            <?php if (!empty($classes)) : ?>
-                <?php foreach ($classes as $row) : ?>
-                    <tr>
-                        <td><?= $no++; ?></td>
-                        <td class="text-break"><?= esc($row['nama_kelas']); ?></td>
-                        <td class="text-break"><?= esc($row['kode_kelas']); ?></td> <!-- Display the class code -->
-                        <td class="text-break"><?= esc($row['jumlah_anggota']); ?></td>
-                        <td class="text-break"> <?= esc($row['status'] == 1 ? 'Aktif' : 'Tidak Aktif'); ?></td>
-                        <td>
-                            <div class="d-flex flex-wrap gap-2" style="justify-content: space-between;">
-                                <!-- Button for adding members -->
-                                <a href="<?= base_url('admin/manage_kelas/kelola_anggota/tambah/' . esc($row['id'])); ?>" class="btn btn-primary btn-sm d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; margin: 2px;">
-                                    <i class="fas fa-user-plus"></i>
-                                </a>
-                                <a href="<?= base_url('admin/manage_kelas/edit/' . esc($row['id'])); ?>" class="btn btn-warning btn-sm d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; margin: 2px;">
-                                    <i class="fas fa-pen"></i>
-                                </a>
-
-                                <form action="<?= base_url('admin/manage_kelas/delete/' . esc($row['id'])); ?>" method="post">
-                                    <?= csrf_field(); ?>
-                                    <button type="submit" class="btn btn-danger btn-sm d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; margin: 2px" onclick="return confirm('Apakah Anda yakin ingin menghapus kelas ini?');">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            <?php else : ?>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="table" style="color: black; background-color:#2222">
                 <tr>
-                    <td colspan="6" class="text-center">Tidak ada data kelas ditemukan</td>
+                    <th style="width: 5%;">No</th>
+                    <th style="width: 20%;">Nama Kelas</th>
+                    <th style="width: 15%;">Kode Kelas</th> <!-- Added Kode Kelas Column -->
+                    <th style="width: 10%;">Jumlah Anggota</th>
+                    <th style="width: 10%;">Status Kelas</th>
+                    <th style="width: 10%;">Aksi</th>
                 </tr>
-            <?php endif; ?>
-        </tbody>
-    </table>
+            </thead>
+            <tbody class="table-group-divider" style="color: black;">
+                <?php if (!empty($classes)) : ?>
+                    <?php foreach ($classes as $row) : ?>
+                        <tr>
+                            <td><?= $no++; ?></td>
+                            <td class="text-break"><?= esc($row['nama_kelas']); ?></td>
+                            <td class="text-break"><?= esc($row['kode_kelas']); ?></td> <!-- Display the class code -->
+                            <td class="text-break"><?= esc($row['jumlah_anggota']); ?></td>
+                            <td class="text-break"> <?= esc($row['status'] == 1 ? 'Aktif' : 'Tidak Aktif'); ?></td>
+                            <td>
+                                <div class="d-flex flex-wrap gap-2" style="justify-content: space-between;">
+                                    <!-- Button for adding members -->
+                                    <a href="<?= base_url('admin/manage_kelas/kelola_anggota/tambah/' . esc($row['id'])); ?>" class="btn btn-primary btn-sm d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; margin: 2px;">
+                                        <i class="fas fa-user-plus"></i>
+                                    </a>
+                                    <a href="<?= base_url('admin/manage_kelas/edit/' . esc($row['id'])); ?>" class="btn btn-warning btn-sm d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; margin: 2px;">
+                                        <i class="fas fa-pen"></i>
+                                    </a>
+
+                                    <form action="<?= base_url('admin/manage_kelas/delete/' . esc($row['id'])); ?>" method="post">
+                                        <?= csrf_field(); ?>
+                                        <button type="submit" class="btn btn-danger btn-sm d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; margin: 2px" onclick="return confirm('Apakah Anda yakin ingin menghapus kelas ini?');">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php else : ?>
+                    <tr>
+                        <td colspan="6" class="text-center">Tidak ada data kelas ditemukan</td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <!-- Ensure jQuery and Bootstrap JS are loaded -->

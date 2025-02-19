@@ -11,40 +11,43 @@
             <h5 class="mb-0"><i class="fas fa-table"></i> Data Kontak Terkini</h5>
         </div>
         <div class="card-body">
-            <table class="table table-bordered">
-                <thead class="table-dark">
-                    <tr>
-                        <th>No. HP</th>
-                        <th>Email</th>
-                        <th>Alamat</th>
-                        <th>Maps</th>
-                        <th>Facebook</th>
-                        <th>Instagram</th>
-                        <th>X</th>
-                        <th>Tiktok</th>
-                        <th>Youtube</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php if (!empty($kontak)) : ?>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead class="table-dark">
                         <tr>
-                            <td><?= esc($kontak['no_hp']) ?></td>
-                            <td><?= esc($kontak['email']) ?></td>
-                            <td><?= esc(strlen($kontak['alamat']) > 50 ? substr($kontak['alamat'], 0, 50) . '...' : $kontak['alamat']) ?></td>
-                            <td><a href="<?= esc($kontak['maps']) ?>" target="_blank">Lihat Maps</a></td>
-                            <td><a href="<?= esc($kontak['facebook']) ?>" target="_blank">Facebook</a></td>
-                            <td><a href="<?= esc($kontak['instagram']) ?>" target="_blank">Instagram</a></td>
-                            <td><a href="<?= esc($kontak['x']) ?>" target="_blank">X</a></td>
-                            <td><a href="<?= esc($kontak['tiktok']) ?>" target="_blank">Tiktok</a></td>
-                            <td><a href="<?= esc($kontak['youtube']) ?>" target="_blank">Youtube</a></td>
+                            <th>No. HP</th>
+                            <th>Email</th>
+                            <th>Alamat</th>
+                            <th>Maps</th>
+                            <th>Facebook</th>
+                            <th>Instagram</th>
+                            <th>X</th>
+                            <th>Tiktok</th>
+                            <th>Youtube</th>
                         </tr>
-                    <?php else : ?>
-                        <tr>
-                            <td colspan="9" class="text-center">Data belum tersedia.</td>
-                        </tr>
-                    <?php endif; ?>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <?php if (!empty($kontak)) : ?>
+                            <tr>
+                                <td><?= esc($kontak['no_hp']) ?></td>
+                                <td><?= esc($kontak['email']) ?></td>
+                                <td><?= esc(strlen($kontak['alamat']) > 50 ? substr($kontak['alamat'], 0, 50) . '...' : $kontak['alamat']) ?></td>
+                                <td><a href="<?= esc($kontak['maps']) ?>" target="_blank">Lihat Maps</a></td>
+                                <td><a href="<?= esc($kontak['facebook']) ?>" target="_blank">Facebook</a></td>
+                                <td><a href="<?= esc($kontak['instagram']) ?>" target="_blank">Instagram</a></td>
+                                <td><a href="<?= esc($kontak['x']) ?>" target="_blank">X</a></td>
+                                <td><a href="<?= esc($kontak['tiktok']) ?>" target="_blank">Tiktok</a></td>
+                                <td><a href="<?= esc($kontak['youtube']) ?>" target="_blank">Youtube</a></td>
+                            </tr>
+                        <?php else : ?>
+                            <tr>
+                                <td colspan="9" class="text-center">Data belum tersedia.</td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
+
         </div>
     </div>
 
@@ -56,7 +59,7 @@
         <div class="card-body">
             <form action="<?= base_url('admin/pengaturan/kontak/update') ?>" method="post">
                 <?= csrf_field() ?>
-                
+
                 <div class="row">
                     <div class="col-md-6">
                         <div class="mb-3">
@@ -73,7 +76,7 @@
                             <label class="form-label"><i class="fas fa-map-marker-alt"></i> Alamat</label>
                             <textarea name="alamat" class="form-control" rows="3" required><?= esc($kontak['alamat'] ?? '') ?></textarea>
                         </div>
-                        
+
                         <div class="mb-3">
                             <label class="form-label"><i class="fas fa-map"></i> Google Maps Embed Link</label>
                             <input type="url" name="maps" class="form-control" value="<?= esc($kontak['maps'] ?? '') ?>" required>

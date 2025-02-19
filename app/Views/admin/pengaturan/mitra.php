@@ -14,6 +14,7 @@
 
     <!-- Tabel Daftar Partner -->
     <div class="table-responsive">
+        <div class="table-responsive"></div>
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>

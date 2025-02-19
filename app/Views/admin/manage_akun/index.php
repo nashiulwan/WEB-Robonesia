@@ -43,96 +43,99 @@
 
     <!-- TABEL -->
     <?php $no = 1; ?>
-    <table class="table table-bordered table-hover">
-        <thead class="table" style="color: black; background-color:#2222">
-            <tr>
-                <th style="width: 5%;">No</th>
-                <th style="width: 15%;">Nama pengguna</th>
-                <th style="width: 28%;">Email</th>
-                <th style="width: 30%;">Nama Lengkap</th>
-                <th style="width: 12%;">
-                    Hak Akses
-                    <!-- Filter Hak Akses dengan button dropdown -->
-                    <div class="dropdown d-inline">
-                        <button class="btn btn-sm btn-secondary dropdown-toggle btn-filter-role" type="button" id="filterRoleButton" data-bs-toggle="dropdown" aria-expanded="false" style="width: 30px; height:30px; color:black; background-color:transparent; border:none; margin:-5px">
-                            <i class="fas fa-bars" style="font-size: 1em; margin-right: 0.5rem;"></i>
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="filterRoleButton">
-                            <li>
-                                <a class="dropdown-item filter-option" href="#" data-role="all">
-                                    <i class="fas fa-bars" style="font-size: 1em; margin-right: 0.5rem;"></i>
-                                    Semua
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item filter-option" href="#" data-role="1">
-                                    <i class="fab fa-black-tie" style="font-size: 1em; margin-right: 0.5rem;"></i>
-                                    Admin
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item filter-option" href="#" data-role="3">
-                                    <i class="fas fa-user-tie" style="font-size: 1em; margin-right: 0.5rem;"></i>
-                                    Guru
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item filter-option" href="#" data-role="2">
-                                    <i class="fas fa-user-graduate" style="font-size: 1em; margin-right: 0.5rem;"></i>
-                                    Siswa
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item filter-option" href="#" data-role="0">
-                                    <i class="fas fa-question-circle" style="font-size: 1em; margin-right: 0.5rem;"></i>
-                                    Lainnya
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </th>
-                <th style="width: 10%;">Aksi</th>
-            </tr>
-        </thead>
-        <tbody class="table-group-divider" style="color: black;">
-            <?php if (!empty($users)) : ?>
-                <?php foreach ($users as $row) : ?>
-                    <tr>
-                        <td><?= $no++; ?></td>
-                        <td class="text-break"><?= esc($row['username']); ?></td>
-                        <td class="text-break"><?= esc($row['email']); ?></td>
-                        <td class="text-break"><?= esc($row['fullname']); ?></td>
-                        <td class="text-break">
-                            <!-- Update role per baris via AJAX -->
-                            <select class="form-select form-select-sm change-role" data-id="<?= $row['id']; ?>">
-                                <option value="1" <?= ($row['role'] == '1') ? 'selected' : '' ?>>Admin</option>
-                                <option value="3" <?= ($row['role'] == '3') ? 'selected' : '' ?>>Guru</option>
-                                <option value="2" <?= ($row['role'] == '2') ? 'selected' : '' ?>>Siswa</option>
-                                <option value="0" <?= (!in_array($row['role'], ['3', '1', '2'])) ? 'selected' : '' ?>>-</option>
-                            </select>
-                        </td>
-                        <td>
-                            <div class="d-flex flex-wrap gap-2" style="justify-content: space-between;">
-                                <a href="<?= base_url('admin/manage_akun/edit/' . esc($row['id'])); ?>" class="btn btn-warning btn-sm d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; margin: 2px;">
-                                    <i class="fas fa-pen"></i>
-                                </a>
-                                <form action="<?= base_url('admin/manage_akun/delete/' . esc($row['id'])); ?>" method="post">
-                                    <?= csrf_field(); ?>
-                                    <button type="submit" class="btn btn-danger btn-sm d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; margin: 2px" onclick="return confirm('Apakah Anda yakin ingin menghapus artikel ini?');">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            <?php else : ?>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="table" style="color: black; background-color:#2222">
                 <tr>
-                    <td colspan="11" class="text-center">Tidak ada data ditemukan</td>
+                    <th style="width: 5%;">No</th>
+                    <th style="width: 15%;">Nama pengguna</th>
+                    <th style="width: 28%;">Email</th>
+                    <th style="width: 30%;">Nama Lengkap</th>
+                    <th style="width: 12%;">
+                        Hak Akses
+                        <!-- Filter Hak Akses dengan button dropdown -->
+                        <div class="dropdown d-inline">
+                            <button class="btn btn-sm btn-secondary dropdown-toggle btn-filter-role" type="button" id="filterRoleButton" data-bs-toggle="dropdown" aria-expanded="false" style="width: 30px; height:30px; color:black; background-color:transparent; border:none; margin:-5px">
+                                <i class="fas fa-bars" style="font-size: 1em; margin-right: 0.5rem;"></i>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="filterRoleButton">
+                                <li>
+                                    <a class="dropdown-item filter-option" href="#" data-role="all">
+                                        <i class="fas fa-bars" style="font-size: 1em; margin-right: 0.5rem;"></i>
+                                        Semua
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item filter-option" href="#" data-role="1">
+                                        <i class="fab fa-black-tie" style="font-size: 1em; margin-right: 0.5rem;"></i>
+                                        Admin
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item filter-option" href="#" data-role="3">
+                                        <i class="fas fa-user-tie" style="font-size: 1em; margin-right: 0.5rem;"></i>
+                                        Guru
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item filter-option" href="#" data-role="2">
+                                        <i class="fas fa-user-graduate" style="font-size: 1em; margin-right: 0.5rem;"></i>
+                                        Siswa
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item filter-option" href="#" data-role="0">
+                                        <i class="fas fa-question-circle" style="font-size: 1em; margin-right: 0.5rem;"></i>
+                                        Lainnya
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </th>
+                    <th style="width: 10%;">Aksi</th>
                 </tr>
-            <?php endif; ?>
-        </tbody>
-    </table>
+            </thead>
+            <tbody class="table-group-divider" style="color: black;">
+                <?php if (!empty($users)) : ?>
+                    <?php foreach ($users as $row) : ?>
+                        <tr>
+                            <td><?= $no++; ?></td>
+                            <td class="text-break"><?= esc($row['username']); ?></td>
+                            <td class="text-break"><?= esc($row['email']); ?></td>
+                            <td class="text-break"><?= esc($row['fullname']); ?></td>
+                            <td class="text-break">
+                                <!-- Update role per baris via AJAX -->
+                                <select class="form-select form-select-sm change-role" data-id="<?= $row['id']; ?>">
+                                    <option value="1" <?= ($row['role'] == '1') ? 'selected' : '' ?>>Admin</option>
+                                    <option value="3" <?= ($row['role'] == '3') ? 'selected' : '' ?>>Guru</option>
+                                    <option value="2" <?= ($row['role'] == '2') ? 'selected' : '' ?>>Siswa</option>
+                                    <option value="0" <?= (!in_array($row['role'], ['3', '1', '2'])) ? 'selected' : '' ?>>-</option>
+                                </select>
+                            </td>
+                            <td>
+                                <div class="d-flex flex-wrap gap-2" style="justify-content: space-between;">
+                                    <a href="<?= base_url('admin/manage_akun/edit/' . esc($row['id'])); ?>" class="btn btn-warning btn-sm d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; margin: 2px;">
+                                        <i class="fas fa-pen"></i>
+                                    </a>
+                                    <form action="<?= base_url('admin/manage_akun/delete/' . esc($row['id'])); ?>" method="post">
+                                        <?= csrf_field(); ?>
+                                        <button type="submit" class="btn btn-danger btn-sm d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; margin: 2px" onclick="return confirm('Apakah Anda yakin ingin menghapus artikel ini?');">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php else : ?>
+                    <tr>
+                        <td colspan="11" class="text-center">Tidak ada data ditemukan</td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+
 </div>
 
 <!-- Pastikan jQuery dan Bootstrap JS telah dimuat -->

@@ -56,43 +56,45 @@
     <div class="mb-3">
         <input type="text" id="searchMemberInput" class="form-control" placeholder="Cari anggota berdasarkan username, nama, atau email">
     </div>
-
-    <table class="table table-bordered table-hover tabel-akun">
-        <thead style="color: black; background-color:#2222">
-            <tr>
-                <th style="width: 5%;">No</th>
-                <th style="width: 25%;">Username</th>
-                <th style="width: 35%;">Nama</th>
-                <th style="width: 30%;">Email</th>
-                <th style="width: 5%;">Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php $no = 1; ?>
-            <?php if (!empty($members)) : ?>
-                <?php foreach ($members as $member) : ?>
-                    <tr class="bg-green">
-                        <td><?= $no++; ?></td>
-                        <td><?= esc($member['username']); ?></td>
-                        <td><?= esc($member['fullname']); ?></td>
-                        <td><?= esc($member['email']); ?></td>
-                        <td>
-                            <form action="<?= base_url('admin/manage_kelas/kelola_anggota/hapus/' . esc($member['anggota_id'])); ?>" method="post" style="display:inline;" onsubmit="return confirm('Hapus anggota ini?');">
-                                <?= csrf_field(); ?>
-                                <button type="submit" class="btn btn-danger btn-sm">
-                                    <i class="fas fa-user-times"></i>
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            <?php else : ?>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover tabel-akun">
+            <thead style="color: black; background-color:#2222">
                 <tr>
-                    <td colspan="5" class="text-center">Tidak ada anggota ditemukan</td>
+                    <th style="width: 5%;">No</th>
+                    <th style="width: 25%;">Username</th>
+                    <th style="width: 35%;">Nama</th>
+                    <th style="width: 30%;">Email</th>
+                    <th style="width: 5%;">Aksi</th>
                 </tr>
-            <?php endif; ?>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <?php $no = 1; ?>
+                <?php if (!empty($members)) : ?>
+                    <?php foreach ($members as $member) : ?>
+                        <tr class="bg-green">
+                            <td><?= $no++; ?></td>
+                            <td><?= esc($member['username']); ?></td>
+                            <td><?= esc($member['fullname']); ?></td>
+                            <td><?= esc($member['email']); ?></td>
+                            <td>
+                                <form action="<?= base_url('admin/manage_kelas/kelola_anggota/hapus/' . esc($member['anggota_id'])); ?>" method="post" style="display:inline;" onsubmit="return confirm('Hapus anggota ini?');">
+                                    <?= csrf_field(); ?>
+                                    <button type="submit" class="btn btn-danger btn-sm">
+                                        <i class="fas fa-user-times"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php else : ?>
+                    <tr>
+                        <td colspan="5" class="text-center">Tidak ada anggota ditemukan</td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+
 </div>
 
 <!-- jQuery dan Bootstrap JS -->
