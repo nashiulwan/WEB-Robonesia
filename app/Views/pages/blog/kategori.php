@@ -1,5 +1,5 @@
 <div class="container mt-5">
-    <h1 class="mb-4"><?= esc($title) ?></h1>
+    <h1 class="mb-4" style="margin-top: 8rem;"><?= esc($title) ?></h1>
 
     <?php if (!empty($message)) : ?>
         <div class="alert alert-warning"><?= esc($message) ?></div>

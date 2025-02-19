@@ -1,5 +1,5 @@
 <div class="container mt-5">
-    <div class="row">
+    <div class="row" style="margin-top: 8rem;">
         <!-- Konten Utama -->
         <div class="col-md-8">
             <h1 class="mb-4"><?= esc($artikel['judul']) ?></h1>

@@ -12,7 +12,7 @@
         <!-- Divider -->
         <hr class="sidebar-divider">
 
-        <!-- Nav Item - Dashboard Siswa -->
+        <!-- Menu Akademik -->
         <li class="nav-item">
             <a class="nav-link" href="<?= base_url('siswa/dashboard'); ?>">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
@@ -20,95 +20,64 @@
             </a>
         </li>
 
-        <!-- Nav Item - Sertifikat yang Diperoleh -->
+        <!-- Menu Prestasi & Pencapaian -->
         <li class="nav-item">
-            <a class="nav-link" href="<?= base_url('siswa/sertifikat'); ?>">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePrestasi" aria-expanded="true" aria-controls="collapsePrestasi">
                 <i class="fas fa-fw fa-award"></i>
-                <span>Sertifikat yang Diperoleh</span>
+                <span>Prestasi dan Nilai</span>
             </a>
-        </li>
-
-        <!-- Nav Item - Pengumuman -->
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePengumuman" aria-expanded="true" aria-controls="collapsePengumuman">
-                <i class="fas fa-fw fa-bullhorn"></i>
-                <span>Pengumuman</span>
-            </a>
-            <div id="collapsePengumuman" class="collapse" aria-labelledby="headingPengumuman" data-parent="#accordionSidebar">
+            <div id="collapsePrestasi" class="collapse" aria-labelledby="headingPrestasi" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="<?= base_url('siswa/pengumuman/sekolah'); ?>">Informasi Sekolah</a>
-                    <a class="collapse-item" href="<?= base_url('siswa/pengumuman/event'); ?>">Event dan Lomba</a>
+                    <a class="collapse-item" href="<?= base_url('siswa/nilai'); ?>">Nilai</a>
+                    <a class="collapse-item" href="<?= base_url('siswa/sertifikat'); ?>">Sertifikat yang Diperoleh</a>
+                    <a class="collapse-item" href="<?= base_url('siswa/prestasi'); ?>">Daftar Prestasi</a>
+                    <a class="collapse-item" href="<?= base_url('siswa/level'); ?>">Sertifikat Level & Pencapaian</a>
                 </div>
             </div>
         </li>
 
-        <!-- Nav Item - Daftar Prestasi -->
+        <!-- Menu Informasi -->
         <li class="nav-item">
-            <a class="nav-link" href="<?= base_url('siswa/prestasi'); ?>">
-                <i class="fas fa-fw fa-trophy"></i>
-                <span>Daftar Prestasi Siswa</span>
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseInfo" aria-expanded="true" aria-controls="collapseInfo">
+                <i class="fas fa-fw fa-bullhorn"></i>
+                <span>Informasi</span>
             </a>
+            <div id="collapseInfo" class="collapse" aria-labelledby="headingInfo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="<?= base_url('siswa/pengumuman/sekolah'); ?>">Informasi Sekolah</a>
+                    <a class="collapse-item" href="<?= base_url('siswa/pengumuman/event'); ?>">Event dan Lomba</a>
+                    <a class="collapse-item" href="<?= base_url('siswa/jadwal'); ?>">Jadwal Event/Lomba</a>
+                </div>
+            </div>
         </li>
 
-        <!-- Nav Item - Galeri Kegiatan -->
+        <!-- Menu Kegiatan & Proyek -->
         <li class="nav-item">
-            <a class="nav-link" href="<?= base_url('siswa/galeri'); ?>">
-                <i class="fas fa-fw fa-photo-video"></i>
-                <span>Galeri Kegiatan</span>
-            </a>
-        </li>
-
-        <!-- Nav Item - Project yang Selesai -->
-        <li class="nav-item">
-            <a class="nav-link" href="<?= base_url('siswa/project'); ?>">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseKegiatan" aria-expanded="true" aria-controls="collapseKegiatan">
                 <i class="fas fa-fw fa-tasks"></i>
-                <span>Project yang Selesai</span>
+                <span>Kegiatan & Proyek</span>
             </a>
+            <div id="collapseKegiatan" class="collapse" aria-labelledby="headingKegiatan" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="<?= base_url('siswa/galeri'); ?>">Galeri Kegiatan</a>
+                </div>
+            </div>
         </li>
 
-        <!-- Nav Item - Sertifikat Level dan Pencapaian -->
-        <li class="nav-item">
-            <a class="nav-link" href="<?= base_url('siswa/level'); ?>">
-                <i class="fas fa-fw fa-medal"></i>
-                <span>Sertifikat Level & Pencapaian</span>
-            </a>
-        </li>
-
-        <!-- Nav Item - Nilai -->
-        <li class="nav-item">
-            <a class="nav-link" href="<?= base_url('siswa/nilai'); ?>">
-                <i class="fas fa-fw fa-graduation-cap"></i>
-                <span>Nilai</span>
-            </a>
-        </li>
-
-        <!-- Nav Item - Jadwal Event/Lomba -->
-        <li class="nav-item">
-            <a class="nav-link" href="<?= base_url('siswa/jadwal'); ?>">
-                <i class="fas fa-fw fa-calendar-alt"></i>
-                <span>Jadwal Event/Lomba</span>
-            </a>
-        </li>
-
-        <!-- Nav Item - Hubungi Guru -->
+        <!-- Menu Komunikasi -->
         <li class="nav-item">
             <a class="nav-link" href="<?= base_url('siswa/hubungi_guru'); ?>">
                 <i class="fas fa-fw fa-comments"></i>
                 <span>Hubungi Guru</span>
             </a>
         </li>
-
-        <!-- Nav Item - Notifikasi -->
         <li class="nav-item">
             <a class="nav-link" href="<?= base_url('siswa/notifikasi'); ?>">
                 <i class="fas fa-fw fa-bell"></i>
                 <span>Notifikasi</span>
             </a>
         </li>
-
     <?php endif; ?>
-
-
 
     <!-- Nav Item - Logout -->
     <li class="nav-item">

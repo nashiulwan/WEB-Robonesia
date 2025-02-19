@@ -2,82 +2,99 @@
 // window.onbeforeunload = function () {
 //   window.scrollTo(0, 0);
 // };
-
 // SMOOTH SCROLL
-{
-  function init() {
-    new SmoothScroll(document, 120, 12)
-  }
+// {
+//   function isOpera() {
+//     return !!window.opr || navigator.userAgent.indexOf(" OPR/") >= 0;
+//   }
+  
+//   function isSmoothScrollSupported() {
+//     return "scrollBehavior" in document.documentElement.style;
+//   }
+  
+//   // Aktifkan smooth scroll hanya jika browser adalah Opera atau tidak punya smooth scrolling bawaan
+//   if (isOpera() || !isSmoothScrollSupported()) {
+//     initSmoothScroll();
+//   } else {
+//     console.log("Smooth scrolling bawaan browser sudah ada, tidak perlu custom smooth scrolling.");
+//   }
+  
+//   function initSmoothScroll() {
+//     console.log("Mengaktifkan smooth scroll custom...");
+//     new SmoothScroll(document, 120, 12);
+//   }
+  
 
-  function SmoothScroll(target, speed, smooth) {
-    if (target === document)
-      target = (document.scrollingElement
-        || document.documentElement
-        || document.body.parentNode
-        || document.body) // cross browser support for document scrolling
+//   function SmoothScroll(target, speed, smooth) {
+//     if (target === document)
+//       target = (document.scrollingElement
+//         || document.documentElement
+//         || document.body.parentNode
+//         || document.body) // cross browser support for document scrolling
 
-    var moving = false
-    var pos = target.scrollTop
-    var frame = target === document.body
-      && document.documentElement
-      ? document.documentElement
-      : target // safari is the new IE
+//     var moving = false
+//     var pos = target.scrollTop
+//     var frame = target === document.body
+//       && document.documentElement
+//       ? document.documentElement
+//       : target // safari is the new IE
 
-    target.addEventListener('mousewheel', scrolled, { passive: false })
-    target.addEventListener('DOMMouseScroll', scrolled, { passive: false })
+//     target.addEventListener('mousewheel', scrolled, { passive: false })
+//     target.addEventListener('DOMMouseScroll', scrolled, { passive: false })
 
-    function scrolled(e) {
-      e.preventDefault(); // disable default scrolling
+//     function scrolled(e) {
+//       e.preventDefault(); // disable default scrolling
 
-      var delta = normalizeWheelDelta(e)
+//       var delta = normalizeWheelDelta(e)
 
-      pos += -delta * speed
-      pos = Math.max(0, Math.min(pos, target.scrollHeight - frame.clientHeight)) // limit scrolling
+//       pos += -delta * speed
+//       pos = Math.max(0, Math.min(pos, target.scrollHeight - frame.clientHeight)) // limit scrolling
 
-      if (!moving) update()
-    }
+//       if (!moving) update()
+//     }
 
-    function normalizeWheelDelta(e) {
-      if (e.detail) {
-        if (e.wheelDelta)
-          return e.wheelDelta / e.detail / 40 * (e.detail > 0 ? 1 : -1) // Opera
-        else
-          return -e.detail / 3 // Firefox
-      } else
-        return e.wheelDelta / 120 // IE,Safari,Chrome
-    }
+//     function normalizeWheelDelta(e) {
+//       if (e.detail) {
+//         if (e.wheelDelta)
+//           return e.wheelDelta / e.detail / 40 * (e.detail > 0 ? 1 : -1) // Opera
+//         else
+//           return -e.detail / 3 // Firefox
+//       } else
+//         return e.wheelDelta / 120 // IE,Safari,Chrome
+//     }
 
-    function update() {
-      moving = true
+//     function update() {
+//       moving = true
 
-      var delta = (pos - target.scrollTop) / smooth
+//       var delta = (pos - target.scrollTop) / smooth
 
-      target.scrollTop += delta
+//       target.scrollTop += delta
 
-      if (Math.abs(delta) > 0.5)
-        requestFrame(update)
-      else
-        moving = false
-    }
+//       if (Math.abs(delta) > 0.5)
+//         requestFrame(update)
+//       else
+//         moving = false
+//     }
 
-    var requestFrame = function () { // requestAnimationFrame cross browser
-      return (
-        window.requestAnimationFrame ||
-        window.webkitRequestAnimationFrame ||
-        window.mozRequestAnimationFrame ||
-        window.oRequestAnimationFrame ||
-        window.msRequestAnimationFrame ||
-        function (func) {
-          window.setTimeout(func, 1000 / 50);
-        }
-      );
-    }()
-  }
+//     var requestFrame = function () { // requestAnimationFrame cross browser
+//       return (
+//         window.requestAnimationFrame ||
+//         window.webkitRequestAnimationFrame ||
+//         window.mozRequestAnimationFrame ||
+//         window.oRequestAnimationFrame ||
+//         window.msRequestAnimationFrame ||
+//         function (func) {
+//           window.setTimeout(func, 1000 / 50);
+//         }
+//       );
+//     }()
+//   }
 
-  window.addEventListener('DOMContentLoaded', () => {
-    init();
-  })
-}
+//   window.addEventListener('DOMContentLoaded', () => {
+//     init();
+//   })
+// }
+
 
 
 

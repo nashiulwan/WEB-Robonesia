@@ -33,7 +33,6 @@
 
 html {
   scroll-behavior: smooth;
-
 }
 
 * {
@@ -268,7 +267,6 @@ h4 {
 .header__container {
   width: var(--max-width);
   margin: auto;
-  padding-block: 10%;
   padding-inline: 3rem;
   display: grid;
   gap: 2rem;
@@ -487,9 +485,9 @@ h4 {
 
 @media screen and (max-width: 800px) {
   .header__container {
-    /* padding-block: 4rem 2rem; */
     grid-template-columns: 1fr;
     gap: 2rem;
+    padding-block: 10%;
   }
 
   .header__image {
@@ -1285,7 +1283,6 @@ h4 {
 .header__tentang {
   max-width: 85%;
   margin: auto;
-  padding-block: 10%;
   padding-inline: 1rem;
   overflow: hidden;
 }
@@ -1413,10 +1410,7 @@ h4 {
 /* ================================================================ */
 /* ================================================================ */
 .gallery__section {
-  /* padding: 8rem 2rem; */
-  padding-block: 10%;
   gap: 2rem;
-  
 }
 
 .gallery__section h1 {

@@ -1,5 +1,5 @@
 <!-- Header -->
-<header class="header__tentang">
+<header class="header__tentang"  style="margin-top: 10%;">
   <h1 data-aos="fade-up" data-aos-duration="1000">Tentang Kami</h1>
   <div class="tentang__container">
     <section>
