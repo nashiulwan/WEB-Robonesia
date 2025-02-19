@@ -63,7 +63,6 @@
                     <a class="collapse-item" href="<?= base_url('admin/manage_kelas'); ?>">Daftar Kelas</a>
                     <a class="collapse-item" href="<?= base_url('admin/manage_kelas/tambah'); ?>">Tambah Kelas</a>
                     <a class="collapse-item" href="<?= base_url('admin/manage_kelas/kelola_anggota'); ?>">Kelola Anggota</a>
-                    <a class="collapse-item" href="<?= base_url('admin/manage_kelas/evaluasi'); ?>">Evaluasi Pembelajaran</a>
                 </div>
             </div>
         </li>
