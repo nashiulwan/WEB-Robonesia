@@ -2,11 +2,18 @@
 
 namespace App\Controllers;
 use App\Models\TimModel;
+use App\Models\ArtikelModel;
 // use App\Models\PartnerModel;
 
 class PagesController extends BaseController
 {
+    protected $artikelModel;
+
+    public function __construct() {
+        $this->artikelModel = new ArtikelModel();
+    }
     // protected $partnerModel;
+    
 
     // public function __construct() {
     //     $this->partnerModel = new PartnerModel();
@@ -15,7 +22,11 @@ class PagesController extends BaseController
     public function index()
     {
         $data = [
-            'title' => 'Robonesia | Rumah Robot Indonesia', 
+            'title' => 'Robonesia | Rumah Robot Indonesia',
+            'artikel' => $this->artikelModel
+                ->where('status', 'publish')
+                ->orderBy('created_at', 'DESC')
+                ->findAll(),
             // 'partner' => $this->partnerModel->findAll()
         ];
         $this->renderView('pages/home', $data);
