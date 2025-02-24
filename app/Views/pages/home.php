@@ -56,6 +56,41 @@
     </form>
     </div>
   </header>
+  <div class="row p-3">
+        <?php if (!empty($artikel)) : ?>
+          <?php $artikel_terbatas = array_slice($artikel, 0, 3); ?>
+          <?php foreach ($artikel_terbatas as $row) : ?>
+                <div class="col-md-4 col-sm-6 mb-4" data-aos="fade-up" data-aos-duration="1000">
+                    <div class="card shadow-sm border-0">
+                        <?php if (!empty($row['gambar'])) : ?>
+                            <img src="<?= base_url('uploads/' . esc($row['gambar'])); ?>" 
+                                class="card-img-top img-fluid" style="height: 200px; object-fit: cover;" 
+                                alt="<?= esc($row['judul']); ?>">
+                        <?php else : ?>
+                            <img src="<?= base_url('uploads/default.jpg'); ?>" class="card-img-top" alt="No Image">
+                        <?php endif; ?>
+
+                        <div class="card-body">
+                            <h5 class="card-title"><?= esc($row['judul']); ?></h5>
+                            <p class="card-text"><?= strip_tags(substr($row['konten'], 0, 100)) ?>...</p>
+                            <a href="<?= base_url('/' . esc($row['slug'])); ?>" class="btn btn-primary">Baca Selengkapnya</a>
+                        </div>
+
+                        <div class="card-footer text-muted text-center">
+                            <small>
+                                <i class="fas fa-folder"></i> <?= esc(ucfirst($row['kategori'])); ?> | 
+                                <i class="fas fa-calendar"></i> <?= date('d M Y', strtotime($row['created_at'])); ?>
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        <?php else : ?>
+            <div class="col-12 text-center">
+                <p class="alert alert-warning">Belum ada artikel yang dipublikasikan.</p>
+            </div>
+        <?php endif; ?>
+    </div>
 </section>
 <!-- MULAI DARI SINI -->
 
@@ -121,48 +156,6 @@
   </svg>
 </section>
 <!-- END KOMITMEN  -->
-
-<!-- Daftar Artikel -->
-  <div class="testimoni__container swiper text-center p-3">  
-  <h1 data-aos="fade-up" data-aos-anchor-placement="bottom-bottom">BLOG</h1>
-  <div class="row">
-        <?php if (!empty($artikel)) : ?>
-          <?php $artikel_terbatas = array_slice($artikel, 0, 3); ?>
-          <?php foreach ($artikel_terbatas as $row) : ?>
-                <div class="col-md-4 col-sm-6 mb-4" data-aos="fade-up" data-aos-duration="1000">
-                    <div class="card shadow-sm border-0">
-                        <?php if (!empty($row['gambar'])) : ?>
-                            <img src="<?= base_url('uploads/' . esc($row['gambar'])); ?>" 
-                                class="card-img-top img-fluid" style="height: 200px; object-fit: cover;" 
-                                alt="<?= esc($row['judul']); ?>">
-                        <?php else : ?>
-                            <img src="<?= base_url('uploads/default.jpg'); ?>" class="card-img-top" alt="No Image">
-                        <?php endif; ?>
-
-                        <div class="card-body">
-                            <h5 class="card-title"><?= esc($row['judul']); ?></h5>
-                            <p class="card-text"><?= strip_tags(substr($row['konten'], 0, 100)) ?>...</p>
-                            <a href="<?= base_url('/' . esc($row['slug'])); ?>" class="btn btn-primary">Baca Selengkapnya</a>
-                        </div>
-
-                        <div class="card-footer text-muted text-center">
-                            <small>
-                                <i class="fas fa-folder"></i> <?= esc(ucfirst($row['kategori'])); ?> | 
-                                <i class="fas fa-calendar"></i> <?= date('d M Y', strtotime($row['created_at'])); ?>
-                            </small>
-                        </div>
-                    </div>
-                </div>
-            <?php endforeach; ?>
-        <?php else : ?>
-            <div class="col-12 text-center">
-                <p class="alert alert-warning">Belum ada artikel yang dipublikasikan.</p>
-            </div>
-        <?php endif; ?>
-    </div>
-  </div>
-    
-
 
 <!-- TESTIMONI -->
 
