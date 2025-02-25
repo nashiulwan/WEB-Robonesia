@@ -1,3 +1,17 @@
+<style>
+    .content img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+    }
+</style>
+<?php
+function convertOembedToIframe($content)
+{
+    return str_replace('[embed]', '<iframe>', str_replace('[/embed]', '</iframe>', $content));
+}
+?>
 <div class="container mt-5">
     <div class="row" style="margin-top: 8rem;">
         <!-- Konten Utama -->
@@ -11,7 +25,7 @@
             <?php endif; ?>
 
             <div class="content lh-lg">
-                <?= html_entity_decode($artikel['konten']) ?>
+                <?= convertOembedToIframe(html_entity_decode($artikel['konten'])) ?>
             </div>
 
             <a href="<?= base_url('blog') ?>" class="btn btn-secondary mt-3 mb-5">Kembali ke Blog</a>
@@ -27,9 +41,9 @@
                         <?php foreach ($artikelTerbaru as $item) : ?>
                             <li class="mb-4">
                                 <?php if (!empty($item['gambar'])) : ?>
-                                <img src="<?= base_url('uploads/' . esc($item['gambar'])) ?>" class="card-img-top" alt="Gambar Artikel" style="height: 200px; object-fit: cover;">
+                                    <img src="<?= base_url('uploads/' . esc($item['gambar'])) ?>" class="card-img-top" alt="Gambar Artikel" style="height: 200px; object-fit: cover;">
                                 <?php endif; ?>
-                                <a href="<?= base_url('blog/' . esc($item['slug'])) ?>" class="text-decoration-none text-dark">
+                                <a href="<?= base_url('/' . esc($item['slug'])) ?>" class="text-decoration-none text-dark">
                                     <?= esc($item['judul']) ?>
                                 </a>
                             </li>
