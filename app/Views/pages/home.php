@@ -1,3 +1,249 @@
+<style>
+  .text-truncate-custom {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    /* Maksimum 4 baris */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Grid Container */
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 16px;
+    border-radius: 5px;
+  }
+
+  /* Grid Item */
+  .grid-item {
+    height: 220px;
+  }
+
+  .versi-1100,
+  .versi-945,
+  .versi-770,
+  .versi-610,
+  .versi-575 {
+    display: none;
+  }
+
+  /* Style khusus untuk line dua (artikel sekunder) */
+  .content-line2 {
+    font-size: 0.8rem;
+    /* teks lebih kecil */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    /* minimal 2 baris dengan ellipsis */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .judul-line1 {
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    /* Batasi ke 2 baris */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* Pastikan tinggi baris sesuai */
+    white-space: normal;
+
+  }
+
+  .judul-line2 {
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    /* Batasi ke 2 baris */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 3em;
+    /* Sesuaikan dengan ukuran font */
+    line-height: 1.5em;
+    /* Pastikan tinggi baris sesuai */
+    white-space: normal;
+
+  }
+
+  .img-line2 {
+    /* Tambahkan styling khusus untuk gambar di line dua jika diperlukan */
+  }
+
+  .lihat-selengkapnya {
+    /* Tambahkan custom style untuk tombol Lihat Selengkapnya jika perlu */
+  }
+
+  /* Responsif untuk layar kecil */
+  @media (max-width: 1100px) {
+    .grid-container .grid-item:nth-child(n+6) {
+      display: none;
+    }
+
+    .versi-normal,
+    .versi-945,
+    .versi-770,
+    .versi-610,
+    .versi-575 {
+      display: none;
+    }
+
+    .versi-1100 {
+      display: inline;
+    }
+  }
+
+  @media (max-width: 945px) {
+    .grid-container .grid-item:nth-child(n+5) {
+      display: none;
+    }
+
+    .versi-normal,
+    .versi-1100,
+    .versi-770,
+    .versi-610,
+    .versi-575 {
+      display: none;
+    }
+
+    .versi-945 {
+      display: inline;
+    }
+  }
+
+  @media (max-width: 770px) {
+    #line-pertama .col-md-4:nth-child(n+3) {
+      display: none;
+    }
+
+    .grid-container .grid-item:nth-child(n+4) {
+      display: none;
+    }
+
+    .versi-normal,
+    .versi-1100,
+    .versi-945,
+    .versi-610,
+    .versi-575 {
+      display: none;
+    }
+
+    .versi-770 {
+      display: inline;
+    }
+  }
+
+  @media (max-width: 620px) {
+
+    #line-pertama .col-md-4:nth-child(n+2) {
+      display: none;
+    }
+
+    #line-pertama .col-md-4 {
+      width: 100%;
+    }
+
+    .grid-container .grid-item:nth-child(n+4) {
+      display: inline;
+    }
+
+    .versi-normal,
+    .versi-1100,
+    .versi-945,
+    .versi-770,
+    .versi-575 {
+      display: none;
+    }
+
+    .versi-610 {
+      display: inline;
+    }
+  }
+
+  @media (max-width: 575) {
+
+    .versi-normal,
+    .versi-1100,
+    .versi-945,
+    .versi-770,
+    .versi-610 {
+      display: none;
+    }
+
+    .versi-575 {
+      display: inline;
+    }
+  }
+
+  .card-hover {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    border-radius: 10px;
+
+  }
+
+  .card-hover:hover {
+    transform: translateY(-5px) scale(1.03);
+  }
+
+  .card-link {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .card-link :hover {
+    transition: transform 0.2s ease;
+    text-decoration: none;
+
+  }
+
+  .card-artikel-line1 {
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border-radius: 10px;
+  }
+
+
+  .card-artikel-line1:hover {
+    transform: translateY(-5px) scale(1.03);
+    box-shadow: 0 8px 12px rgba(51, 204, 204, 0.5);
+  }
+
+  .card-artikel-line1:hover img {
+    transform: scale(1.05);
+  }
+
+  .card-artikel-line1 img {
+    transition: transform 0.2s ease;
+    width: 100%;
+  }
+
+  .card-artikel {
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border-radius: 10px;
+  }
+
+
+  .card-artikel:hover {
+    transform: translateY(-5px) scale(1.03);
+    box-shadow: 0 8px 12px rgba(51, 204, 204, 0.5);
+  }
+
+  .card-artikel:hover img {
+    transform: scale(1.05);
+  }
+
+  .card-artikel img {
+    transition: transform 0.2s ease;
+    width: 100%;
+  }
+</style>
+
 <section>
   <header class="header__container" style="margin-top: 10%;">
     <div class="header__image">
@@ -5,21 +251,19 @@
         SCIENCE
       </div>
       <div class="header__image__card header__image__card-2" data-aos="fade-left" data-aos-delay="200">
-        <!-- <span><i class="ri-passport-line"></i></span> -->
         TECH
       </div>
       <div class="header__image__card header__image__card-3" data-aos="fade-right" data-aos-delay="300">
-        <!-- <span><i class="ri-map-2-line"></i></span> -->
         ENGINEERING
       </div>
       <div class="header__image__card header__image__card-4" data-aos="fade-left" data-aos-delay="400">
-        <!-- <span><i class="ri-guide-line"></i></span> -->
         MATH
       </div>
       <img src="image/header.png" alt="header" />
     </div>
     <div class="header__content">
-      <h1 data-aos="fade-right" data-aos-duration="300">SELAMAT DATANG DI <span>ROBONESIA!</span>
+      <h1 data-aos="fade-right" data-aos-duration="300">
+        SELAMAT DATANG DI <span>ROBONESIA!</span>
         <br>RUMAH ROBOT INDONESIA
       </h1>
       <p data-aos="fade-right" data-aos-duration="600" data-aos-delay="300">
@@ -34,7 +278,7 @@
         menjadi salah satu negara dengan sumber
         daya manusia teknologi yang handal.
       </p>
-      <form action="/" data-aos="fade-right" data-aos-duration="600" data-aos-delay="500">
+      <form action="/" data-aos="fade-right" data-aos-duration="200" data-aos-delay="100">
         <div class="input__row">
           <div class="input__group">
             <h5>Lokasi</h5>
@@ -52,48 +296,366 @@
             </a>
           </div>
         </div>
-    </div>
-    </form>
+      </form>
     </div>
   </header>
-  <div class="row p-3">
-        <?php if (!empty($artikel)) : ?>
-          <?php $artikel_terbatas = array_slice($artikel, 0, 3); ?>
-          <?php foreach ($artikel_terbatas as $row) : ?>
-                <div class="col-md-4 col-sm-6 mb-4" data-aos="fade-up" data-aos-duration="1000">
-                    <div class="card shadow-sm border-0">
-                        <?php if (!empty($row['gambar'])) : ?>
-                            <img src="<?= base_url('uploads/' . esc($row['gambar'])); ?>" 
-                                class="card-img-top img-fluid" style="height: 200px; object-fit: cover;" 
-                                alt="<?= esc($row['judul']); ?>">
-                        <?php else : ?>
-                            <img src="<?= base_url('uploads/default.jpg'); ?>" class="card-img-top" alt="No Image">
-                        <?php endif; ?>
 
-                        <div class="card-body">
-                            <h5 class="card-title"><?= esc($row['judul']); ?></h5>
-                            <p class="card-text"><?= strip_tags(substr($row['konten'], 0, 100)) ?>...</p>
-                            <a href="<?= base_url('/' . esc($row['slug'])); ?>" class="btn btn-primary">Baca Selengkapnya</a>
-                        </div>
+  <!-- ARTIKEL MULAI -->
+  <div class="artikel-container">
 
-                        <div class="card-footer text-muted text-center">
-                            <small>
-                                <i class="fas fa-folder"></i> <?= esc(ucfirst($row['kategori'])); ?> | 
-                                <i class="fas fa-calendar"></i> <?= date('d M Y', strtotime($row['created_at'])); ?>
-                            </small>
-                        </div>
+    <div class="row p-3">
+      <?php if (!empty($artikel)) : ?>
+        <!-- Line Pertama -->
+        <div class="col-12 ">
+          <div class="row" id="line-pertama">
+            <?php
+            // Ambil artikel terbaru untuk line pertama (3 artikel)
+            $main_articles = array_slice($artikel, 0, 3);
+            ?>
+            <?php foreach ($main_articles as $index => $row) : ?>
+              <div class="col-md-4 col-sm-6 col-12 mb-4" data-aos="fade-up" data-aos-duration="1000">
+                <a href="<?= base_url('/' . esc($row['slug'])); ?>" class="card-link">
+                  <div class="card shadow-md border-0 card-artikel-line1">
+                    <?php if (!empty($row['gambar'])) : ?>
+                      <img src="<?= base_url('uploads/' . esc($row['gambar'])); ?>"
+                        class="card-img-top img-fluid" style="height: 200px; object-fit: cover;"
+                        alt="<?= esc($row['judul']); ?>">
+                    <?php else : ?>
+                      <img src="<?= base_url('uploads/default.jpg'); ?>"
+                        class="card-img-top" alt="No Image">
+                    <?php endif; ?>
+
+                    <div class="card-body" style="height:200px;">
+                      <h5 class="card-title judul-line1"><?= esc($row['judul']); ?></h5>
+                      <p class="card-text text-truncate-custom">
+                        <?= esc(strip_tags($row['konten'])); ?>
+                      </p>
                     </div>
-                </div>
-            <?php endforeach; ?>
-        <?php else : ?>
-            <div class="col-12 text-center">
-                <p class="alert alert-warning">Belum ada artikel yang dipublikasikan.</p>
-            </div>
-        <?php endif; ?>
-    </div>
-</section>
-<!-- MULAI DARI SINI -->
 
+                    <div class="card-footer text-muted text-center">
+                      <small>
+                        <i class="fas fa-folder"></i> <?= esc(ucfirst($row['kategori'])); ?> |
+                        <i class="fas fa-calendar"></i> <?= date('d M Y', strtotime($row['created_at'])); ?>
+                      </small>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            <?php endforeach; ?>
+          </div>
+        </div>
+
+        <!-- Line Kedua - Versi Normal -->
+        <div class="col-12 versi-normal" data-aos="fade-up" data-aos-duration="200" data-aos-delay="100">
+          <div class="grid-container">
+            <?php
+            $secondary_articles = array_slice($artikel, count($main_articles), 5);
+            ?>
+            <?php foreach ($secondary_articles as $index => $row) : ?>
+              <div class="grid-item card-artikel">
+                <a href="<?= base_url('/' . esc($row['slug'])); ?>" class="card-link">
+                  <div class="card shadow-sm border-0 h-100">
+                    <?php if (!empty($row['gambar'])) : ?>
+                      <img src="<?= base_url('uploads/' . esc($row['gambar'])); ?>"
+                        class="card-img-top img-line2"
+                        style="height: 100px; object-fit: cover;"
+                        alt="<?= esc($row['judul']); ?>">
+                    <?php else : ?>
+                      <img src="<?= base_url('uploads/default.jpg'); ?>"
+                        class="card-img-top img-line2"
+                        style="height: 100px; object-fit: cover;"
+                        alt="No Image">
+                    <?php endif; ?>
+                    <div class="card-body d-flex align-items-center" style="height: 120px;">
+                      <h6 class="card-title content-line2 judul-line2 text-truncate">
+                        <?= esc($row['judul']); ?>
+                      </h6>
+                    </div>
+                    <div class="card-footer text-muted text-center">
+                      <small>
+                        <?= esc(ucfirst($row['kategori'])); ?>
+                      </small>
+                    </div>
+                  </div>
+                </a>
+
+              </div>
+            <?php endforeach; ?>
+
+            <!-- Card Lihat Selengkapnya -->
+            <div class="grid-item card-lain">
+              <a href="<?= base_url('blog'); ?>" class="card-link-lain">
+                <div class="card shadow-sm border-0 d-flex align-items-center justify-content-center h-100 card-hover" style="background: #ffdd00">
+                  <h6 class="text-center">
+                    Lihat Berita <br> Lainnya <i class="fas fa-arrow-right ms-2"></i>
+                  </h6>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Line Kedua - Versi 1100 -->
+        <div class="col-12 versi-1100" data-aos="fade-up" data-aos-duration="200" data-aos-delay="100">
+          <div class="grid-container">
+            <?php
+            $secondary_articles = array_slice($artikel, count($main_articles), 4);
+            ?>
+            <?php foreach ($secondary_articles as $index => $row) : ?>
+              <div class="grid-item card-artikel">
+                <a href="<?= base_url('/' . esc($row['slug'])); ?>" class="card-link"><a href="">
+                    <div class="card shadow-sm border-0 h-100">
+                      <?php if (!empty($row['gambar'])) : ?>
+                        <img src="<?= base_url('uploads/' . esc($row['gambar'])); ?>"
+                          class="card-img-top img-line2"
+                          style="height: 100px; object-fit: cover;"
+                          alt="<?= esc($row['judul']); ?>">
+                      <?php else : ?>
+                        <img src="<?= base_url('uploads/default.jpg'); ?>"
+                          class="card-img-top img-line2"
+                          style="height: 100px; object-fit: cover;"
+                          alt="No Image">
+                      <?php endif; ?>
+                      <div class="card-body d-flex align-items-center" style="height: 100px;">
+                        <h6 class="card-title content-line2 judul-line2 text-truncate">
+                          <?= esc($row['judul']); ?>
+                        </h6>
+                      </div>
+                      <div class="card-footer text-muted text-center">
+                        <small>
+                          <?= esc(ucfirst($row['kategori'])); ?>
+                        </small>
+                      </div>
+                    </div>
+                  </a>
+
+              </div>
+            <?php endforeach; ?>
+
+            <!-- Card Lihat Selengkapnya -->
+            <div class="grid-item card-lain">
+              <a href="<?= base_url('blog'); ?>" class="card-link-lain">
+                <div class="card shadow-sm border-0 d-flex align-items-center justify-content-center h-100 card-hover" style="background: #ffdd00">
+                  <h6 class="text-center">
+                    Lihat Berita <br> Lainnya <i class="fas fa-arrow-right ms-2"></i>
+                  </h6>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Line Kedua - Versi 945 -->
+        <div class="col-12 versi-945" data-aos="fade-up" data-aos-duration="200" data-aos-delay="100">
+          <div class="grid-container">
+            <?php
+            $secondary_articles = array_slice($artikel, 2, 3);
+            ?>
+            <?php foreach ($secondary_articles as $index => $row) : ?>
+              <div class="grid-item card-artikel">
+                <a href="<?= base_url('/' . esc($row['slug'])); ?>" class="card-link">
+                  <div class="card shadow-sm border-0 h-100">
+                    <?php if (!empty($row['gambar'])) : ?>
+                      <img src="<?= base_url('uploads/' . esc($row['gambar'])); ?>"
+                        class="card-img-top img-line2"
+                        style="height: 100px; object-fit: cover;"
+                        alt="<?= esc($row['judul']); ?>">
+                    <?php else : ?>
+                      <img src="<?= base_url('uploads/default.jpg'); ?>"
+                        class="card-img-top img-line2"
+                        style="height: 100px; object-fit: cover;"
+                        alt="No Image">
+                    <?php endif; ?>
+                    <div class="card-body d-flex align-items-center" style="height: 100px;">
+                      <h6 class="card-title content-line2 judul-line2 text-truncate">
+                        <?= esc($row['judul']); ?>
+                      </h6>
+                    </div>
+                    <div class="card-footer text-muted text-center">
+                      <small>
+                        <?= esc(ucfirst($row['kategori'])); ?>
+                      </small>
+                    </div>
+                  </div>
+                </a>
+
+              </div>
+            <?php endforeach; ?>
+
+            <!-- Card Lihat Selengkapnya -->
+            <div class="grid-item card-lain">
+              <a href="<?= base_url('blog'); ?>" class="card-link-lain">
+                <div class="card shadow-sm border-0 d-flex align-items-center justify-content-center h-100 card-hover" style="background: #ffdd00">
+                  <h6 class="text-center">
+                    Lihat Berita <br> Lainnya <i class="fas fa-arrow-right ms-2"></i>
+                  </h6>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Line Kedua - Versi 770 -->
+        <div class="col-12 versi-770" data-aos="fade-up" data-aos-duration="200" data-aos-delay="100">
+          <div class="grid-container">
+            <?php
+            $secondary_articles = array_slice($artikel, 2, 2);
+            ?>
+            <?php foreach ($secondary_articles as $index => $row) : ?>
+              <div class="grid-item card-artikel">
+                <a href="<?= base_url('/' . esc($row['slug'])); ?>" class="card-link">
+                  <div class="card shadow-sm border-0 h-100">
+                    <?php if (!empty($row['gambar'])) : ?>
+                      <img src="<?= base_url('uploads/' . esc($row['gambar'])); ?>"
+                        class="card-img-top img-line2"
+                        style="height: 100px; object-fit: cover;"
+                        alt="<?= esc($row['judul']); ?>">
+                    <?php else : ?>
+                      <img src="<?= base_url('uploads/default.jpg'); ?>"
+                        class="card-img-top img-line2"
+                        style="height: 100px; object-fit: cover;"
+                        alt="No Image">
+                    <?php endif; ?>
+                    <div class="card-body d-flex align-items-center" style="height: 100px;">
+                      <h6 class="card-title content-line2 judul-line2 text-truncate">
+                        <?= esc($row['judul']); ?>
+                      </h6>
+                    </div>
+                    <div class="card-footer text-muted text-center">
+                      <small>
+                        <?= esc(ucfirst($row['kategori'])); ?>
+                      </small>
+                    </div>
+                  </div>
+                </a>
+
+              </div>
+            <?php endforeach; ?>
+
+            <!-- Card Lihat Selengkapnya -->
+            <div class="grid-item card-lain">
+              <a href="<?= base_url('blog'); ?>" class="card-link-lain">
+                <div class="card shadow-sm border-0 d-flex align-items-center justify-content-center h-100 card-hover" style="background: #ffdd00">
+                  <h6 class="text-center">
+                    Lihat Berita <br> Lainnya <i class="fas fa-arrow-right ms-2"></i>
+                  </h6>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Line Kedua - Versi 610 -->
+        <div class="col-12 versi-610" data-aos="fade-up" data-aos-duration="200" data-aos-delay="100">
+          <div class="grid-container">
+            <?php
+            $secondary_articles = array_slice($artikel, 1, 3);
+            ?>
+            <?php foreach ($secondary_articles as $index => $row) : ?>
+              <div class="grid-item card-artikel">
+                <a href="<?= base_url('/' . esc($row['slug'])); ?>" class="card-link">
+                  <div class="card shadow-sm border-0 h-100">
+                    <?php if (!empty($row['gambar'])) : ?>
+                      <img src="<?= base_url('uploads/' . esc($row['gambar'])); ?>"
+                        class="card-img-top img-line2"
+                        style="height: 100px; object-fit: cover;"
+                        alt="<?= esc($row['judul']); ?>">
+                    <?php else : ?>
+                      <img src="<?= base_url('uploads/default.jpg'); ?>"
+                        class="card-img-top img-line2"
+                        style="height: 100px; object-fit: cover;"
+                        alt="No Image">
+                    <?php endif; ?>
+                    <div class="card-body d-flex align-items-center" style="height: 100px;">
+                      <h6 class="card-title content-line2 judul-line2 text-truncate">
+                        <?= esc($row['judul']); ?>
+                      </h6>
+                    </div>
+                    <div class="card-footer text-muted text-center">
+                      <small>
+                        <?= esc(ucfirst($row['kategori'])); ?>
+                      </small>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            <?php endforeach; ?>
+
+            <!-- Card Lihat Selengkapnya -->
+            <div class="grid-item card-lain">
+              <a href="<?= base_url('blog'); ?>" class="card-link-lain">
+                <div class="card shadow-sm border-0 d-flex align-items-center justify-content-center h-100 card-hover" style="background: #ffdd00">
+                  <h6 class="text-center">
+                    Lihat Berita <br> Lainnya <i class="fas fa-arrow-right ms-2"></i>
+                  </h6>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Line Kedua - Versi 575 -->
+        <div class="col-12 versi-575" data-aos="fade-up" data-aos-duration="200" data-aos-delay="100">
+          <div class="grid-container">
+            <?php
+            $secondary_articles = array_slice($artikel, 1, 3);
+            ?>
+            <?php foreach ($secondary_articles as $index => $row) : ?>
+              <div class="grid-item card-artikel">
+                <a href="<?= base_url('/' . esc($row['slug'])); ?>" class="card-link">
+                  <div class="card shadow-sm border-0 h-100">
+                    <?php if (!empty($row['gambar'])) : ?>
+                      <img src="<?= base_url('uploads/' . esc($row['gambar'])); ?>"
+                        class="card-img-top img-line2"
+                        style="height: 100px; object-fit: cover;"
+                        alt="<?= esc($row['judul']); ?>">
+                    <?php else : ?>
+                      <img src="<?= base_url('uploads/default.jpg'); ?>"
+                        class="card-img-top img-line2"
+                        style="height: 100px; object-fit: cover;"
+                        alt="No Image">
+                    <?php endif; ?>
+                    <div class="card-body d-flex align-items-center" style="height: 100px;">
+                      <h6 class="card-title content-line2 judul-line2 text-truncate">
+                        <?= esc($row['judul']); ?>
+                      </h6>
+                    </div>
+                    <div class="card-footer text-muted text-center">
+                      <small>
+                        <?= esc(ucfirst($row['kategori'])); ?>
+                      </small>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            <?php endforeach; ?>
+
+            <!-- Card Lihat Selengkapnya -->
+            <div class="grid-item card-lain">
+              <a href="<?= base_url('blog'); ?>" class="card-link-lain">
+                <div class="card shadow-sm border-0 d-flex align-items-center justify-content-center h-100 card-hover" style="background: #ffdd00">
+                  <h6 class="text-center">
+                    Lihat Berita <br> Lainnya <i class="fas fa-arrow-right ms-2"></i>
+                  </h6>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      <?php else : ?>
+        <div class="col-12 text-center">
+          <p class="alert alert-warning">Belum ada artikel yang dipublikasikan.</p>
+        </div>
+      <?php endif; ?>
+    </div>
+  </div>
+  <!-- ARTIKEL SELESAI -->
+</section>
+<!-- SELESAI -->
+
+<section>
+
+</section>
 <!-- VISI DAN MISI -->
 <section>
   <div class="visi-misi__container">

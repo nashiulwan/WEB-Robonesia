@@ -11,13 +11,33 @@ class BlogController extends BaseController
     protected $artikelModel;
     protected $KontakModel;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->artikelModel = new ArtikelModel();
         $this->kontakModel = new KontakModel();
     }
 
+    public function convertOembedToIframe($content)
+    {
+        return preg_replace_callback(
+            '/<oembed url="(.*?)"><\/oembed>/i',
+            function ($matches) {
+                $url = $matches[1];
+
+                // Konversi URL Youtube ke format embed
+                if (strpos($url, 'youtube.com') !== false || strpos($url, 'youtu.be') !== false) {
+                    return '<iframe width="100%" height="400" src="' . str_replace("watch?v=", "embed/", $url) . '" frameborder="0" allowfullscreen></iframe>';
+                }
+
+                return $matches[0]; // Jika bukan YouTube, tetap tampilkan seperti biasa
+            },
+            $content
+        );
+    }
+
+
     public function index()
-    {   
+    {
         $data = [
             'title' => 'Robonesia | BLOG',
             'artikel' => $this->artikelModel
@@ -32,43 +52,83 @@ class BlogController extends BaseController
         echo view('pages/blog');
         echo view('layout/footer');
     }
-    
+
+    // public function artikel($slug)
+    // {
+    //     // Mencari artikel berdasarkan slug
+    //     $artikel = $this->artikelModel->where('slug', $slug)->first();
+
+    //     // Jika artikel tidak ditemukan
+    //     if (!$artikel) {
+    //         throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+    //     }
+
+
+    //     // Ambil artikel terbaru kecuali artikel yang sedang ditampilkan
+    //     $artikelTerbaru = $this->artikelModel
+    //         ->where('status', 'publish')
+    //         ->where('slug !=', $slug) // Filter agar tidak termasuk artikel yang sedang dibuka
+    //         ->orderBy('created_at', 'DESC')
+    //         ->findAll(5); // Ambil 5 artikel terbaru
+
+    //     // Ambil kategori unik dari artikel
+    //     $kategori = $this->artikelModel
+    //         ->select('kategori, slug')
+    //         ->distinct()
+    //         ->findAll();
+
+    //     $artikel['konten'] = $this->convertOembedToIframe(html_entity_decode($artikel['konten']));
+
+    //     // Kirim data artikel ke view
+    //     $data = [
+    //         'title' => $artikel['judul'],
+    //         'artikel' => $artikel,
+    //         'artikelTerbaru' => $artikelTerbaru, // Kirim daftar artikel terbaru
+    //         'kategori' => $kategori,
+    //         'kontak' => $this->kontakModel->first() // Tambahkan data kontak
+    //     ];
+
+    //     echo view('layout/header', $data);
+    //     echo view('pages/blog/artikel');
+    //     echo view('layout/footer');
+    // }
     public function artikel($slug)
     {
-        // Mencari artikel berdasarkan slug
         $artikel = $this->artikelModel->where('slug', $slug)->first();
 
-        // Jika artikel tidak ditemukan
         if (!$artikel) {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
 
         // Ambil artikel terbaru kecuali artikel yang sedang ditampilkan
         $artikelTerbaru = $this->artikelModel
-        ->where('status', 'publish')
-        ->where('slug !=', $slug) // Filter agar tidak termasuk artikel yang sedang dibuka
-        ->orderBy('created_at', 'DESC')
-        ->findAll(5); // Ambil 5 artikel terbaru
+            ->where('status', 'publish')
+            ->where('slug !=', $slug)
+            ->orderBy('created_at', 'DESC')
+            ->findAll(5);
 
         // Ambil kategori unik dari artikel
         $kategori = $this->artikelModel
-        ->select('kategori, slug')
-        ->distinct()
-        ->findAll();
+            ->select('kategori, slug')
+            ->distinct()
+            ->findAll();
 
-        // Kirim data artikel ke view
+        // Ubah konten artikel sebelum dikirim ke view
+        $artikel['konten'] = $this->convertOembedToIframe(html_entity_decode($artikel['konten']));
+
         $data = [
             'title' => $artikel['judul'],
             'artikel' => $artikel,
-            'artikelTerbaru' => $artikelTerbaru, // Kirim daftar artikel terbaru
+            'artikelTerbaru' => $artikelTerbaru,
             'kategori' => $kategori,
-            'kontak' => $this->kontakModel->first() // Tambahkan data kontak
+            'kontak' => $this->kontakModel->first()
         ];
 
         echo view('layout/header', $data);
         echo view('pages/blog/artikel');
         echo view('layout/footer');
     }
+
 
     public function kategori($kategoriSlug)
     {
@@ -97,5 +157,4 @@ class BlogController extends BaseController
         echo view('pages/blog/kategori');
         echo view('layout/footer');
     }
-
 }
