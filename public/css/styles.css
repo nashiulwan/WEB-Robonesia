@@ -1681,7 +1681,6 @@ h4 {
 .tim__container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
 }
 
 .tim__container__top {
@@ -1744,6 +1743,7 @@ h4 {
   overflow-x: auto;
   align-items: center;
   padding: 10px;
+  min-height: 120px;
   height: 30%;
   background-color: #ddd;
 }
@@ -1776,12 +1776,17 @@ h4 {
 }
 
 @media screen and (max-width: 480px) {
-  .tim__container__bottom img {
-    display: none;
-  }
-
+ 
   .tim_arrow {
     display: block
+  }
+  .tim__container {
+    padding-top: 15% !important;
+  }
+}
+@media screen and (max-width: 800px) {
+  .tim__container {
+    padding-top: 10%;
   }
 }
 

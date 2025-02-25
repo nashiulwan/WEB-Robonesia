@@ -4,7 +4,7 @@
     <!-- Section Top -->
     <div class="tim__container__top" id="timContainerTop">
       <h1 id="timTopTitle" data-aos="fade-up" data-aos-duration="1000">TIM KAMI</h1>
-      
+
       <!-- Tampilkan anggota pertama sebagai default -->
       <?php $firstTim = $tim[0]; ?>
       <section>
