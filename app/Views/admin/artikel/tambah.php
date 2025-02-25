@@ -89,6 +89,12 @@
 <!-- CKEditor 5 -->
 <script src="https://cdn.ckeditor.com/ckeditor5/41.3.1/classic/ckeditor.js"></script>
 <script>
+    CKEDITOR.replace('konten', {
+        extraAllowedContent: 'iframe[*];',
+        allowedContent: true
+    });
+</script>
+<script>
     class MyUploadAdapter {
         constructor(loader) {
             this.loader = loader;
@@ -171,18 +177,20 @@
             formData.append('upload', blob, filename);
 
             fetch('<?= base_url('admin/artikel/upload') ?>', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(result => {
-                if (result.url) {
-                    resolve({ default: result.url });
-                } else {
-                    reject(result.error || 'Upload gagal.');
-                }
-            })
-            .catch(error => reject(error));
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(result => {
+                    if (result.url) {
+                        resolve({
+                            default: result.url
+                        });
+                    } else {
+                        reject(result.error || 'Upload gagal.');
+                    }
+                })
+                .catch(error => reject(error));
         }
     }
 
@@ -192,7 +200,7 @@
         };
     }
 
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function() {
         ClassicEditor
             .create(document.querySelector('#konten'), {
                 extraPlugins: [CustomUploadAdapterPlugin]

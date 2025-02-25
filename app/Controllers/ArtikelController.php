@@ -103,7 +103,7 @@ class ArtikelController extends BaseController
         $success = $artikelModel->save([
             'judul' => $this->request->getPost('judul'),
             'slug' => url_title($this->request->getPost('judul'), '-', true),
-            'konten' => $this->request->getPost('konten'),
+            'konten' => $this->request->getVar('konten', FILTER_UNSAFE_RAW),
             'kategori' => $this->request->getPost('kategori'),
             'penulis_id' => 1,
             'status' => 'publish',
@@ -190,7 +190,7 @@ class ArtikelController extends BaseController
         $data = [
             'judul' => $this->request->getPost('judul'),
             'slug' => url_title($this->request->getPost('judul'), '-', true),
-            'konten' => $this->request->getPost('konten'),
+            'konten' => $this->request->getVar('konten', FILTER_UNSAFE_RAW),
             'kategori' => $this->request->getPost('kategori'),
             'penulis_id' => 1,
             'status' => 'publish',
@@ -255,7 +255,7 @@ class ArtikelController extends BaseController
         if ($file->isValid() && !$file->hasMoved()) {
             $newName = $file->getRandomName();
             $file->move('uploads/artikel/', $newName);
-            
+
             return $this->response->setJSON([
                 'url' => base_url('uploads/artikel/' . $newName)
             ]);
@@ -265,5 +265,4 @@ class ArtikelController extends BaseController
             'error' => 'Gagal mengunggah gambar.'
         ]);
     }
-
 }
