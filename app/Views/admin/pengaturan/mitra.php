@@ -7,15 +7,23 @@
 
     <!-- Button Tambah Partner -->
     <div class="mb-4 text-end">
-        <a href="<?= base_url('admin/pengaturan/mitra/tambah'); ?>" class="btn btn-success">
+        <a href="<?= base_url('admin/pengaturan/mitra/tambah'); ?>" class="btn btn-primary">
             <i class="fas fa-plus"></i> Tambah Partner Baru
         </a>
+    </div>
+
+    <!-- Form Pencarian -->
+    <div class="mb-3 d-flex align-items-center justify-content-between">
+        <div class="flex-grow-1 me-3" style="margin-right:1rem">
+            <input type="text" id="searchInput" class="form-control" placeholder="Cari mitra">
+        </div>
+        <i class="fas fa-search text-muted" style="margin-right:1rem"></i>
     </div>
 
     <!-- Tabel Daftar Partner -->
     <div class="table-responsive">
         <div class="table-responsive"></div>
-        <table class="table table-bordered table-striped">
+        <table class="table table-bordered table-striped" id="mitraTable">
             <thead>
                 <tr>
                     <th>No</th>
@@ -44,13 +52,15 @@
                             <td><a href="<?= esc($row['maps']); ?>" target="_blank">Lihat Map</a></td>
                             <td>
                                 <!-- Button Edit -->
-                                <a href="<?= base_url('admin/pengaturan/mitra/edit/' . esc($row['id'])); ?>" class="btn btn-warning btn-sm w-100 mb-2">
-                                    <i class="fas fa-edit"></i>
+                                <a href="<?= base_url('admin/pengaturan/mitra/edit/' . esc($row['id'])); ?>" class="btn btn-warning btn-sm d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; margin: 2px;">
+                                    <i class="fas fa-pen"></i>
                                 </a>
 
                                 <!-- Button Hapus -->
-                                <a href="<?= base_url('admin/pengaturan/mitra/hapus/' . esc($row['id'])); ?>" class="btn btn-danger btn-sm w-100" onclick="return confirm('Yakin ingin menghapus partner ini?');">
-                                    <i class="fas fa-trash"></i>
+                                <a href="<?= base_url('admin/pengaturan/mitra/hapus/' . esc($row['id'])); ?>" <?= csrf_field(); ?>
+                                    <button type="submit" class="btn btn-danger btn-sm d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; margin: 2px" onclick="return confirm('Apakah Anda yakin ingin menghapus artikel ini?');">
+                                    <i class="fas fa-trash-alt"></i>
+                                    </button>
                                 </a>
                             </td>
                         </tr>
@@ -65,5 +75,19 @@
     </div>
 
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const searchInput = document.getElementById("searchInput");
+        const table = document.getElementById("mitraTable");
+        const rows = table.getElementsByTagName("tr");
 
+        searchInput.addEventListener("keyup", function() {
+            const searchText = searchInput.value.toLowerCase();
+            for (let i = 1; i < rows.length; i++) { // Lewati header
+                let rowData = rows[i].textContent.toLowerCase();
+                rows[i].style.display = rowData.includes(searchText) ? "" : "none";
+            }
+        });
+    })
+</script>
 <?= $this->endSection() ?>

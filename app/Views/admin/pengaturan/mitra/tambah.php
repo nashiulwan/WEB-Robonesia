@@ -14,7 +14,7 @@
     /* Styling untuk preview crop yang aktif (sebelum disimpan) */
     .image-preview-cut-save {
         width: 50vw;
-        max-height: 20vw;
+        max-height: 30vw;
     }
 </style>
 
@@ -47,7 +47,8 @@
         <!-- Upload Logo -->
         <div class="mb-3">
             <label for="logo" class="form-label">Upload Logo</label>
-            <input type="file" class="form-control" id="logo" name="logo" required>
+            <input type="file" class="form-control custom_file" id="logo" name="logo" required>
+
         </div>
 
         <!-- Preview Gambar Tercrop yang ditampilkan di bawah input file -->
@@ -60,12 +61,13 @@
         <div id="image-preview-container" class="image-preview-cut-save-group" style="display: none;width: 400px;">
             <img id="image-preview" class="image-preview-cut-save">
             <div id="crop-buttons-container" style="display: flex; gap: 1rem; margin-top: 1rem; margin-bottom: 2rem">
-                    <button type="button" id="crop-button" class="btn btn-primary">Pangkas & Simpan</button>
-                    <button type="button" id="cancel-crop-button" class="btn btn-warning">Batal Pangkas</button>
+                <button type="button" id="crop-button" class="btn btn-primary">Pangkas & Simpan</button>
+                <button type="button" id="cancel-crop-button" class="btn btn-warning">Batal Pangkas</button>
             </div>
         </div>
 
         <button type="submit" class="btn btn-primary">Tambah Partner</button>
+        <a href="<?= base_url('admin/pengaturan/mitra') ?>" class="btn btn-warning" style="margin-left:10px; width:7rem">Kembali</a>
     </form>
 </div>
 

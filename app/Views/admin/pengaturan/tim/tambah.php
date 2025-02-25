@@ -29,10 +29,10 @@
         <div class="card-body">
             <form action="<?= base_url('admin/pengaturan/tim/simpan') ?>" method="post" enctype="multipart/form-data">
                 <?= csrf_field() ?>
-                
+
                 <div class="form-group">
                     <label for="foto">Foto Profil</label>
-                    <input type="file" name="foto" id="foto" class="form-control" required>
+                    <input type="file" name="foto" id="foto" class="form-control custom_file" required>
                 </div>
 
                 <!-- Preview Gambar Tercrop yang ditampilkan di bawah input file -->
@@ -79,9 +79,8 @@
                     <label for="instagram">Instagram</label>
                     <input type="url" name="instagram" id="instagram" class="form-control" placeholder="Masukkan URL Instagram">
                 </div>
-
-                <button type="submit" class="btn btn-primary">Simpan</button>
-                <a href="<?= base_url('admin/pengaturan/tim') ?>" class="btn btn-secondary">Batal</a>
+                <button type="submit" class="btn btn-primary" style="width:7rem">Simpan</button>
+                <a href="<?= base_url('admin/pengaturan/tim') ?>" class="btn btn-warning" style="margin-left:10px; width:7rem">Kembali</a>
             </form>
         </div>
     </div>

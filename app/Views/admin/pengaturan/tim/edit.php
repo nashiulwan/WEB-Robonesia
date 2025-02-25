@@ -28,10 +28,10 @@
         <div class="card-body">
             <form action="<?= base_url('admin/pengaturan/tim/update/' . $tim['id']) ?>" method="post" enctype="multipart/form-data">
                 <?= csrf_field() ?>
-                
+
                 <div class="form-group">
                     <label for="foto">Foto Profil</label>
-                    <input type="file" name="foto" id="foto" class="form-control">
+                    <input type="file" name="foto" id="foto" class="form-control custom_file">
                 </div>
 
                 <div id="cropped-preview-container" style="margin-bottom: 1rem; <?= $tim['foto'] ? '' : 'display: none;' ?>">
@@ -77,8 +77,8 @@
                     <input type="url" name="instagram" id="instagram" class="form-control" value="<?= $tim['instagram'] ?>">
                 </div>
 
-                <button type="submit" class="btn btn-primary">Simpan</button>
-                <a href="<?= base_url('admin/pengaturan/tim') ?>" class="btn btn-secondary">Batal</a>
+                <button type="submit" class="btn btn-primary" style="width:7rem">Simpan</button>
+                <a href="<?= base_url('admin/pengaturan/tim') ?>" class="btn btn-warning" style="margin-left:10px; width:7rem">Kembali</a>
             </form>
         </div>
     </div>
@@ -117,7 +117,9 @@
                 canvas.toBlob((blob) => {
                     let fileInput = document.getElementById("foto");
                     let fileName = fileInput.files[0].name;
-                    let croppedFile = new File([blob], fileName, { type: "image/jpeg" });
+                    let croppedFile = new File([blob], fileName, {
+                        type: "image/jpeg"
+                    });
                     let dataTransfer = new DataTransfer();
                     dataTransfer.items.add(croppedFile);
                     fileInput.files = dataTransfer.files;
