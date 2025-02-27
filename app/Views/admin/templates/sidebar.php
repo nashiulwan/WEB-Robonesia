@@ -67,6 +67,20 @@
             </div>
         </li>
         
+        <!-- Nav Item - Prestasi dan Sertifikat -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePrestasiSertifikat" aria-expanded="true" aria-controls="collapsePrestasiSertifikat">
+                <i class="fas fa-trophy"></i>
+                <span>Prestasi & Sertifikat</span>
+            </a>
+            <div id="collapsePrestasiSertifikat" class="collapse" aria-labelledby="headingPrestasiSertifikat" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="<?= base_url('admin/prestasi'); ?>">Prestasi</a>
+                    <a class="collapse-item" href="<?= base_url('admin/grade_level'); ?>">Grade/Level</a>
+                    <a class="collapse-item" href="<?= base_url('admin/sertifikat'); ?>">Sertfikat</a>
+                </div>
+            </div>
+        </li>
 
         <!-- Nav Item - Analytics -->
         <li class="nav-item">
