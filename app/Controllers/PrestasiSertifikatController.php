@@ -103,7 +103,7 @@ class PrestasiSertifikatController extends BaseController
     // Validasi input dengan rules
     $validationRules = [
       'nama_kegiatan' => 'required',
-      'jenis'         => 'required|in_list[individual,kelompok]',
+      'jenis'         => 'required|in_list[Individual,Kelompok]',
       'tingkat'       => 'required',
       'tahun'         => 'required|numeric',
       'pencapaian'    => 'required',
@@ -139,9 +139,9 @@ class PrestasiSertifikatController extends BaseController
 
     // Tentukan user yang terhubung dengan prestasi berdasarkan jenisnya
     $userIds = [];
-    if ($post['jenis'] === 'individual') {
+    if ($post['jenis'] === 'Individual') {
       $userIds[] = $post['user_id']; // Pastikan user yang sedang menginput masuk
-    } elseif ($post['jenis'] === 'kelompok' && isset($post['user_ids'])) {
+    } elseif ($post['jenis'] === 'Kelompok' && isset($post['user_ids'])) {
       $userIds = $post['user_ids'];
       if (!in_array($post['user_id'], $userIds)) {
         $userIds[] = $post['user_id']; // Tambahkan user_id dari view jika belum ada
@@ -213,7 +213,7 @@ class PrestasiSertifikatController extends BaseController
       'title'     => 'Detail Prestasi',
       'prestasi'  => $prestasi,
       'owner'     => $owner,
-      'anggota'   => ($prestasi['jenis'] === 'kelompok') ? $anggotaLainnya : []
+      'anggota'   => ($prestasi['jenis'] === 'Kelompok') ? $anggotaLainnya : []
     ];
 
     return view('admin/prestasi_sertifikat/prestasi/prestasi_user_info', $data);
@@ -281,7 +281,7 @@ class PrestasiSertifikatController extends BaseController
     // Validasi input dengan rules
     $validationRules = [
       'nama_kegiatan' => 'required',
-      'jenis'         => 'required|in_list[individual,kelompok]',
+      'jenis'         => 'required|in_list[Individual,Kelompok]',
       'tingkat'       => 'required',
       'tahun'         => 'required|numeric',
       'pencapaian'    => 'required',
@@ -320,10 +320,10 @@ class PrestasiSertifikatController extends BaseController
 
     // Tentukan user yang terhubung dengan prestasi berdasarkan jenisnya
     $userIds = [];
-    if ($post['jenis'] === 'individual') {
+    if ($post['jenis'] === 'Individual') {
       // Hanya satu user (individu), yaitu user yang sedang login
       $userIds[] = $post['user_id'];
-    } elseif ($post['jenis'] === 'kelompok' && isset($post['user_ids'])) {
+    } elseif ($post['jenis'] === 'Kelompok' && isset($post['user_ids'])) {
       // Ambil semua user yang dipilih dari form
       $userIds = $post['user_ids'];
       // Pastikan user yang sedang login juga masuk ke daftar anggota
@@ -417,7 +417,7 @@ class PrestasiSertifikatController extends BaseController
     $data = [
       'title'     => 'Detail Prestasi',
       'prestasi'  => $prestasi,
-      'anggota'   => ($prestasi['jenis'] === 'kelompok') ? $anggota : []
+      'anggota'   => ($prestasi['jenis'] === 'Kelompok') ? $anggota : []
     ];
 
     return view('admin/prestasi_sertifikat/prestasi/prestasi_info', $data);
@@ -467,6 +467,78 @@ class PrestasiSertifikatController extends BaseController
     return view('admin/prestasi_sertifikat/prestasi/prestasi_edit', $data);
   }
 
+
+  // Memproses update data prestasi (POST)
+  public function prestasiUpdate($prestasiId)
+  {
+    $post = $this->request->getPost();
+
+    // Validasi input dengan rules
+    $validationRules = [
+      'nama_kegiatan' => 'required',
+      'jenis'         => 'required|in_list[Individual,Kelompok]',
+      'tingkat'       => 'required',
+      'tahun'         => 'required|numeric',
+      'pencapaian'    => 'required',
+    ];
+
+    if (! $this->validate($validationRules)) {
+      session()->setFlashdata('error', 'Semua field harus diisi dengan benar.');
+      return redirect()->back()->withInput();
+    }
+
+    // Jika nilai tingkat adalah 'lainnya', gunakan nilai dari input tingkat_lainnya
+    $tingkat = $post['tingkat'];
+    if ($tingkat == 'Lainnya') {
+      $tingkat = $post['tingkat_lainnya'];
+    }
+
+    // Mulai database transaction
+    $db = \Config\Database::connect();
+    $db->transStart();
+
+    // Siapkan data prestasi
+    $prestasiData = [
+      'nama_kegiatan' => $post['nama_kegiatan'],
+      'jenis'         => $post['jenis'],
+      'tingkat'       => $tingkat,
+      'tahun'         => $post['tahun'],
+      'pencapaian'    => $post['pencapaian'],
+    ];
+
+    // Update data prestasi
+    $this->prestasiSertifikatModel->update($prestasiId, $prestasiData);
+
+    // Update pivot table: hapus semua data lama untuk prestasi ini
+    $userPrestasiModel = new UserPrestasiModel();
+    $userPrestasiModel->where('prestasi_id', $prestasiId)->delete();
+
+    // Tentukan user yang terhubung dengan prestasi berdasarkan jenisnya
+    $userIds[] = $post['user_id'];
+
+    // Cek apakah user_id valid sebelum dimasukkan ke pivot table
+    $validUserIds = $this->userModel->whereIn('id', $userIds)->findColumn('id');
+
+    if (!empty($validUserIds)) {
+      foreach ($validUserIds as $uid) {
+        $userPrestasiModel->insert([
+          'user_id'     => $uid,
+          'prestasi_id' => $prestasiId,
+        ]);
+      }
+    }
+
+    // Selesaikan transaksi
+    $db->transComplete();
+
+    if ($db->transStatus() === false) {
+      session()->setFlashdata('error', 'Terjadi kesalahan saat memperbarui prestasi.');
+      return redirect()->back()->withInput();
+    }
+
+    session()->setFlashdata('success', 'Prestasi berhasil diperbarui.');
+    return redirect()->to(base_url('admin/prestasi/prestasi_detail/' . esc($userId)));
+  }
 
   public function prestasiDelete($prestasiId)
   {
