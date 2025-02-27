@@ -46,7 +46,6 @@
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item" href="<?= base_url('siswa/pengumuman/sekolah'); ?>">Informasi Sekolah</a>
                     <a class="collapse-item" href="<?= base_url('siswa/pengumuman/event'); ?>">Event dan Lomba</a>
-                    <a class="collapse-item" href="<?= base_url('siswa/jadwal'); ?>">Jadwal Event/Lomba</a>
                 </div>
             </div>
         </li>
@@ -66,7 +65,7 @@
 
         <!-- Menu Komunikasi -->
         <li class="nav-item">
-            <a class="nav-link" href="<?= base_url('siswa/hubungi_guru'); ?>">
+            <a class="nav-link" target="_blank" href="https://wa.me/<?= esc($kontak['no_hp']) ?>">
                 <i class="fas fa-fw fa-comments"></i>
                 <span>Hubungi Guru</span>
             </a>
