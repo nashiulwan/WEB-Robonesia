@@ -20,6 +20,14 @@
             </a>
         </li>
 
+        <!-- Nav Item - Profil -->
+        <li class="nav-item">
+            <a class="nav-link" href="<?= base_url('siswa/profil'); ?>">
+                <i class="fas fa-fw fa-user"></i>
+                <span>Profil</span>
+            </a>
+        </li>
+
         <!-- Menu Prestasi & Pencapaian -->
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePrestasi" aria-expanded="true" aria-controls="collapsePrestasi">
@@ -63,19 +71,6 @@
             </div>
         </li>
 
-        <!-- Menu Komunikasi -->
-        <li class="nav-item">
-            <a class="nav-link" target="_blank" href="https://wa.me/<?= esc($kontak['no_hp']) ?>">
-                <i class="fas fa-fw fa-comments"></i>
-                <span>Hubungi Guru</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="<?= base_url('siswa/notifikasi'); ?>">
-                <i class="fas fa-fw fa-bell"></i>
-                <span>Notifikasi</span>
-            </a>
-        </li>
     <?php endif; ?>
 
     <!-- Nav Item - Logout -->

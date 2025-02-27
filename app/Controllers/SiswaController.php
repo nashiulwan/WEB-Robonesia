@@ -23,9 +23,9 @@ class SiswaController extends BaseController
         $data = [
             'title'             => 'Dashboard Siswa',
             'event_artikel'     => $this->artikelModel->where('kategori', 'event')
-                                        ->where('created_at >=', date('Y-m-d', strtotime('-30 days')))
-                                        ->orderBy('created_at', 'DESC')
-                                        ->findAll(),
+                ->where('created_at >=', date('Y-m-d', strtotime('-30 days')))
+                ->orderBy('created_at', 'DESC')
+                ->findAll(),
         ];
 
         $this->renderViewDashboardSiswa('siswa/dashboard', $data);
@@ -42,7 +42,7 @@ class SiswaController extends BaseController
     public function notifikasi()
     {
         $notifikasiModel = new NotifikasiModel();
-        
+
         $notifikasi = $notifikasiModel
             ->where('siswa_id', session('id'))
             ->orderBy('created_at', 'DESC')
@@ -60,7 +60,7 @@ class SiswaController extends BaseController
     public function eventLomba()
     {
         $notifikasiModel = new NotifikasiModel();
-        
+
         $notifikasi = $notifikasiModel
             ->where('siswa_id', session('id'))
             ->orderBy('created_at', 'DESC')

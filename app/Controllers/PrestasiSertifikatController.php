@@ -422,6 +422,99 @@ class PrestasiSertifikatController extends BaseController
 
     return view('admin/prestasi_sertifikat/prestasi/prestasi_info', $data);
   }
+  // Menampilkan form tambah prestasi untuk user tertentu
+  public function prestasiTambah()
+  {
+    if (!logged_in()) {
+      return redirect()->to('/login');
+    }
+
+    $users = $this->prestasiSertifikatModel->getUsersByRole('2');
+
+    $data = [
+      'title' => 'Tambah Prestasi',
+      'users' => $users,
+    ];
+
+    return view('admin/prestasi_sertifikat/prestasi/prestasi_tambah', $data);
+  }
+  public function prestasiSimpan()
+  {
+    $post = $this->request->getPost();
+
+    // Validasi input dengan rules
+    $validationRules = [
+      'nama_kegiatan' => 'required',
+      'jenis'         => 'required|in_list[Individual,Kelompok]',
+      'tingkat'       => 'required',
+      'tahun'         => 'required|numeric',
+      'pencapaian'    => 'required',
+    ];
+
+    if (!$this->validate($validationRules)) {
+      session()->setFlashdata('error', 'Semua field harus diisi dengan benar.');
+      return redirect()->back()->withInput();
+    }
+
+    // Jika tingkat adalah 'Lainnya', gunakan nilai dari input tingkat_lainnya
+    $tingkat = ($post['tingkat'] == 'Lainnya') ? $post['tingkat_lainnya'] : $post['tingkat'];
+
+    // Mulai database transaction
+    $db = \Config\Database::connect();
+    $db->transStart();
+
+    // Siapkan data prestasi
+    $prestasiData = [
+      'nama_kegiatan' => $post['nama_kegiatan'],
+      'jenis'         => $post['jenis'],
+      'tingkat'       => $tingkat,
+      'tahun'         => $post['tahun'],
+      'pencapaian'    => $post['pencapaian'],
+    ];
+
+    // Simpan data prestasi
+    $this->prestasiSertifikatModel->insert($prestasiData);
+    $prestasiId = $this->prestasiSertifikatModel->getInsertID();
+
+    // Pastikan user_ids selalu berupa array (jika ada)
+    $userIds = [];
+    if (isset($post['user_ids'])) {
+      $userIds = is_array($post['user_ids']) ? $post['user_ids'] : [$post['user_ids']];
+    }
+
+    // Jika Individual, wajib memilih satu akun
+    if ($post['jenis'] === 'Individual' && empty($userIds)) {
+      session()->setFlashdata('error', 'Untuk prestasi Individual, pilih satu akun.');
+      return redirect()->back()->withInput();
+    }
+
+    // Cek apakah user_ids valid sebelum dimasukkan ke pivot table
+    if (!empty($userIds)) {
+      $validUserIds = $this->userModel->whereIn('id', $userIds)->findColumn('id');
+
+      if (!empty($validUserIds)) {
+        $userPrestasiModel = new UserPrestasiModel();
+        foreach ($validUserIds as $uid) {
+          $userPrestasiModel->insert([
+            'user_id'     => $uid,
+            'prestasi_id' => $prestasiId,
+          ]);
+        }
+      }
+    }
+
+    // Selesaikan transaksi
+    $db->transComplete();
+
+    if ($db->transStatus() === false) {
+      session()->setFlashdata('error', 'Terjadi kesalahan saat menyimpan prestasi.');
+      return redirect()->back()->withInput();
+    }
+
+    session()->setFlashdata('success', 'Prestasi berhasil ditambahkan.');
+    return redirect()->to(base_url('admin/prestasi'));
+  }
+
 
   // Menampilkan form edit prestasi
   public function prestasiEdit($prestasiId)

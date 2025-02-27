@@ -119,6 +119,8 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
 
     //Prestasi Umum
     $routes->get('prestasi/detail/(:num)', 'PrestasiSertifikatController::prestasiInfo/$1', ['filter' => 'role:admin']);
+    $routes->get('prestasi/tambah', 'PrestasiSertifikatController::prestasiTambah', ['filter' => 'role:admin']);
+    $routes->post('prestasi/simpan', 'PrestasiSertifikatController::prestasiSimpan', ['filter' => 'role:admin']);
     $routes->get('prestasi/edit/(:num)', 'PrestasiSertifikatController::prestasiEdit/$1', ['filter' => 'role:admin']);
     $routes->post('prestasi/update/(:num)', 'PrestasiSertifikatController::prestasiUpdate/$1', ['filter' => 'role:admin']);
     $routes->post('prestasi/delete/(:num)', 'PrestasiSertifikatController::prestasiDelete/$1', ['filter' => 'role:admin']);
@@ -160,6 +162,12 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
 
 $routes->group('siswa', ['filter' => 'auth'], function ($routes) {
     $routes->get('dashboard', 'SiswaController::dashboard', ['filter' => 'role:siswa']);
+
+    // Routes untuk profil
+    $routes->get('profil', 'SiswaProfilController::index', ['filter' => 'role:siswa']);
+    $routes->get('profil/edit', 'SiswaProfilController::edit', ['filter' => 'role:siswa']);
+    $routes->post('profil/update', 'SiswaProfilController::update', ['filter' => 'role:siswa']);
+
     $routes->get('nilai', 'SiswaController::nilai', ['filter' => 'role:siswa']);
     $routes->get('sertifikat', 'SiswaController::sertifikat', ['filter' => 'role:siswa']);
     $routes->get('prestasi', 'SiswaController::prestasi', ['filter' => 'role:siswa']);
