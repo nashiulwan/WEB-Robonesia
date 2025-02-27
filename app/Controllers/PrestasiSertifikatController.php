@@ -417,12 +417,11 @@ class PrestasiSertifikatController extends BaseController
     $data = [
       'title'     => 'Detail Prestasi',
       'prestasi'  => $prestasi,
-      'anggota'   => ($prestasi['jenis'] === 'Kelompok') ? $anggota : []
+      'anggota'   => $anggota,
     ];
 
     return view('admin/prestasi_sertifikat/prestasi/prestasi_info', $data);
   }
-
 
   // Menampilkan form edit prestasi
   public function prestasiEdit($prestasiId)
@@ -467,13 +466,11 @@ class PrestasiSertifikatController extends BaseController
     return view('admin/prestasi_sertifikat/prestasi/prestasi_edit', $data);
   }
 
-
-  // Memproses update data prestasi (POST)
   public function prestasiUpdate($prestasiId)
   {
     $post = $this->request->getPost();
 
-    // Validasi input dengan rules
+    // Validasi input
     $validationRules = [
       'nama_kegiatan' => 'required',
       'jenis'         => 'required|in_list[Individual,Kelompok]',
@@ -487,18 +484,14 @@ class PrestasiSertifikatController extends BaseController
       return redirect()->back()->withInput();
     }
 
-    // Jika nilai tingkat adalah 'lainnya', gunakan nilai dari input tingkat_lainnya
-    $tingkat = $post['tingkat'];
-    if ($tingkat == 'Lainnya') {
-      $tingkat = $post['tingkat_lainnya'];
-    }
+    // Menyesuaikan nilai tingkat jika "Lainnya" dipilih
+    $tingkat = $post['tingkat'] === 'Lainnya' ? $post['tingkat_lainnya'] : $post['tingkat'];
 
-    // Mulai database transaction
-    $db = \Config\Database::connect();
-    $db->transStart();
+    // Ambil data prestasi saat ini
+    $currentPrestasi = $this->prestasiSertifikatModel->find($prestasiId);
 
-    // Siapkan data prestasi
-    $prestasiData = [
+    // Data baru dari form
+    $newPrestasiData = [
       'nama_kegiatan' => $post['nama_kegiatan'],
       'jenis'         => $post['jenis'],
       'tingkat'       => $tingkat,
@@ -506,29 +499,70 @@ class PrestasiSertifikatController extends BaseController
       'pencapaian'    => $post['pencapaian'],
     ];
 
-    // Update data prestasi
-    $this->prestasiSertifikatModel->update($prestasiId, $prestasiData);
-
-    // Update pivot table: hapus semua data lama untuk prestasi ini
-    $userPrestasiModel = new UserPrestasiModel();
-    $userPrestasiModel->where('prestasi_id', $prestasiId)->delete();
-
-    // Tentukan user yang terhubung dengan prestasi berdasarkan jenisnya
-    $userIds[] = $post['user_id'];
-
-    // Cek apakah user_id valid sebelum dimasukkan ke pivot table
-    $validUserIds = $this->userModel->whereIn('id', $userIds)->findColumn('id');
-
-    if (!empty($validUserIds)) {
-      foreach ($validUserIds as $uid) {
-        $userPrestasiModel->insert([
-          'user_id'     => $uid,
-          'prestasi_id' => $prestasiId,
-        ]);
+    // Cek apakah data utama telah berubah
+    $dataChanged = false;
+    foreach ($newPrestasiData as $key => $value) {
+      if ($currentPrestasi[$key] != $value) {
+        $dataChanged = true;
+        break;
       }
     }
 
-    // Selesaikan transaksi
+    // Tentukan user_ids berdasarkan jenis prestasi
+    $userIds = [];
+    if ($post['jenis'] === 'Individual') {
+      $userIds[] = $post['user_id'] ?? session()->get('id');
+    } elseif ($post['jenis'] === 'Kelompok' && isset($post['user_ids'])) {
+      $userIds = $post['user_ids'];
+      // Pastikan user yang sedang login termasuk
+      $currentUserId = $post['user_id'] ?? session()->get('id');
+      if (!in_array($currentUserId, $userIds)) {
+        $userIds[] = $currentUserId;
+      }
+    }
+    sort($userIds);
+
+    // Ambil data pivot (user-prestasi) saat ini
+    $userPrestasiModel = new UserPrestasiModel();
+    $currentPivot = $userPrestasiModel->where('prestasi_id', $prestasiId)->findAll();
+    $currentUserIds = [];
+    foreach ($currentPivot as $row) {
+      $currentUserIds[] = $row['user_id'];
+    }
+    sort($currentUserIds);
+
+    // Cek apakah data pivot berubah
+    if ($userIds != $currentUserIds) {
+      $dataChanged = true;
+    }
+
+    // Jika tidak ada perubahan, jangan lakukan eksekusi update
+    if (!$dataChanged) {
+      session()->setFlashdata('info', 'Tidak ada perubahan data.');
+      return redirect()->back();
+    }
+
+    // Mulai transaksi database
+    $db = \Config\Database::connect();
+    $db->transStart();
+
+    // Update data prestasi
+    $this->prestasiSertifikatModel->update($prestasiId, $newPrestasiData);
+
+    // Update pivot table: hapus data lama jika ada perubahan pada user_ids
+    if ($userIds != $currentUserIds) {
+      $userPrestasiModel->where('prestasi_id', $prestasiId)->delete();
+      $validUserIds = $this->userModel->whereIn('id', $userIds)->findColumn('id');
+      if (!empty($validUserIds)) {
+        foreach ($validUserIds as $uid) {
+          $userPrestasiModel->insert([
+            'user_id'     => $uid,
+            'prestasi_id' => $prestasiId,
+          ]);
+        }
+      }
+    }
+
     $db->transComplete();
 
     if ($db->transStatus() === false) {
@@ -537,8 +571,9 @@ class PrestasiSertifikatController extends BaseController
     }
 
     session()->setFlashdata('success', 'Prestasi berhasil diperbarui.');
-    return redirect()->to(base_url('admin/prestasi/prestasi_detail/' . esc($userId)));
+    return redirect()->to(base_url('admin/prestasi'));
   }
+
 
   public function prestasiDelete($prestasiId)
   {

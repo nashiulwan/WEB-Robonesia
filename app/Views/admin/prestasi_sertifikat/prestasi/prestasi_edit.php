@@ -8,10 +8,10 @@
   }
 </style>
 
-<div class="container-fluid">
-  <h1 class="h3 mb-4 text-gray-800"><?= $title; ?></h1>
+<div class="container-fluid my-4">
+  <h1 class="h3 mb-4 text-gray-800"><?= esc($title) ?></h1>
 
-  <!-- Pesan error validasi, sukses, dan error umum -->
+
   <?php if (session()->getFlashdata('errors')) : ?>
     <div class="alert alert-danger">
       <ul>
@@ -34,11 +34,12 @@
     </div>
   <?php endif; ?>
 
-  <!-- Form edit prestasi -->
   <form action="<?= base_url('admin/prestasi/update/' . esc($prestasi['id'])) ?>" method="post" autocomplete="off">
     <?= csrf_field() ?>
-    <!-- Hidden field -->
+    <!-- Hidden field untuk id prestasi -->
     <input type="hidden" name="prestasi_id" value="<?= $prestasi['id'] ?>">
+    <!-- Hidden field untuk tipe Individual -->
+    <input type="hidden" name="user_id" id="user_id" value="">
 
     <div class="form-group mb-3">
       <label for="nama_kegiatan">Nama Kegiatan</label>
@@ -57,9 +58,7 @@
     <div class="form-group mb-3">
       <label for="tingkat">Tingkat</label>
       <?php
-      // Daftar nilai valid
       $validTingkat = ['Sekolah', 'Desa/Kelurahan', 'Kecamatan', 'Kabupaten/Kota', 'Provinsi', 'Nasional', 'Internasional'];
-      // Ambil nilai dari old() atau dari data prestasi
       $tingkatValue = old('tingkat', $prestasi['tingkat']);
       if (!in_array($tingkatValue, $validTingkat)) {
         $tingkatValue = 'Lainnya';
@@ -95,7 +94,7 @@
       <input type="text" name="pencapaian" id="pencapaian" class="form-control" placeholder="Masukkan pencapaian" value="<?= old('pencapaian', $prestasi['pencapaian']) ?>" required>
     </div>
 
-    <!-- Bagian daftar akun untuk prestasi -->
+    <!-- Daftar Akun -->
     <div id="daftarAkun">
       <div class="form-group mb-3">
         <label>Daftar Akun<span class="text-danger">*</span></label>
@@ -106,19 +105,13 @@
         <small>
           <span class="text-danger">**</span> Pilih lebih dari satu untuk jenis prestasi Kelompok.
         </small><br>
-
         <!-- Input pencarian -->
         <input type="text" id="searchAkun" style="margin-top: 1rem;" class="form-control mb-2" placeholder="Cari akun...">
-        <!-- Tabel daftar akun -->
-
-        <!-- Pesan peringatan khusus untuk Individual -->
+        <!-- Pesan peringatan untuk Individual -->
         <div id="individualWarning" class="small text-danger" style="display: none;">Hanya dapat memilih satu untuk jenis prestasi Individual.</div>
         <div style="max-height: 250px; overflow-y: auto;">
           <?php
-          // Gunakan data dari old() jika ada, jika tidak, ambil user_id dari pivot
           $selectedUserIds = old('user_ids') ? old('user_ids') : array_column($anggota, 'user_id');
-
-          // Urutkan data akun agar yang terpilih berada di atas
           $selectedUsers = [];
           $nonSelectedUsers = [];
           foreach ($users as $row) {
@@ -130,8 +123,8 @@
           }
           $orderedUsers = array_merge($selectedUsers, $nonSelectedUsers);
           ?>
-          <table class="table table-bordered table-sm table-hover">
-            <thead style="color: black; background-color:#2222;">
+          <table class="table table-bordered table-sm table-hover table-account">
+            <thead style="color: black; background-color: rgba(78, 115, 223, 0.1)">
               <tr>
                 <th style="width: 5%;">No</th>
                 <th style="width: 20%;">Nama Pengguna</th>
@@ -150,7 +143,13 @@
                     <td><?= esc($row['email']); ?></td>
                     <td><?= esc($row['fullname']); ?></td>
                     <td class="text-center">
-                      <input type="checkbox" name="user_ids[]" value="<?= $row['id'] ?>" id="user<?= $row['id'] ?>" class="custom-checkbox">
+                      <input
+                        type="checkbox"
+                        name="user_ids[]"
+                        value="<?= $row['id'] ?>"
+                        id="user<?= $row['id'] ?>"
+                        class="custom-checkbox"
+                        <?= in_array($row['id'], $selectedUserIds) ? 'checked' : '' ?>>
                     </td>
                   </tr>
                 <?php endforeach; ?>
@@ -162,8 +161,6 @@
             </tbody>
           </table>
         </div>
-
-
       </div>
     </div>
 
@@ -172,10 +169,8 @@
   </form>
 </div>
 
-<!-- JQuery dan script tambahan -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-  // Validasi input tahun
   document.getElementById("tahun").addEventListener("input", function() {
     let tahunInput = this.value;
     let errorMsg = document.getElementById("tahunError");
@@ -200,17 +195,17 @@
         errorMsg.style.display = "none";
       }
     });
-
-    // Panggil fungsi checkIndividualSelection pada awalnya
     checkIndividualSelection();
+    if ($("#jenis").val() === "Individual") {
+      var selected = $("input[name='user_ids[]']:checked").first().val();
+      $("#user_id").val(selected);
+    }
   });
 
-  // Fungsi untuk menampilkan input "tingkat lainnya"
   function checkTingkat() {
     var tingkat = document.getElementById("tingkat");
     var tingkatLainnyaGroup = document.getElementById("tingkat_lainnya_group");
     var tingkatLainnyaInput = document.getElementById("tingkat_lainnya");
-
     if (tingkat.value === "Lainnya") {
       tingkatLainnyaGroup.style.display = "block";
       tingkatLainnyaInput.setAttribute("required", "true");
@@ -221,39 +216,65 @@
     }
   }
 
-  // Fungsi untuk membatasi pilihan akun jika jenis Individual
   function checkIndividualSelection() {
-    // Periksa apakah jenis prestasi Individual
     if ($("#jenis").val() === "Individual") {
       var checked = $("input[name='user_ids[]']:checked");
       if (checked.length >= 1) {
-        // Jika sudah ada yang terpilih, nonaktifkan checkbox lainnya
         $("input[name='user_ids[]']").not(":checked").prop("disabled", true);
-        // Tampilkan peringatan
         $("#individualWarning").show();
       } else {
-        // Jika tidak ada yang terpilih, aktifkan semua
         $("input[name='user_ids[]']").prop("disabled", false);
         $("#individualWarning").hide();
       }
     } else {
-      // Jika jenis bukan Individual, pastikan semua checkbox aktif dan sembunyikan peringatan
       $("input[name='user_ids[]']").prop("disabled", false);
       $("#individualWarning").hide();
     }
   }
 
-  // Event handler: saat checkbox akun berubah, periksa kembali
   $(document).on("change", "input[name='user_ids[]']", function() {
+    if ($("#jenis").val() === "Individual") {
+      var checked = $("input[name='user_ids[]']:checked");
+      if (checked.length > 0) {
+        var selectedVal = checked.first().val();
+        $("#user_id").val(selectedVal);
+      } else {
+        $("#user_id").val('');
+      }
+    }
     checkIndividualSelection();
   });
 
-  // Event handler: saat jenis prestasi berubah, periksa kembali pilihan akun
   $("#jenis").on("change", function() {
+    var jenis = $(this).val();
+    if (jenis === "Individual") {
+      $("input[name='user_ids[]']").prop("checked", false).prop("disabled", false);
+      $("#user_id").val('');
+      $("#individualWarning").hide();
+    } else if (jenis === "Kelompok") {
+      resetToPivotSelection();
+    }
     checkIndividualSelection();
   });
 
-  // Fitur pencarian untuk filter akun
+  function resetToPivotSelection() {
+    $("input[name='user_ids[]']").prop("checked", false);
+    <?php if (!empty($selectedUserIds)) : ?>
+      var pivotUserIds = <?= json_encode($selectedUserIds); ?>;
+      pivotUserIds.forEach(function(id) {
+        $("#user" + id).prop("checked", true);
+      });
+    <?php endif; ?>
+  }
+
+  // Tambahan: pastikan hidden input 'user_id' terisi saat form disubmit untuk tipe Individual
+  $("form").submit(function() {
+    if ($("#jenis").val() === "Individual") {
+      var selected = $("input[name='user_ids[]']:checked").first().val();
+      $("#user_id").val(selected);
+    }
+  });
+
   $(document).ready(function() {
     $('#searchAkun').on("keyup", function() {
       var value = $(this).val().toLowerCase();
