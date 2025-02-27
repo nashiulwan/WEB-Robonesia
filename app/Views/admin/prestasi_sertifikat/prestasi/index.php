@@ -30,7 +30,7 @@
                     <i class="fas fa-search text-muted ms-2" id="iconSearchPrestasi" style="margin-right:1rem"></i>
                 </div>
                 <!-- Tombol di sebelah kanan -->
-                <a href="<?= base_url('admin/manage_prestasi/tambah'); ?>" class="btn btn-primary" id="tambahPrestasiBtn">Tambah Prestasi</a>
+                <a href="<?= base_url('admin/prestasi/tambah'); ?>" class="btn btn-primary" id="tambahPrestasiBtn">Tambah Prestasi</a>
             </div>
             <div class="table-responsive">
                 <table class="table table-bordered table-hover">
