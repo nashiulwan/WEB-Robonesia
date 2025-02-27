@@ -11,14 +11,6 @@ if ($hour >= 5 && $hour < 12) {
 } else {
     $greeting = "Selamat malam, " . user()->fullname . "!";
 }
-
-// Contoh jumlah notifikasi (ambil dari database)
-$jumlah_notifikasi = 3; // Ganti ini dengan query untuk mendapatkan jumlah notifikasi pengguna
-$notifikasi = [
-    ["judul" => "Pengumuman Sekolah", "waktu" => "2 jam lalu"],
-    ["judul" => "Jadwal Ujian Diperbarui", "waktu" => "1 hari lalu"],
-    ["judul" => "Sertifikat Baru Diterima", "waktu" => "3 hari lalu"]
-];
 ?>
 
 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
@@ -39,11 +31,14 @@ $notifikasi = [
     <ul class="navbar-nav ml-auto">
         
         <!-- Nav Item - Notifikasi -->
+        
+
+        <!-- Nav Item - Notifikasi -->
         <li class="nav-item dropdown no-arrow mx-1">
             <a class="nav-link dropdown-toggle" href="#" id="notifikasiDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-bell fa-fw"></i>
                 <!-- Jika ada notifikasi, tampilkan badge -->
-                <?php if ($jumlah_notifikasi > 0) : ?>
+                <?php if (isset($jumlah_notifikasi) && $jumlah_notifikasi > 0) : ?>
                     <span class="badge badge-danger badge-counter"><?= $jumlah_notifikasi ?></span>
                 <?php endif; ?>
             </a>
@@ -52,12 +47,12 @@ $notifikasi = [
                 <h6 class="dropdown-header">
                     Pusat Notifikasi
                 </h6>
-                <?php if ($jumlah_notifikasi > 0) : ?>
+                <?php if (!empty($notifikasi)) : ?>
                     <?php foreach ($notifikasi as $notif) : ?>
-                        <a class="dropdown-item d-flex align-items-center" href="#">
+                        <a class="dropdown-item d-flex align-items-center" href="<?= base_url('siswa/markAsRead/' . $notif['id']); ?>">
                             <div>
-                                <div class="small text-gray-500"><?= $notif['waktu'] ?></div>
-                                <span class="font-weight-bold"><?= $notif['judul'] ?></span>
+                                <div class="small text-gray-500"><?= date('d M Y H:i', strtotime($notif['created_at'])); ?></div>
+                                <span class="font-weight-bold"><?= esc($notif['judul']); ?></span>
                             </div>
                         </a>
                     <?php endforeach; ?>
@@ -67,6 +62,7 @@ $notifikasi = [
                 <a class="dropdown-item text-center small text-gray-500" href="<?= base_url('siswa/notifikasi'); ?>">Lihat semua notifikasi</a>
             </div>
         </li>
+
 
         <!-- Nav Item - User Information -->
         <li class="nav-item dropdown no-arrow">

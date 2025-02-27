@@ -160,6 +160,16 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
 
 $routes->group('siswa', ['filter' => 'auth'], function ($routes) {
     $routes->get('dashboard', 'SiswaController::dashboard', ['filter' => 'role:siswa']);
+    $routes->get('nilai', 'SiswaController::nilai', ['filter' => 'role:siswa']);
+    $routes->get('sertifikat', 'SiswaController::sertifikat', ['filter' => 'role:siswa']);
+    $routes->get('prestasi', 'SiswaController::prestasi', ['filter' => 'role:siswa']);
+    $routes->get('level', 'SiswaController::level', ['filter' => 'role:siswa']);
+    $routes->get('pengumuman/sekolah', 'SiswaController::pengumumanSekolah', ['filter' => 'role:siswa']);
+    $routes->get('pengumuman/event', 'SiswaController::pengumumanEvent', ['filter' => 'role:siswa']);
+    $routes->get('galeri', 'SiswaController::galeri', ['filter' => 'role:siswa']);
+    $routes->get('hubungi', 'SiswaController::hubungi', ['filter' => 'role:siswa']);
+    $routes->get('notifikasi', 'SiswaController::notifikasi', ['filter' => 'role:siswa']);
+    $routes->get('markAsRead/(:num)', 'SiswaController::markAsRead/$1', ['filter' => 'role:siswa']);
 });
 
 
