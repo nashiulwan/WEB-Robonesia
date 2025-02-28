@@ -30,39 +30,6 @@ if ($hour >= 5 && $hour < 12) {
     <!-- Navbar Items -->
     <ul class="navbar-nav ml-auto">
         
-        <!-- Nav Item - Notifikasi -->
-        
-
-        <!-- Nav Item - Notifikasi -->
-        <li class="nav-item dropdown no-arrow mx-1">
-            <a class="nav-link dropdown-toggle" href="#" id="notifikasiDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-bell fa-fw"></i>
-                <!-- Jika ada notifikasi, tampilkan badge -->
-                <?php if (isset($jumlah_notifikasi) && $jumlah_notifikasi > 0) : ?>
-                    <span class="badge badge-danger badge-counter"><?= $jumlah_notifikasi ?></span>
-                <?php endif; ?>
-            </a>
-            <!-- Dropdown - Notifikasi -->
-            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="notifikasiDropdown">
-                <h6 class="dropdown-header">
-                    Pusat Notifikasi
-                </h6>
-                <?php if (!empty($notifikasi)) : ?>
-                    <?php foreach ($notifikasi as $notif) : ?>
-                        <a class="dropdown-item d-flex align-items-center" href="<?= base_url('siswa/markAsRead/' . $notif['id']); ?>">
-                            <div>
-                                <div class="small text-gray-500"><?= date('d M Y H:i', strtotime($notif['created_at'])); ?></div>
-                                <span class="font-weight-bold"><?= esc($notif['judul']); ?></span>
-                            </div>
-                        </a>
-                    <?php endforeach; ?>
-                <?php else : ?>
-                    <a class="dropdown-item text-center small text-gray-500" href="#">Tidak ada notifikasi baru</a>
-                <?php endif; ?>
-            </div>
-        </li>
-
-
         <!-- Nav Item - User Information -->
         <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

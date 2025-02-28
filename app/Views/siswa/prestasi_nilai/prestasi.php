@@ -19,7 +19,7 @@
         <tbody>
             <?php if (empty($prestasi)) : ?>
                 <tr>
-                    <td colspan="6" class="text-center">Belum ada data prestasi.</td>
+                    <td colspan="6" class="text-center">Belum ada prestasi yang tercatat.</td>
                 </tr>
             <?php else : ?>
                 <?php $no = 1; foreach ($prestasi as $p) : ?>
