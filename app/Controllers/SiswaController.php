@@ -23,7 +23,7 @@ class SiswaController extends BaseController
         $data = [
             'title'             => 'Dashboard Siswa',
             'event_artikel'     => $this->artikelModel->where('kategori', 'event')
-                ->where('created_at >=', date('Y-m-d', strtotime('-30 days')))
+                ->where('created_at >=', date('Y-m-d', strtotime('-7 days')))
                 ->orderBy('created_at', 'DESC')
                 ->findAll(),
         ];
@@ -57,20 +57,28 @@ class SiswaController extends BaseController
     }
 
     // HALAMAN EVENT DAN LOMBA
-    public function eventLomba()
+    public function pengumumanEvent()
     {
-        $notifikasiModel = new NotifikasiModel();
-
-        $notifikasi = $notifikasiModel
-            ->where('siswa_id', session('id'))
-            ->orderBy('created_at', 'DESC')
-            ->findAll();
-
-        $data = [
-            'title'      => 'Semua Notifikasi',
-            'notifikasi' => $notifikasi
+         $data = [
+            'title'             => 'Event dan Lomba',
+            'event_artikel'     => $this->artikelModel->where('kategori', 'event')
+                ->orderBy('created_at', 'DESC')
+                ->findAll(),
         ];
 
-        $this->renderViewDashboardSiswa('siswa/notifikasi', $data);
+        $this->renderViewDashboardSiswa('siswa/pengumuman/event', $data);
+    }
+
+    // HALAMAN EVENT DAN LOMBA
+    public function pengumumanSekolah()
+    {
+         $data = [
+            'title'             => 'Pengumuman Sekolah',
+            'berita_artikel'     => $this->artikelModel->where('kategori', 'berita')
+                ->orderBy('created_at', 'DESC')
+                ->findAll(),
+        ];
+
+        $this->renderViewDashboardSiswa('siswa/pengumuman/sekolah', $data);
     }
 }
