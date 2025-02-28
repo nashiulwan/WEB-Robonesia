@@ -36,10 +36,9 @@
             </a>
             <div id="collapsePrestasi" class="collapse" aria-labelledby="headingPrestasi" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="<?= base_url('siswa/nilai'); ?>">Nilai</a>
+                    <a class="collapse-item" href="<?= base_url('siswa/project-dan-nilai'); ?>">Project dan Nilai</a>
                     <a class="collapse-item" href="<?= base_url('siswa/sertifikat'); ?>">Sertifikat yang Diperoleh</a>
                     <a class="collapse-item" href="<?= base_url('siswa/prestasi'); ?>">Daftar Prestasi</a>
-                    <a class="collapse-item" href="<?= base_url('siswa/level'); ?>">Sertifikat Level & Pencapaian</a>
                 </div>
             </div>
         </li>
@@ -60,15 +59,10 @@
 
         <!-- Menu Kegiatan & Proyek -->
         <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseKegiatan" aria-expanded="true" aria-controls="collapseKegiatan">
-                <i class="fas fa-fw fa-tasks"></i>
-                <span>Kegiatan & Proyek</span>
+            <a class="nav-link" href="<?= base_url('siswa/galeri'); ?>">
+                <i class="fas fa-fw fa-images"></i>
+                <span>Galeri Kegiatan</span>
             </a>
-            <div id="collapseKegiatan" class="collapse" aria-labelledby="headingKegiatan" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="<?= base_url('siswa/galeri'); ?>">Galeri Kegiatan</a>
-                </div>
-            </div>
         </li>
 
     <?php endif; ?>

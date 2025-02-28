@@ -90,4 +90,35 @@ class SiswaController extends BaseController
 
         $this->renderViewDashboardSiswa('siswa/prestasi_nilai/prestasi', $data);
     }
+
+    // HALAMAN GALERI KEGIATAN
+    public function galeriKegiatan()
+    {
+         $data = [
+            'title'             => 'Galeri Kegiatan',
+        ];
+
+        $this->renderViewDashboardSiswa('siswa/galeri_kegiatan', $data);
+    }
+
+     // HALAMAN PROJECT DAN NILAI
+     public function projectNilai()
+     {
+          $data = [
+             'title'             => 'Project dan Nilai',
+         ];
+ 
+         $this->renderViewDashboardSiswa('siswa/prestasi_nilai/project_nilai', $data);
+     }
+
+     // HALAMAN SERTIFIKAT
+     public function sertifikat()
+     {
+          $data = [
+             'title'             => 'Sertifikat dan Level',
+         ];
+ 
+         $this->renderViewDashboardSiswa('siswa/prestasi_nilai/sertifikat', $data);
+     }
+    
 }
