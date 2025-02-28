@@ -75,7 +75,7 @@
     <div class="row" id="artikelList">
         <?php if (!empty($artikel)) : ?>
             <?php foreach ($artikel as $row) : ?>
-                <div class="col-md-4 col-sm-6 mb-4 artikel-item"
+                <div class="col-md-4 col-sm-6 mb-4 artikel-item" data-aos="fade-up" data-aos-duration="300"
                     data-title="<?= strtolower(esc($row['judul'])); ?>"
                     data-content="<?= strtolower(strip_tags($row['konten'])); ?>">
                     <div class="card card-blog shadow-sm border-1" style="min-height: 500px;">
