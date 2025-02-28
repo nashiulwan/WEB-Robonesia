@@ -90,14 +90,6 @@
             </a>
         </li>
 
-        <!-- Nav Item - SEO -->
-        <li class="nav-item">
-            <a class="nav-link" href="<?= base_url('admin/seo'); ?>">
-                <i class="fas fa-fw fa-search"></i>
-                <span>SEO</span>
-            </a>
-        </li>
-
         <!-- Nav Item - Pengaturan -->
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePengaturan" aria-expanded="true" aria-controls="collapsePengaturan">

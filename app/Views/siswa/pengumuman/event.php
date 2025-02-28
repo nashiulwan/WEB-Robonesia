@@ -22,6 +22,10 @@
                                         <?php else : ?>
                                             <img src="<?= base_url('uploads/default.jpg'); ?>" class="card-img-top" alt="No Image">
                                         <?php endif; ?>
+                                        <!-- Kategori -->
+                                        <span class="badge bg-danger">
+                                            <?= ucfirst($event['kategori']); ?>
+                                        </span>
                                         <h5 class="card-title"><?= esc($event['judul']); ?></h5>
                                         <a href="<?= base_url('/' . esc($event['slug'])); ?>" class="btn btn-primary">
                                             Baca Selengkapnya

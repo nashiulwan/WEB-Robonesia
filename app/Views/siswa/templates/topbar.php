@@ -21,7 +21,7 @@ if ($hour >= 5 && $hour < 12) {
 
     <div class="d-none d-sm-inline-block form-inline mr-auto ml-md-6 my-2 my-md-0">
         <div class="input-group">   
-            <h1 class="d-none d-lg-inline text-gray-800" style="font-size:18px; margin-bottom:-2px; margin-left: 1rem;">
+            <h1 class="d-none d-lg-inline text-gray-800" style="font-size:18px; margin-bottom:-2px; margin-left: 1rem; font-weight: bold;">
                 <?= $greeting ?>
             </h1>
         </div>
@@ -59,7 +59,6 @@ if ($hour >= 5 && $hour < 12) {
                 <?php else : ?>
                     <a class="dropdown-item text-center small text-gray-500" href="#">Tidak ada notifikasi baru</a>
                 <?php endif; ?>
-                <a class="dropdown-item text-center small text-gray-500" href="<?= base_url('siswa/notifikasi'); ?>">Lihat semua notifikasi</a>
             </div>
         </li>
 

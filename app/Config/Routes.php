@@ -54,7 +54,6 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
     // Routes untuk admin area (protected dengan filter auth)
     $routes->get('dashboard', 'AdminController::dashboard', ['filter' => 'role:admin']);
     $routes->get('pengguna', 'AdminController::pengguna', ['filter' => 'role:admin']);
-    $routes->get('seo', 'AdminController::seo', ['filter' => 'role:admin']);
     $routes->get('pengaturan', 'AdminController::pengaturan', ['filter' => 'role:admin']);
     $routes->get('analytics', 'AdminController::analytics', ['filter' => 'role:admin']);
 
@@ -176,7 +175,7 @@ $routes->group('siswa', ['filter' => 'auth'], function ($routes) {
     // Pengumuman
     $routes->get('pengumuman/sekolah', 'SiswaController::pengumumanSekolah', ['filter' => 'role:siswa']);
     $routes->get('pengumuman/event', 'SiswaController::pengumumanEvent', ['filter' => 'role:siswa']);
-    
+
     $routes->get('galeri', 'SiswaController::galeri', ['filter' => 'role:siswa']);
     $routes->get('hubungi', 'SiswaController::hubungi', ['filter' => 'role:siswa']);
     $routes->get('markAsRead/(:num)', 'SiswaController::markAsRead/$1', ['filter' => 'role:siswa']);
