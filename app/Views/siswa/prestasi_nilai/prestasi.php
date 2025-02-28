@@ -3,7 +3,7 @@
 <?= $this->section('page-content'); ?>
 
 <div class="container mt-4">
-    <h2 class="text-center mb-4">Prestasi Siswa</h2>
+    <h2 class="text-center mb-4">Prestasi Saya</h2>
 
     <table class="table table-striped table-bordered">
         <thead class="table-dark">
@@ -19,7 +19,7 @@
         <tbody>
             <?php if (empty($prestasi)) : ?>
                 <tr>
-                    <td colspan="6" class="text-center">Belum ada data prestasi.</td>
+                    <td colspan="6" class="text-center">Belum ada prestasi yang tercatat.</td>
                 </tr>
             <?php else : ?>
                 <?php $no = 1; foreach ($prestasi as $p) : ?>

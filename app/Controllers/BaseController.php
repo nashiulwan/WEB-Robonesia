@@ -9,7 +9,6 @@ use Psr\Log\LoggerInterface;
 use App\Models\KontakModel;
 use App\Models\PartnerModel;
 use App\Models\TimModel;
-use App\Models\NotifikasiModel; // Tambahkan model notifikasi
 
 abstract class BaseController extends Controller
 {
@@ -18,9 +17,6 @@ abstract class BaseController extends Controller
     protected $kontakModel;
     protected $partnerModel;
     protected $timModel;
-    protected $notifikasiModel; // Model Notifikasi
-    protected $notifikasi;
-    protected $jumlah_notifikasi;
     protected $kontak;
     protected $partner;
     protected $tim;
@@ -61,25 +57,6 @@ abstract class BaseController extends Controller
         $this->kontak = $this->getKontakModel()->first();
         $this->partner = $this->getPartnerModel()->findAll();
         $this->tim = $this->getTimModel()->findAll();
-
-        // **Inisialisasi Notifikasi**
-        $this->notifikasiModel = new NotifikasiModel();
-
-        if ($this->session->has('id')) { // Pastikan pengguna login
-            $this->notifikasi = $this->notifikasiModel
-                ->where('user_id', $this->session->get('id'))
-                ->orderBy('created_at', 'DESC')
-                ->limit(5)
-                ->findAll();
-
-            $this->jumlah_notifikasi = $this->notifikasiModel
-                ->where('user_id', $this->session->get('id'))
-                ->where('status', 'unread')
-                ->countAllResults();
-        } else {
-            $this->notifikasi = [];
-            $this->jumlah_notifikasi = 0;
-        }
     }
 
     protected function getKontakModel()
@@ -125,9 +102,7 @@ abstract class BaseController extends Controller
     protected function renderViewDashboardSiswa($view, $data = [])
     {
         $data = array_merge($data, [
-            'notifikasi' => $this->notifikasi,
             'kontak' => $this->kontak,
-            'jumlah_notifikasi' => $this->jumlah_notifikasi
         ]);
 
         echo view($view, $data);

@@ -4,21 +4,19 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\ArtikelModel;
-use App\Models\NotifikasiModel;
 use App\Models\PrestasiSertifikatModel;
 use App\Models\UserPrestasiModel;
+use CodeIgniter\Shield\Authentication\Authenticators\Session;
 
 class SiswaController extends BaseController
 {
     protected $artikelModel;
-    protected $notifikasiModel;
     protected $prestasiModel;
     protected $userPrestasiModel;
 
     public function __construct()
     {
         $this->artikelModel = new ArtikelModel();
-        $this->notifikasiModel = new NotifikasiModel();
         $this->prestasiModel = new PrestasiSertifikatModel();
         $this->userPrestasiModel = new UserPrestasiModel();
     }
@@ -38,30 +36,6 @@ class SiswaController extends BaseController
         $this->renderViewDashboardSiswa('siswa/dashboard', $data);
     }
 
-    public function markAsRead($id)
-    {
-        $this->notifikasiModel->update($id, ['status' => 'read']);
-        return redirect()->to(base_url('siswa/notifikasi')); // Redirect ke halaman notifikasi
-    }
-
-
-    // HALAMAN NOTIFIKASI
-    public function notifikasi()
-    {
-        $notifikasiModel = new NotifikasiModel();
-
-        $notifikasi = $notifikasiModel
-            ->where('siswa_id', session('id'))
-            ->orderBy('created_at', 'DESC')
-            ->findAll();
-
-        $data = [
-            'title'      => 'Semua Notifikasi',
-            'notifikasi' => $notifikasi
-        ];
-
-        $this->renderViewDashboardSiswa('siswa/notifikasi', $data);
-    }
 
     // HALAMAN EVENT DAN LOMBA
     public function pengumumanEvent()
@@ -93,32 +67,58 @@ class SiswaController extends BaseController
     // HALAMAN PRESTASI
     public function prestasi()
     {
-        // Ambil user yang sedang login
-        $user = auth()->user(); // Jika menggunakan Shield atau Auth, pastikan ini sesuai dengan sistem autentikasi Anda.
-        $user_id = $user->id;
-
-        // Ambil daftar prestasi yang terkait dengan user
-        $userPrestasi = $this->userPrestasiModel
-            ->where('user_id', $user_id)
-            ->findAll();
-
-        // Ambil ID prestasi dari tabel pivot
-        $prestasiIds = array_column($userPrestasi, 'prestasi_id');
-
-        // Ambil data prestasi berdasarkan ID yang diperoleh
-        $prestasi = [];
-        if (!empty($prestasiIds)) {
-            $prestasi = $this->prestasiModel
-                ->whereIn('id', $prestasiIds)
-                ->orderBy('tahun', 'DESC')
-                ->findAll();
+        // Mendapatkan user yang sedang login
+        $auth = service('authentication');
+        $user = $auth->user();
+        
+        if (!$user) {
+            return redirect()->to('auth/login');
         }
 
+        // Ambil semua prestasi berdasarkan user_id yang sedang login
+        $prestasiUser = $this->userPrestasiModel
+            ->select('prestasi.*')
+            ->join('prestasi', 'prestasi.id = user_prestasi.prestasi_id')
+            ->where('user_prestasi.user_id', $user->id)
+            ->orderBy('prestasi.tahun', 'DESC')
+            ->findAll();
+
         $data = [
-            'title'     => 'Prestasi Saya',
-            'prestasi'  => $prestasi,
+            'title'    => 'Prestasi Saya',
+            'prestasi' => $prestasiUser,
         ];
 
         $this->renderViewDashboardSiswa('siswa/prestasi_nilai/prestasi', $data);
     }
+
+    // HALAMAN GALERI KEGIATAN
+    public function galeriKegiatan()
+    {
+         $data = [
+            'title'             => 'Galeri Kegiatan',
+        ];
+
+        $this->renderViewDashboardSiswa('siswa/galeri_kegiatan', $data);
+    }
+
+     // HALAMAN PROJECT DAN NILAI
+     public function projectNilai()
+     {
+          $data = [
+             'title'             => 'Project dan Nilai',
+         ];
+ 
+         $this->renderViewDashboardSiswa('siswa/prestasi_nilai/project_nilai', $data);
+     }
+
+     // HALAMAN SERTIFIKAT
+     public function sertifikat()
+     {
+          $data = [
+             'title'             => 'Sertifikat dan Level',
+         ];
+ 
+         $this->renderViewDashboardSiswa('siswa/prestasi_nilai/sertifikat', $data);
+     }
+    
 }
