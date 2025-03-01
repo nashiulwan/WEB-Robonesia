@@ -81,4 +81,10 @@ class PagesController extends BaseController
 
         return $this->response->setJSON($timData);
     }
+
+    public function shop()
+    {
+        $data = ['title' => 'Robonesia | Shop',];
+        $this->renderView('pages/shop', $data);
+    }
 }
