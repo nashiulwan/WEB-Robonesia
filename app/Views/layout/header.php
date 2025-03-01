@@ -44,7 +44,6 @@
             <li class="nav-beranda"><a href="/beranda">Beranda</a></li>
             <li><a href="/tentang">Tentang</a></li>
             <li><a href="/blog">Blog</a></li>
-            <li><a href="/shop">Shop</a></li>
             <li><a href="/galeri">Galeri</a></li>
             <li><a href="/tim">Tim</a></li>
             <li><a href="/partner">Mitra</a></li>

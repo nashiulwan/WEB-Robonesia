@@ -36,14 +36,10 @@ $routes->group('', function ($routes) {
     $routes->get('/pages/blog', 'BlogController::index');
     $routes->get('/blog', 'BlogController::index');
 
-    $routes->get('/pages/shop', 'PagesController::shop');
-    $routes->get('/shop', 'PagesController::shop');
-    
     $routes->get('/(:segment)', 'BlogController::artikel/$1'); // Menampilkan detail artikel
     $routes->get('blog/kategori/(:segment)', 'BlogController::kategori/$1');
 
     $routes->get('/login', 'AuthController::login');
-
 });
 
 $routes->group('auth', function ($routes) {
