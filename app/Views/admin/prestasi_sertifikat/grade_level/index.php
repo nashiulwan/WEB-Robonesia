@@ -13,12 +13,23 @@
     #filterRoleButton::after {
         display: none;
     }
+
+    /* Styling untuk grid gambar proyek */
+    .project-images-grid {
+        display: grid;
+        grid-auto-flow: column;
+        gap: 10px;
+        overflow: hidden;
+    }
+
+    .project-images-grid img {
+        height: 60px;
+    }
 </style>
 
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1 class="h3 text-gray-800"><?= esc($title) ?></h1>
-        <a href="<?= base_url('admin/manage_kelas/tambah'); ?>" class="btn btn-primary">Tambahkan Kelas</a>
     </div>
 
     <!-- Show Flash Messages -->
@@ -44,11 +55,11 @@
             <thead class="table" style="color: black; background-color:#2222">
                 <tr>
                     <th style="width: 5%;">No</th>
-                    <th style="width: 25%;">Nama Kelas</th>
+                    <th style="width: 22%;">Nama Kelas</th>
                     <th style="width: 10%;">Level</th>
                     <th style="width: 10%;">Sub Level</th>
                     <th style="width: 35%;">Proyek Terbaru</th>
-                    <th style="width: 10%;">Aksi</th>
+                    <th style="width: 13%;">Aksi</th>
                 </tr>
             </thead>
             <tbody class="table-group-divider" style="color: black;">
@@ -61,11 +72,20 @@
                             <td class="text-break"><?= esc($row['sub_level']); ?></td>
                             <td class="text-break">
                                 <?php if (!empty($row['images'])) : ?>
-                                    <?php 
-                                        // Asumsikan array images sudah diurutkan dengan gambar terbaru di index 0
-                                        $latestImage = $row['images'][0]; 
-                                    ?>
-                                    <img src="<?= base_url('uploads/' . esc($latestImage['image_name'])) ?>" alt="Gambar Terbaru" style="height:60px; margin-right:5px;">
+                                    <div class="project-images-grid">
+                                        <?php
+                                        // Sort gambar berdasarkan created_at secara descending
+                                        $images = $row['images'];
+                                        usort($images, function ($a, $b) {
+                                            return strtotime($b['created_at']) - strtotime($a['created_at']);
+                                        });
+                                        // Ambil hanya 3 gambar terbaru
+                                        $displayImages = array_slice($images, 0, 3);
+                                        ?>
+                                        <?php foreach ($displayImages as $image) : ?>
+                                            <img src="<?= base_url('uploads/proyek/' . esc($image['image_name'])) ?>" alt="Gambar Proyek">
+                                        <?php endforeach; ?>
+                                    </div>
                                 <?php else : ?>
                                     <span>Tidak ada gambar</span>
                                 <?php endif; ?>
@@ -75,8 +95,11 @@
                                     <a href="<?= base_url('admin/grade_level/detail/' . esc($row['id'])); ?>" class="btn btn-primary btn-sm d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; margin: 2px;">
                                         <i class="fas fa-eye"></i>
                                     </a>
-                                    <a href="<?= base_url('admin/grade_level/edit/' . esc($row['id'])); ?>" class="btn btn-warning btn-sm d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; margin: 2px;">
-                                        <i class="fas fa-pen"></i>
+                                    <a href="<?= base_url('admin/grade_level/level/' . esc($row['id'])); ?>" class="btn btn-warning btn-sm d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; margin: 2px;">
+                                        <i class="fas fa-layer-group"></i>
+                                    </a>
+                                    <a href="<?= base_url('admin/grade_level/proyek/' . esc($row['id'])); ?>" class="btn btn-info btn-sm d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; margin: 2px;">
+                                        <i class="fas fa-image"></i>
                                     </a>
                                 </div>
                             </td>
@@ -97,7 +120,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     $(document).ready(function() {
-        // Search functionality for filtering table rows based on class name, teacher name, etc.
+        // Search functionality for filtering table rows based on class name
         $("#searchInput").on("keyup", function() {
             var value = $(this).val().toLowerCase();
             $("table tbody tr").each(function() {

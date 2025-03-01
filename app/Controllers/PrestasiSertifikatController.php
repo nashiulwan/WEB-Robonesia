@@ -736,42 +736,37 @@ class PrestasiSertifikatController extends BaseController
 
     // Ambil detail kelas (termasuk jumlah anggota)
     $class = $this->manageKelasModel->getClassWithMemberCountById($id);
-    // Ambil gambar terkait dari tabel pivot grade_images
-    $images = $this->gradeImagesModel->getImagesByKelas($id);
+    $proyek = $this->gradeImagesModel->where('kelas_id', $id)->findAll();
 
     $data = [
       'title'  => 'Informasi Level Kelas',
       'class'  => $class,
-      'images' => $images,
+      'proyek' => $proyek,
     ];
 
     return view('admin/prestasi_sertifikat/grade_level/kelas_detail', $data);
   }
 
-  // Menampilkan form edit kelas beserta data gambar
-  public function gradeEdit($id)
+  // Menampilkan form edit level
+  public function gradeLevel($id)
   {
     if (!logged_in()) {
       return redirect()->to('/login');
     }
 
     $class = $this->manageKelasModel->getClassWithMemberCountById($id);
-    // Ambil data anggota kelas
-    $images = $this->gradeImagesModel->getImagesByKelas($id);
 
     $data = [
       'title'   => 'Edit Level Kelas ' . $class['nama_kelas'],
       'kelas'   => $class,
-      'images'  => $images, // kirim data gambar ke view
     ];
 
-    return view('admin/prestasi_sertifikat/grade_level/kelas_edit', $data);
+    return view('admin/prestasi_sertifikat/grade_level/kelas_level', $data);
   }
 
-  // Memproses update data kelas (tanpa mengubah data gambar di manage_kelas)
-  // Untuk gambar, file yang diupload akan disimpan di folder uploads, dan tiap file
-  // akan diinsert ke tabel grade_images dengan foreign key kelas_id.
-  public function gradeUpdate($id)
+
+  // Memproses update data kelas (hanya menyimpan level dan sub_level)
+  public function gradeLevelUpdate($id)
   {
     if (!logged_in()) {
       return redirect()->to('/login');
@@ -796,10 +791,7 @@ class PrestasiSertifikatController extends BaseController
     }
     $sub_level = $this->request->getPost('sub_level');
 
-    // Logging untuk debugging
-    log_message('debug', 'gradeUpdate: id = ' . $id . ', level = ' . $level . ', sub_level = ' . $sub_level);
-
-    // Update data utama kelas (tanpa gambar)
+    // Update data utama kelas 
     $data = [
       'level'      => $level,
       'sub_level'  => $sub_level,
@@ -813,30 +805,177 @@ class PrestasiSertifikatController extends BaseController
       return redirect()->back()->with('error', 'Gagal memperbarui grade level.');
     }
 
-    // Proses upload gambar (multiple upload) untuk disimpan di tabel grade_images
-    $files = $this->request->getFiles();
-    if (isset($files['images'])) {
-      foreach ($files['images'] as $file) {
-        if ($file->isValid() && !$file->hasMoved()) {
-          // Buat nama file baru secara acak
-          $newFileName = $file->getRandomName();
-          // Pindahkan file ke folder "uploads"
-          $file->move(FCPATH . 'uploads/', $newFileName);
+    return redirect()->to(base_url('admin/grade_level'))
+      ->with('success', 'Level kelas berhasil diperbarui.');
+  }
 
-          // Simpan ke tabel pivot grade_images
-          $this->gradeImagesModel->insert([
-            'kelas_id'   => $id,
-            'image_name' => $newFileName,
-            // Anda bisa menyimpan deskripsi atau biarkan kosong
-            'deskripsi'  => '',
-            'created_at' => date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s'),
-          ]);
-        }
-      }
+  // Menampilkan daftar proyek berdasarkan ID kelas
+  public function gradeProyek($kelas_id)
+  {
+    if (!logged_in()) {
+      return redirect()->to('/login');
     }
 
-    return redirect()->to(base_url('admin/grade_level/detail/' . esc($id)))
-      ->with('success', 'Level kelas berhasil diperbarui.');
+    $kelas = $this->manageKelasModel->find($kelas_id);
+    $proyek = $this->gradeImagesModel->where('kelas_id', $kelas_id)->findAll();
+
+    $data = [
+      'title' => 'Daftar Proyek',
+      'kelas' => $kelas,
+      'proyek' => $proyek,
+    ];
+
+    return view('admin/prestasi_sertifikat/grade_level/kelas_proyek', $data);
+  }
+
+  // Menampilkan form tambah proyek berdasarkan ID kelas
+  public function gradeProyekTambah($kelas_id)
+  {
+    if (!logged_in()) {
+      return redirect()->to('/login');
+    }
+
+    $kelas = $this->manageKelasModel->find($kelas_id);
+
+    $data = [
+      'title' => 'Tambah Proyek',
+      'kelas' => $kelas,
+    ];
+
+    return view('admin/prestasi_sertifikat/grade_level/kelas_proyek_tambah', $data);
+  }
+
+  public function gradeProyekSimpan($kelas_id)
+  {
+    if (!logged_in()) {
+      return redirect()->to('/login');
+    }
+
+    $validationRules = [
+      'deskripsi' => 'required',
+      'image_name' => [
+        'rules'  => 'permit_empty|is_image[gambar]|mime_in[gambar,image/jpg,image/jpeg,image/png,image/svg+xml]|max_size[gambar,2048]',
+        'errors' => [
+          'is_image' => 'File harus berupa gambar.',
+          'mime_in'  => 'Format gambar harus JPG, JPEG, PNG, atau SVG.',
+          'max_size' => 'Ukuran gambar maksimal 2MB.'
+        ]
+      ]
+    ];
+
+    if (!$this->validate($validationRules)) {
+      return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+    }
+
+    $gradeImagesModel = new GradeImagesModel();
+
+    $data = [
+      'deskripsi'   => $this->request->getPost('deskripsi'),
+      'kelas_id'    => $kelas_id,
+      'created_at'  => date('Y-m-d H:i:s'),
+    ];
+
+    // Proses upload gambar
+    $file = $this->request->getFile('gambar');
+    if ($file && $file->isValid() && !$file->hasMoved()) {
+      $newFileName = $file->getRandomName(); // Generate nama acak
+      $file->move(FCPATH . 'uploads/proyek/', $newFileName); // Simpan ke folder uploads/proyek/
+      $data['image_name'] = $newFileName; // Simpan nama file ke database menggunakan key image_name
+    }
+
+    if ($gradeImagesModel->insert($data)) {
+      return redirect()->to('admin/grade_level/proyek/' . $kelas_id)->with('success', 'Proyek berhasil ditambahkan!');
+    } else {
+      return redirect()->back()->withInput()->with('error', 'Gagal menyimpan proyek.');
+    }
+  }
+
+  public function gradeProyekEdit($kelas_id, $proyek_id)
+  {
+    if (!logged_in()) {
+      return redirect()->to('/login');
+    }
+
+    // Ambil data kelas
+    $kelas = $this->manageKelasModel->find($kelas_id);
+    // Ambil data proyek berdasarkan ID proyek
+    $proyek = $this->gradeImagesModel->find($proyek_id);
+
+    if (!$proyek) {
+      throw new \CodeIgniter\Exceptions\PageNotFoundException("Proyek tidak ditemukan.");
+    }
+
+    $data = [
+      'title'   => 'Edit Proyek',
+      'kelas'   => $kelas,
+      'proyek'  => $proyek,
+    ];
+
+    return view('admin/prestasi_sertifikat/grade_level/kelas_proyek_edit', $data);
+  }
+
+
+  public function gradeProyekUpdate($kelas_id)
+  {
+    if (!logged_in()) {
+      return redirect()->to('/login');
+    }
+
+    // Validasi file gambar
+    $validationRules = [
+      'gambar' => [
+        'rules'  => 'uploaded[gambar]|is_image[gambar]|mime_in[gambar,image/jpg,image/jpeg,image/png,image/svg+xml]|max_size[gambar,2048]',
+        'errors' => [
+          'uploaded' => 'Gambar harus diunggah.',
+          'is_image' => 'File harus berupa gambar.',
+          'mime_in'  => 'Format gambar harus JPG, JPEG, PNG, atau SVG.',
+          'max_size' => 'Ukuran gambar maksimal 2MB.'
+        ]
+      ]
+    ];
+
+    if (!$this->validate($validationRules)) {
+      return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+    }
+
+    $gradeImagesModel = new GradeImagesModel();
+
+    // Proses upload gambar
+    $file = $this->request->getFile('gambar');
+    if ($file->isValid() && !$file->hasMoved()) {
+      $newFileName = $file->getRandomName(); // Generate nama acak
+      $file->move(FCPATH . 'uploads/proyek/', $newFileName); // Simpan ke folder uploads/proyek/
+
+      // Simpan informasi gambar ke database
+      $data = [
+        'kelas_id' => $kelas_id,
+        'image_name'     => $newFileName,
+        'created_at'     => date('Y-m-d H:i:s'),
+      ];
+
+      if ($gradeImagesModel->insert($data)) {
+        return redirect()->to('admin/grade_level/proyek/' . $kelas_id)->with('success', 'Gambar berhasil diunggah!');
+      } else {
+        return redirect()->back()->withInput()->with('error', 'Gagal menyimpan gambar ke database.');
+      }
+    } else {
+      return redirect()->back()->withInput()->with('error', 'Gagal mengunggah gambar.');
+    }
+  }
+
+  public function gradeProyekDelete($kelas_id, $proyek_id)
+  {
+    if (!logged_in()) {
+      return redirect()->to('/login');
+    }
+
+    $proyek = $this->gradeImagesModel->where(['id' => $proyek_id, 'kelas_id' => $kelas_id])->first();
+
+    if ($proyek) {
+      $this->gradeImagesModel->delete($proyek_id);
+      return redirect()->to('admin/grade_level/proyek/' . $kelas_id)->with('success', 'Proyek berhasil dihapus');
+    }
+
+    return redirect()->to('admin/grade_level/proyek/' . $kelas_id)->with('error', 'Proyek tidak ditemukan');
   }
 }

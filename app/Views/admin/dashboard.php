@@ -87,6 +87,7 @@
     background-image: url("data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><path fill='%23ff9800' d='M6.7 16l9.3-9.3v-1.4l-10.7 10.7z'/><path fill='%23ff9800' d='M9.7 16l6.3-6.3v-1.4l-7.7 7.7z'/><path fill='%23ff9800' d='M12.7 16l3.3-3.3v-1.4l-4.7 4.7z'/><path fill='%23ff9800' d='M15.7 16l0.3-0.3v-1.4l-1.7 1.7z'/></svg>");
   }
 
+
   .toptight-corner-prestasi-nasional {
     position: absolute;
     top: 0;
@@ -123,9 +124,126 @@
     background-image: url("data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><path fill='%239c27b0' d='M6.7 16l9.3-9.3v-1.4l-10.7 10.7z'/><path fill='%239c27b0' d='M9.7 16l6.3-6.3v-1.4l-7.7 7.7z'/><path fill='%239c27b0' d='M12.7 16l3.3-3.3v-1.4l-4.7 4.7z'/><path fill='%239c27b0' d='M15.7 16l0.3-0.3v-1.4l-1.7 1.7z'/></svg>");
   }
 
-  /* --- Untuk Kelas (warna tetap, bisa dikembangkan) --- */
+  /* Untuk kelas anak-anak dengan warna lebih tajam */
   .border-left-kelas {
-    border-left: 5px solid #673ab7;
+    border-left: 5px solid #2979FF;
+    /* Biru Elektrik */
+  }
+
+  .border-left-kelas-basic {
+    border-left: 5px solid #2979FF;
+    /* Biru Elektrik */
+  }
+
+  .border-left-kelas-intermediate {
+    border-left: 5px solid #FFD600;
+    /* Kuning Neon */
+  }
+
+  .border-left-kelas-advance {
+    border-left: 5px solid #D50000;
+    /* Merah Terang */
+  }
+
+  /* Top corner untuk label anak-anak dengan warna lebih tajam */
+  .toptight-corner-kelas {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50px;
+    height: 50px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url("data:image/svg+xml;utf8,<svg width='800px' height='800px' viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg' version='1.1' fill='%232979FF' stroke='%23000000' stroke-linecap='round' stroke-linejoin='round' stroke-width='1'><path d='m8 1.75 5.25 2v5c0 2.25-2 4.5-5.25 5.5-3.25-1-5.25-3-5.25-5.5v-5z'/></svg>");
+  }
+
+  .toptight-corner-kelas-basic {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50px;
+    height: 50px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url("data:image/svg+xml;utf8,<svg width='800px' height='800px' viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg' version='1.1' fill='%232979FF' stroke='%23000000' stroke-linecap='round' stroke-linejoin='round' stroke-width='1'><path d='m8 1.75 5.25 2v5c0 2.25-2 4.5-5.25 5.5-3.25-1-5.25-3-5.25-5.5v-5z'/></svg>");
+  }
+
+  .toptight-corner-kelas-intermediate {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50px;
+    height: 50px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url("data:image/svg+xml;utf8,<svg width='800px' height='800px' viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg' version='1.1' fill='%23FFD600' stroke='%23000000' stroke-linecap='round' stroke-linejoin='round' stroke-width='1'><path d='m8 1.75 5.25 2v5c0 2.25-2 4.5-5.25 5.5-3.25-1-5.25-3-5.25-5.5v-5z'/></svg>");
+  }
+
+  .toptight-corner-kelas-advance {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50px;
+    height: 50px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url("data:image/svg+xml;utf8,<svg width='800px' height='800px' viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg' version='1.1' fill='%23D50000' stroke='%23000000' stroke-linecap='round' stroke-linejoin='round' stroke-width='1'><path d='m8 1.75 5.25 2v5c0 2.25-2 4.5-5.25 5.5-3.25-1-5.25-3-5.25-5.5v-5z'/></svg>");
+  }
+
+  .toptightback-corner-kelas {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 60px;
+    height: 60px;
+    background-repeat: repeat;
+    background-size: 16px 16px;
+    transform: rotate(-90deg);
+    background-image: url("data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 16 16'><path fill='%232979FF' d='M6.7 16l9.3-9.3v-1.4l-10.7 10.7z'/><path fill='%232979FF' d='M9.7 16l6.3-6.3v-1.4l-7.7 7.7z'/><path fill='%232979FF' d='M12.7 16l3.3-3.3v-1.4l-4.7 4.7z'/><path fill='%232979FF' d='M15.7 16l0.3-0.3v-1.4l-1.7 1.7z'/></svg>");
+  }
+
+  .toptightback-corner-kelas-basic {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 60px;
+    height: 60px;
+    background-repeat: repeat;
+    background-size: 16px 16px;
+    transform: rotate(-90deg);
+    background-image: url("data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 16 16'><path fill='%232979FF' d='M6.7 16l9.3-9.3v-1.4l-10.7 10.7z'/><path fill='%232979FF' d='M9.7 16l6.3-6.3v-1.4l-7.7 7.7z'/><path fill='%232979FF' d='M12.7 16l3.3-3.3v-1.4l-4.7 4.7z'/><path fill='%232979FF' d='M15.7 16l0.3-0.3v-1.4l-1.7 1.7z'/></svg>");
+  }
+
+  .toptightback-corner-kelas-intermediate {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 60px;
+    height: 60px;
+    background-repeat: repeat;
+    background-size: 16px 16px;
+    /* Sesuaikan dengan ukuran asli SVG */
+    transform: rotate(-90deg);
+    background-image: url("data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 16 16'><path fill='%23FFD600' d='M6.7 16l9.3-9.3v-1.4l-10.7 10.7z'/><path fill='%23FFD600' d='M9.7 16l6.3-6.3v-1.4l-7.7 7.7z'/><path fill='%23FFD600' d='M12.7 16l3.3-3.3v-1.4l-4.7 4.7z'/><path fill='%23FFD600' d='M15.7 16l0.3-0.3v-1.4l-1.7 1.7z'/></svg>");
+  }
+
+  .toptightback-corner-kelas-advance {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 60px;
+    height: 60px;
+    background-repeat: repeat;
+    background-size: 16px 16px;
+    transform: rotate(-90deg);
+    background-image: url("data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 16 16'><path fill='%23D50000' d='M6.7 16l9.3-9.3v-1.4l-10.7 10.7z'/><path fill='%23D50000' d='M9.7 16l6.3-6.3v-1.4l-7.7 7.7z'/><path fill='%23D50000' d='M12.7 16l3.3-3.3v-1.4l-4.7 4.7z'/><path fill='%23D50000' d='M15.7 16l0.3-0.3v-1.4l-1.7 1.7z'/></svg>");
+  }
+
+
+  .star-kelas {
+    position: absolute;
+    top: 25px;
+    right: 50px;
   }
 
   /* --- Untuk Artikel --- */
@@ -171,6 +289,21 @@
     .search {
       max-width: 10rem;
     }
+  }
+
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    text-decoration: none;
+  }
+
+  .card a {
+    text-decoration: none;
+    color: black;
+  }
+
+  .card:hover a {
+    text-decoration: none;
   }
 </style>
 
@@ -299,17 +432,19 @@
                     <!-- Card body dengan border left berdasarkan jenis dan corner SVG berdasarkan tingkat -->
                     <div class="card-body <?= $borderClass; ?> shadow h-100 d-flex flex-column py-1" style="position: relative;">
                       <div class="<?= $cornerClass; ?>" style="position: absolute; top: 0; right: 0; width: 60px; height: 60px;"></div>
-                      <div class="flex-grow-1">
-                        <div class="text-ellipsis-2" style="font-weight: bold;">
-                          <?= esc($item['nama_kegiatan'] ?? 'Nama Kegiatan') ?>
+                      <a href="<?= base_url('admin/prestasi/detail/' . esc($item['id'])); ?>" class="stretched-link">
+                        <div class="flex-grow-1 card-isi">
+                          <div class="text-ellipsis-2" style="font-weight: bold;">
+                            <?= esc($item['nama_kegiatan'] ?? 'Nama Kegiatan') ?>
+                          </div>
+                          <div>
+                            <?= esc(($item['jenis'] ?? 'Jenis') . ' | ' . ($item['tingkat'] ?? 'Tingkat')) ?>
+                          </div>
                         </div>
-                        <div>
-                          <?= esc(($item['jenis'] ?? 'Jenis') . ' | ' . ($item['tingkat'] ?? 'Tingkat')) ?>
+                        <div class="card-footer p-0" style="background-color: transparent; justify-items:right;">
+                          <small class="text-muted"><?= esc($item['tahun'] ?? 'Tahun') ?></small>
                         </div>
-                      </div>
-                      <div class="card-footer p-0" style="background-color: transparent; justify-items:right;">
-                        <small class="text-muted"><?= esc($item['tahun'] ?? 'Tahun') ?></small>
-                      </div>
+                      </a>
                     </div>
                   </div>
                 <?php endforeach; ?>
@@ -338,23 +473,89 @@
           <div class="collapse show" id="collapseLeft2">
             <div class="card-body" style="height:250px; overflow-y:auto; margin-bottom:1rem">
               <?php if (!empty($classes)): ?>
-                <?php foreach ($classes as $kelas): ?>
-                  <div class="card mb-2" style="height:5rem;">
-                    <div class="card-body border-left-kelas shadow h-100 d-flex flex-column py-1">
-                      <div class="flex-grow-1">
-                        <div class="text-ellipsis-2" style="font-weight: bold;">
-                          <?= esc($kelas['nama_kelas'] ?? 'Nama Kelas') ?>
-                        </div>
-                        <div>
-                          <?= esc($kelas['kode_kelas'] ?? 'Kode Kelas') ?>
-                        </div>
-                      </div>
-                      <div class="card-footer p-0" style="background-color: transparent; justify-items:right;">
-                        <small class="text-muted"><?= esc($kelas['jumlah_anggota'] ?? '0') ?> anggota</small>
+                <?php if (!empty($classes)): ?>
+                  <?php foreach ($classes as $kelas): ?>
+                    <?php
+                    // Ambil nilai grade level dan tentukan warna border-nya
+                    $grade = strtolower($kelas['level'] ?? '');
+                    switch ($grade) {
+                      case 'basic':
+                        $borderColor = 'border-left-kelas-basic';
+                        break;
+                      case 'intermediate':
+                        $borderColor = 'border-left-kelas-intermediate';
+                        break;
+                      case 'advance':
+                        $borderColor = 'border-left-kelas-advance';
+                        break;
+                      default:
+                        $borderColor = 'border-left-kelas';
+                        break;
+                    }
+                    switch ($grade) {
+                      case 'basic':
+                        $cornerColor = 'toptight-corner-kelas-basic';
+                        break;
+                      case 'intermediate':
+                        $cornerColor = 'toptight-corner-kelas-intermediate';
+                        break;
+                      case 'advance':
+                        $cornerColor = 'toptight-corner-kelas-advance';
+                        break;
+                      default:
+                        $cornerColor = 'toptight-corner-kelas';
+                        break;
+                    }
+                    switch ($grade) {
+                      case 'basic':
+                        $cornerColorBack = 'toptightback-corner-kelas-basic';
+                        break;
+                      case 'intermediate':
+                        $cornerColorBack = 'toptightback-corner-kelas-intermediate';
+                        break;
+                      case 'advance':
+                        $cornerColorBack = 'toptightback-corner-kelas-advance';
+                        break;
+                      default:
+                        $cornerColorBack = 'toptightback-corner-kelas';
+                        break;
+                    }
+
+                    ?>
+                    <div class="card mb-2" style="height:5rem;">
+                      <div class="card-body <?= $borderColor; ?> shadow h-100 d-flex flex-column py-1" style="position: relative;">
+                        <div class="<?= $cornerColorBack; ?>" style="position: absolute; top: 0; right: 0; width: 45px; height: 45px;"></div>
+                        <div class="<?= $cornerColor; ?>" style="position: absolute; top: 0; right: 0; width: 50px; height: 50px;"></div>
+
+                        <!-- Tambahan ikon bintang berdasarkan sub_level -->
+                        <?php if (isset($kelas['sub_level']) && $kelas['sub_level'] > 0): ?>
+                          <div class="star-kelas">
+                            <?php for ($i = 0; $i < (int)$kelas['sub_level']; $i++): ?>
+                              <svg fill="#ffd700" width="15px" height="15px" style="margin:-2px;" viewBox="0 0 24 24" class="icon star-icon">
+                                <path d="M22,9.81a1,1,0,0,0-.83-.69l-5.7-.78L12.88,3.53a1,1,0,0,0-1.76,0L8.57,8.34l-5.7.78a1,1,0,0,0-.82.69,1,1,0,0,0,.28,1l4.09,3.73-1,5.24A1,1,0,0,0,6.88,20.9L12,18.38l5.12,2.52a1,1,0,0,0,.44.1,1,1,0,0,0,1-1.18l-1-5.24,4.09-3.73A1,1,0,0,0,22,9.81Z"></path>
+                              </svg>
+                            <?php endfor; ?>
+                          </div>
+                        <?php endif; ?>
+                        <a href="<?= base_url('admin/manage_kelas/kelola_anggota/detail/' . esc($kelas['id'])); ?>" class="stretched-link">
+                          <div class="flex-grow-1 card-isi">
+                            <div class="text-ellipsis-2" style="font-weight: bold;">
+                              <?= esc($kelas['nama_kelas'] ?? 'Nama Kelas') ?>
+                            </div>
+                            <div>
+                              <?= esc($kelas['kode_kelas'] ?? 'Kode Kelas') ?>
+                            </div>
+                          </div>
+                          <div class="card-footer p-0" style="background-color: transparent; z-index:1; text-align: right;">
+                            <small class="text-muted"><?= esc($kelas['jumlah_anggota'] ?? '0') ?> anggota</small>
+                          </div>
+                        </a>
                       </div>
                     </div>
-                  </div>
-                <?php endforeach; ?>
+                  <?php endforeach; ?>
+                <?php else: ?>
+                  <p>Tidak ada data kelas.</p>
+                <?php endif; ?>
               <?php else: ?>
                 <p>Tidak ada data kelas.</p>
               <?php endif; ?>
@@ -403,19 +604,21 @@
                   ?>
                   <div class="card mb-2" style="height:5rem;">
                     <div class="card-body border-left-artikel topright-corner-artikel <?= $kategoriClass; ?> shadow h-100 d-flex flex-column py-1">
-                      <div class="flex-grow-1">
-                        <div class="text-ellipsis-2" style="font-weight: bold;">
-                          <?= esc($a['judul'] ?? 'Judul Artikel') ?>
+                      <a target="_blank" href="<?= base_url('/' . esc($a['slug'])); ?>" class="stretched-link">
+                        <div class="flex-grow-1 card-isi">
+                          <div class="text-ellipsis-2" style="font-weight: bold;">
+                            <?= esc($a['judul'] ?? 'Judul Artikel') ?>
+                          </div>
+                          <div>
+                            <?= esc($a['kategori'] ?? 'Kategori') ?>
+                          </div>
                         </div>
-                        <div>
-                          <?= esc($a['kategori'] ?? 'Kategori') ?>
+                        <div class="card-footer p-0" style="background-color: transparent; justify-items:right;">
+                          <small class="text-muted">
+                            <?= esc(($a['updated_at'] ?? '') . ($a['tanggal'] ?? '')) ?>
+                          </small>
                         </div>
-                      </div>
-                      <div class="card-footer p-0" style="background-color: transparent; justify-items:right;">
-                        <small class="text-muted">
-                          <?= esc(($a['updated_at'] ?? '') . ($a['tanggal'] ?? '')) ?>
-                        </small>
-                      </div>
+                      </a>
                     </div>
                   </div>
                 <?php endforeach; ?>

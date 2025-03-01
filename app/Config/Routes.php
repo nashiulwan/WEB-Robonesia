@@ -124,8 +124,14 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
     // Routes untuk Grade/Kelas
     $routes->get('grade_level', 'PrestasiSertifikatController::gradeIndex', ['filter' => 'role:admin']);
     $routes->get('grade_level/detail/(:num)', 'PrestasiSertifikatController::gradeDetail/$1', ['filter' => 'role:admin']);
-    $routes->get('grade_level/edit/(:num)', 'PrestasiSertifikatController::gradeEdit/$1', ['filter' => 'role:admin']);
-    $routes->post('grade_level/update/(:num)', 'PrestasiSertifikatController::gradeUpdate/$1', ['filter' => 'role:admin']);
+    $routes->get('grade_level/level/(:num)', 'PrestasiSertifikatController::gradeLevel/$1', ['filter' => 'role:admin']);
+    $routes->post('grade_level/update_level/(:num)', 'PrestasiSertifikatController::gradeLevelUpdate/$1', ['filter' => 'role:admin']);
+    $routes->get('grade_level/proyek/(:num)', 'PrestasiSertifikatController::gradeProyek/$1', ['filter' => 'role:admin']);
+    $routes->get('grade_level/proyek/tambah/(:num)', 'PrestasiSertifikatController::gradeProyekTambah/$1', ['filter' => 'role:admin']);
+    $routes->post('grade_level/proyek/simpan/(:num)', 'PrestasiSertifikatController::gradeProyekSimpan/$1', ['filter' => 'role:admin']);
+    $routes->get('grade_level/proyek/edit/(:num)/(:num)', 'PrestasiSertifikatController::gradeProyekEdit/$1/$2', ['filter' => 'role:admin']);
+    $routes->post('grade_level/proyek/update/(:num)/(:num)', 'PrestasiSertifikatController::gradeProyekUpdate/$1/$2', ['filter' => 'role:admin']);
+    $routes->get('grade_level/proyek/delete/(:num)/(:num)', 'PrestasiSertifikatController::gradeProyekDelete/$1/$2', ['filter' => 'role:admin']);
 
     // Routes untuk Sertifikat
     $routes->get('sertifikat', 'PrestasiSertifikatController::tambah', ['filter' => 'role:admin']);
