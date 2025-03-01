@@ -229,7 +229,7 @@ class Manage_akunController extends BaseController
 
         $manage_akunModel = new Manage_akunModel();
 
-        $role = $this->request->getPost('role');
+        $role = $this->request->getPost('role') ?? ''; // Bisa kosong
         $username = $this->request->getPost('username');
         $email = $this->request->getPost('email');
         $fullname = $this->request->getPost('fullname');
@@ -250,7 +250,7 @@ class Manage_akunController extends BaseController
             'username' => 'required|alpha_numeric_space|min_length[3]|max_length[30]|is_unique[users.username]',
             'password' => 'required',
             'confirm_password' => 'required|matches[password]',
-            'role' => 'required|in_list[1,2,3]', // Validasi role
+            // Role tidak lagi required
         ];
 
         if (!$this->validate($rules)) {
@@ -274,8 +274,9 @@ class Manage_akunController extends BaseController
 
         $hashedPassword = Password::hash($this->request->getPost('password'));
 
-        // Pastikan role hanya menerima nilai yang valid
-        $role = in_array($role, ['1', '2', '3']) ? (int)$role : 3;
+        // Jika role kosong atau tidak valid, set ke default (2 = siswa)
+        $validRoles = ['1', '2', '3'];
+        $role = in_array($role, $validRoles) ? (int)$role : 2;
 
         // Buat data user
         $data = [
@@ -301,6 +302,7 @@ class Manage_akunController extends BaseController
             return redirect()->back()->with('error', 'Gagal menambahkan akun.');
         }
     }
+
 
 
     public function edit($id)

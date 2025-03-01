@@ -78,7 +78,7 @@
 
         <div class="form-group">
             <label for="role">Hak Akses</label>
-            <select class="custom-select" name="role" required>
+            <select class="custom-select" name="role">
                 <option value="" disabled selected>Pilih Role</option>
                 <option value="1">Admin</option>
                 <option value="3">Guru</option>
