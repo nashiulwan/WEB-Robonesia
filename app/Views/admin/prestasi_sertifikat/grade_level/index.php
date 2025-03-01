@@ -46,7 +46,8 @@
                     <th style="width: 5%;">No</th>
                     <th style="width: 25%;">Nama Kelas</th>
                     <th style="width: 10%;">Level</th>
-                    <th style="width: 50%;">Proyek dikerjakan</th>
+                    <th style="width: 10%;">Sub Level</th>
+                    <th style="width: 35%;">Proyek Terbaru</th>
                     <th style="width: 10%;">Aksi</th>
                 </tr>
             </thead>
@@ -56,12 +57,21 @@
                         <tr>
                             <td><?= $no++; ?></td>
                             <td class="text-break"><?= esc($row['nama_kelas']); ?></td>
-                            <td class="text-break"><?= esc($row['level']); ?></td> <!-- Display the class code -->
-                            <td class="text-break"><?= esc($row['gambar_proyek']); ?></td>
-
+                            <td class="text-break"><?= esc($row['level']); ?></td>
+                            <td class="text-break"><?= esc($row['sub_level']); ?></td>
+                            <td class="text-break">
+                                <?php if (!empty($row['images'])) : ?>
+                                    <?php 
+                                        // Asumsikan array images sudah diurutkan dengan gambar terbaru di index 0
+                                        $latestImage = $row['images'][0]; 
+                                    ?>
+                                    <img src="<?= base_url('uploads/' . esc($latestImage['image_name'])) ?>" alt="Gambar Terbaru" style="height:60px; margin-right:5px;">
+                                <?php else : ?>
+                                    <span>Tidak ada gambar</span>
+                                <?php endif; ?>
+                            </td>
                             <td>
                                 <div class="d-flex flex-wrap gap-2" style="justify-content: space-between;">
-                                    <!-- Button for adding members -->
                                     <a href="<?= base_url('admin/grade_level/detail/' . esc($row['id'])); ?>" class="btn btn-primary btn-sm d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; margin: 2px;">
                                         <i class="fas fa-eye"></i>
                                     </a>

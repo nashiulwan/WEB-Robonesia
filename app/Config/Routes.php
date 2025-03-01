@@ -38,12 +38,11 @@ $routes->group('', function ($routes) {
 
     $routes->get('/pages/shop', 'PagesController::shop');
     $routes->get('/shop', 'PagesController::shop');
-    
+
     $routes->get('/(:segment)', 'BlogController::artikel/$1'); // Menampilkan detail artikel
     $routes->get('blog/kategori/(:segment)', 'BlogController::kategori/$1');
 
     $routes->get('/login', 'AuthController::login');
-
 });
 
 $routes->group('auth', function ($routes) {
@@ -126,6 +125,7 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
     $routes->get('grade_level', 'PrestasiSertifikatController::gradeIndex', ['filter' => 'role:admin']);
     $routes->get('grade_level/detail/(:num)', 'PrestasiSertifikatController::gradeDetail/$1', ['filter' => 'role:admin']);
     $routes->get('grade_level/edit/(:num)', 'PrestasiSertifikatController::gradeEdit/$1', ['filter' => 'role:admin']);
+    $routes->post('grade_level/update/(:num)', 'PrestasiSertifikatController::gradeUpdate/$1', ['filter' => 'role:admin']);
 
     // Routes untuk Sertifikat
     $routes->get('sertifikat', 'PrestasiSertifikatController::tambah', ['filter' => 'role:admin']);

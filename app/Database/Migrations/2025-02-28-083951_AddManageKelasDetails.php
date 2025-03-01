@@ -14,15 +14,16 @@ class AddManageKelasDetails extends Migration
                 'constraint' => 50,
                 'null'       => true,
             ],
-            'gambar_proyek' => [
-                'type' => 'TEXT',
-                'null' => true,
+            'sub_level' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 50,
+                'null'       => true,
             ],
         ]);
     }
 
     public function down()
     {
-        $this->forge->dropColumn('manage_kelas', ['level', 'gambar_proyek']);
+        $this->forge->dropColumn('manage_kelas', ['level', 'sub_level']);
     }
 }

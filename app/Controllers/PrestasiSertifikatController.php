@@ -5,8 +5,8 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\PrestasiSertifikatModel;
 use App\Models\UserPrestasiModel;
-use App\Model\Manage_kelasModel;
-use App\Models\Manage_kelasModel as ModelsManage_kelasModel;
+use App\Models\Manage_kelasModel;
+use App\Models\GradeImagesModel;
 use App\Models\UserModel;
 
 class PrestasiSertifikatController extends BaseController
@@ -15,13 +15,15 @@ class PrestasiSertifikatController extends BaseController
   protected $userPrestasiModel;
   protected $manageKelasModel;
   protected $userModel;
+  protected $gradeImagesModel;
 
   public function __construct()
   {
     $this->prestasiSertifikatModel = new PrestasiSertifikatModel();
     $this->userPrestasiModel = new UserPrestasiModel();
     $this->userModel      = new UserModel();
-    $this->manageKelasModel = new ModelsManage_kelasModel();
+    $this->manageKelasModel = new Manage_kelasModel();
+    $this->gradeImagesModel        = new GradeImagesModel();
   }
 
   // Menampilkan halaman utama dengan dua tab:
@@ -699,7 +701,7 @@ class PrestasiSertifikatController extends BaseController
   //===============================================================================//
   //===============================================================================//
   //===============================================================================//
-
+  // Menampilkan daftar kelas
   public function gradeIndex()
   {
     if (!logged_in()) {
@@ -707,14 +709,25 @@ class PrestasiSertifikatController extends BaseController
     }
 
     $classes = $this->manageKelasModel->getAllClassesWithMemberCount();
+
+    // Untuk tiap kelas, ambil semua gambar dari tabel pivot grade_images
+    foreach ($classes as &$class) {
+      $images = $this->gradeImagesModel->where('kelas_id', $class['id'])->findAll();
+      // Simpan data gambar sebagai array di key 'images'
+      $class['images'] = $images;
+    }
+    unset($class); // hapus reference
+
     $data = [
-      'title' => 'Daftar Kelas',
+      'title'   => 'Daftar Kelas',
       'classes' => $classes,
     ];
 
     return view('admin/prestasi_sertifikat/grade_level/index', $data);
   }
 
+
+  // Menampilkan detail kelas (termasuk data gambar dari tabel pivot grade_images)
   public function gradeDetail($id)
   {
     if (!logged_in()) {
@@ -723,36 +736,107 @@ class PrestasiSertifikatController extends BaseController
 
     // Ambil detail kelas (termasuk jumlah anggota)
     $class = $this->manageKelasModel->getClassWithMemberCountById($id);
-    // Ambil data anggota kelas
-    $members = $this->manageKelasModel->getAnggotaByKelas($id);
+    // Ambil gambar terkait dari tabel pivot grade_images
+    $images = $this->gradeImagesModel->getImagesByKelas($id);
 
     $data = [
-      'title'   => 'Informasi Level Kelas',
-      'class'   => $class,
-      'members' => $members,
+      'title'  => 'Informasi Level Kelas',
+      'class'  => $class,
+      'images' => $images,
     ];
 
     return view('admin/prestasi_sertifikat/grade_level/kelas_detail', $data);
   }
 
-
+  // Menampilkan form edit kelas beserta data gambar
   public function gradeEdit($id)
   {
     if (!logged_in()) {
       return redirect()->to('/login');
     }
 
-    // Ambil detail kelas (termasuk jumlah anggota)
     $class = $this->manageKelasModel->getClassWithMemberCountById($id);
     // Ambil data anggota kelas
-    $members = $this->manageKelasModel->getAnggotaByKelas($id);
+    $images = $this->gradeImagesModel->getImagesByKelas($id);
 
     $data = [
       'title'   => 'Edit Level Kelas ' . $class['nama_kelas'],
       'kelas'   => $class,
-      'members' => $members,
+      'images'  => $images, // kirim data gambar ke view
     ];
 
     return view('admin/prestasi_sertifikat/grade_level/kelas_edit', $data);
+  }
+
+  // Memproses update data kelas (tanpa mengubah data gambar di manage_kelas)
+  // Untuk gambar, file yang diupload akan disimpan di folder uploads, dan tiap file
+  // akan diinsert ke tabel grade_images dengan foreign key kelas_id.
+  public function gradeUpdate($id)
+  {
+    if (!logged_in()) {
+      return redirect()->to('/login');
+    }
+
+    // Validasi input dasar
+    $validationRules = [
+      'level'     => 'required',
+      'sub_level' => 'required',
+    ];
+
+    if (!$this->validate($validationRules)) {
+      return redirect()->back()
+        ->withInput()
+        ->with('errors', $this->validator->getErrors());
+    }
+
+    // Ambil nilai level; jika level "Lainnya", gunakan nilai dari input level_lainnya
+    $level = $this->request->getPost('level');
+    if ($level === 'Lainnya') {
+      $level = $this->request->getPost('level_lainnya');
+    }
+    $sub_level = $this->request->getPost('sub_level');
+
+    // Logging untuk debugging
+    log_message('debug', 'gradeUpdate: id = ' . $id . ', level = ' . $level . ', sub_level = ' . $sub_level);
+
+    // Update data utama kelas (tanpa gambar)
+    $data = [
+      'level'      => $level,
+      'sub_level'  => $sub_level,
+      'updated_at' => date('Y-m-d H:i:s'),
+    ];
+
+    $result = $this->manageKelasModel->update($id, $data);
+    if (!$result) {
+      $errors = $this->manageKelasModel->errors();
+      log_message('error', 'Update grade level gagal: ' . print_r($errors, true));
+      return redirect()->back()->with('error', 'Gagal memperbarui grade level.');
+    }
+
+    // Proses upload gambar (multiple upload) untuk disimpan di tabel grade_images
+    $files = $this->request->getFiles();
+    if (isset($files['images'])) {
+      foreach ($files['images'] as $file) {
+        if ($file->isValid() && !$file->hasMoved()) {
+          // Buat nama file baru secara acak
+          $newFileName = $file->getRandomName();
+          // Pindahkan file ke folder "uploads"
+          $file->move(FCPATH . 'uploads/', $newFileName);
+
+          // Simpan ke tabel pivot grade_images
+          $this->gradeImagesModel->insert([
+            'kelas_id'   => $id,
+            'image_name' => $newFileName,
+            // Anda bisa menyimpan deskripsi atau biarkan kosong
+            'deskripsi'  => '',
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s'),
+          ]);
+        }
+      }
+    }
+
+    return redirect()->to(base_url('admin/grade_level/detail/' . esc($id)))
+      ->with('success', 'Level kelas berhasil diperbarui.');
   }
 }

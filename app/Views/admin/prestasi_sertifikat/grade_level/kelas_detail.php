@@ -40,7 +40,7 @@
   </table>
   <div>
 
-  <a href="<?= base_url('admin/grade_level') ?>" class="btn btn-warning" style="margin-left:10px; width:7rem">Kembali</a>
+  <a href="<?= base_url('admin/grade_level') ?>" class="btn btn-warning" style="min-width:7rem">Kembali</a>
   </div>
 </div>
 <?= $this->endSection() ?>
