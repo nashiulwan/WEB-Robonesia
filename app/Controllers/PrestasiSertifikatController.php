@@ -5,12 +5,15 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\PrestasiSertifikatModel;
 use App\Models\UserPrestasiModel;
+use App\Model\Manage_kelasModel;
+use App\Models\Manage_kelasModel as ModelsManage_kelasModel;
 use App\Models\UserModel;
 
 class PrestasiSertifikatController extends BaseController
 {
   protected $prestasiSertifikatModel;
   protected $userPrestasiModel;
+  protected $manageKelasModel;
   protected $userModel;
 
   public function __construct()
@@ -18,6 +21,7 @@ class PrestasiSertifikatController extends BaseController
     $this->prestasiSertifikatModel = new PrestasiSertifikatModel();
     $this->userPrestasiModel = new UserPrestasiModel();
     $this->userModel      = new UserModel();
+    $this->manageKelasModel = new ModelsManage_kelasModel();
   }
 
   // Menampilkan halaman utama dengan dua tab:
@@ -688,4 +692,26 @@ class PrestasiSertifikatController extends BaseController
   //===============================================================================//
   //===============================================================================//
   //===============================================================================//
+
+
+  //===============================================================================//
+  //Grade Kelas Mulai
+  //===============================================================================//
+  //===============================================================================//
+  //===============================================================================//
+
+  public function gradeIndex()
+  {
+    if (!logged_in()) {
+      return redirect()->to('/login');
+    }
+
+    $classes = $this->manageKelasModel->getAllClassesWithMemberCount();
+    $data = [
+      'title' => 'Daftar Kelas',
+      'classes' => $classes,
+    ];
+
+    return view('admin/prestasi_sertifikat/grade_level/index', $data);
+  }
 }

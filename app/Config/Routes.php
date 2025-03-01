@@ -125,7 +125,7 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
     $routes->post('prestasi/delete/(:num)', 'PrestasiSertifikatController::prestasiDelete/$1', ['filter' => 'role:admin']);
 
     // Routes untuk Grade/Kelas
-    $routes->get('grade_kelas', 'PrestasiSertifikatController::tambah', ['filter' => 'role:admin']);
+    $routes->get('grade_level', 'PrestasiSertifikatController::gradeIndex', ['filter' => 'role:admin']);
     // Routes untuk Sertifikat
     $routes->get('sertifikat', 'PrestasiSertifikatController::tambah', ['filter' => 'role:admin']);
 
