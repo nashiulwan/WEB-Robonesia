@@ -714,4 +714,45 @@ class PrestasiSertifikatController extends BaseController
 
     return view('admin/prestasi_sertifikat/grade_level/index', $data);
   }
+
+  public function gradeDetail($id)
+  {
+    if (!logged_in()) {
+      return redirect()->to('/login');
+    }
+
+    // Ambil detail kelas (termasuk jumlah anggota)
+    $class = $this->manageKelasModel->getClassWithMemberCountById($id);
+    // Ambil data anggota kelas
+    $members = $this->manageKelasModel->getAnggotaByKelas($id);
+
+    $data = [
+      'title'   => 'Informasi Level Kelas',
+      'class'   => $class,
+      'members' => $members,
+    ];
+
+    return view('admin/prestasi_sertifikat/grade_level/kelas_detail', $data);
+  }
+
+
+  public function gradeEdit($id)
+  {
+    if (!logged_in()) {
+      return redirect()->to('/login');
+    }
+
+    // Ambil detail kelas (termasuk jumlah anggota)
+    $class = $this->manageKelasModel->getClassWithMemberCountById($id);
+    // Ambil data anggota kelas
+    $members = $this->manageKelasModel->getAnggotaByKelas($id);
+
+    $data = [
+      'title'   => 'Edit Level Kelas ' . $class['nama_kelas'],
+      'kelas'   => $class,
+      'members' => $members,
+    ];
+
+    return view('admin/prestasi_sertifikat/grade_level/kelas_edit', $data);
+  }
 }

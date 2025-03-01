@@ -12,8 +12,7 @@ class AddManageKelasDetails extends Migration
             'level' => [
                 'type'       => 'VARCHAR',
                 'constraint' => 50,
-                'null'       => false,
-                'default'    => 'basic',
+                'null'       => true,
             ],
             'gambar_proyek' => [
                 'type' => 'TEXT',

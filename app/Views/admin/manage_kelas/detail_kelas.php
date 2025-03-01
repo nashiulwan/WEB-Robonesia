@@ -18,7 +18,11 @@
 </style>
 
 <div class="container-fluid my-4">
-    <h1 class="h3 mb-4 text-gray-800">Informasi Kelas</h1>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="h3 text-gray-800"><?= esc($title) ?></h1>
+        <a href="<?= base_url('admin/manage_kelas/kelola_anggota') ?>" class="btn btn-warning" style="margin-left:10px; width:7rem">Kembali</a>
+    </div>
+
     <table class="table table-borderless table-striped table-detail" style="color: black;">
         <tr>
             <th style="width:35%;">Nama Kelas</th>

@@ -243,6 +243,8 @@ class Manage_kelasController extends BaseController
 
         return view('admin/manage_kelas/kelola_anggota', $data);
     }
+
+
     public function detail($id)
     {
         if (!logged_in()) {

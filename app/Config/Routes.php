@@ -89,12 +89,6 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
     $routes->post('manage_kelas/kelola_anggota/hapus/(:num)', 'Manage_kelasController::hapus_anggota/$1', ['filter' => 'role:admin']);
     $routes->post('manage_kelas/kelola_anggota/hapus_anggota/(:num)/(:num)', 'Manage_kelasController::hapus_anggota_kelas/$1/$2', ['filter' => 'role:admin']);
 
-
-    //  Manage kelas (evaluasi pembelajaran)
-    $routes->get('manage_kelas/evaluasi', 'Manage_kelasController::evaluasi', ['filter' => 'role:admin']);
-    $routes->post('manage_kelas/evaluasi/update', 'Manage_kelasController::up   date_evaluasi', ['filter' => 'role:admin']);
-
-
     // Routes untuk manage artikel
     $routes->get('artikel', 'ArtikelController::index', ['filter' => 'role:admin']); // Menampilkan daftar artikel
     $routes->get('artikel/tambah', 'ArtikelController::tambah', ['filter' => 'role:admin']); // Menampilkan form tambah
@@ -126,6 +120,9 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
 
     // Routes untuk Grade/Kelas
     $routes->get('grade_level', 'PrestasiSertifikatController::gradeIndex', ['filter' => 'role:admin']);
+    $routes->get('grade_level/detail/(:num)', 'PrestasiSertifikatController::gradeDetail/$1', ['filter' => 'role:admin']);
+    $routes->get('grade_level/edit/(:num)', 'PrestasiSertifikatController::gradeEdit/$1', ['filter' => 'role:admin']);
+
     // Routes untuk Sertifikat
     $routes->get('sertifikat', 'PrestasiSertifikatController::tambah', ['filter' => 'role:admin']);
 

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controllers;
+
 use App\Models\TimModel;
 use App\Models\ArtikelModel;
 // use App\Models\PartnerModel;
@@ -9,11 +10,12 @@ class PagesController extends BaseController
 {
     protected $artikelModel;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->artikelModel = new ArtikelModel();
     }
     // protected $partnerModel;
-    
+
 
     // public function __construct() {
     //     $this->partnerModel = new PartnerModel();
