@@ -10,65 +10,23 @@ use App\Models\KontakModel;
 use App\Models\PartnerModel;
 use App\Models\TimModel;
 
-/**
- * Class BaseController
- *
- * BaseController provides a convenient place for loading components
- * and performing functions that are needed by all your controllers.
- * Extend this class in any new controllers:
- *     class Home extends BaseController
- *
- * For security be sure to declare any new methods as protected or private.
- */
 abstract class BaseController extends Controller
 {
-    /**
-     * Instance of the main Request object.
-     *
-     * @var RequestInterface
-     */
     protected $request;
-
-    /**
-     * Instance of the Session object.
-     *
-     * @var \CodeIgniter\Session\Session
-     */
     protected $session;
-
-    /**
-     * Lazy-loaded model instances.
-     */
     protected $kontakModel;
     protected $partnerModel;
     protected $timModel;
-
-    /**
-     * Global data for views.
-     */
     protected $kontak;
     protected $partner;
     protected $tim;
-
-    /**
-     * Helpers to be loaded automatically.
-     *
-     * @var array
-     */
     protected $helpers = ['auth'];
 
-    /**
-     * Constructor
-     */
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
     {
-        // Do Not Edit This Line
         parent::initController($request, $response, $logger);
 
-        // Load session service
         $this->session = session();
-
-        // Database connection
         $db = \Config\Database::connect();
 
         // Cek apakah tabel masih kosong
@@ -82,7 +40,6 @@ abstract class BaseController extends Controller
             $db->transStart();
             $seeder = \Config\Database::seeder();
 
-            // Cek apakah DatabaseSeeder ada
             if (class_exists('App\Database\Seeds\DatabaseSeeder')) {
                 $seeder->call('DatabaseSeeder');
             } else {
@@ -102,9 +59,6 @@ abstract class BaseController extends Controller
         $this->tim = $this->getTimModel()->findAll();
     }
 
-    /**
-     * Lazy Load KontakModel
-     */
     protected function getKontakModel()
     {
         if ($this->kontakModel === null) {
@@ -113,9 +67,6 @@ abstract class BaseController extends Controller
         return $this->kontakModel;
     }
 
-    /**
-     * Lazy Load PartnerModel
-     */
     protected function getPartnerModel()
     {
         if ($this->partnerModel === null) {
@@ -124,9 +75,6 @@ abstract class BaseController extends Controller
         return $this->partnerModel;
     }
 
-    /**
-     * Lazy Load TimModel
-     */
     protected function getTimModel()
     {
         if ($this->timModel === null) {
@@ -143,11 +91,20 @@ abstract class BaseController extends Controller
         $data = array_merge($data, [
             'tim' => $this->tim,
             'kontak' => $this->kontak,
-            'partner' => $this->partner
+            'partner' => $this->partner,
         ]);
 
         echo view('layout/header', $data)
             . view($view, $data)
             . view('layout/footer', $data);
+    }
+
+    protected function renderViewDashboardSiswa($view, $data = [])
+    {
+        $data = array_merge($data, [
+            'kontak' => $this->kontak,
+        ]);
+
+        echo view($view, $data);
     }
 }

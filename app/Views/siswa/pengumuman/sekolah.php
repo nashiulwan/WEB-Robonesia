@@ -2,37 +2,27 @@
 
 <?= $this->section('page-content'); ?>
 
-<!-- SECTION ARTIKEL -->
 <div class="container mt-4">
-    <h2 class="text-center mb-4">Berita & Event Terbaru</h2>
+    <h2 class="text-center mb-4">Berita dan Pengumuman</h2>
     <!-- Carousel -->
     <div id="eventCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
-            <?php foreach (array_chunk($event_artikel, 3) as $index => $chunk) : ?>
+            <?php foreach (array_chunk($berita_artikel, 9) as $index => $chunk) : ?>
                 <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
                     <div class="row">
-                        <?php foreach ($chunk as $artikel) : ?>
+                        <?php foreach ($chunk as $event) : ?>
                             <div class="col-md-4">
                                 <div class="card shadow-sm border-0">
                                     <div class="card-body text-center d-flex flex-column gap-2">
-                                        <?php if (!empty($artikel['gambar'])) : ?>
-                                            <img src="<?= base_url('uploads/' . esc($artikel['gambar'])); ?>" 
+                                        <?php if (!empty($event['gambar'])) : ?>
+                                            <img src="<?= base_url('uploads/' . esc($event['gambar'])); ?>" 
                                                 class="card-img-top img-fluid" style="height: 200px; object-fit: cover;" 
-                                                alt="<?= esc($artikel['judul']); ?>">
+                                                alt="<?= esc($event['judul']); ?>">
                                         <?php else : ?>
                                             <img src="<?= base_url('uploads/default.jpg'); ?>" class="card-img-top" alt="No Image">
                                         <?php endif; ?>
-                                        
-                                        <!-- Kategori -->
-                                        <span class="badge 
-                                            <?= ($artikel['kategori'] === 'event') ? 'bg-success' : 
-                                                (($artikel['kategori'] === 'kompetisi') ? 'bg-danger' : 'bg-primary'); ?>">
-                                            <?= ucfirst($artikel['kategori']); ?>
-                                        </span>
-
-                                        <h5 class="card-title"><?= esc($artikel['judul']); ?></h5>
-                                        <p class="text-muted small"><?= date('d M Y', strtotime($artikel['created_at'])); ?></p>
-                                        <a href="<?= base_url('/' . esc($artikel['slug'])); ?>" class="btn btn-primary">
+                                        <h5 class="card-title"><?= esc($event['judul']); ?></h5>
+                                        <a href="<?= base_url('/' . esc($event['slug'])); ?>" class="btn btn-primary">
                                             Baca Selengkapnya
                                         </a>
                                     </div>
@@ -54,4 +44,5 @@
     </div>
 </div>
 
+        
 <?= $this->endSection(); ?>

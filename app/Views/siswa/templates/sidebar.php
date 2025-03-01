@@ -20,6 +20,14 @@
             </a>
         </li>
 
+        <!-- Nav Item - Profil -->
+        <li class="nav-item">
+            <a class="nav-link" href="<?= base_url('siswa/profil'); ?>">
+                <i class="fas fa-fw fa-user"></i>
+                <span>Profil</span>
+            </a>
+        </li>
+
         <!-- Menu Prestasi & Pencapaian -->
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePrestasi" aria-expanded="true" aria-controls="collapsePrestasi">
@@ -28,10 +36,9 @@
             </a>
             <div id="collapsePrestasi" class="collapse" aria-labelledby="headingPrestasi" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="<?= base_url('siswa/nilai'); ?>">Nilai</a>
+                    <a class="collapse-item" href="<?= base_url('siswa/project-dan-nilai'); ?>">Project dan Nilai</a>
                     <a class="collapse-item" href="<?= base_url('siswa/sertifikat'); ?>">Sertifikat yang Diperoleh</a>
                     <a class="collapse-item" href="<?= base_url('siswa/prestasi'); ?>">Daftar Prestasi</a>
-                    <a class="collapse-item" href="<?= base_url('siswa/level'); ?>">Sertifikat Level & Pencapaian</a>
                 </div>
             </div>
         </li>
@@ -46,37 +53,18 @@
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item" href="<?= base_url('siswa/pengumuman/sekolah'); ?>">Informasi Sekolah</a>
                     <a class="collapse-item" href="<?= base_url('siswa/pengumuman/event'); ?>">Event dan Lomba</a>
-                    <a class="collapse-item" href="<?= base_url('siswa/jadwal'); ?>">Jadwal Event/Lomba</a>
                 </div>
             </div>
         </li>
 
         <!-- Menu Kegiatan & Proyek -->
         <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseKegiatan" aria-expanded="true" aria-controls="collapseKegiatan">
-                <i class="fas fa-fw fa-tasks"></i>
-                <span>Kegiatan & Proyek</span>
+            <a class="nav-link" href="<?= base_url('siswa/galeri'); ?>">
+                <i class="fas fa-fw fa-images"></i>
+                <span>Galeri Kegiatan</span>
             </a>
-            <div id="collapseKegiatan" class="collapse" aria-labelledby="headingKegiatan" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="<?= base_url('siswa/galeri'); ?>">Galeri Kegiatan</a>
-                </div>
-            </div>
         </li>
 
-        <!-- Menu Komunikasi -->
-        <li class="nav-item">
-            <a class="nav-link" href="<?= base_url('siswa/hubungi_guru'); ?>">
-                <i class="fas fa-fw fa-comments"></i>
-                <span>Hubungi Guru</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="<?= base_url('siswa/notifikasi'); ?>">
-                <i class="fas fa-fw fa-bell"></i>
-                <span>Notifikasi</span>
-            </a>
-        </li>
     <?php endif; ?>
 
     <!-- Nav Item - Logout -->

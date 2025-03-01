@@ -1,5 +1,5 @@
 <div class="container mt-5">
-    <h1 class="mb-4" style="margin-top: 8rem;"><?= esc($title) ?></h1>
+    <h1 class="mb-4" data-aos="fade-up" data-aos-duration="1000" style="margin-top: 8rem;"><?= esc($title) ?></h1>
 
     <?php if (!empty($message)) : ?>
         <div class="alert alert-warning"><?= esc($message) ?></div>
@@ -7,7 +7,7 @@
 
     <div class="row">
         <?php foreach ($artikel as $item) : ?>
-            <div class="col-md-4 mb-4">
+            <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-duration="300"> 
                 <div class="card">
                     <?php if (!empty($item['gambar'])) : ?>
                         <img src="<?= base_url('uploads/' . esc($item['gambar'])) ?>" class="card-img-top" alt="Gambar Artikel" style="height: 200px; object-fit: cover;">

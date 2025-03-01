@@ -58,7 +58,6 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
     // Routes untuk admin area (protected dengan filter auth)
     $routes->get('dashboard', 'AdminController::dashboard', ['filter' => 'role:admin']);
     $routes->get('pengguna', 'AdminController::pengguna', ['filter' => 'role:admin']);
-    $routes->get('seo', 'AdminController::seo', ['filter' => 'role:admin']);
     $routes->get('pengaturan', 'AdminController::pengaturan', ['filter' => 'role:admin']);
     $routes->get('analytics', 'AdminController::analytics', ['filter' => 'role:admin']);
 
@@ -94,12 +93,6 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
     $routes->post('manage_kelas/kelola_anggota/hapus/(:num)', 'Manage_kelasController::hapus_anggota/$1', ['filter' => 'role:admin']);
     $routes->post('manage_kelas/kelola_anggota/hapus_anggota/(:num)/(:num)', 'Manage_kelasController::hapus_anggota_kelas/$1/$2', ['filter' => 'role:admin']);
 
-
-    //  Manage kelas (evaluasi pembelajaran)
-    $routes->get('manage_kelas/evaluasi', 'Manage_kelasController::evaluasi', ['filter' => 'role:admin']);
-    $routes->post('manage_kelas/evaluasi/update', 'Manage_kelasController::up   date_evaluasi', ['filter' => 'role:admin']);
-
-
     // Routes untuk manage artikel
     $routes->get('artikel', 'ArtikelController::index', ['filter' => 'role:admin']); // Menampilkan daftar artikel
     $routes->get('artikel/tambah', 'ArtikelController::tambah', ['filter' => 'role:admin']); // Menampilkan form tambah
@@ -109,7 +102,33 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
     $routes->post('artikel/delete/(:num)', 'ArtikelController::delete/$1', ['filter' => 'role:admin']); // Menghapus artikel
     $routes->post('artikel/upload', 'ArtikelController::upload');
 
+    // Routes untuk Prestasi & Sertifikat
+    // Routes untuk Prestasi
+    $routes->get('prestasi', 'PrestasiSertifikatController::index', ['filter' => 'role:admin']);
+    //Prestasi Perorangan
+    $routes->get('prestasi/prestasi_detail/(:num)', 'PrestasiSertifikatController::prestasiDetail/$1', ['filter' => 'role:admin']);
+    $routes->get('prestasi/tambah_prestasi/(:num)', 'PrestasiSertifikatController::prestasiDetailTambah/$1', ['filter' => 'role:admin']);
+    $routes->post('prestasi/tambah_prestasi/simpan', 'PrestasiSertifikatController::prestasiDetailSimpan', ['filter' => 'role:admin']);
+    $routes->get('prestasi/prestasi_detail/info/(:num)/(:num)', 'PrestasiSertifikatController::prestasiDetailInfo/$1/$2', ['filter' => 'role:admin']);
+    $routes->get('prestasi/prestasi_detail/edit/(:num)/(:num)', 'PrestasiSertifikatController::prestasiDetailEdit/$1/$2', ['filter' => 'role:admin']);
+    $routes->post('prestasi/prestasi_detail/update/(:num)/(:num)', 'PrestasiSertifikatController::prestasiDetailUpdate/$1/$2', ['filter' => 'role:admin']);
+    $routes->post('prestasi/prestasi_detail/delete/(:num)', 'PrestasiSertifikatController::prestasiDetailDelete/$1', ['filter' => 'role:admin']);
 
+    //Prestasi Umum
+    $routes->get('prestasi/detail/(:num)', 'PrestasiSertifikatController::prestasiInfo/$1', ['filter' => 'role:admin']);
+    $routes->get('prestasi/tambah', 'PrestasiSertifikatController::prestasiTambah', ['filter' => 'role:admin']);
+    $routes->post('prestasi/simpan', 'PrestasiSertifikatController::prestasiSimpan', ['filter' => 'role:admin']);
+    $routes->get('prestasi/edit/(:num)', 'PrestasiSertifikatController::prestasiEdit/$1', ['filter' => 'role:admin']);
+    $routes->post('prestasi/update/(:num)', 'PrestasiSertifikatController::prestasiUpdate/$1', ['filter' => 'role:admin']);
+    $routes->post('prestasi/delete/(:num)', 'PrestasiSertifikatController::prestasiDelete/$1', ['filter' => 'role:admin']);
+
+    // Routes untuk Grade/Kelas
+    $routes->get('grade_level', 'PrestasiSertifikatController::gradeIndex', ['filter' => 'role:admin']);
+    $routes->get('grade_level/detail/(:num)', 'PrestasiSertifikatController::gradeDetail/$1', ['filter' => 'role:admin']);
+    $routes->get('grade_level/edit/(:num)', 'PrestasiSertifikatController::gradeEdit/$1', ['filter' => 'role:admin']);
+
+    // Routes untuk Sertifikat
+    $routes->get('sertifikat', 'PrestasiSertifikatController::tambah', ['filter' => 'role:admin']);
 
     // Routes untuk pengaturan
     $routes->get('pengaturan', 'PengaturanController::index', ['filter' => 'role:admin']);
@@ -143,6 +162,25 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
 
 $routes->group('siswa', ['filter' => 'auth'], function ($routes) {
     $routes->get('dashboard', 'SiswaController::dashboard', ['filter' => 'role:siswa']);
+
+    // Routes untuk profil
+    $routes->get('profil', 'SiswaProfilController::index', ['filter' => 'role:siswa']);
+    $routes->get('profil/edit', 'SiswaProfilController::edit', ['filter' => 'role:siswa']);
+    $routes->post('profil/update', 'SiswaProfilController::update', ['filter' => 'role:siswa']);
+
+    $routes->get('project-dan-nilai', 'SiswaController::projectNilai', ['filter' => 'role:siswa']);
+
+    $routes->get('sertifikat', 'SiswaController::sertifikat', ['filter' => 'role:siswa']);
+
+    $routes->get('prestasi', 'SiswaController::prestasi', ['filter' => 'role:siswa']);
+
+    // Pengumuman
+    $routes->get('pengumuman/sekolah', 'SiswaController::pengumumanSekolah', ['filter' => 'role:siswa']);
+    $routes->get('pengumuman/event', 'SiswaController::pengumumanEvent', ['filter' => 'role:siswa']);
+
+    $routes->get('galeri', 'SiswaController::galeriKegiatan', ['filter' => 'role:siswa']);
+
+    $routes->get('hubungi', 'SiswaController::hubungi', ['filter' => 'role:siswa']);
 });
 
 

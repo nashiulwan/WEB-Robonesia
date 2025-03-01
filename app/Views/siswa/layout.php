@@ -30,7 +30,7 @@
   <div id="wrapper">
 
     <!-- Sidebar -->
-    <?= $this->include('admin/templates/sidebar'); ?>
+    <?= $this->include('siswa/templates/sidebar'); ?>
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
@@ -40,7 +40,7 @@
       <div id="content">
 
         <!-- Topbar -->
-        <?= $this->include('admin/templates/topbar'); ?>
+        <?= $this->include('siswa/templates/topbar'); ?>
         <!-- End of Topbar -->
 
         <!-- Begin Page Content -->

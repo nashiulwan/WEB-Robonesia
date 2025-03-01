@@ -16,19 +16,19 @@ function convertOembedToIframe($content)
     <div class="row" style="margin-top: 8rem;">
         <!-- Konten Utama -->
         <div class="col-md-8">
-            <h1 class="mb-4"><?= esc($artikel['judul']) ?></h1>
-            <p><strong>Kategori:</strong> <?= esc($artikel['kategori']) ?></p>
-            <p><strong>Diposting pada:</strong> <?= esc($artikel['created_at']) ?></p>
+            <h1 class="mb-4" data-aos="fade-up" data-aos-duration="1000"><?= esc($artikel['judul']) ?></h1>
+            <p data-aos="fade-up" data-aos-duration="500"><strong>Kategori:</strong> <?= esc($artikel['kategori']) ?></p>
+            <p data-aos="fade-up" data-aos-duration="500"><strong>Diposting pada:</strong> <?= esc($artikel['created_at']) ?></p>
 
             <?php if (!empty($artikel['gambar'])) : ?>
-                <img src="<?= base_url('uploads/' . esc($artikel['gambar'])) ?>" alt="Gambar Artikel" class="img-fluid mb-4">
+                <img src="<?= base_url('uploads/' . esc($artikel['gambar'])) ?>" alt="Gambar Artikel" class="img-fluid mb-4" data-aos="fade-up" data-aos-duration="500" data-aos-delay="100">
             <?php endif; ?>
 
             <div class="content lh-lg">
                 <?= convertOembedToIframe(html_entity_decode($artikel['konten'])) ?>
             </div>
 
-            <a href="<?= base_url('blog') ?>" class="btn btn-secondary mt-3 mb-5">Kembali ke Blog</a>
+            <a href="<?= base_url('blog') ?>" class="btn btn-secondary mt-3 mb-5" data-aos="fade-up" data-aos-duration="500">Kembali ke Blog</a>
         </div>
 
         <!-- Sidebar -->
@@ -39,7 +39,7 @@ function convertOembedToIframe($content)
                 <ul class="list-unstyled">
                     <?php if (!empty($artikelTerbaru)) : ?>
                         <?php foreach ($artikelTerbaru as $item) : ?>
-                            <li class="mb-4">
+                            <li class="mb-4" data-aos="fade-left" data-aos-duration="1000">
                                 <?php if (!empty($item['gambar'])) : ?>
                                     <img src="<?= base_url('uploads/' . esc($item['gambar'])) ?>" class="card-img-top" alt="Gambar Artikel" style="height: 200px; object-fit: cover;">
                                 <?php endif; ?>
@@ -54,8 +54,8 @@ function convertOembedToIframe($content)
                 </ul>
 
                 <!-- Daftar Kategori Manual -->
-                <h4 class="mt-4 mb-3">Kategori</h4>
-                <ul class="list-unstyled">
+                <h4 class="mt-4 mb-3" data-aos="fade-left" data-aos-duration="1000" >Kategori</h4>
+                <ul class="list-unstyled" data-aos="fade-left" data-aos-duration="1000">
                     <li class="mb-2">
                         <a href="<?= base_url('blog/kategori/berita') ?>" class="text-decoration-none text-dark">
                             Berita
