@@ -146,7 +146,7 @@
   <?php endif; ?>
 
   <!-- Form Update Sertifikat -->
-  <form action="<?= base_url('admin/sertifikat/prestasi/update/' . esc($prestasiId) . '/' . esc($sertifikat['id'])) ?>" method="post" enctype="multipart/form-data">
+  <form action="<?= base_url('admin/sertifikat/akun/update/' . esc($user['id']) . '/' . esc($sertifikat['id'])) ?>" method="post" enctype="multipart/form-data">
     <?= csrf_field() ?>
 
     <!-- Deskripsi Sertifikat -->
@@ -199,7 +199,7 @@
     <div id="previewContainer" class="mt-3 mb-2"></div>
 
     <button type="submit" class="btn btn-primary">Update</button>
-    <a href="<?= base_url('admin/sertifikat/prestasi/' . esc($prestasiId)) ?>" class="btn btn-warning">Kembali</a>
+    <a href="<?= base_url('admin/sertifikat/akun/' . esc($user['id'])) ?>" class="btn btn-warning">Kembali</a>
   </form>
 </div>
 

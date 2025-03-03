@@ -31,6 +31,10 @@
   <?php endif; ?>
 
   <!-- Tabel sertifikat -->
+  <div class="mb-3 d-flex align-items-center justify-content-between">
+    <input type="text" id="searchInput" class="form-control flex-grow-1" placeholder="Cari sertifikat" style="margin-right:1rem">
+    <i class="fas fa-search text-muted ms-2" id="iconSearch" style="margin-right:1rem"></i>
+  </div>
   <div class="table-responsive">
     <table class="table table-bordered table-hover">
       <thead style="color: black; background-color:#2222">
@@ -101,4 +105,24 @@
     </table>
   </div>
 </div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  $("#searchInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase().trim();
+
+    $("table tbody tr").each(function() {
+      var sertifikat = $(this).find("td:nth-child(2)").text().toLowerCase().trim(); // Kolom Sertifikat
+      var deskripsi = $(this).find("td:nth-child(3)").text().toLowerCase().trim(); // Kolom Deskripsi
+
+      if (sertifikat.includes(value) || deskripsi.includes(value)) {
+        $(this).show();
+      } else {
+        $(this).hide();
+      }
+    });
+  });
+</script>
 <?= $this->endSection() ?>

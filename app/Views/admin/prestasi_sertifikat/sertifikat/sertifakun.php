@@ -31,6 +31,10 @@
   <?php endif; ?>
 
   <!-- Tabel sertifikat -->
+  <div class="mb-3 d-flex align-items-center justify-content-between">
+    <input type="text" id="searchInput" class="form-control flex-grow-1" placeholder="Cari sertifikat" style="margin-right:1rem">
+    <i class="fas fa-search text-muted ms-2" id="iconSearch" style="margin-right:1rem"></i>
+  </div>
   <div class="table-responsive">
     <table class="table table-bordered table-hover">
       <thead style="color: black; background-color:#2222">
@@ -79,10 +83,10 @@
               <td><?= esc(date("d-m-Y H:i", strtotime($row['updated_at']))); ?></td>
               <td>
                 <div class="d-flex flex-wrap gap-2" style="justify-content: space-between;">
-                  <a href="<?= base_url('admin/sertifikat/prestasi/edit/' . esc($user['id'])) . '/' . esc($row['id']); ?>" class="btn btn-warning btn-sm d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; margin: 2px;">
+                  <a href="<?= base_url('admin/sertifikat/akun/edit/' . esc($user['id'])) . '/' . esc($row['id']); ?>" class="btn btn-warning btn-sm d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; margin: 2px;">
                     <i class="fas fa-pen"></i>
                   </a>
-                  <form action="<?= base_url('admin/sertifikat/prestasi/delete/' . esc($user['id'])) . '/' . esc($row['id']); ?>" method="post">
+                  <form action="<?= base_url('admin/sertifikat/akun/delete/' . esc($user['id'])) . '/' . esc($row['id']); ?>" method="post">
                     <?= csrf_field(); ?>
                     <button type="submit" class="btn btn-danger btn-sm d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; margin: 2px" onclick="return confirm('Apakah Anda yakin ingin menghapus sertifikat ini?');">
                       <i class="fas fa-trash-alt"></i>
@@ -101,4 +105,23 @@
     </table>
   </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  $("#searchInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase().trim();
+
+    $("table tbody tr").each(function() {
+      var sertifikat = $(this).find("td:nth-child(2)").text().toLowerCase().trim(); // Kolom Sertifikat
+      var deskripsi = $(this).find("td:nth-child(3)").text().toLowerCase().trim(); // Kolom Deskripsi
+
+      if (sertifikat.includes(value) || deskripsi.includes(value)) {
+        $(this).show();
+      } else {
+        $(this).hide();
+      }
+    });
+  });
+</script>
 <?= $this->endSection() ?>
