@@ -82,6 +82,20 @@
             </div>
         </li>
 
+        <!-- Nav Item - Shop -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseManage_kelas" aria-expanded="true" aria-controls="collapseManage_kelas">
+                <i class="fas fa-chalkboard-teacher"></i>
+                <span>Shop</span>
+            </a>
+            <div id="collapseManage_kelas" class="collapse" aria-labelledby="headingManage_kelas" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="<?= base_url('admin/produk/index'); ?>">Daftar Produk</a>
+                    <a class="collapse-item" href="<?= base_url('admin/produk/tambah'); ?>">Tambah Produk</a>
+                </div>
+            </div>
+        </li>
+
         <!-- Nav Item - Analytics -->
         <li class="nav-item">
             <a class="nav-link" href="<?= base_url('admin/analytics'); ?>">

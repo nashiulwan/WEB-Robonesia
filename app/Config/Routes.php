@@ -164,6 +164,15 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
     $routes->post('pengaturan/kontak/update', 'PengaturanController::updateKontak', ['filter' => 'role:admin']);
 
     $routes->get('pengaturan/galeri', 'PengaturanController::galeri', ['filter' => 'role:admin']);
+
+    // Routes untuk shop
+    $routes->get('shop', 'ShopController::index', ['filter' => 'role:admin']);
+    $routes->get('shop/detail', 'ShopController::detail', ['filter' => 'role:admin']);
+    $routes->get('shop/tambah', 'ShopController::tambah', ['filter' => 'role:admin']);
+    $routes->post('shop/simpan', 'ShopController::simpan', ['filter' => 'role:admin']);
+    $routes->get('shop/edit/(:num)', 'ShopController::edit/$1', ['filter' => 'role:admin']);
+    $routes->post('shop/update/(:num)', 'ShopController::update/$1', ['filter' => 'role:admin']);
+    $routes->post('shop/delete/(:num)', 'ShopController::delete/$1', ['filter' => 'role:admin']);
 });
 
 $routes->group('siswa', ['filter' => 'auth'], function ($routes) {
