@@ -31,6 +31,15 @@
     </div>
   <?php endif; ?>
 
+  <div class="mb-3 d-flex align-items-center justify-content-between">
+    <div class="d-flex align-items-center flex-grow-1 me-3" style="min-width: 0; ">
+      <input type="text" id="searchInput" class="form-control flex-grow-1" placeholder="Cari prestasi" style="min-width: 0; max-width:30rem; margin-right:1rem">
+      <i class="fas fa-search text-muted ms-2" id="iconSearch" style="margin-right:1rem"></i>
+    </div>
+    <!-- Tombol di sebelah kanan -->
+    <a href="<?= base_url('admin/prestasi/'); ?>" class="btn btn-warning" id="tambahPrestasiBtn">Kembali</a>
+  </div>
+
   <!-- Tabel prestasi user -->
   <div class="table-responsive">
     <table class="table table-bordered table-hover">
@@ -84,4 +93,26 @@
     </table>
   </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  $("#searchInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase().trim();
+
+    $("table tbody tr").each(function() {
+      var nama_kegiatan = $(this).find("td:nth-child(2)").text().toLowerCase().trim();
+      var jenis = $(this).find("td:nth-child(3)").text().toLowerCase().trim();
+      var tingkat = $(this).find("td:nth-child(4)").text().toLowerCase().trim();
+      var tahun = $(this).find("td:nth-child(4)").text().toLowerCase().trim();
+      var pencapaian = $(this).find("td:nth-child(5)").text().toLowerCase().trim();
+      if (nama_kegiatan.includes(value) || jenis.includes(value || tingkat.includes(value) || tahun
+          .includes(value) || pencapaian.includes(value))) {
+        $(this).show();
+      } else {
+        $(this).hide();
+      }
+    });
+  });
+</script>
 <?= $this->endSection() ?>

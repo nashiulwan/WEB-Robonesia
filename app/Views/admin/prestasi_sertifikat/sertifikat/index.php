@@ -7,26 +7,29 @@
     </div>
 
     <ul class="nav nav-tabs mb-3" id="prestasiTab" role="tablist">
-        <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="daftar-sertifikat-tab" data-bs-toggle="tab" data-bs-target="#daftar-sertifikat" type="button" role="tab" aria-controls="daftar-sertifikat" aria-selected="true">
-                Daftar Sertifikat
-            </button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="daftar-prestasi-tab" data-bs-toggle="tab" data-bs-target="#daftar-prestasi" type="button" role="tab" aria-controls="daftar-prestasi" aria-selected="true">
-                Daftar Prestasi
-            </button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="daftar-akun-tab" data-bs-toggle="tab" data-bs-target="#daftar-akun" type="button" role="tab" aria-controls="daftar-akun" aria-selected="false">
-                Daftar Akun
-            </button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="daftar-kelas-tab" data-bs-toggle="tab" data-bs-target="#daftar-kelas" type="button" role="tab" aria-controls="daftar-kelas" aria-selected="false">
-                Daftar Kelas
-            </button>
-        </li>
+        <ul class="nav nav-tabs mb-3" id="prestasiTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="daftar-sertifikat-tab" data-bs-toggle="tab" data-bs-target="#daftar-sertifikat" type="button" role="tab" aria-controls="daftar-sertifikat" aria-selected="true">
+                    Daftar Sertifikat
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="daftar-prestasi-tab" data-bs-toggle="tab" data-bs-target="#daftar-prestasi" type="button" role="tab" aria-controls="daftar-prestasi" aria-selected="false">
+                    Daftar Prestasi
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="daftar-akun-tab" data-bs-toggle="tab" data-bs-target="#daftar-akun" type="button" role="tab" aria-controls="daftar-akun" aria-selected="false">
+                    Daftar Akun
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="daftar-kelas-tab" data-bs-toggle="tab" data-bs-target="#daftar-kelas" type="button" role="tab" aria-controls="daftar-kelas" aria-selected="false">
+                    Daftar Kelas
+                </button>
+            </li>
+        </ul>
+
     </ul>
 
     <div class="tab-content">
@@ -84,15 +87,18 @@
                                     <td><?= esc($sertifikat['penerima']); ?></td>
                                     <td>
                                         <div class="d-flex flex-wrap gap-2" style="justify-content: space-between;">
-                                            <a href="<?= base_url('admin/sertifikat/detail/' . esc($sertifikat['id'])); ?>" class="btn btn-primary btn-sm" title="Lihat">
+                                            <a href="<?= base_url('admin/sertifikat/detail/' . esc($sertifikat['id'])); ?>" class="btn btn-primary btn-sm" title="Detail" style="width: 32px; height: 32px; margin: 2px">
                                                 <i class="fas fa-eye"></i>
                                             </a>
-                                            <a href="<?= base_url('admin/sertifikat/edit/' . esc($sertifikat['id'])); ?>" class="btn btn-warning btn-sm" title="Download">
+                                            <a href="<?= base_url('admin/sertifikat/edit/' . esc($sertifikat['id'])); ?>" class="btn btn-warning btn-sm" title="Edit" style="width: 32px; height: 32px; margin: 2px">
                                                 <i class="fas fa-pen"></i>
                                             </a>
-                                            <a href="<?= base_url('admin/sertifikat/delete/' . esc($sertifikat['id'])); ?>" class="btn btn-danger btn-sm" title="Hapus" onclick="return confirm('Apakah Anda yakin ingin menghapus sertifikat ini?');">
-                                                <i class="fas fa-trash"></i>
-                                            </a>
+                                            <form action="<?= base_url('admin/sertifikat/delete/' . esc($sertifikat['id'])); ?>" method="post">
+                                                <?= csrf_field(); ?>
+                                                <button type="submit" title="Hapus" class="btn btn-danger btn-sm d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; margin: 2px" onclick="return confirm('Apakah Anda yakin ingin menghapus sertifikat ini?');">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </form>
                                         </div>
                                     </td>
                                 </tr>
@@ -303,6 +309,30 @@
                 $(this).hide();
             }
         });
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Dapatkan semua tombol tab
+        const tabButtons = document.querySelectorAll('#prestasiTab button.nav-link');
+
+        // Saat tab diklik, simpan data-bs-target ke localStorage
+        tabButtons.forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                const activeTab = this.getAttribute('data-bs-target');
+                localStorage.setItem('activeTab', activeTab);
+            });
+        });
+
+        // Saat halaman dimuat, periksa apakah ada tab aktif yang disimpan
+        const storedTab = localStorage.getItem('activeTab');
+        if (storedTab) {
+            const triggerEl = document.querySelector(`#prestasiTab button[data-bs-target="${storedTab}"]`);
+            if (triggerEl) {
+                var tabInstance = new bootstrap.Tab(triggerEl);
+                tabInstance.show();
+            }
+        }
     });
 </script>
 

@@ -1,12 +1,13 @@
 <?= $this->extend('admin/layout') ?>
 
 <?= $this->section('content') ?>
-<div class="container-fluid">
+<div class="container-fluid ">
+
+
   <div class="d-flex justify-content-between align-items-center mb-3">
     <h1 class="h3 text-gray-800"><?= esc($title) ?></h1>
     <a href="<?= base_url('admin/sertifikat/prestasi/tambah/' . esc($prestasi['id'])); ?>" class="btn btn-primary">Tambah Sertifikat</a>
   </div>
-
   <!-- Pesan error validasi, sukses, dan error umum -->
   <?php if (session()->getFlashdata('errors')) : ?>
     <div class="alert alert-danger">
@@ -31,10 +32,16 @@
   <?php endif; ?>
 
   <!-- Tabel sertifikat -->
+
   <div class="mb-3 d-flex align-items-center justify-content-between">
-    <input type="text" id="searchInput" class="form-control flex-grow-1" placeholder="Cari sertifikat" style="margin-right:1rem">
-    <i class="fas fa-search text-muted ms-2" id="iconSearch" style="margin-right:1rem"></i>
+    <div class="d-flex align-items-center flex-grow-1 me-3" style="min-width: 0; ">
+      <input type="text" id="searchInput" class="form-control flex-grow-1" placeholder="Cari sertifikat" style="min-width: 0; max-width:30rem; margin-right:1rem">
+      <i class="fas fa-search text-muted ms-2" id="iconSearch" style="margin-right:1rem"></i>
+    </div>
+    <!-- Tombol di sebelah kanan -->
+    <a href="<?= base_url('admin/sertifikat/'); ?>" class="btn btn-warning" id="tambahPrestasiBtn">Kembali</a>
   </div>
+
   <div class="table-responsive">
     <table class="table table-bordered table-hover">
       <thead style="color: black; background-color:#2222">

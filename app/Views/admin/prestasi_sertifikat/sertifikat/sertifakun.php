@@ -32,8 +32,12 @@
 
   <!-- Tabel sertifikat -->
   <div class="mb-3 d-flex align-items-center justify-content-between">
-    <input type="text" id="searchInput" class="form-control flex-grow-1" placeholder="Cari sertifikat" style="margin-right:1rem">
-    <i class="fas fa-search text-muted ms-2" id="iconSearch" style="margin-right:1rem"></i>
+    <div class="d-flex align-items-center flex-grow-1 me-3" style="min-width: 0; ">
+      <input type="text" id="searchInput" class="form-control flex-grow-1" placeholder="Cari sertifikat" style="min-width: 0; max-width:30rem; margin-right:1rem">
+      <i class="fas fa-search text-muted ms-2" id="iconSearch" style="margin-right:1rem"></i>
+    </div>
+    <!-- Tombol di sebelah kanan -->
+    <a href="<?= base_url('admin/sertifikat/'); ?>" class="btn btn-warning" id="tambahPrestasiBtn">Kembali</a>
   </div>
   <div class="table-responsive">
     <table class="table table-bordered table-hover">

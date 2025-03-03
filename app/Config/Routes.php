@@ -135,6 +135,10 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
 
     // Routes untuk Sertifikat
     $routes->get('sertifikat', 'PrestasiSertifikatController::sertifikatIndex', ['filter' => 'role:admin']);
+    $routes->get('sertifikat/detail/(:num)', 'PrestasiSertifikatController::sertifikatDetail/$1', ['filter' => 'role:admin']);
+    $routes->get('sertifikat/edit/(:num)', 'PrestasiSertifikatController::sertifikatEdit/$1', ['filter' => 'role:admin']);
+    $routes->post('sertifikat/update/(:num)', 'PrestasiSertifikatController::sertifikatUpdate/$1', ['filter' => 'role:admin']);
+    $routes->post('sertifikat/delete/(:num)', 'PrestasiSertifikatController::sertifikatDelete/$1', ['filter' => 'role:admin']);
     // Routes untuk Sertifikat berdasarkan prestasi
     $routes->get('sertifikat/prestasi/(:num)', 'PrestasiSertifikatController::sertifikatPrestasiDetail/$1', ['filter' => 'role:admin']);
     $routes->get('sertifikat/prestasi/tambah/(:num)', 'PrestasiSertifikatController::sertifikatPrestasiTambah/$1', ['filter' => 'role:admin']);

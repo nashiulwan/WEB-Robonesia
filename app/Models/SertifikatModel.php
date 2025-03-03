@@ -11,6 +11,33 @@ class SertifikatModel extends Model
     protected $allowedFields = ['nama_file', 'deskripsi', 'kategori', 'created_at', 'updated_at'];
     protected $useTimestamps = true;
 
+    public function getSertifikatById($id)
+    {
+        return $this->where('id', $id)->first();
+    }
+    public function getSertifikatDetailById($sertifikatId)
+    {
+        return $this->select(
+            's.id, s.nama_file, s.deskripsi, sr.target_type, 
+             GROUP_CONCAT(DISTINCT 
+                CASE 
+                    WHEN sr.target_type = "users" THEN u.fullname
+                    WHEN sr.target_type = "prestasi" THEN p.nama_kegiatan
+                    WHEN sr.target_type = "manage_kelas" THEN mk.nama_kelas
+                    ELSE "-"
+                END
+             SEPARATOR ", ") as penerima'
+        )
+            ->from('sertifikat as s')
+            ->join('sertifikat_recipients as sr', 'sr.sertifikat_id = s.id', 'left')
+            ->join('users as u', 'u.id = sr.target_id AND sr.target_type = "users"', 'left')
+            ->join('prestasi as p', 'p.id = sr.target_id AND sr.target_type = "prestasi"', 'left')
+            ->join('manage_kelas as mk', 'mk.id = sr.target_id AND sr.target_type = "manage_kelas"', 'left')
+            ->where('s.id', $sertifikatId)
+            ->groupBy('s.id, sr.target_type')
+            ->first();
+    }
+
     public function getUsersByRole($groupId)
     {
         return $this->db->table('auth_groups_users')
@@ -56,14 +83,14 @@ class SertifikatModel extends Model
 
         $builder->select(
             's.id, s.nama_file, s.deskripsi, s.kategori, 
-         GROUP_CONCAT(
-            CASE 
-                WHEN sr.target_type = "users" THEN u.fullname
-                WHEN sr.target_type = "prestasi" THEN p.nama_kegiatan
-                WHEN sr.target_type = "manage_kelas" THEN mk.nama_kelas
-                ELSE "Unknown"
-            END
-         SEPARATOR ", ") as penerima',
+             GROUP_CONCAT(
+                CASE 
+                    WHEN sr.target_type = "users" THEN CONCAT(u.fullname, " [Akun]")
+                    WHEN sr.target_type = "prestasi" THEN CONCAT(p.nama_kegiatan, " [Prestasi]")
+                    WHEN sr.target_type = "manage_kelas" THEN CONCAT(mk.nama_kelas, " [Kelas]")
+                    ELSE "-"
+                END
+             SEPARATOR ", ") as penerima',
             false
         );
 
@@ -72,6 +99,7 @@ class SertifikatModel extends Model
         $builder->join('prestasi as p', 'p.id = sr.target_id AND sr.target_type = "prestasi"', 'left');
         $builder->join('manage_kelas as mk', 'mk.id = sr.target_id AND sr.target_type = "manage_kelas"', 'left');
         $builder->groupBy('s.id');
+
         return $builder->get()->getResultArray();
     }
 }
