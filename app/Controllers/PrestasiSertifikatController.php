@@ -1294,7 +1294,7 @@ class PrestasiSertifikatController extends BaseController
   //===============================================================================//
   //===============================================================================//
   //===============================================================================//
-  //Sertifikat Akun Selesai
+  //Sertifikat Akun Mulai
   //===============================================================================//
   public function sertifikatAkunDetail($userId)
   {
@@ -1560,28 +1560,283 @@ class PrestasiSertifikatController extends BaseController
   }
 
   //===============================================================================//
+  //Sertifikat Akun Selesai
+  //===============================================================================//
+  //===============================================================================//
+  //===============================================================================//
+
+
+  //===============================================================================//
   //===============================================================================//
   //===============================================================================//
   //Sertifikat Kelas Mulai
   //===============================================================================//
+  public function sertifikatKelasDetail($kelasId)
+  {
+    if (!logged_in()) {
+      return redirect()->to('/login');
+    }
+
+    $kelas = $this->manageKelasModel->getClassById($kelasId);
+    if (!$kelas) {
+      throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('Kelas tidak ditemukan.');
+    }
+
+    $sertifikat = $this->sertifikatModel->getSertifikatByKelas($kelasId);
+
+    $data = [
+      'title'      => 'Sertifikat Kelas',
+      'kelas'       => $kelas,
+      'sertifikat' => $sertifikat,
+    ];
+
+    return view('admin/prestasi_sertifikat/sertifikat/sertifkelas', $data);
+  }
+
+  // Menampilkan Form Tambah Sertifikat untuk Akun
+  public function sertifikatKelasTambah($kelasId)
+  {
+    if (!logged_in()) {
+      return redirect()->to('/login');
+    }
+
+    $kelas = $this->manageKelasModel->find($kelasId);
+    if (!$kelas) {
+      throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('Kelas tidak ditemukan.');
+    }
+
+    $data = [
+      'title' => 'Tambah Sertifikat Kelas',
+      'kelas'  => $kelas,
+    ];
+
+    return view('admin/prestasi_sertifikat/sertifikat/sertifkelas_tambah', $data);
+  }
+
+  // Proses Simpan Sertifikat untuk Kelas
+  public function sertifikatKelasSimpan($kelasId)
+  {
+    if (!logged_in()) {
+      return redirect()->to('/login');
+    }
+
+    $validationRules = [
+      'deskripsi' => 'required',
+      'nama_file' => [
+        'rules'  => 'uploaded[nama_file]|max_size[nama_file,2048]|mime_in[nama_file,image/jpg,image/jpeg,image/png,application/pdf]',
+        'errors' => [
+          'uploaded' => 'Harus ada file yang diupload.',
+          'max_size' => 'Ukuran file maksimal 2MB.',
+          'mime_in'  => 'File harus berupa gambar atau PDF.'
+        ]
+      ]
+    ];
+
+    if (!$this->validate($validationRules)) {
+      return redirect()->back()
+        ->withInput()
+        ->with('errors', $this->validator->getErrors());
+    }
+
+    $files = $this->request->getFiles();
+    $savedFileNames = [];
+
+    foreach ($files['nama_file'] as $file) {
+      if ($file->isValid() && !$file->hasMoved()) {
+        $originalName = $file->getClientName();
+        $extension    = $file->getExtension();
+        $nameWithoutExt = pathinfo($originalName, PATHINFO_FILENAME);
+        $newFileName  = $nameWithoutExt . '_' . date('YmdHis') . '.' . $extension;
+        $file->move(FCPATH . 'uploads/sertifikat/', $newFileName);
+        $savedFileNames[] = $newFileName;
+      }
+    }
+
+    $sertifikatData = [
+      'nama_file' => json_encode($savedFileNames),
+      'deskripsi' => $this->request->getPost('deskripsi'),
+      'kategori'  => 'kelas',
+    ];
+
+    if ($this->sertifikatModel->insert($sertifikatData)) {
+      $sertifikatId = $this->sertifikatModel->getInsertID();
+
+      // Simpan data pivot ke tabel sertifikat_recipients
+      $dataRecipient = [
+        'sertifikat_id' => $sertifikatId,
+        'target_type'   => 'kelas',
+        'target_id'     => $kelasId,
+        'created_at'    => date('Y-m-d H:i:s'),
+        'updated_at'    => date('Y-m-d H:i:s'),
+      ];
+
+      $db = \Config\Database::connect();
+      $builder = $db->table('sertifikat_recipients');
+      if ($builder->insert($dataRecipient)) {
+        return redirect()->to('admin/sertifikat/kelas/' . esc($kelasId))
+          ->with('success', 'Sertifikat berhasil ditambahkan!');
+      } else {
+        // Jika pivot gagal, hapus data sertifikat yang sudah tersimpan (opsional)
+        $this->sertifikatModel->delete($sertifikatId);
+        return redirect()->back()->withInput()->with('error', 'Gagal menyimpan penerima sertifikat.');
+      }
+    } else {
+      return redirect()->back()->withInput()->with('error', 'Gagal menyimpan sertifikat.');
+    }
+  }
+
+  // Menampilkan Form Edit Sertifikat untuk Kelas
+  public function sertifikatKelasEdit($kelasId, $sertifikatId)
+  {
+    if (!logged_in()) {
+      return redirect()->to('/login');
+    }
+
+    $kelas = $this->manageKelasModel->find($kelasId);
+    if (!$kelasId) {
+      throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('User tidak ditemukan.');
+    }
+
+    // Ambil sertifikat berdasarkan kelas_id
+    $sertifikatList = $this->sertifikatModel->getSertifikatByKelas($kelasId);
+    // Filter sertifikat yang sesuai dengan sertifikatId
+    $sertifikatArr = array_filter($sertifikatList, function ($s) use ($sertifikatId) {
+      return $s['id'] == $sertifikatId;
+    });
+
+    if (empty($sertifikatArr)) {
+      throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('Sertifikat tidak ditemukan.');
+    }
+
+    $data = [
+      'title'      => 'Edit Sertifikat Kelas',
+      'sertifikat' => reset($sertifikatArr),
+      'kelas'       => $kelas,
+    ];
+
+    return view('admin/prestasi_sertifikat/sertifikat/sertifkelas_edit', $data);
+  }
+
+  // Proses Update Sertifikat untuk Kelas
+  public function sertifikatKelasUpdate($kelasId, $sertifikatId)
+  {
+    if (!logged_in()) {
+      return redirect()->to('/login');
+    }
+
+    $model = new SertifikatModel();
+    $sertifikat = $model->find($sertifikatId);
+
+    // Pastikan sertifikat terkait dengan akun yang benar
+    if (!$sertifikat || !$model->getSertifikatByKelas($kelasId)) {
+      return redirect()->back()->with('error', 'Sertifikat tidak ditemukan atau tidak sesuai dengan akun.');
+    }
+
+    $validationRules = [
+      'deskripsi' => 'required',
+      'nama_file' => [
+        'rules'  => 'max_size[nama_file,2048]|mime_in[nama_file,image/jpg,image/jpeg,image/png,application/pdf]',
+        'errors' => [
+          'max_size' => 'Ukuran file maksimal 2MB.',
+          'mime_in'  => 'File harus berupa gambar atau PDF.'
+        ]
+      ]
+    ];
+
+    if (!$this->validate($validationRules)) {
+      return redirect()->back()
+        ->withInput()
+        ->with('errors', $this->validator->getErrors());
+    }
+
+    // Ambil file lama yang tersimpan (dari database)
+    $oldFileNames = json_decode($sertifikat['nama_file'], true) ?? [];
+
+    // Ambil file yang tersisa (dari input hidden 'existing_files[]')
+    $remainingFiles = $this->request->getPost('existing_files');
+    if (!is_array($remainingFiles)) {
+      $remainingFiles = [];
+    }
+
+    // Ambil file baru yang diupload
+    $files = $this->request->getFiles();
+    $newFiles = [];
+    if (!empty($files['nama_file'])) {
+      foreach ($files['nama_file'] as $file) {
+        if ($file->isValid() && !$file->hasMoved()) {
+          $originalName = $file->getClientName();
+          $extension = $file->getExtension();
+          $nameWithoutExt = pathinfo($originalName, PATHINFO_FILENAME);
+          $newFileName = $nameWithoutExt . '_' . date('YmdHis') . '.' . $extension;
+          $file->move(FCPATH . 'uploads/sertifikat/', $newFileName);
+          $newFiles[] = $newFileName;
+        }
+      }
+    }
+
+    // Gabungkan file lama yang masih ada dan file baru
+    $updatedFileNames = array_merge($remainingFiles, $newFiles);
+
+    // Cari file yang telah dihapus: file yang sebelumnya ada tapi tidak dikirim melalui form
+    $removedFiles = array_diff($oldFileNames, $updatedFileNames);
+    foreach ($removedFiles as $removedFile) {
+      $filePath = FCPATH . 'uploads/sertifikat/' . $removedFile;
+      if (file_exists($filePath)) {
+        unlink($filePath);
+      }
+    }
+
+    $updateData = [
+      'nama_file' => json_encode($updatedFileNames),
+      'deskripsi' => $this->request->getPost('deskripsi'),
+      'updated_at' => date('Y-m-d H:i:s')
+    ];
+
+    if ($model->update($sertifikatId, $updateData)) {
+      return redirect()->to('admin/sertifikat/kelas/' . esc($kelasId))
+        ->with('success', 'Sertifikat berhasil diperbarui!');
+    } else {
+      return redirect()->back()->withInput()->with('error', 'Gagal memperbarui sertifikat.');
+    }
+  }
+
+  // Proses Delete Sertifikat untuk Kelas
+  public function sertifikatKelasDelete($kelasId, $sertifikatId)
+  {
+    if (!logged_in()) {
+      return redirect()->to('/login');
+    }
+
+    $model = new SertifikatModel();
+    $sertifikat = $model->find($sertifikatId);
+
+    // Pastikan sertifikat terkait dengan akun yang benar
+    if (!$sertifikat || !$model->getSertifikatByKelas($kelasId)) {
+      return redirect()->back()->with('error', 'Sertifikat tidak ditemukan atau tidak sesuai dengan akun.');
+    }
+
+    // Hapus file dari server
+    $files = json_decode($sertifikat['nama_file'], true);
+    if (!empty($files)) {
+      foreach ($files as $file) {
+        $filePath = FCPATH . 'uploads/sertifikat/' . $file;
+        if (file_exists($filePath)) {
+          unlink($filePath);
+        }
+      }
+    }
+
+    if ($model->delete($sertifikatId)) {
+      return redirect()->to('admin/sertifikat/kelas/' . esc($kelasId))
+        ->with('success', 'Sertifikat berhasil dihapus.');
+    } else {
+      return redirect()->back()->with('error', 'Gagal menghapus sertifikat.');
+    }
+  }
 
 
   //===============================================================================//
   //Sertifikat Kelas Selesai
-  //===============================================================================//
-  //===============================================================================//
-  //===============================================================================//
-
-
-  //===============================================================================//
-  //===============================================================================//
-  //===============================================================================//
-  //Sertifikat User Mulai
-  //===============================================================================//
-
-
-  //===============================================================================//
-  //Sertifikat User Selesai
   //===============================================================================//
   //===============================================================================//
   //===============================================================================//

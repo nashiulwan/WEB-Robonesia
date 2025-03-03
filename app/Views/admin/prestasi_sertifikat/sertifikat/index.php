@@ -214,9 +214,10 @@
                     <thead style="color: black; background-color:#2222">
                         <tr>
                             <th style="width: 5%;">No</th>
-                            <th style="width: 31%;">Nama Kelas</th>
-                            <th style="width: 25%;">Level</th>
-                            <th style="width: 25%;">Sub Level</th>
+                            <th style="width: 26%;">Nama Kelas</th>
+                            <th style="width: 18%;">Kode Kelas</th>
+                            <th style="width: 18%;">Level</th>
+                            <th style="width: 18%;">Sub Level</th>
                             <th style="width: 5%;">Aksi</th>
                         </tr>
                     </thead>
@@ -228,6 +229,7 @@
                                 <tr>
                                     <td><?= $no++; ?></td>
                                     <td><?= esc($row['nama_kelas']); ?></td>
+                                    <td><?= esc($row['kode_kelas']); ?></td>
                                     <td><?= esc($row['level']); ?></td>
                                     <td><?= esc($row['sub_level']); ?></td>
                                     <td>

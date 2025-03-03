@@ -4,7 +4,7 @@
 <div class="container-fluid">
   <div class="d-flex justify-content-between align-items-center mb-3">
     <h1 class="h3 text-gray-800"><?= esc($title) ?></h1>
-    <a href="<?= base_url('admin/sertifikat/akun/tambah/' . esc($user['id'])); ?>" class="btn btn-primary">Tambah Sertifikat</a>
+    <a href="<?= base_url('admin/sertifikat/kelas/tambah/' . esc($kelas['id'])); ?>" class="btn btn-primary">Tambah Sertifikat</a>
   </div>
 
   <!-- Pesan error validasi, sukses, dan error umum -->
@@ -83,10 +83,10 @@
               <td><?= esc(date("d-m-Y H:i", strtotime($row['updated_at']))); ?></td>
               <td>
                 <div class="d-flex flex-wrap gap-2" style="justify-content: space-between;">
-                  <a href="<?= base_url('admin/sertifikat/akun/edit/' . esc($user['id'])) . '/' . esc($row['id']); ?>" class="btn btn-warning btn-sm d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; margin: 2px;">
+                  <a href="<?= base_url('admin/sertifikat/kelas/edit/' . esc($kelas['id'])) . '/' . esc($row['id']); ?>" class="btn btn-warning btn-sm d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; margin: 2px;">
                     <i class="fas fa-pen"></i>
                   </a>
-                  <form action="<?= base_url('admin/sertifikat/akun/delete/' . esc($user['id'])) . '/' . esc($row['id']); ?>" method="post">
+                  <form action="<?= base_url('admin/sertifikat/kelas/delete/' . esc($kelas['id'])) . '/' . esc($row['id']); ?>" method="post">
                     <?= csrf_field(); ?>
                     <button type="submit" class="btn btn-danger btn-sm d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; margin: 2px" onclick="return confirm('Apakah Anda yakin ingin menghapus sertifikat ini?');">
                       <i class="fas fa-trash-alt"></i>
@@ -98,13 +98,14 @@
           <?php endforeach; ?>
         <?php else: ?>
           <tr>
-            <td colspan="6" class="text-center">Belum ada sertifikat untuk akun ini.</td>
+            <td colspan="6" class="text-center">Belum ada sertifikat untuk kelas ini.</td>
           </tr>
         <?php endif; ?>
       </tbody>
     </table>
   </div>
 </div>
+
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>

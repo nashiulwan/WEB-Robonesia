@@ -44,7 +44,7 @@ class SertifikatModel extends Model
     {
         return $this->db->table('sertifikat')
             ->join('sertifikat_recipients', 'sertifikat_recipients.sertifikat_id = sertifikat.id')
-            ->where('sertifikat_recipients.target_type', 'manage_kelas')
+            ->where('sertifikat_recipients.target_type', 'kelas')
             ->where('sertifikat_recipients.target_id', $kelasId)
             ->get()
             ->getResultArray();

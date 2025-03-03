@@ -6,8 +6,8 @@ use CodeIgniter\Model;
 
 class Manage_kelasModel extends Model
 {
-    protected $table      = 'manage_kelas'; // Tabel utama untuk kelas
-    protected $primaryKey = 'id'; // Primary key tabel manage_kelas
+    protected $table      = 'manage_kelas';
+    protected $primaryKey = 'id';
 
     // Tabel dan kolom yang bisa diubah
     protected $allowedFields = ['nama_kelas', 'deskripsi', 'kode_kelas', 'status', 'level', 'sub_level', 'created_at', 'updated_at'];
@@ -26,6 +26,16 @@ class Manage_kelasModel extends Model
             ->getRowArray();
     }
 
+    public function getClassById($id)
+    {
+        return $this->db->table('manage_kelas')
+            ->select('manage_kelas.id, manage_kelas.nama_kelas, manage_kelas.deskripsi, manage_kelas.kode_kelas, manage_kelas.status, manage_kelas.level,  manage_kelas.sub_level, COUNT(kelas_anggota.id) as jumlah_anggota')
+            ->join('kelas_anggota', 'kelas_anggota.id_kelas = manage_kelas.id', 'left')
+            ->where('manage_kelas.id', $id)
+            ->groupBy('manage_kelas.id')
+            ->get()
+            ->getRowArray();
+    }
     // Ambil semua kelas beserta jumlah anggotanya
     public function getAllClassesWithMemberCount()
     {

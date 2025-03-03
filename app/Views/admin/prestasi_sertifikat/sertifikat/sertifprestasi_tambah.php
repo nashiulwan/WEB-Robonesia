@@ -136,7 +136,7 @@
     </div>
 
     <!-- Container preview file -->
-    <div id="previewContainer" class="mt-3"></div>
+    <div id="previewContainer" class="mt-3 mb-3"></div>
 
     <div class="form-group mb-3">
       <label for="deskripsi">Deskripsi</label>
