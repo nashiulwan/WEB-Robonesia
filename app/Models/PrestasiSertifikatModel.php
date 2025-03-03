@@ -11,6 +11,7 @@ class PrestasiSertifikatModel extends Model
     protected $allowedFields = ['nama_kegiatan', 'jenis', 'tingkat', 'tahun', 'pencapaian', 'created_at', 'updated_at'];
     protected $useTimestamps = true;
 
+
     public function getUsersByRole($groupId)
     {
         return $this->db->table('auth_groups_users')
@@ -18,5 +19,11 @@ class PrestasiSertifikatModel extends Model
             ->where('auth_groups_users.group_id', $groupId)
             ->get()
             ->getResultArray();
+    }
+
+    public function findPrestasiById($id)
+    {
+        $prestasi = $this->find($id);
+        return $prestasi;
     }
 }

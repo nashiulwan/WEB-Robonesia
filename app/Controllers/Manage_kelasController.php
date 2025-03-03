@@ -348,6 +348,8 @@ class Manage_kelasController extends BaseController
     {
         $manage_akunModel = new Manage_akunModel();
 
+        $class = $this->manageKelasModel->getClassWithMemberCountById($id);
+
         // Ambil semua user dengan role "siswa" (role == 2)
         $users = $manage_akunModel->getAllUsersWithRoles();
         $filteredUsers = array_filter($users, function ($user) {
@@ -366,6 +368,7 @@ class Manage_kelasController extends BaseController
             'title'      => 'Daftar Akun',
             'users'      => $filteredUsers,
             'class_id'   => $id,
+            'kelas'      => $class,
             'member_ids' => $member_ids,
         ];
 
