@@ -119,7 +119,7 @@
                                 <?= esc($kelasSaya['nama_kelas']); ?>
                                 <span class="badge bg-primary fs-6"><?= esc($kelasSaya['kode_kelas']); ?></span>
                             </h4>
-                            <p class="text-muted text-center fst-italic"><?= esc($kelasSaya['deskripsi']); ?></p>
+                            <p class="text-muted text-center fst-italic py-4"><?= esc($kelasSaya['deskripsi']); ?></p>
 
                             <div class="col-4 text-center p-2">
                                 <i class="fas fa-layer-group text-success" style="font-size: 2rem;"></i>

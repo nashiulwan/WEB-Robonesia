@@ -29,6 +29,7 @@ function convertOembedToIframe($content)
             </div>
 
             <a href="<?= base_url('blog') ?>" class="btn btn-secondary mt-3 mb-5" data-aos="fade-up" data-aos-duration="500">Kembali ke Blog</a>
+            <a target="_blank" href="https://wa.me/<?= esc($kontak['no_hp'])?>" class="btn mt-3 mb-5 mx-2" data-aos="fade-up" data-aos-duration="500" style="background-color: #25D366;">Hubungi Kami</a>
         </div>
 
         <!-- Sidebar -->
