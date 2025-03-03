@@ -119,7 +119,7 @@
                                     </a>
                                     <form action="<?= base_url('admin/manage_akun/delete/' . esc($row['id'])); ?>" method="post">
                                         <?= csrf_field(); ?>
-                                        <button type="submit" class="btn btn-danger btn-sm d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; margin: 2px" onclick="return confirm('Apakah Anda yakin ingin menghapus artikel ini?');">
+                                        <button type="submit" class="btn btn-danger btn-sm d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; margin: 2px" onclick="return confirm('Apakah Anda yakin ingin menghapus akun ini?');">
                                             <i class="fas fa-trash-alt"></i>
                                         </button>
                                     </form>
