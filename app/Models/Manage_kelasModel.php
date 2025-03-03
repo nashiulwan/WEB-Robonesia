@@ -108,6 +108,17 @@ class Manage_kelasModel extends Model
             ->get()
             ->getRowArray();
     }
+
+    public function getClassesByUserId($userId)
+    {
+        return $this->db->table($this->table)
+            ->select('manage_kelas.*')
+            ->join('kelas_anggota', 'kelas_anggota.id_kelas = manage_kelas.id')
+            ->where('kelas_anggota.id_user', $userId)
+            ->get()
+            ->getRowArray();
+    }
+
     public function addAnggota($kelasId, $userId)
     {
         // Log nilai yang diterima

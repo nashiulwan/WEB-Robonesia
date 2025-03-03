@@ -75,10 +75,9 @@ class ArtikelController extends BaseController
                 ]
             ],
             'gambar' => [
-                'rules' => 'uploaded[gambar]|max_size[gambar,5000]|is_image[gambar]|mime_in[gambar,image/jpg,image/jpeg,image/png]',
+                'rules' => 'uploaded[gambar]|is_image[gambar]|mime_in[gambar,image/jpg,image/jpeg,image/png]',
                 'errors' => [
                     'uploaded' => 'Gambar harus diunggah.',
-                    'max_size' => 'Ukuran gambar maksimal adalah 5MB.',
                     'is_image' => 'File harus berupa gambar.',
                     'mime_in' => 'Format gambar harus JPG, JPEG, atau PNG.'
                 ]
@@ -173,9 +172,8 @@ class ArtikelController extends BaseController
                 'errors' => ['required' => 'Konten artikel tidak boleh kosong.']
             ],
             'gambar' => [
-                'rules' => 'max_size[gambar,5000]|is_image[gambar]|mime_in[gambar,image/jpg,image/jpeg,image/png]',
+                'rules' => 'is_image[gambar]|mime_in[gambar,image/jpg,image/jpeg,image/png]',
                 'errors' => [
-                    'max_size' => 'Ukuran gambar maksimal adalah 5MB.',
                     'is_image' => 'File harus berupa gambar.',
                     'mime_in' => 'Format gambar harus JPG, JPEG, atau PNG.'
                 ]
