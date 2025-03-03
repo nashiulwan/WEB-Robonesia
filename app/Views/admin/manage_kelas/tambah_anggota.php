@@ -35,7 +35,10 @@
 </style>
 
 <div class="container-fluid">
-    <h1 class="h3 text-gray-800 mb-4"><?= esc($title) ?></h1>
+    <div class="d-flex justify-content-between align-items-center mb-3" style="padding-top: 1rem;">
+        <h1 class="h3 text-gray-800 mb-4"><?= esc($title) ?></h1>
+        <a href="<?= base_url('admin/manage_kelas/kelola_anggota/detail/' . esc($kelas['id'])); ?>" class="btn btn-warning" style="margin-left:10px; width:7rem">Kembali</a>
+    </div>
 
     <!-- Flash Messages -->
     <?php if (session()->getFlashdata('success')) : ?>
