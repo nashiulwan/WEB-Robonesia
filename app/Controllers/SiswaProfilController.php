@@ -4,13 +4,13 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\ProfilModel;
+use App\Models\Manage_kelasModel;
 use Myth\Auth\Password;
 
 class SiswaProfilController extends BaseController
 {
-  /**
-   * Tampilkan halaman Profil Saya.
-   */
+  protected $kelasModel;
+
   public function index()
   {
     if (!logged_in()) {
@@ -20,6 +20,7 @@ class SiswaProfilController extends BaseController
     $userId = user_id();
     $profilModel = new ProfilModel();
     $user = $profilModel->getUserById($userId);
+    $this->kelasModel = new Manage_kelasModel();    
 
     if (!$user) {
       return redirect()->to('/login')->with('error', 'Akun tidak ditemukan.');
@@ -27,7 +28,8 @@ class SiswaProfilController extends BaseController
 
     $data = [
       'title' => 'Profil Saya',
-      'user'  => $user
+      'user'  => $user,
+      'kelasSaya' => $this->kelasModel->getClassesByUserId($userId),
     ];
 
     return view('siswa/profil/index', $data);

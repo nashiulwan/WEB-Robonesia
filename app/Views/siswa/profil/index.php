@@ -56,7 +56,7 @@
                         </tr>
                         <tr>
                             <th>Kelas</th>
-                            <td><?= esc($user['kelas']) ?></td>
+                            <td><?= esc($user['kelas'])?></td>
                         </tr>
                         <tr>
                             <th>Alamat</th>
