@@ -54,7 +54,7 @@ function convertOembedToIframe($content)
                 </ul>
 
                 <!-- Daftar Kategori Manual -->
-                <h4 class="mt-4 mb-3" data-aos="fade-left" data-aos-duration="1000" >Kategori</h4>
+                <h4 class="mt-4 mb-3" data-aos="fade-left" data-aos-duration="1000">Kategori</h4>
                 <ul class="list-unstyled" data-aos="fade-left" data-aos-duration="1000">
                     <li class="mb-2">
                         <a href="<?= base_url('blog/kategori/berita') ?>" class="text-decoration-none text-dark">
