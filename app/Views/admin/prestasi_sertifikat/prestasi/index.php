@@ -1,7 +1,6 @@
 <?= $this->extend('admin/layout') ?>
 
 <?= $this->section('content') ?>
-<!-- Custom CSS untuk menghilangkan efek fokus pada button filter -->
 
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -87,7 +86,6 @@
 
         <!-- Tab Daftar Akun -->
         <div class="tab-pane fade" id="daftar-akun" role="tabpanel" aria-labelledby="daftar-akun-tab">
-            <!-- Sama seperti view sebelumnya, tampilkan tabel daftar akun -->
             <div class="mb-3 d-flex align-items-center justify-content-between">
                 <div class="flex-grow-1 me-3" style="margin-right:1rem">
                     <input type="text" id="searchInput" class="form-control" placeholder="Cari akun berdasarkan username, nama, atau email">
@@ -101,8 +99,9 @@
                         <tr>
                             <th style="width: 5%;">No</th>
                             <th style="width: 20%;">Nama Pengguna</th>
-                            <th style="width: 28%;">Email</th>
-                            <th style="width: 30%;">Nama Lengkap</th>
+                            <th style="width: 20%;">Email</th>
+                            <th style="width: 25%;">Nama Lengkap</th>
+                            <th style="width: 25%;">Asal Sekolah</th>
                             <th style="width: 5%;">Aksi</th>
                         </tr>
                     </thead>
@@ -115,6 +114,7 @@
                                     <td><?= esc($row['username']); ?></td>
                                     <td><?= esc($row['email']); ?></td>
                                     <td><?= esc($row['fullname']); ?></td>
+                                    <td><?= esc($row['asal_sekolah']); ?></td>
                                     <td>
                                         <!-- Tautan untuk menambahkan prestasi ke akun tertentu -->
                                         <a href="<?= base_url('admin/prestasi/prestasi_detail/' . $row['id']); ?>" class="btn btn-primary btn-sm"><i class="fas fa-trophy"></i></a>
