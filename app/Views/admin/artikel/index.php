@@ -41,17 +41,15 @@
     <div class="table-responsive">
         <table id="artikelTable" class="table table-bordered table-auto">
             <thead class="table" style="color: black; background-color:#2222">
-                <tr>
+                <tr>S
                     <th style="width: 5%;">NO</th>
                     <th style="width: 15%;">Judul</th>
                     <th style="width: 10%;">Slug</th>
-                    <th style="width: 20%;">Konten</th>
+                    <th style="width: 15%;">Konten</th>
                     <th style="width: 10%;">Kategori</th>
-                    <!-- <th style="width: 10%;">Penulis</th>
-                    <th style="width: 8%;">Status</th> -->
-                    <th style="width: 12%;">Created At</th>
-                    <th style="width: 12%;">Updated At</th>
-                    <th style="width: 12%;">Gambar</th>
+                    <th style="width: 13%;">Created At</th>
+                    <th style="width: 13%;">Updated At</th>
+                    <th style="width: 14%;">Gambar</th>
                     <th style="width: 5%;">Aksi</th>
                 </tr>
             </thead>
