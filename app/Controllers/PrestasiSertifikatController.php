@@ -87,6 +87,87 @@ class PrestasiSertifikatController extends BaseController
     return view('admin/prestasi_sertifikat/sertifikat/edit', $data);
   }
 
+  // public function sertifikatUpdate($sertifikatId)
+  // {
+  //   if (!logged_in()) {
+  //     return redirect()->to('/login');
+  //   }
+
+  //   $model = new SertifikatModel();
+  //   $sertifikat = $model->find($sertifikatId);
+
+  //   if (!$sertifikat) {
+  //     return redirect()->back()->with('error', 'Sertifikat tidak ditemukan.');
+  //   }
+
+  //   $validationRules = [
+  //     'deskripsi' => 'required',
+  //     'nama_file' => [
+  //       'rules'  => 'mime_in[nama_file,image/jpg,image/jpeg,image/png,application/pdf]',
+  //       'errors' => [
+  //         'mime_in'  => 'File harus berupa gambar atau PDF.'
+  //       ]
+  //     ]
+  //   ];
+
+  //   if (!$this->validate($validationRules)) {
+  //     return redirect()->back()
+  //       ->withInput()
+  //       ->with('errors', $this->validator->getErrors());
+  //   }
+
+  //   // Ambil file lama
+  //   $oldFileNames = json_decode($sertifikat['nama_file'], true) ?? [];
+
+  //   // File yang tersisa dari input hidden 'existing_files[]'
+  //   $remainingFiles = $this->request->getPost('existing_files') ?? [];
+  //   if (!is_array($remainingFiles)) {
+  //     $remainingFiles = [];
+  //   }
+
+  //   // Ambil file baru
+  //   $files = $this->request->getFiles();
+  //   $newFiles = [];
+  //   if (!empty($files['nama_file'])) {
+  //     foreach ($files['nama_file'] as $file) {
+  //       if ($file->isValid() && !$file->hasMoved()) {
+  //         $originalName = $file->getClientName();
+  //         $extension = $file->getExtension();
+  //         $nameWithoutExt = pathinfo($originalName, PATHINFO_FILENAME);
+  //         $newFileName = $nameWithoutExt . '_' . date('YmdHis') . '.' . $extension;
+  //         $file->move(FCPATH . 'uploads/sertifikat/', $newFileName);
+  //         $newFiles[] = $newFileName;
+  //       }
+  //     }
+  //   }
+
+  //   // Gabungkan file lama yang masih ada dengan file baru
+  //   $updatedFileNames = array_merge($remainingFiles, $newFiles);
+
+  //   // Hapus file yang sudah tidak ada
+  //   $removedFiles = array_diff($oldFileNames, $updatedFileNames);
+  //   foreach ($removedFiles as $removedFile) {
+  //     $filePath = FCPATH . 'uploads/sertifikat/' . $removedFile;
+  //     if (file_exists($filePath)) {
+  //       unlink($filePath);
+  //     }
+  //   }
+
+  //   // Update sertifikat
+  //   $updateData = [
+  //     'nama_file'  => json_encode($updatedFileNames),
+  //     'deskripsi'  => $this->request->getPost('deskripsi'),
+  //     'updated_at' => date('Y-m-d H:i:s')
+  //   ];
+
+  //   if ($model->update($sertifikatId, $updateData)) {
+  //     return redirect()->to('admin/sertifikat')
+  //       ->with('success', 'Sertifikat berhasil diperbarui!');
+  //   } else {
+  //     return redirect()->back()->withInput()->with('error', 'Gagal memperbarui sertifikat.');
+  //   }
+  // }
+
   public function sertifikatUpdate($sertifikatId)
   {
     if (!logged_in()) {
@@ -100,11 +181,13 @@ class PrestasiSertifikatController extends BaseController
       return redirect()->back()->with('error', 'Sertifikat tidak ditemukan.');
     }
 
+    // Tambahkan rule 'uploaded' jika file wajib diupload, atau sesuaikan jika file bersifat opsional
     $validationRules = [
       'deskripsi' => 'required',
       'nama_file' => [
-        'rules'  => 'mime_in[nama_file,image/jpg,image/jpeg,image/png,application/pdf]',
+        'rules'  => 'uploaded[nama_file]|mime_in[nama_file,image/jpg,image/jpeg,image/png,application/pdf]',
         'errors' => [
+          'uploaded' => 'File harus di-upload terlebih dahulu.',
           'mime_in'  => 'File harus berupa gambar atau PDF.'
         ]
       ]
@@ -116,10 +199,10 @@ class PrestasiSertifikatController extends BaseController
         ->with('errors', $this->validator->getErrors());
     }
 
-    // Ambil file lama
+    // Ambil file lama yang sudah tersimpan
     $oldFileNames = json_decode($sertifikat['nama_file'], true) ?? [];
 
-    // File yang tersisa dari input hidden 'existing_files[]'
+    // Dapatkan file yang masih dipertahankan dari input hidden 'existing_files[]'
     $remainingFiles = $this->request->getPost('existing_files') ?? [];
     if (!is_array($remainingFiles)) {
       $remainingFiles = [];
@@ -128,12 +211,20 @@ class PrestasiSertifikatController extends BaseController
     // Ambil file baru
     $files = $this->request->getFiles();
     $newFiles = [];
+
     if (!empty($files['nama_file'])) {
       foreach ($files['nama_file'] as $file) {
-        if ($file->isValid() && !$file->hasMoved()) {
+        // Periksa apakah file valid
+        if (!$file->isValid()) {
+          // Jika ada error pada file, redirect ke base URL dengan pesan error
+          return redirect()->to(base_url())->with('error', 'Terjadi kesalahan pada upload file. Perubahan sedang di proses, silakan coba lagi.');
+        }
+        // Jika file belum dipindahkan, lakukan proses upload
+        if (!$file->hasMoved()) {
           $originalName = $file->getClientName();
           $extension = $file->getExtension();
           $nameWithoutExt = pathinfo($originalName, PATHINFO_FILENAME);
+          // Menghasilkan nama file baru yang unik
           $newFileName = $nameWithoutExt . '_' . date('YmdHis') . '.' . $extension;
           $file->move(FCPATH . 'uploads/sertifikat/', $newFileName);
           $newFiles[] = $newFileName;
@@ -144,7 +235,7 @@ class PrestasiSertifikatController extends BaseController
     // Gabungkan file lama yang masih ada dengan file baru
     $updatedFileNames = array_merge($remainingFiles, $newFiles);
 
-    // Hapus file yang sudah tidak ada
+    // Hapus file yang tidak ada lagi
     $removedFiles = array_diff($oldFileNames, $updatedFileNames);
     foreach ($removedFiles as $removedFile) {
       $filePath = FCPATH . 'uploads/sertifikat/' . $removedFile;
@@ -153,7 +244,7 @@ class PrestasiSertifikatController extends BaseController
       }
     }
 
-    // Update sertifikat
+    // Persiapkan data update
     $updateData = [
       'nama_file'  => json_encode($updatedFileNames),
       'deskripsi'  => $this->request->getPost('deskripsi'),
@@ -161,12 +252,12 @@ class PrestasiSertifikatController extends BaseController
     ];
 
     if ($model->update($sertifikatId, $updateData)) {
-      return redirect()->to('admin/sertifikat')
-        ->with('success', 'Sertifikat berhasil diperbarui!');
+      return redirect()->to(base_url())->with('success', 'Sertifikat berhasil diperbarui!');
     } else {
       return redirect()->back()->withInput()->with('error', 'Gagal memperbarui sertifikat.');
     }
   }
+
 
   public function sertifikatDelete($sertifikatId)
   {
