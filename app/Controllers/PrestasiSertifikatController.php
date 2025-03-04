@@ -252,7 +252,7 @@ class PrestasiSertifikatController extends BaseController
     ];
 
     if ($model->update($sertifikatId, $updateData)) {
-      return redirect()->to(base_url())->with('success', 'Sertifikat berhasil diperbarui!');
+      return redirect()->to('admin/sertifikat')->with('success', 'Sertifikat berhasil diperbarui!');
     } else {
       return redirect()->back()->withInput()->with('error', 'Gagal memperbarui sertifikat.');
     }
