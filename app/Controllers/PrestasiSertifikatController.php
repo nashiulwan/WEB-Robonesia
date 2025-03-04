@@ -103,9 +103,8 @@ class PrestasiSertifikatController extends BaseController
     $validationRules = [
       'deskripsi' => 'required',
       'nama_file' => [
-        'rules'  => 'max_size[nama_file,2048]|mime_in[nama_file,image/jpg,image/jpeg,image/png,application/pdf]',
+        'rules'  => 'mime_in[nama_file,image/jpg,image/jpeg,image/png,application/pdf]',
         'errors' => [
-          'max_size' => 'Ukuran file maksimal 2MB.',
           'mime_in'  => 'File harus berupa gambar atau PDF.'
         ]
       ]
@@ -1016,11 +1015,10 @@ class PrestasiSertifikatController extends BaseController
     $validationRules = [
       'deskripsi' => 'required',
       'image_name' => [
-        'rules'  => 'permit_empty|is_image[gambar]|mime_in[gambar,image/jpg,image/jpeg,image/png,image/svg+xml]|max_size[gambar,2048]',
+        'rules'  => 'permit_empty|is_image[gambar]|mime_in[gambar,image/jpg,image/jpeg,image/png,image/svg+xml]',
         'errors' => [
           'is_image' => 'File harus berupa gambar.',
           'mime_in'  => 'Format gambar harus JPG, JPEG, PNG, atau SVG.',
-          'max_size' => 'Ukuran gambar maksimal 2MB.'
         ]
       ]
     ];
@@ -1086,12 +1084,11 @@ class PrestasiSertifikatController extends BaseController
     // Validasi file gambar
     $validationRules = [
       'gambar' => [
-        'rules'  => 'uploaded[gambar]|is_image[gambar]|mime_in[gambar,image/jpg,image/jpeg,image/png,image/svg+xml]|max_size[gambar,2048]',
+        'rules'  => 'uploaded[gambar]|is_image[gambar]|mime_in[gambar,image/jpg,image/jpeg,image/png,image/svg+xml]',
         'errors' => [
           'uploaded' => 'Gambar harus diunggah.',
           'is_image' => 'File harus berupa gambar.',
           'mime_in'  => 'Format gambar harus JPG, JPEG, PNG, atau SVG.',
-          'max_size' => 'Ukuran gambar maksimal 2MB.'
         ]
       ]
     ];
@@ -1229,10 +1226,9 @@ class PrestasiSertifikatController extends BaseController
     $validationRules = [
       'deskripsi' => 'required',
       'nama_file' => [
-        'rules'  => 'uploaded[nama_file]|max_size[nama_file,2048]|mime_in[nama_file,image/jpg,image/jpeg,image/png,application/pdf]',
+        'rules'  => 'uploaded[nama_file]|mime_in[nama_file,image/jpg,image/jpeg,image/png,application/pdf]',
         'errors' => [
           'uploaded' => 'Harus ada file yang diupload.',
-          'max_size' => 'Ukuran file maksimal 2MB.',
           'mime_in'  => 'File harus berupa gambar atau PDF.'
         ]
       ]
@@ -1345,9 +1341,8 @@ class PrestasiSertifikatController extends BaseController
     $validationRules = [
       'deskripsi' => 'required',
       'nama_file' => [
-        'rules'  => 'max_size[nama_file,2048]|mime_in[nama_file,image/jpg,image/jpeg,image/png,application/pdf]',
+        'rules'  => 'mime_in[nama_file,image/jpg,image/jpeg,image/png,application/pdf]',
         'errors' => [
-          'max_size' => 'Ukuran file maksimal 2MB.',
           'mime_in'  => 'File harus berupa gambar atau PDF.'
         ]
       ]
@@ -1508,10 +1503,9 @@ class PrestasiSertifikatController extends BaseController
     $validationRules = [
       'deskripsi' => 'required',
       'nama_file' => [
-        'rules'  => 'uploaded[nama_file]|max_size[nama_file,2048]|mime_in[nama_file,image/jpg,image/jpeg,image/png,application/pdf]',
+        'rules'  => 'uploaded[nama_file]|mime_in[nama_file,image/jpg,image/jpeg,image/png,application/pdf]',
         'errors' => [
           'uploaded' => 'Harus ada file yang diupload.',
-          'max_size' => 'Ukuran file maksimal 2MB.',
           'mime_in'  => 'File harus berupa gambar atau PDF.'
         ]
       ]
@@ -1620,9 +1614,8 @@ class PrestasiSertifikatController extends BaseController
     $validationRules = [
       'deskripsi' => 'required',
       'nama_file' => [
-        'rules'  => 'max_size[nama_file,2048]|mime_in[nama_file,image/jpg,image/jpeg,image/png,application/pdf]',
+        'rules'  => 'mime_in[nama_file,image/jpg,image/jpeg,image/png,application/pdf]',
         'errors' => [
-          'max_size' => 'Ukuran file maksimal 2MB.',
           'mime_in'  => 'File harus berupa gambar atau PDF.'
         ]
       ]
@@ -1783,10 +1776,9 @@ class PrestasiSertifikatController extends BaseController
     $validationRules = [
       'deskripsi' => 'required',
       'nama_file' => [
-        'rules'  => 'uploaded[nama_file]|max_size[nama_file,2048]|mime_in[nama_file,image/jpg,image/jpeg,image/png,application/pdf]',
+        'rules'  => 'uploaded[nama_file]|mime_in[nama_file,image/jpg,image/jpeg,image/png,application/pdf]',
         'errors' => [
           'uploaded' => 'Harus ada file yang diupload.',
-          'max_size' => 'Ukuran file maksimal 2MB.',
           'mime_in'  => 'File harus berupa gambar atau PDF.'
         ]
       ]
@@ -1895,9 +1887,8 @@ class PrestasiSertifikatController extends BaseController
     $validationRules = [
       'deskripsi' => 'required',
       'nama_file' => [
-        'rules'  => 'max_size[nama_file,2048]|mime_in[nama_file,image/jpg,image/jpeg,image/png,application/pdf]',
+        'rules'  => 'mime_in[nama_file,image/jpg,image/jpeg,image/png,application/pdf]',
         'errors' => [
-          'max_size' => 'Ukuran file maksimal 2MB.',
           'mime_in'  => 'File harus berupa gambar atau PDF.'
         ]
       ]
