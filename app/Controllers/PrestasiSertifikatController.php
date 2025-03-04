@@ -1407,6 +1407,37 @@ class PrestasiSertifikatController extends BaseController
   }
 
 
+  // public function sertifikatPrestasiDelete($prestasiId, $sertifikatId)
+  // {
+  //   if (!logged_in()) {
+  //     return redirect()->to('/login');
+  //   }
+
+  //   $model = new SertifikatModel();
+  //   $sertifikat = $model->find($sertifikatId);
+
+  //   // Pastikan sertifikat terkait dengan prestasi yang benar
+  //   if (!$sertifikat || !$model->getSertifikatByPrestasi($prestasiId)) {
+  //     return redirect()->back()->with('error', 'Sertifikat tidak ditemukan atau tidak sesuai dengan prestasi.');
+  //   }
+
+  //   // Hapus file dari server
+  //   $files = json_decode($sertifikat['nama_file'], true);
+  //   if (!empty($files)) {
+  //     foreach ($files as $file) {
+  //       $filePath = FCPATH . 'uploads/sertifikat/' . $file;
+  //       if (file_exists($filePath)) {
+  //         unlink($filePath);
+  //       }
+  //     }
+  //   }
+
+  //   if ($model->delete($sertifikatId)) {
+  //     return redirect()->to('admin/sertifikat/prestasi/' . esc($prestasiId))->with('success', 'Sertifikat berhasil dihapus.');
+  //   } else {
+  //     return redirect()->back()->with('error', 'Gagal menghapus sertifikat.');
+  //   }
+  // }
   public function sertifikatPrestasiDelete($prestasiId, $sertifikatId)
   {
     if (!logged_in()) {
@@ -1432,8 +1463,14 @@ class PrestasiSertifikatController extends BaseController
       }
     }
 
+    // Hapus data dari tabel pivot sertifikat_recipients
+    $db = \Config\Database::connect();
+    $db->table('sertifikat_recipients')->where('sertifikat_id', $sertifikatId)->delete();
+
+    // Hapus sertifikat dari database
     if ($model->delete($sertifikatId)) {
-      return redirect()->to('admin/sertifikat/prestasi/' . esc($prestasiId))->with('success', 'Sertifikat berhasil dihapus.');
+      return redirect()->to('admin/sertifikat/prestasi/' . esc($prestasiId))
+        ->with('success', 'Sertifikat berhasil dihapus.');
     } else {
       return redirect()->back()->with('error', 'Gagal menghapus sertifikat.');
     }
@@ -1679,6 +1716,38 @@ class PrestasiSertifikatController extends BaseController
   }
 
   // Proses Delete Sertifikat untuk Akun
+  // public function sertifikatAkunDelete($userId, $sertifikatId)
+  // {
+  //   if (!logged_in()) {
+  //     return redirect()->to('/login');
+  //   }
+
+  //   $model = new SertifikatModel();
+  //   $sertifikat = $model->find($sertifikatId);
+
+  //   // Pastikan sertifikat terkait dengan akun yang benar
+  //   if (!$sertifikat || !$model->getSertifikatByUser($userId)) {
+  //     return redirect()->back()->with('error', 'Sertifikat tidak ditemukan atau tidak sesuai dengan akun.');
+  //   }
+
+  //   // Hapus file dari server
+  //   $files = json_decode($sertifikat['nama_file'], true);
+  //   if (!empty($files)) {
+  //     foreach ($files as $file) {
+  //       $filePath = FCPATH . 'uploads/sertifikat/' . $file;
+  //       if (file_exists($filePath)) {
+  //         unlink($filePath);
+  //       }
+  //     }
+  //   }
+
+  //   if ($model->delete($sertifikatId)) {
+  //     return redirect()->to('admin/sertifikat/akun/' . esc($userId))
+  //       ->with('success', 'Sertifikat berhasil dihapus.');
+  //   } else {
+  //     return redirect()->back()->with('error', 'Gagal menghapus sertifikat.');
+  //   }
+  // }
   public function sertifikatAkunDelete($userId, $sertifikatId)
   {
     if (!logged_in()) {
@@ -1704,6 +1773,11 @@ class PrestasiSertifikatController extends BaseController
       }
     }
 
+    // Hapus data dari tabel pivot sertifikat_recipients
+    $db = \Config\Database::connect();
+    $db->table('sertifikat_recipients')->where('sertifikat_id', $sertifikatId)->delete();
+
+    // Hapus sertifikat dari database
     if ($model->delete($sertifikatId)) {
       return redirect()->to('admin/sertifikat/akun/' . esc($userId))
         ->with('success', 'Sertifikat berhasil dihapus.');
@@ -1951,18 +2025,66 @@ class PrestasiSertifikatController extends BaseController
     }
   }
 
+
   // Proses Delete Sertifikat untuk Kelas
+  // public function sertifikatKelasDelete($kelasId, $sertifikatId)
+  // {
+  //   if (!logged_in()) {
+  //     return redirect()->to('/login');
+  //   }
+
+  //   $sertifikatModel = new SertifikatModel();
+  //   $recipientModel = new SertifikatRecipientsModel(); // Tambahkan model untuk pivot table
+
+  //   $sertifikat = $sertifikatModel->find($sertifikatId);
+
+  //   // Pastikan sertifikat terkait dengan akun yang benar
+  //   if (!$sertifikat || !$sertifikatModel->getSertifikatByKelas($kelasId)) {
+  //     return redirect()->back()->with('error', 'Sertifikat tidak ditemukan atau tidak sesuai dengan akun.');
+  //   }
+
+  //   // Hapus file dari server
+  //   $files = json_decode($sertifikat['nama_file'], true);
+  //   if (!empty($files)) {
+  //     foreach ($files as $file) {
+  //       $filePath = FCPATH . 'uploads/sertifikat/' . $file;
+  //       if (file_exists($filePath)) {
+  //         unlink($filePath);
+  //       }
+  //     }
+  //   }
+
+  //   // Gunakan transaksi untuk memastikan integritas data
+  //   $db = \Config\Database::connect();
+  //   $db->transStart();
+
+  //   // Hapus dari tabel pivot sertifikat_recipients
+  //   $recipientModel->where('sertifikat_id', $sertifikatId)->delete();
+
+  //   // Hapus sertifikat dari tabel utama
+  //   $sertifikatModel->delete($sertifikatId);
+
+  //   $db->transComplete();
+
+  //   if ($db->transStatus() === false) {
+  //     return redirect()->back()->with('error', 'Gagal menghapus sertifikat.');
+  //   }
+
+  //   return redirect()->to('admin/sertifikat/kelas/' . esc($kelasId))
+  //     ->with('success', 'Sertifikat berhasil dihapus.');
+  // }
+
   public function sertifikatKelasDelete($kelasId, $sertifikatId)
   {
     if (!logged_in()) {
       return redirect()->to('/login');
     }
 
-    $model = new SertifikatModel();
-    $sertifikat = $model->find($sertifikatId);
+    $sertifikatModel = new SertifikatModel();
+    $sertifikat = $sertifikatModel->find($sertifikatId);
 
-    // Pastikan sertifikat terkait dengan akun yang benar
-    if (!$sertifikat || !$model->getSertifikatByKelas($kelasId)) {
+    // Pastikan sertifikat terkait dengan kelas yang benar
+    if (!$sertifikat || !$sertifikatModel->getSertifikatByKelas($kelasId)) {
       return redirect()->back()->with('error', 'Sertifikat tidak ditemukan atau tidak sesuai dengan akun.');
     }
 
@@ -1977,13 +2099,26 @@ class PrestasiSertifikatController extends BaseController
       }
     }
 
-    if ($model->delete($sertifikatId)) {
-      return redirect()->to('admin/sertifikat/kelas/' . esc($kelasId))
-        ->with('success', 'Sertifikat berhasil dihapus.');
-    } else {
+    // Gunakan transaksi untuk memastikan integritas data
+    $db = \Config\Database::connect();
+    $db->transStart();
+
+    // Hapus data di tabel pivot sertifikat_recipients yang terkait
+    $db->table('sertifikat_recipients')->where('sertifikat_id', $sertifikatId)->delete();
+
+    // Hapus sertifikat dari tabel utama
+    $sertifikatModel->delete($sertifikatId);
+
+    $db->transComplete();
+
+    if ($db->transStatus() === false) {
       return redirect()->back()->with('error', 'Gagal menghapus sertifikat.');
     }
+
+    return redirect()->to('admin/sertifikat/kelas/' . esc($kelasId))
+      ->with('success', 'Sertifikat berhasil dihapus.');
   }
+
 
 
   //===============================================================================//

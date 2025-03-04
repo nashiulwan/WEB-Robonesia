@@ -39,8 +39,6 @@
         <i class="fas fa-search text-muted" style="margin-right:1rem"></i>
     </div>
 
-
-
     <!-- TABEL -->
     <?php $no = 1; ?>
     <div class="table-responsive">

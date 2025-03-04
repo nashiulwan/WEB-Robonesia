@@ -7,7 +7,7 @@
     </div>
 
     <ul class="nav nav-tabs mb-3" id="prestasiTab" role="tablist">
-        <ul class="nav nav-tabs mb-3" id="prestasiTab" role="tablist">
+        <ul class="nav nav-tabs " id="prestasiTab" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link active" id="daftar-sertifikat-tab" data-bs-toggle="tab" data-bs-target="#daftar-sertifikat" type="button" role="tab" aria-controls="daftar-sertifikat" aria-selected="true">
                     Daftar Sertifikat
@@ -311,29 +311,6 @@
         });
     });
 </script>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // Dapatkan semua tombol tab
-        const tabButtons = document.querySelectorAll('#prestasiTab button.nav-link');
 
-        // Saat tab diklik, simpan data-bs-target ke localStorage
-        tabButtons.forEach(function(btn) {
-            btn.addEventListener('click', function() {
-                const activeTab = this.getAttribute('data-bs-target');
-                localStorage.setItem('activeTab', activeTab);
-            });
-        });
-
-        // Saat halaman dimuat, periksa apakah ada tab aktif yang disimpan
-        const storedTab = localStorage.getItem('activeTab');
-        if (storedTab) {
-            const triggerEl = document.querySelector(`#prestasiTab button[data-bs-target="${storedTab}"]`);
-            if (triggerEl) {
-                var tabInstance = new bootstrap.Tab(triggerEl);
-                tabInstance.show();
-            }
-        }
-    });
-</script>
 
 <?= $this->endSection() ?>
