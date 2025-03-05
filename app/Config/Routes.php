@@ -135,6 +135,7 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
 
     // Routes untuk Sertifikat
     $routes->get('sertifikat', 'PrestasiSertifikatController::sertifikatIndex', ['filter' => 'role:admin']);
+    // Routes untuk Sertifikat umum
     $routes->get('sertifikat/detail/(:num)', 'PrestasiSertifikatController::sertifikatDetail/$1', ['filter' => 'role:admin']);
     $routes->get('sertifikat/edit/(:num)', 'PrestasiSertifikatController::sertifikatEdit/$1', ['filter' => 'role:admin']);
     $routes->post('sertifikat/update/(:num)', 'PrestasiSertifikatController::sertifikatUpdate/$1', ['filter' => 'role:admin']);
@@ -160,7 +161,6 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
     $routes->get('sertifikat/kelas/edit/(:num)/(:num)', 'PrestasiSertifikatController::sertifikatKelasEdit/$1/$2', ['filter' => 'role:admin']);
     $routes->post('sertifikat/kelas/update/(:num)/(:num)', 'PrestasiSertifikatController::sertifikatKelasUpdate/$1/$2', ['filter' => 'role:admin']);
     $routes->post('sertifikat/kelas/delete/(:num)/(:num)', 'PrestasiSertifikatController::sertifikatKelasDelete/$1/$2', ['filter' => 'role:admin']);
-
 
     // Routes untuk pengaturan
     $routes->get('pengaturan', 'PengaturanController::index', ['filter' => 'role:admin']);
@@ -189,6 +189,15 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
     $routes->post('pengaturan/kontak/update', 'PengaturanController::updateKontak', ['filter' => 'role:admin']);
 
     $routes->get('pengaturan/galeri', 'PengaturanController::galeri', ['filter' => 'role:admin']);
+
+    //Routes untuk Galeri Siswa
+    $routes->get('galeri', 'GaleriSiswaController::index', ['filter' => 'role:admin']);
+    $routes->get('galeri/detail/(:num)', 'GaleriSiswaController::detail/$1', ['filter' => 'role:admin']);
+    $routes->get('galeri/tambah/(:num)', 'GaleriSiswaController::tambah/$1', ['filter' => 'role:admin']);
+    $routes->post('galeri/simpan/(:num)', 'GaleriSiswaController::simpan/$1', ['filter' => 'role:admin']);
+    $routes->get('galeri/edit/(:num)/(:num)', 'GaleriSiswaController::edit/$1/$2', ['filter' => 'role:admin']);
+    $routes->post('galeri/update/(:num)/(:num)', 'GaleriSiswaController::update/$1/$2', ['filter' => 'role:admin']);
+    $routes->post('galeri/delete/(:num)/(:num)', 'GaleriSiswaController::delete/$1/$2', ['filter' => 'role:admin']);
 
     // Routes untuk shop
     $routes->get('shop', 'ShopController::index', ['filter' => 'role:admin']);
@@ -222,8 +231,6 @@ $routes->group('siswa', ['filter' => 'auth'], function ($routes) {
 
     $routes->get('hubungi', 'SiswaController::hubungi', ['filter' => 'role:siswa']);
 });
-
-
 
 $routes->group('guru', ['filter' => 'auth'], function ($routes) {});
 $routes->group('siswa', ['filter' => 'auth'], function ($routes) {});

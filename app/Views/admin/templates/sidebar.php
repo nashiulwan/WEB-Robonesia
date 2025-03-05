@@ -52,6 +52,20 @@
             </div>
         </li>
 
+        <!-- Nav Item - Shop -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseShop" aria-expanded="true" aria-controls="collapseShop">
+                <i class="fas fa-store"></i>
+                <span>Shop</span>
+            </a>
+            <div id="collapseShop" class="collapse" aria-labelledby="headingShop" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="<?= base_url('admin/shop'); ?>">Daftar Produk</a>
+                    <a class="collapse-item" href="<?= base_url('admin/shop/tambah'); ?>">Tambah Produk</a>
+                </div>
+            </div>
+        </li>
+        
         <!-- Nav Item - Manage_Kelas -->
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseManage_kelas" aria-expanded="true" aria-controls="collapseManage_kelas">
@@ -82,19 +96,14 @@
             </div>
         </li>
 
-        <!-- Nav Item - Shop -->
+        <!-- Nav Item - Galeri Siswa -->
         <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseShop" aria-expanded="true" aria-controls="collapseShop">
-                <i class="fas fa-store"></i>
-                <span>Shop</span>
+            <a class="nav-link" href="<?= base_url('admin/galeri'); ?>">
+                <i class="fas fa-images"></i>
+                <span>Galeri Siswa</span>
             </a>
-            <div id="collapseShop" class="collapse" aria-labelledby="headingShop" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="<?= base_url('admin/shop'); ?>">Daftar Produk</a>
-                    <a class="collapse-item" href="<?= base_url('admin/shop/tambah'); ?>">Tambah Produk</a>
-                </div>
-            </div>
         </li>
+
 
         <!-- Nav Item - Analytics -->
         <li class="nav-item">

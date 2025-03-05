@@ -7,6 +7,7 @@
   <!-- Form Edit Kelas (termasuk level/sub level dan data gambar) -->
   <form action="<?= base_url('admin/grade_level/update_level/' . $kelas['id']) ?>" method="post" enctype="multipart/form-data">
     <?= csrf_field() ?>
+    <input type="hidden" name="user_id" value="<?= esc($user['id']) ?>">
     <!-- Field Level -->
     <div class="form-group">
       <label for="level">Level</label>
