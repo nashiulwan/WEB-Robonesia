@@ -27,4 +27,13 @@ new Swiper('.testimoni-card-wrapper', {
       },
     }
   });
+  // Fungsi untuk mengecek scroll dan menambahkan kelas shifted
+  window.addEventListener("scroll", function() {
+    const floatingButtons = document.querySelector('.floating-buttons');
+    if (window.scrollY > 500) {
+      floatingButtons.classList.add('shifted');
+    } else {
+      floatingButtons.classList.remove('shifted');
+    }
+  });
   

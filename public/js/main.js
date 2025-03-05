@@ -251,3 +251,7 @@ setInterval(nextPhoto, 3000);
 
 // Panggil updateGallery untuk inisialisasi awal
 updateGallery();
+
+
+
+  

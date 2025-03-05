@@ -8,6 +8,7 @@
     text-overflow: ellipsis;
   }
 
+
   /* Grid Container */
   .grid-container {
     display: grid;
@@ -696,20 +697,20 @@
       <a href="/tentang" class="btn" data-aos="fade-right" data-aos-duration="700" data-aos-delay="300">Pelajari Lebih Lanjut</a>
     </div>
     <div class="commitment__right">
-      <article class="commitment" data-aos="zoom-in" data-aos-duration="500">
-        <p>Mengembangkan program robotik untuk anak usia dini</p>
+      <article class="commitment" style="display: flex; align-items: center; justify-content: center; height: 100%;" data-aos="zoom-in" data-aos-duration="500">
+        <p style="font-size: 1rem; margin-bottom:0;">Mengembangkan program robotik untuk anak usia dini</p>
       </article>
-      <article class="commitment" data-aos="zoom-in" data-aos-duration="750">
-        <p>Membimbing anak Indonesia untuk mengenal teknologi sejak usia dini</p>
+      <article class="commitment" style="display: flex; align-items: center; justify-content: center; height: 100%;" data-aos="zoom-in" data-aos-duration="750">
+        <p style="font-size: 1rem; margin-bottom:0;">Membimbing anak Indonesia untuk mengenal teknologi sejak usia dini</p>
       </article>
-      <article class="commitment" data-aos="zoom-in" data-aos-duration="1000">
-        <p>Kami mencintai anak-anak dan meyakini bahwa mereka adalah aset tak ternilai untuk masa depan</p>
+      <article class="commitment" style="display: flex; align-items: center; justify-content: center; height: 100%;" data-aos="zoom-in" data-aos-duration="1000">
+        <p style="font-size: 1rem; margin-bottom:0;">Kami mencintai anak-anak dan meyakini bahwa mereka adalah aset tak ternilai untuk masa depan</p>
       </article>
-      <article class="commitment" data-aos="zoom-in" data-aos-duration="1250">
-        <p>Menyediakan layanan belajar yang relevan</p>
+      <article class="commitment" style="display: flex; align-items: center; justify-content: center; height: 100%;" data-aos="zoom-in" data-aos-duration="1250">
+        <p style="font-size: 1rem; margin-bottom:0">Menyediakan layanan belajar yang relevan</p>
       </article>
-      <article class="commitment" data-aos="zoom-in" data-aos-duration="1500">
-        <p>Membuat sistem belajar alternatif yang menyenangkan</p>
+      <article class="commitment" style="display: flex; align-items: center; justify-content: center; height: 100%;" data-aos="zoom-in" data-aos-duration="1500">
+        <p style="font-size: 1rem; margin-bottom:0;">Membuat sistem belajar alternatif yang menyenangkan</p>
       </article>
     </div>
   </div>
@@ -721,7 +722,7 @@
 
 <!-- TESTIMONI -->
 
-<section>
+<section style="max-width: 100vw;">
   <div class="testimoni__container swiper text-center">
     <h1 data-aos="fade-up" data-aos-anchor-placement="bottom-bottom">Kata Mereka yang sudah</h1>
     <h1 data-aos="fade-up" data-aos-anchor-placement="bottom-bottom">Belajar di <span class="gradient-text">Robonesia</span></h1>
@@ -790,11 +791,10 @@
 
       </ul>
       <div class="swiper-pagination"></div>
-      <div class="swipper-slide-button swiper-button-prev"></div>
-      <div class="swipper-slide-button swiper-button-next"></div>
+      <div class="swipper-slide-button swiper-button-prev" style="margin-left: 1rem;"></div>
+      <div class="swipper-slide-button swiper-button-next" style="margin-right: 1rem;"></div>
     </div>
   </div>
-
 </section>
 <!-- TESTIMONI END -->
 
@@ -920,3 +920,13 @@
   </div>
 </section>
 <!-- PRESTASI END -->
+
+<!-- Tombol WhatsApp & Maps -->
+<div class="floating-buttons">
+  <a target="_blank" href="<?= esc('https://wa.me/' . $kontak['no_hp']) ?>" class="btn-floating btn-whatsapp" title='Hubungi Kami'>
+    <i class="ri-whatsapp-fill"></i>
+  </a>
+  <a target="_blank" href="https://maps.app.goo.gl/Cu246KuzoBk2Dvph8" class="btn-floating btn-shop" title="Shop">
+    <i class="ri-shopping-bag-fill"></i>
+  </a>
+</div>

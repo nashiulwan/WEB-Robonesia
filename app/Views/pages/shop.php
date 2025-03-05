@@ -20,3 +20,13 @@
     </div>
   </div>
 </section>
+
+<!-- Tombol WhatsApp & Shop -->
+<div class="floating-buttons">
+  <a target="_blank" href="<?= esc('https://wa.me/' . $kontak['no_hp']) ?>" class="btn-floating btn-whatsapp" title='Hubungi Kami'>
+    <i class="ri-whatsapp-fill"></i>
+  </a>
+  <a target="_blank" href="https://maps.app.goo.gl/Cu246KuzoBk2Dvph8" class="btn-floating btn-shop" title="Shop">
+    <i class="ri-shopping-bag-fill"></i>
+  </a>
+</div>
