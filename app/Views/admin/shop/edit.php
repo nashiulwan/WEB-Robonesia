@@ -1,6 +1,7 @@
 <?= $this->extend('admin/layout') ?>
 
 <?= $this->section('content') ?>
+<!-- Sertakan CSS Cropper.js -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
 
 <style>
@@ -9,223 +10,234 @@
         margin-left: -5px;
     }
 
+    /* Styling untuk preview crop yang aktif (sebelum disimpan) */
     .image-preview-cut-save {
         width: 50vw;
         max-height: 30vw;
     }
-
-
-    .user-image-now {
-        margin-right: 1rem;
-    }
-
-
-    .form-label-now-img {
-        display: none;
-    }
-
-    @media (max-width: 720px) {
-        .profile-container {
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .profile-container img {
-            margin-bottom: 5px;
-        }
-
-
-        .image-preview-cut-save {
-            max-height: 50vw;
-            width: 70vw;
-        }
-
-        .user-image-now {
-            margin-right: 0rem;
-        }
-
-        .form-profil-now {
-            display: none;
-        }
-
-        .form-label-now {
-            display: none;
-        }
-
-        .form-label-now-img {
-            display: block;
-            text-align: center;
-            width: 100%;
-        }
-
-        .form-input {
-            width: 100%;
-        }
-    }
 </style>
+
 <div class="container-fluid">
 
-    <h1 class="h3 mb-4 text-gray-800"><?= $title; ?></h1>
-
-    <!-- Menampilkan pesan error validasi -->
-    <?php if (session()->getFlashdata('errors')) : ?>
+    <h1 class="h3 mb-4 text-gray-800">Edit Produk</h1>
+    <!-- Tampilkan Flash Message -->
+    <?php if (session()->getFlashdata('success')) : ?>
+        <div class="alert alert-success"><?= esc(session()->getFlashdata('success')) ?></div>
+    <?php endif; ?>
+    <?php if (session()->getFlashdata('error')) : ?>
+        <div class="alert alert-danger"><?= esc(session()->getFlashdata('error')) ?></div>
+    <?php endif; ?>
+    <?php if (session()->has('errors')) : ?>
         <div class="alert alert-danger">
             <ul>
-                <?php foreach (session()->getFlashdata('errors') as $error) : ?>
-                    <li><?= $error ?></li>
+                <?php foreach (session('errors') as $error) : ?>
+                    <li><?= esc($error) ?></li>
                 <?php endforeach; ?>
             </ul>
         </div>
     <?php endif; ?>
 
-    <?php if (session()->getFlashdata('success')) : ?>
-        <div class="alert alert-success">
-            <?= session()->getFlashdata('success'); ?>
-        </div>
-    <?php endif; ?>
-
-    <?php if (session()->getFlashdata('error')) : ?>
-        <div class="alert alert-danger">
-            <?= session()->getFlashdata('error') ?>
-        </div>
-    <?php endif; ?>
-
-    <!-- Form edit Akun -->
-
-    <form action="<?= base_url('admin/manage_akun/update/' . $users['id']) ?>" method="post" enctype="multipart/form-data">
+    <!-- Form Tambah Artikel -->
+    <form action="<?= base_url('admin/shop/update/'. esc($shop['id'])) ?>" method="post" enctype="multipart/form-data">
         <?= csrf_field() ?>
-        <div class="mb-3 d-flex profile-container">
-            <!-- Menampilkan gambar profil lama jika ada -->
-            <?php if (!empty($users['user_image'])): ?>
-                <div class="me-3 user-image-now">
-                    <img src=" <?= base_url('/uploads/' . $users['user_image']) ?>" alt="Gambar Profil" width="200" class="img-thumbnail">
-                    <label for="user_image" class="form-label form-label-now-img">Foto Profil Sekarang</label>
+
+        <div class="form-group">
+            <label for="judul">Nama Produk</label>
+            <input type="text" value="<?= old('nama_produk', $shop['nama_produk']) ?>" name="nama_produk" id="nama_produk" class="form-control" placeholder="Masukkan nama produk" required>
+        </div>
+
+        <div class="form-group">
+            <label for="harga">Harga Produk</label>
+            <input type="text" value="<?= old('harga', $shop['harga']) ?>" name="harga" id="judul" class="form-control" placeholder="Masukkan harga produk" required>
+            
+        </div>
+
+        <div class="mb-3">
+            <label for="gambar" class="form-label">Upload Gambar</label>
+            <input type="file" value="<?= old('gambar_produk', $shop['gambar_produk']) ?>" class="form-control custom_file" id="gambar" name="gambar" accept="image/*">
+        </div>
+        <?php if (!empty($shop['gambar_produk'])): ?>
+                <div class="me-3 shop-image-now">
+                    <img src="<?= base_url('/uploads/shop/' . $shop['gambar_produk']) ?>" alt="Gambar Produk" width="200" class="img-thumbnail">
+                    <label for="gambar_produk" class="form-label form-label-now-img">Foto Produk Sekarang</label>
                 </div>
             <?php endif; ?>
 
-            <div class="flex-grow-1 form-input">
-                <div class="flex-grow-1 mb-3">
-                    <label for="user_image" class="form-label form-label-now">Foto Profil Sekarang</label>
-                    <input type="text" class="form-control form-profil-now" id="file-name" value="<?= !empty($users['user_image']) ? $users['user_image'] : 'Pilih file gambar' ?>" readonly>
-                </div>
-                <div class="flex-grow-1 mb-3 new-file-input">
-                    <label for="user_image" class="form-label">
-                        Unggah Foto Profil Baru <span class="text-danger">*</span>
-                    </label>
-                    <input type="file" class="form-control custom_file " id="user_image" name="user_image" accept="image/*">
-                    <small class="text-muted"><span class="text-danger">*</span> Pilih foto baru jika ingin mengganti foto profil saat ini. Jika tidak, biarkan kosong.</small>
-                </div>
+        <!-- Preview Gambar Tercrop yang ditampilkan di bawah input file -->
+        <div id="cropped-preview-container" style="display: none; margin-bottom: 1rem;">
+            <p>Pratinjau gambar</p>
+            <img id="cropped-preview" src="" alt="Preview Gambar Tercrop" style="max-width: 80%; height: auto; border: 1px solid #888; border-radius: 5px; margin-bottom:1rem">
+        </div>
 
-                <!-- Tempat Preview dan Crop -->
-                <div id="image-preview-container" class="image-preview-cut-save-group" style="display: none;">
-                    <img id="image-preview" class="image-preview-cut-save">
-                    <div id="crop-buttons-container" style="display: flex; gap: 1rem; margin-top: 1rem;">
-                        <button type="button" id="crop-button" class="btn btn-primary">Pangkas & Simpan</button>
-                        <button type="button" id="cancel-crop-button" class="btn btn-warning">Batal Pangkas</button>
-                    </div>
-                </div>
+        <!-- Container Preview untuk Crop (ditampilkan saat proses crop aktif) -->
+        <div id="image-preview-container" class="image-preview-cut-save-group" style="display: none;">
+            <img id="image-preview" class="image-preview-cut-save">
+            <div id="crop-buttons-container" style="display: flex; gap: 1rem; margin-top: 1rem; margin-bottom: 2rem">
+                <button type="button" id="crop-button" class="btn btn-primary">Pangkas & Simpan</button>
+                <button type="button" id="cancel-crop-button" class="btn btn-warning">Batal Pangkas</button>
             </div>
         </div>
 
         <div class="form-group">
-            <label for="username">Nama Pengguna</label>
-            <input type="text" name="username" id="username" class="form-control" value="<?= old('username', $users['username']) ?>" required>
+            <label for="konten">Deskripsi</label>
+            <textarea name="deskripsi_produk" value="> <?= esc($shop['deskripsi_produk']) ?>" id="konten" class="form-control" rows="10" placeholder="Tulis deskripsi produk..."><?= esc($shop['deskripsi_produk']) ?></textarea>
         </div>
 
-        <div class="form-group">
-            <label for="fullname">Nama Lengkap</label>
-            <input type="text" name="fullname" id="fullname" class="form-control" value="<?= old('fullname', $users['fullname']) ?>" required>
-        </div>
-
-        <div class="form-group">
-            <label for="email">Alamat Email</label>
-            <input type="email" name="email" id="email" class="form-control" value="<?= old('email', $users['email']) ?>" required>
-        </div>
-
-        <div class="form-group">
-            <label for="role">Hak Akses</label>
-            <select class="custom-select" name="role" required>
-                <option value="1" <?= ($role == '1') ? 'selected' : '' ?>>Admin</option>
-                <option value="3" <?= ($role == '3') ? 'selected' : '' ?>>Guru</option>
-                <option value="2" <?= ($role == '2') ? 'selected' : '' ?>>Siswa</option>
-                <option value="0" <?= ($role == '0') ? 'selected' : '' ?>>-</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label for="status">Status Akun</label>
-            <select class="custom-select" name="status" required>
-                <option value="1" <?= ($users['status'] == '1') ? 'selected' : '' ?>>Aktif</option>
-                <option value="0" <?= ($users['status'] == '0') ? 'selected' : '' ?>>Tidak Aktif</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="password">Kata Sandi Baru (Opsional) <span class="text-danger">*</span></label>
-            <input type="password" name="password" id="password" class="form-control" placeholder="Biarkan kosong jika tidak ingin diubah" autocomplete="new-password">
-            <small class="text-muted"><span class="text-danger">*</span> Masukkan kata sandi baru jika ingin mengubahnya. Jika tidak, biarkan kosong.</small>
-        </div>
-
-
-        <div class="form-group">
-            <label for="confirm_password">Konfirmasi Kata Sandi</label>
-            <input type="password" name="confirm_password" id="confirm_password" class="form-control" placeholder="Masukkan kembali kata sandi baru" autocomplete="new-password">
-        </div>
-        <button type="submit" class="btn btn-primary">Update Akun</button>
-        <a href="<?= base_url('admin/manage_akun') ?>" class="btn btn-warning" style="margin-left:10px; width:7rem">Kembali</a>
-
+        <button type="submit" class="btn btn-primary">Simpan</button>
+        <a href="<?= base_url('admin/artikel') ?>" class="btn btn-warning" style="margin-left:10px; width:7rem">Kembali</a>
     </form>
+
 </div>
 
-
-
+<!-- CKEditor 5 -->
+<script src="https://cdn.ckeditor.com/ckeditor5/41.3.1/classic/ckeditor.js"></script>
 <script>
-    document.getElementById("user_image").addEventListener("change", function() {
-        var fileName = this.files[0] ? this.files[0].name : "Pilih file gambar";
-        document.getElementById("file-name").value = fileName;
+    CKEDITOR.replace('konten', {
+        extraAllowedContent: 'iframe[*];',
+        allowedContent: true
     });
-
-    document.getElementById("user_image").addEventListener("change", function(event) {
-        var file = event.target.files[0];
-        var preview = document.querySelector(".user-image-now img");
-        var fileNameInput = document.getElementById("file-name");
-
-        if (file) {
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                preview.src = e.target.result; // Ganti src dengan gambar yang baru dipilih
-            };
-            reader.readAsDataURL(file);
-
-            fileNameInput.value = file.name; // Perbarui input teks dengan nama file
-        } else {
-            fileNameInput.value = "Pilih file gambar";
+</script>
+<script>
+    class MyUploadAdapter {
+        constructor(loader) {
+            this.loader = loader;
         }
+
+        upload() {
+            return this.loader.file.then(file => {
+                return new Promise((resolve, reject) => {
+                    if (!file) {
+                        reject('File tidak valid.');
+                        return;
+                    }
+
+                    const reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = () => {
+                        this.showCropperModal(reader.result, file, resolve, reject);
+                    };
+
+                    reader.onerror = error => reject(error);
+                });
+            });
+        }
+
+        showCropperModal(imageSrc, file, resolve, reject) {
+            // Hapus modal sebelumnya jika ada
+            let existingModal = document.getElementById('cropperModal');
+            if (existingModal) {
+                document.body.removeChild(existingModal);
+            }
+
+            // Buat modal
+            let modal = document.createElement('div');
+            modal.id = 'cropperModal';
+            modal.innerHTML = `
+                <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); display: flex; align-items: center; justify-content: center; z-index: 999;">
+                    <div style="background: white; padding: 20px; border-radius: 10px; box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2); width: 90%; max-width: 500px; position: relative; text-align: center;">
+                        <h3 style="margin: 0 0 10px;">Crop Gambar</h3>
+                        <div style="max-width: 100%; max-height: 200px; overflow: hidden; display: flex; justify-content: center; align-items: center;">
+                            <img id="cropperImage" src="${imageSrc}" style="max-width: 100%; max-height: 100%; display: block;"/>
+                        </div>
+                        <div style="margin-top: 10px; text-align: right;">
+                            <button id="cancelCrop" style="background: #ccc; border: none; padding: 8px 12px; cursor: pointer; margin-right: 10px; border-radius: 5px;">Batal</button>
+                            <button id="confirmCrop" style="background: #28a745; color: white; border: none; padding: 8px 12px; cursor: pointer; border-radius: 5px;">Crop & Upload</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+            const cropperImage = modal.querySelector("#cropperImage");
+
+            // Perbaikan Cropper agar sesuai modal
+            const cropper = new Cropper(cropperImage, {
+                viewMode: 2,
+                autoCropArea: 1,
+                responsive: true,
+                restore: false,
+                modal: true,
+                background: false
+            });
+
+            // Tombol Crop & Upload
+            modal.querySelector("#confirmCrop").onclick = () => {
+                cropper.getCroppedCanvas().toBlob(blob => {
+                    this.uploadCroppedImage(blob, file.name, resolve, reject);
+                    document.body.removeChild(modal);
+                });
+            };
+
+            // Tombol Batal
+            modal.querySelector("#cancelCrop").onclick = () => {
+                document.body.removeChild(modal);
+                reject('User membatalkan crop.');
+            };
+        }
+
+        uploadCroppedImage(blob, filename, resolve, reject) {
+            const formData = new FormData();
+            formData.append('upload', blob, filename);
+
+            fetch('<?= base_url('admin/artikel/upload') ?>', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(result => {
+                    if (result.url) {
+                        resolve({
+                            default: result.url
+                        });
+                    } else {
+                        reject(result.error || 'Upload gagal.');
+                    }
+                })
+                .catch(error => reject(error));
+        }
+    }
+
+    function CustomUploadAdapterPlugin(editor) {
+        editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+            return new MyUploadAdapter(loader);
+        };
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        ClassicEditor
+            .create(document.querySelector('#konten'), {
+                extraPlugins: [CustomUploadAdapterPlugin]
+            })
+            .catch(error => {
+                console.error(error);
+            });
     });
+</script>
 
+<!-- Sertakan JS Cropper.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+<script>
     let cropper;
-    let previousImageSrc = document.querySelector(".user-image-now img").src;
 
-    document.getElementById("user_image").addEventListener("change", function(event) {
+    // Ketika file gambar dipilih
+    document.getElementById("gambar").addEventListener("change", function(event) {
         let file = event.target.files[0];
-
         if (file) {
             let reader = new FileReader();
             reader.onload = function(e) {
                 let imagePreview = document.getElementById("image-preview");
                 imagePreview.src = e.target.result;
+                // Tampilkan container preview crop
                 document.getElementById("image-preview-container").style.display = "block";
-
-                // Hapus cropper sebelumnya jika ada
+                // Jika ada preview final sebelumnya, sembunyikan
+                document.getElementById("cropped-preview-container").style.display = "none";
+                // Jika cropper sudah ada, hancurkan terlebih dahulu
                 if (cropper) {
                     cropper.destroy();
                 }
-
-                // Simpan gambar sebelumnya sebelum diubah
-                previousImageSrc = document.querySelector(".user-image-now img").src;
-
-                // Inisialisasi Cropper.js dengan rasio 1:1
+                // Inisialisasi Cropper.js dengan aspect ratio 16:9 (ubah sesuai kebutuhan)
                 cropper = new Cropper(imagePreview, {
-                    aspectRatio: 1,
+                    aspectRatio: 1 / 1,
                     viewMode: 2,
                     autoCropArea: 1,
                 });
@@ -234,51 +246,49 @@
         }
     });
 
+    // Tombol "Pangkas & Simpan"
     document.getElementById("crop-button").addEventListener("click", function() {
-        let canvas = cropper.getCroppedCanvas();
+        if (cropper) {
+            let canvas = cropper.getCroppedCanvas();
+            if (canvas) {
+                canvas.toBlob((blob) => {
+                    // Buat file baru dari hasil crop
+                    let fileInput = document.getElementById("gambar");
+                    let fileName = fileInput.files[0].name;
+                    let croppedFile = new File([blob], fileName, {
+                        type: "image/jpeg"
+                    });
+                    // Buat objek FileList baru menggunakan DataTransfer
+                    let dataTransfer = new DataTransfer();
+                    dataTransfer.items.add(croppedFile);
+                    fileInput.files = dataTransfer.files;
 
-        if (canvas) {
-            canvas.toBlob((blob) => {
-                let fileInput = document.getElementById("user_image");
-                let fileName = fileInput.files[0].name;
-                let croppedFile = new File([blob], fileName, {
-                    type: "image/jpeg"
-                });
+                    // Tampilkan preview gambar final di bawah input file
+                    let finalPreview = document.getElementById("cropped-preview");
+                    finalPreview.src = URL.createObjectURL(blob);
+                    document.getElementById("cropped-preview-container").style.display = "block";
 
-                // Buat objek FileList baru (agar bisa dikirim ke form)
-                let dataTransfer = new DataTransfer();
-                dataTransfer.items.add(croppedFile);
-                fileInput.files = dataTransfer.files;
-
-                // Perbarui tampilan gambar profil sebelumnya dengan hasil crop
-                let profileImage = document.querySelector(".user-image-now img");
-                profileImage.src = URL.createObjectURL(blob);
-
-                // Sembunyikan preview setelah crop selesai
-                document.getElementById("image-preview-container").style.display = "none";
-            }, "image/jpeg");
+                    // Sembunyikan container preview crop
+                    document.getElementById("image-preview-container").style.display = "none";
+                }, "image/jpeg");
+            }
         }
     });
 
-    // Event listener untuk tombol "Batal Pangkas"
+    // Tombol "Batal Pangkas"
     document.getElementById("cancel-crop-button").addEventListener("click", function() {
+        // Sembunyikan container preview crop
         document.getElementById("image-preview-container").style.display = "none";
-
-        // Kembalikan gambar sebelumnya
-        let profileImage = document.querySelector(".user-image-now img");
-        profileImage.src = previousImageSrc;
-
-        // Hapus file yang baru dipilih dari input file
-        document.getElementById("user_image").value = "";
-
+        // Reset input file
+        document.getElementById("gambar").value = "";
         // Hapus instance cropper jika ada
         if (cropper) {
             cropper.destroy();
             cropper = null;
         }
+        // Sembunyikan preview final jika ada
+        document.getElementById("cropped-preview-container").style.display = "none";
     });
 </script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
 
 <?= $this->endSection() ?>

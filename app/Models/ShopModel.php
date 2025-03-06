@@ -8,7 +8,7 @@ class ShopModel extends Model
 {
     protected $table         = 'shop';
     protected $primaryKey    = 'id';
-    protected $allowedFields = ['nama_produk', 'gambar_produk', 'deskripsi_produk', 'created_at', 'updated_at'];
+    protected $allowedFields = ['nama_produk', 'gambar_produk', 'deskripsi_produk', 'harga', 'kategori', 'created_at', 'updated_at'];
     protected $useTimestamps = true;
 
 }

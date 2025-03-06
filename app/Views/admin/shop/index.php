@@ -2,6 +2,13 @@
 
 <?= $this->section('content') ?>
 
+<?php
+function convertOembedToIframe($content)
+{
+    return str_replace('[embed]', '<iframe>', str_replace('[/embed]', '</iframe>', $content));
+}
+?>
+
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1 class="h3 text-gray-800"><?= esc($title) ?></h1>
@@ -33,9 +40,10 @@
             <thead class="table" style="color: black; background-color:#2222">
                 <tr>
                     <th style="width: 5%;">No</th>
-                    <th style="width: 20%;">Gambar Produk</th>
-                    <th style="width: 30%;">Nama Produk</th>
-                    <th style="width: 35%;">Deskripsi</th>
+                    <th style="width: 15%;">Gambar Produk</th>
+                    <th style="width: 20%;">Nama Produk</th>
+                    <th style="width: 15%;">Harga Produk</th>
+                    <th style="width: 25%;">Deskripsi</th>
                     <th style="width: 10%;">Aksi</th>
                 </tr>
             </thead>
@@ -44,15 +52,15 @@
                     <?php foreach ($shop as $row) : ?>
                         <tr>
                             <td><?= $no++; ?></td>
-                            <td class="text-break"><?= esc($row['gambar_produk']); ?></td>
+                            <td class="text-break">
+                                <img src="<?= base_url('uploads/shop/' . esc($row['gambar_produk'])); ?>" alt="Gambar Produk" class="img-fluid" width="100">
+                            </td>
                             <td class="text-break"><?= esc($row['nama_produk']); ?></td>
-                            <td class="text-break"><?= esc($row['deskripsi_produk']); ?></td>
+                            <td class="text-break"><?= esc($row['harga']); ?></td>
+                            <td class="text-break"><?= convertOembedToIframe(html_entity_decode($row['deskripsi_produk'])) ?></td>
 
                             <td>
                                 <div class="d-flex flex-wrap gap-2" style="justify-content: space-between;">
-                                    <a href="<?= base_url('admin/shop/detail/' . esc($row['id'])); ?>" class="btn btn-warning btn-sm d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; margin: 2px;">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
                                     <a href="<?= base_url('admin/shop/edit/' . esc($row['id'])); ?>" class="btn btn-warning btn-sm d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; margin: 2px;">
                                         <i class="fas fa-pen"></i>
                                     </a>
