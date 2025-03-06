@@ -17,12 +17,12 @@
             <?php if (!empty($partner)) : ?>
               <?php foreach ($partner as $row) : ?>
                 <div class="col">
-                  <div class="partner_items d-flex align-items-center p-3 border rounded shadow-sm"  data-aos="fade-up" data-aos-duration="1000">
+                  <div class="partner_items d-flex align-items-center p-3 border rounded shadow-sm" data-aos="fade-up" data-aos-duration="1000">
                     <?php if (!empty($row['logo'])) : ?>
                       <img src="<?= base_url('uploads/' . esc($row['logo'])); ?>" class="card-img-top img-fluid" style="width: 150px; height: 150px; object-fit: cover;" alt="<?= esc($row['partner']); ?>">
                     <?php else : ?>
                       <img src="<?= base_url('uploads/default.jpg'); ?>" class="card-img-top" alt="No Image">
-                    <?php endif; ?>  
+                    <?php endif; ?>
                     <div class="ms-3 text-start">
                       <h4 class="mb-1"><?= esc($row['partner']) ?></h4>
                       <a target="_blank" href="<?= esc($row['maps']) ?>" style="color:black;"><?= esc($row['alamat']) ?></a>
@@ -37,4 +37,13 @@
         </div>
       </div>
     </section>
+    <!-- Tombol WhatsApp & Shop -->
+    <div class="floating-buttons">
+      <a target="_blank" href="<?= esc('https://wa.me/' . $kontak['no_hp']) ?>" class="btn-floating btn-whatsapp" title='Hubungi Kami'>
+        <i class="ri-whatsapp-fill"></i>
+      </a>
+      <a target="_blank" href="https://maps.app.goo.gl/Cu246KuzoBk2Dvph8" class="btn-floating btn-shop" title="Shop">
+        <i class="ri-shopping-bag-fill"></i>
+      </a>
+    </div>
     <!-- PARTNER SECTION END -->

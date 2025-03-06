@@ -17,8 +17,8 @@ class CreateSertifikatTable extends Migration
                 'auto_increment' => true,
             ],
             'nama_file'  => [
-                'type'       => 'VARCHAR',
-                'constraint' => '255',
+                'type'       => 'TEXT',
+                'null'       => 'true',
             ],
             'deskripsi'  => [
                 'type'       => 'TEXT',

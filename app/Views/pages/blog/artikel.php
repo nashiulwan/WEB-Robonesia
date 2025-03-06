@@ -29,6 +29,7 @@ function convertOembedToIframe($content)
             </div>
 
             <a href="<?= base_url('blog') ?>" class="btn btn-secondary mt-3 mb-5" data-aos="fade-up" data-aos-duration="500">Kembali ke Blog</a>
+            <a target="_blank" href="https://wa.me/<?= esc($kontak['no_hp'])?>" class="btn mt-3 mb-5 mx-2" data-aos="fade-up" data-aos-duration="500" style="background-color: #25D366;">Hubungi Kami</a>
         </div>
 
         <!-- Sidebar -->
@@ -54,7 +55,7 @@ function convertOembedToIframe($content)
                 </ul>
 
                 <!-- Daftar Kategori Manual -->
-                <h4 class="mt-4 mb-3" data-aos="fade-left" data-aos-duration="1000" >Kategori</h4>
+                <h4 class="mt-4 mb-3" data-aos="fade-left" data-aos-duration="1000">Kategori</h4>
                 <ul class="list-unstyled" data-aos="fade-left" data-aos-duration="1000">
                     <li class="mb-2">
                         <a href="<?= base_url('blog/kategori/berita') ?>" class="text-decoration-none text-dark">
@@ -85,4 +86,13 @@ function convertOembedToIframe($content)
             </div>
         </div>
     </div>
+</div>
+<!-- Tombol WhatsApp & Maps -->
+<div class="floating-buttons">
+    <a target="_blank" href="<?= esc('https://wa.me/' . $kontak['no_hp']) ?>" class="btn-floating btn-whatsapp" title='Hubungi Kami'>
+        <i class="ri-whatsapp-fill"></i>
+    </a>
+    <a target="_blank" href="https://maps.app.goo.gl/Cu246KuzoBk2Dvph8" class="btn-floating btn-shop" title="Shop">
+        <i class="ri-shopping-bag-fill"></i>
+    </a>
 </div>

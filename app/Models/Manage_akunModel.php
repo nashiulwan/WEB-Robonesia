@@ -95,6 +95,6 @@ class Manage_akunModel extends Model
             ->get()
             ->getRow();
 
-        return $result ? $result->group_id : null; // Jika tidak ditemukan, kembalikan null
+        return $result ? $result->group_id : null;
     }
 }

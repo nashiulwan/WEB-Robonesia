@@ -134,7 +134,33 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
     $routes->get('grade_level/proyek/delete/(:num)/(:num)', 'PrestasiSertifikatController::gradeProyekDelete/$1/$2', ['filter' => 'role:admin']);
 
     // Routes untuk Sertifikat
-    $routes->get('sertifikat', 'PrestasiSertifikatController::tambah', ['filter' => 'role:admin']);
+    $routes->get('sertifikat', 'PrestasiSertifikatController::sertifikatIndex', ['filter' => 'role:admin']);
+    // Routes untuk Sertifikat umum
+    $routes->get('sertifikat/detail/(:num)', 'PrestasiSertifikatController::sertifikatDetail/$1', ['filter' => 'role:admin']);
+    $routes->get('sertifikat/edit/(:num)', 'PrestasiSertifikatController::sertifikatEdit/$1', ['filter' => 'role:admin']);
+    $routes->post('sertifikat/update/(:num)', 'PrestasiSertifikatController::sertifikatUpdate/$1', ['filter' => 'role:admin']);
+    $routes->post('sertifikat/delete/(:num)', 'PrestasiSertifikatController::sertifikatDelete/$1', ['filter' => 'role:admin']);
+    // Routes untuk Sertifikat berdasarkan prestasi
+    $routes->get('sertifikat/prestasi/(:num)', 'PrestasiSertifikatController::sertifikatPrestasiDetail/$1', ['filter' => 'role:admin']);
+    $routes->get('sertifikat/prestasi/tambah/(:num)', 'PrestasiSertifikatController::sertifikatPrestasiTambah/$1', ['filter' => 'role:admin']);
+    $routes->post('sertifikat/prestasi/simpan/(:num)', 'PrestasiSertifikatController::sertifikatPrestasiSimpan/$1/$2', ['filter' => 'role:admin']);
+    $routes->get('sertifikat/prestasi/edit/(:num)/(:num)', 'PrestasiSertifikatController::sertifikatPrestasiEdit/$1/$2', ['filter' => 'role:admin']);
+    $routes->post('sertifikat/prestasi/update/(:num)/(:num)', 'PrestasiSertifikatController::sertifikatPrestasiUpdate/$1/$2', ['filter' => 'role:admin']);
+    $routes->post('sertifikat/prestasi/delete/(:num)/(:num)', 'PrestasiSertifikatController::sertifikatPrestasiDelete/$1/$2', ['filter' => 'role:admin']);
+    // Routes untuk Sertifikat berdasarkan akun
+    $routes->get('sertifikat/akun/(:num)', 'PrestasiSertifikatController::sertifikatAkunDetail/$1', ['filter' => 'role:admin']);
+    $routes->get('sertifikat/akun/tambah/(:num)', 'PrestasiSertifikatController::sertifikatAkunTambah/$1', ['filter' => 'role:admin']);
+    $routes->post('sertifikat/akun/simpan/(:num)', 'PrestasiSertifikatController::sertifikatAkunSimpan/$1/$2', ['filter' => 'role:admin']);
+    $routes->get('sertifikat/akun/edit/(:num)/(:num)', 'PrestasiSertifikatController::sertifikatAkunEdit/$1/$2', ['filter' => 'role:admin']);
+    $routes->post('sertifikat/akun/update/(:num)/(:num)', 'PrestasiSertifikatController::sertifikatAkunUpdate/$1/$2', ['filter' => 'role:admin']);
+    $routes->post('sertifikat/akun/delete/(:num)/(:num)', 'PrestasiSertifikatController::sertifikatAkunDelete/$1/$2', ['filter' => 'role:admin']);
+    // Routes untuk Sertifikat berdasarkan kelas
+    $routes->get('sertifikat/kelas/(:num)', 'PrestasiSertifikatController::sertifikatKelasDetail/$1', ['filter' => 'role:admin']);
+    $routes->get('sertifikat/kelas/tambah/(:num)', 'PrestasiSertifikatController::sertifikatKelasTambah/$1', ['filter' => 'role:admin']);
+    $routes->post('sertifikat/kelas/simpan/(:num)', 'PrestasiSertifikatController::sertifikatKelasSimpan/$1/$2', ['filter' => 'role:admin']);
+    $routes->get('sertifikat/kelas/edit/(:num)/(:num)', 'PrestasiSertifikatController::sertifikatKelasEdit/$1/$2', ['filter' => 'role:admin']);
+    $routes->post('sertifikat/kelas/update/(:num)/(:num)', 'PrestasiSertifikatController::sertifikatKelasUpdate/$1/$2', ['filter' => 'role:admin']);
+    $routes->post('sertifikat/kelas/delete/(:num)/(:num)', 'PrestasiSertifikatController::sertifikatKelasDelete/$1/$2', ['filter' => 'role:admin']);
 
     // Routes untuk pengaturan
     $routes->get('pengaturan', 'PengaturanController::index', ['filter' => 'role:admin']);
@@ -156,7 +182,6 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
     $routes->post('pengaturan/tim/update/(:num)', 'PengaturanController::updateTim/$1', ['filter' => 'role:admin']);
     $routes->get('pengaturan/tim/hapus/(:num)', 'PengaturanController::hapusTim/$1', ['filter' => 'role:admin']);
 
-
     $routes->get('pengaturan/prestasi', 'PengaturanController::prestasi', ['filter' => 'role:admin']);
 
     // Pengaturan kontak
@@ -164,6 +189,15 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
     $routes->post('pengaturan/kontak/update', 'PengaturanController::updateKontak', ['filter' => 'role:admin']);
 
     $routes->get('pengaturan/galeri', 'PengaturanController::galeri', ['filter' => 'role:admin']);
+
+    //Routes untuk Galeri Siswa
+    $routes->get('galeri', 'GaleriSiswaController::index', ['filter' => 'role:admin']);
+    $routes->get('galeri/detail/(:num)', 'GaleriSiswaController::detail/$1', ['filter' => 'role:admin']);
+    $routes->get('galeri/tambah/(:num)', 'GaleriSiswaController::tambah/$1', ['filter' => 'role:admin']);
+    $routes->post('galeri/simpan/(:num)', 'GaleriSiswaController::simpan/$1', ['filter' => 'role:admin']);
+    $routes->get('galeri/edit/(:num)/(:num)', 'GaleriSiswaController::edit/$1/$2', ['filter' => 'role:admin']);
+    $routes->post('galeri/update/(:num)/(:num)', 'GaleriSiswaController::update/$1/$2', ['filter' => 'role:admin']);
+    $routes->post('galeri/delete/(:num)/(:num)', 'GaleriSiswaController::delete/$1/$2', ['filter' => 'role:admin']);
 
     // Routes untuk shop
     $routes->get('shop', 'ShopController::index', ['filter' => 'role:admin']);
@@ -197,8 +231,6 @@ $routes->group('siswa', ['filter' => 'auth'], function ($routes) {
 
     $routes->get('hubungi', 'SiswaController::hubungi', ['filter' => 'role:siswa']);
 });
-
-
 
 $routes->group('guru', ['filter' => 'auth'], function ($routes) {});
 $routes->group('siswa', ['filter' => 'auth'], function ($routes) {});

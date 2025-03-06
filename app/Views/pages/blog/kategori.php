@@ -7,7 +7,7 @@
 
     <div class="row">
         <?php foreach ($artikel as $item) : ?>
-            <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-duration="300"> 
+            <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-duration="300">
                 <div class="card">
                     <?php if (!empty($item['gambar'])) : ?>
                         <img src="<?= base_url('uploads/' . esc($item['gambar'])) ?>" class="card-img-top" alt="Gambar Artikel" style="height: 200px; object-fit: cover;">
@@ -23,4 +23,13 @@
     </div>
 
     <a href="<?= base_url('blog') ?>" class="btn btn-secondary mt-3 mb-5">Kembali ke Blog</a>
+</div>
+<!-- Tombol WhatsApp & Maps -->
+<div class="floating-buttons">
+    <a target="_blank" href="<?= esc('https://wa.me/' . $kontak['no_hp']) ?>" class="btn-floating btn-whatsapp" title='Hubungi Kami'>
+        <i class="ri-whatsapp-fill"></i>
+    </a>
+    <a target="_blank" href="https://maps.app.goo.gl/Cu246KuzoBk2Dvph8" class="btn-floating btn-shop" title="Shop">
+        <i class="ri-shopping-bag-fill"></i>
+    </a>
 </div>
