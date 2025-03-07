@@ -7,6 +7,7 @@ use App\Models\ArtikelModel;
 use App\Models\PrestasiSertifikatModel;
 use App\Models\UserPrestasiModel;
 use App\Models\Manage_kelasModel;
+use App\Models\GaleriSiswaModel;
 use CodeIgniter\Shield\Authentication\Authenticators\Session;
 
 class SiswaController extends BaseController
@@ -95,9 +96,38 @@ class SiswaController extends BaseController
 
     public function galeriKegiatan()
     {
-        $data = ['title' => 'Galeri Kegiatan'];
+        $galeriModel = new GaleriSiswaModel();
+        $userId = $this->user->id;
+
+        $galeri = $galeriModel->getGaleryByUserId($userId);
+
+        // Kelompokkan berdasarkan level dan sub level
+        $galeriData = [];
+        foreach ($galeri as $item) {
+            $level = $item['level'];
+            $subLevel = $item['sub_level'];
+
+            if (!isset($galeriData[$level])) {
+                $galeriData[$level] = [];
+            }
+
+            if (!isset($galeriData[$level][$subLevel])) {
+                $galeriData[$level][$subLevel] = [];
+            }
+
+            $galeriData[$level][$subLevel][] = $item;
+        }
+
+        $data = [
+            'title' => 'Galeri Kegiatan',
+            'galeri' => $galeriData
+        ];
+
         $this->renderViewDashboardSiswa('siswa/galeri_kegiatan', $data);
     }
+
+
+
 
     public function projectNilai()
     {
