@@ -54,48 +54,6 @@
     </div>
 </div> -->
 
-<div class="container-fluid mt-5">
-    <h2 class="text-center mb-4 fw-bold">Event Terbaru</h2>
-
-    <div class="swiper-container px-5">
-        <div class="swiper-wrapper">
-            <?php foreach ($event_artikel as $artikel) : ?>
-                <div class="swiper-slide">
-                    <div class="card shadow-sm border-0 rounded-4">
-                        <?php if (!empty($artikel['gambar'])) : ?>
-                            <img src="<?= base_url('uploads/' . esc($artikel['gambar'])); ?>" 
-                                 class="card-img-top img-fluid rounded-top-4" 
-                                 style="height: 220px; object-fit: cover;" 
-                                 alt="<?= esc($artikel['judul']); ?>">
-                        <?php else : ?>
-                            <img src="<?= base_url('uploads/default.jpg'); ?>" class="card-img-top" alt="No Image">
-                        <?php endif; ?>
-
-                        <div class="card-body text-right">
-                            <span class="badge 
-                                <?= ($artikel['kategori'] === 'event') ? 'bg-success' : 
-                                    (($artikel['kategori'] === 'kompetisi') ? 'bg-danger' : 'bg-primary'); ?>">
-                                <?= ucfirst($artikel['kategori']); ?>
-                            </span>
-
-                            <h5 class="card-title mt-2"><?= esc($artikel['judul']); ?></h5>
-                            <p class="text-muted small"><?= date('d M Y', strtotime($artikel['created_at'])); ?></p>
-                            <a href="<?= base_url('/' . esc($artikel['slug'])); ?>" class="btn btn-primary btn-sm">
-                                Baca Selengkapnya
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            <?php endforeach; ?>
-        </div>
-
-        <!-- Navigasi Swiper -->
-        <!-- <div class="swiper-button-next"></div>
-        <div class="swiper-button-prev"></div>
-        <div class="swiper-pagination"></div> -->
-    </div>
-</div>
-
 
 <!-- KELAS -->
 <div class="container mt-5">
@@ -150,6 +108,49 @@
                 </div>
             </div>
         <?php endif; ?>
+    </div>
+</div>
+
+<!-- EVENT -->
+<div class="container-fluid mt-5">
+    <h2 class="text-center mb-4 fw-bold">Event Terbaru</h2>
+
+    <div class="swiper-container px-5">
+        <div class="swiper-wrapper">
+            <?php foreach ($event_artikel as $artikel) : ?>
+                <div class="swiper-slide">
+                    <div class="card shadow-sm border-0 rounded-4">
+                        <?php if (!empty($artikel['gambar'])) : ?>
+                            <img src="<?= base_url('uploads/' . esc($artikel['gambar'])); ?>" 
+                                 class="card-img-top img-fluid rounded-top-4" 
+                                 style="height: 220px; object-fit: cover;" 
+                                 alt="<?= esc($artikel['judul']); ?>">
+                        <?php else : ?>
+                            <img src="<?= base_url('uploads/default.jpg'); ?>" class="card-img-top" alt="No Image">
+                        <?php endif; ?>
+
+                        <div class="card-body text-right">
+                            <span class="badge 
+                                <?= ($artikel['kategori'] === 'event') ? 'bg-success' : 
+                                    (($artikel['kategori'] === 'kompetisi') ? 'bg-danger' : 'bg-primary'); ?>">
+                                <?= ucfirst($artikel['kategori']); ?>
+                            </span>
+
+                            <h5 class="card-title mt-2"><?= esc($artikel['judul']); ?></h5>
+                            <p class="text-muted small"><?= date('d M Y', strtotime($artikel['created_at'])); ?></p>
+                            <a href="<?= base_url('/' . esc($artikel['slug'])); ?>" class="btn btn-primary btn-sm">
+                                Baca Selengkapnya
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+
+        <!-- Navigasi Swiper -->
+        <!-- <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-pagination"></div> -->
     </div>
 </div>
 
