@@ -91,69 +91,59 @@ class FrontShopController extends BaseController
     //     echo view('pages/blog/artikel');
     //     echo view('layout/footer');
     // }
-    public function artikel($slug)
+    public function shop($nama_produk)
     {
-        $artikel = $this->artikelModel->where('slug', $slug)->first();
+        $produk = $this->shopModel->where('nama_produk', $nama_produk)->first();
 
-        if (!$artikel) {
+        if (!$produk) {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
 
-        // Ambil artikel terbaru kecuali artikel yang sedang ditampilkan
-        $artikelTerbaru = $this->artikelModel
-            ->where('status', 'publish')
-            ->where('slug !=', $slug)
+        $produkLainnya = $this->shopModel
+            ->where('nama_produk !=', $nama_produk)
             ->orderBy('created_at', 'DESC')
-            ->findAll(5);
+            ->findAll(4);
 
-        // Ambil kategori unik dari artikel
-        $kategori = $this->artikelModel
-            ->select('kategori, slug')
-            ->distinct()
-            ->findAll();
-
-        // Ubah konten artikel sebelum dikirim ke view
-        $artikel['konten'] = $this->convertOembedToIframe(html_entity_decode($artikel['konten']));
+        $produk['deskripsi_produk'] = $this->convertOembedToIframe(html_entity_decode($produk['deskripsi_produk']));
 
         $data = [
-            'title' => $artikel['judul'],
-            'artikel' => $artikel,
-            'artikelTerbaru' => $artikelTerbaru,
-            'kategori' => $kategori,
+            'title' => $produk['nama_produk'],
+            'produk' => $produk,
+            'produkLainnya' => $produkLainnya,
             'kontak' => $this->kontakModel->first()
         ];
 
         echo view('layout/header', $data);
-        echo view('pages/blog/artikel');
+        echo view('pages/shop/produk', $data);
         echo view('layout/footer');
     }
 
 
     public function kategori($kategoriSlug)
     {
-        // Ambil artikel berdasarkan kategori
-        $artikelByKategori = $this->artikelModel
-            ->where('status', 'publish')
-            ->where('kategori', $kategoriSlug) // Filter berdasarkan kategori
-            ->orderBy('created_at', 'DESC')
-            ->findAll();
+        //     // Ambil artikel berdasarkan kategori
+        //     $artikelByKategori = $this->artikelModel
+        //         ->where('status', 'publish')
+        //         ->where('kategori', $kategoriSlug) // Filter berdasarkan kategori
+        //         ->orderBy('created_at', 'DESC')
+        //         ->findAll();
 
-        // Jika tidak ada artikel dalam kategori ini
-        if (empty($artikelByKategori)) {
-            $message = "Belum ada artikel dalam kategori ini.";
-        } else {
-            $message = null;
-        }
+        //     // Jika tidak ada artikel dalam kategori ini
+        //     if (empty($artikelByKategori)) {
+        //         $message = "Belum ada artikel dalam kategori ini.";
+        //     } else {
+        //         $message = null;
+        //     }
 
-        $data = [
-            'title' => 'Kategori: ' . ucfirst($kategoriSlug),
-            'artikel' => $artikelByKategori,
-            'message' => $message,
-            'kontak' => $this->kontakModel->first() // Tambahkan data kontak
-        ];
+        //     $data = [
+        //         'title' => 'Kategori: ' . ucfirst($kategoriSlug),
+        //         'artikel' => $artikelByKategori,
+        //         'message' => $message,
+        //         'kontak' => $this->kontakModel->first() // Tambahkan data kontak
+        //     ];
 
-        echo view('layout/header', $data);
-        echo view('pages/blog/kategori');
-        echo view('layout/footer');
+        //     echo view('layout/header', $data);
+        //     echo view('pages/blog/kategori');
+        //     echo view('layout/footer');
     }
 }

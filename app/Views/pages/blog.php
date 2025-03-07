@@ -41,6 +41,27 @@
         -webkit-box-orient: vertical;
         text-overflow: ellipsis;
     }
+
+    .card-blog {
+        overflow: hidden;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        border-radius: 10px;
+    }
+
+
+    .card-blog:hover {
+        transform: translateY(-5px) scale(1.03);
+        box-shadow: 0 8px 12px rgba(255, 221, 0, 0.5);
+    }
+
+    .card-blog:hover img {
+        transform: scale(1.05);
+    }
+
+    .card-blog img {
+        transition: transform 0.2s ease;
+        width: 100%;
+    }
 </style>
 <div class="container mt-5">
     <h1 class="text-center mb-4" data-aos="fade-up" data-aos-duration="1000" style="margin-top: 8rem;">BLOG</h1>
@@ -78,7 +99,7 @@
                 <div class="col-md-4 col-sm-6 mb-4 artikel-item" data-aos="fade-up" data-aos-duration="300"
                     data-title="<?= strtolower(esc($row['judul'])); ?>"
                     data-content="<?= strtolower(strip_tags($row['konten'])); ?>">
-                    <div class="card card-blog shadow-sm border-1" style="min-height: 500px;">
+                    <div class="card card-blog shadow-md border-1" style="min-height: 500px;">
                         <?php if (!empty($row['gambar'])) : ?>
                             <img src="<?= base_url('uploads/' . esc($row['gambar'])); ?>"
                                 class="card-img-top img-fluid" style="height: 200px; object-fit: cover;"
@@ -109,15 +130,7 @@
         <?php endif; ?>
     </div>
 </div>
-<!-- Tombol WhatsApp & Maps -->
-<div class="floating-buttons">
-    <a target="_blank" href="<?= esc('https://wa.me/' . $kontak['no_hp']) ?>" class="btn-floating btn-whatsapp" title='Hubungi Kami'>
-        <i class="ri-whatsapp-fill"></i>
-    </a>
-    <a target="_blank" href="https://maps.app.goo.gl/Cu246KuzoBk2Dvph8" class="btn-floating btn-shop" title="Shop">
-        <i class="ri-shopping-bag-fill"></i>
-    </a>
-</div>
+
 <script>
     document.getElementById('searchInput').addEventListener('input', function() {
         let searchValue = this.value.toLowerCase();

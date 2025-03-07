@@ -237,7 +237,7 @@
                 }
                 // Inisialisasi Cropper.js dengan aspect ratio 16:9 (ubah sesuai kebutuhan)
                 cropper = new Cropper(imagePreview, {
-                    aspectRatio: 1 / 1,
+                    aspectRatio: 16 / 9,
                     viewMode: 2,
                     autoCropArea: 1,
                 });

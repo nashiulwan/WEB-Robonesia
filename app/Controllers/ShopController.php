@@ -152,7 +152,6 @@ class ShopController extends BaseController
 
         return view('admin/shop/edit', $data);
     }
-
     public function update($id)
     {
         if (!logged_in()) {
@@ -186,47 +185,44 @@ class ShopController extends BaseController
                 ]
             ],
             'gambar_produk' => [
-                'rules' => 'uploaded[gambar]|is_image[gambar]|mime_in[gambar,image/jpg,image/jpeg,image/png]',
+                'rules' => 'is_image[gambar]|mime_in[gambar,image/jpg,image/jpeg,image/png]',
                 'errors' => [
-                    'uploaded' => 'Gambar harus diunggah.',
                     'is_image' => 'File harus berupa gambar.',
                     'mime_in' => 'Format gambar harus JPG, JPEG, atau PNG.'
                 ]
             ]
         ];
 
-
         if (!$this->validate($validationRules)) {
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
 
-        // Cek jika ada gambar baru yang diunggah
+        // Ambil inputan dari form dan buat data array awal
+        $data = [
+            'nama_produk'       => $this->request->getPost('nama_produk'),
+            'deskripsi_produk'  => $this->request->getVar('deskripsi_produk', FILTER_UNSAFE_RAW),
+            'harga'             => $this->request->getPost('harga'),
+            'updated_at'        => date('Y-m-d H:i:s'),
+        ];
+
+        // Cek jika ada file gambar baru yang diunggah
         $file = $this->request->getFile('gambar');
         if ($file && $file->isValid() && !$file->hasMoved()) {
             // Hapus gambar lama jika ada
-            if (!empty($shop['gambar']) && file_exists(FCPATH . 'uploads/' . $shop['gambar'])) {
-                unlink(FCPATH . 'uploads/' . $shop['gambar']);
+            if (!empty($shop['gambar_produk']) && file_exists(FCPATH . 'uploads/shop/' . $shop['gambar_produk'])) {
+                unlink(FCPATH . 'uploads/shop/' . $shop['gambar_produk']);
             }
 
-            // Upload gambar baru
+            // Buat nama file acak dan pindahkan file ke folder uploads/shop/
             $fileName = $file->getRandomName();
             $file->move(FCPATH . 'uploads/shop/', $fileName);
-            $data['gambar'] = $fileName;
+            $data['gambar_produk'] = $fileName;
         }
 
-
-        // Ambil inputan dari form
-        $data = [
-            'nama_produk' => $this->request->getPost('nama_produk'),
-            'deskripsi_produk' => $this->request->getVar('deskripsi_produk', FILTER_UNSAFE_RAW),
-            'harga' => $this->request->getPost('harga'),
-            'created_at' => date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s'),
-            'gambar_produk' => $fileName,
-        ];
-
         // Cek apakah ada perubahan data sebelum update
-        if ($shop == $data) {
+        // (hanya membandingkan field yang ada di $data, sehingga jika gambar tidak diubah, field tersebut tidak akan ikut dibandingkan)
+        $changes = array_diff_assoc($data, $shop);
+        if (empty($changes)) {
             return redirect()->back()->with('error', 'Tidak ada perubahan yang dilakukan.');
         }
 

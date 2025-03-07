@@ -128,33 +128,31 @@ class BlogController extends BaseController
         echo view('pages/blog/artikel');
         echo view('layout/footer');
     }
-
-
     public function kategori($kategoriSlug)
     {
         // Ambil artikel berdasarkan kategori
         $artikelByKategori = $this->artikelModel
             ->where('status', 'publish')
-            ->where('kategori', $kategoriSlug) // Filter berdasarkan kategori
+            ->where('kategori', $kategoriSlug)
             ->orderBy('created_at', 'DESC')
             ->findAll();
 
-        // Jika tidak ada artikel dalam kategori ini
-        if (empty($artikelByKategori)) {
-            $message = "Belum ada artikel dalam kategori ini.";
-        } else {
-            $message = null;
-        }
+        // Ambil daftar kategori unik dari database
+        $kategoriList = $this->artikelModel
+            ->select('kategori')
+            ->groupBy('kategori')
+            ->findAll();
 
         $data = [
             'title' => 'Kategori: ' . ucfirst($kategoriSlug),
             'artikel' => $artikelByKategori,
-            'message' => $message,
-            'kontak' => $this->kontakModel->first() // Tambahkan data kontak
+            'kategoriSlug' => $kategoriSlug, // Tambahkan kategori aktif ke view
+            'kategoriList' => $kategoriList, // Kirim daftar kategori
+            'kontak' => $this->kontakModel->first()
         ];
 
         echo view('layout/header', $data);
-        echo view('pages/blog/kategori');
+        echo view('pages/blog/kategori', $data);
         echo view('layout/footer');
     }
 }

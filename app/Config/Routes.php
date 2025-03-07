@@ -39,8 +39,10 @@ $routes->group('', function ($routes) {
     $routes->get('/pages/shop', 'FrontShopController::index');
     $routes->get('/shop', 'FrontShopController::index');
 
-    $routes->get('/(:segment)', 'BlogController::artikel/$1'); // Menampilkan detail artikel
+    $routes->get('/(:segment)', 'BlogController::artikel/$1');
     $routes->get('blog/kategori/(:segment)', 'BlogController::kategori/$1');
+
+    $routes->get('/shop/(:segment)', 'FrontShopController::shop/$1');
 
     $routes->get('/login', 'AuthController::login');
 });

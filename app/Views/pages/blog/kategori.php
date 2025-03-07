@@ -1,35 +1,166 @@
+<style>
+    .card-blog {
+        min-height: 400px;
+        max-height: 400px;
+    }
+
+    .card-img-top {
+        flex-shrink: 0;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .card-body {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .card-title {
+        font-size: 1.2rem;
+        font-weight: bold;
+        line-height: 1.4;
+        height: 3.6rem;
+        /* 1.8rem x 2 baris */
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+
+    .card-text {
+        flex-grow: 1;
+        font-size: 0.9rem;
+        line-height: 1.5;
+        max-height: 5rem;
+        overflow: hidden;
+        word-break: break-word;
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        text-overflow: ellipsis;
+    }
+
+    .card-blog {
+        overflow: hidden;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        border-radius: 10px;
+    }
+
+
+    .card-blog:hover {
+        transform: translateY(-5px) scale(1.03);
+        box-shadow: 0 8px 12px rgba(255, 221, 0, 0.5);
+    }
+
+    .card-blog:hover img {
+        transform: scale(1.05);
+    }
+
+    .card-blog img {
+        transition: transform 0.2s ease;
+        width: 100%;
+    }
+</style>
 <div class="container mt-5">
-    <h1 class="mb-4" data-aos="fade-up" data-aos-duration="1000" style="margin-top: 8rem;"><?= esc($title) ?></h1>
+    <h1 class="text-center mb-4" data-aos="fade-up" data-aos-duration="1000" style="margin-top: 8rem;"><?= esc($title) ?></h1>
 
-    <?php if (!empty($message)) : ?>
-        <div class="alert alert-warning"><?= esc($message) ?></div>
-    <?php endif; ?>
-
-    <div class="row">
-        <?php foreach ($artikel as $item) : ?>
-            <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-duration="300">
-                <div class="card">
-                    <?php if (!empty($item['gambar'])) : ?>
-                        <img src="<?= base_url('uploads/' . esc($item['gambar'])) ?>" class="card-img-top" alt="Gambar Artikel" style="height: 200px; object-fit: cover;">
-                    <?php endif; ?>
-                    <div class="card-body">
-                        <h5 class="card-title"><?= esc($item['judul']) ?></h5>
-                        <p class="card-text"><?= esc(substr($item['konten'], 0, 100)) ?>...</p>
-                        <a href="<?= base_url('blog/' . esc($item['slug'])) ?>" class="btn btn-primary">Baca Selengkapnya</a>
-                    </div>
-                </div>
-            </div>
-        <?php endforeach; ?>
+    <!-- Daftar Kategori -->
+    <div class="d-flex flex-wrap justify-content-center gap-2 mb-4"
+        data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+        <!-- Tombol "Semua" selalu muncul -->
+        <a href="<?= base_url('blog'); ?>" class="btn btn-outline-dark">
+            <i class="fas fa-list"></i> Semua
+        </a>
+        <!-- Jika kategori aktif (disimpan di $kategoriSlug) tidak sama dengan 'berita', tampilkan tombol Berita -->
+        <?php if (!isset($kategoriSlug) || $kategoriSlug != 'berita'): ?>
+            <a href="<?= base_url('blog/kategori/berita'); ?>" class="btn btn-outline-primary">
+                <i class="fas fa-newspaper"></i> Berita
+            </a>
+        <?php endif; ?>
+        <?php if (!isset($kategoriSlug) || $kategoriSlug != 'kompetisi'): ?>
+            <a href="<?= base_url('blog/kategori/kompetisi'); ?>" class="btn btn-outline-success">
+                <i class="fas fa-trophy"></i> Kompetisi
+            </a>
+        <?php endif; ?>
+        <?php if (!isset($kategoriSlug) || $kategoriSlug != 'event'): ?>
+            <a href="<?= base_url('blog/kategori/event'); ?>" class="btn btn-outline-warning">
+                <i class="fas fa-calendar-alt"></i> Event
+            </a>
+        <?php endif; ?>
+        <?php if (!isset($kategoriSlug) || $kategoriSlug != 'belajar'): ?>
+            <a href="<?= base_url('blog/kategori/belajar'); ?>" class="btn btn-outline-info">
+                <i class="fas fa-book"></i> Belajar
+            </a>
+        <?php endif; ?>
+        <?php if (!isset($kategoriSlug) || $kategoriSlug != 'lainnya'): ?>
+            <a href="<?= base_url('blog/kategori/lainnya'); ?>" class="btn btn-outline-secondary">
+                <i class="fas fa-ellipsis-h"></i> Lainnya
+            </a>
+        <?php endif; ?>
     </div>
 
-    <a href="<?= base_url('blog') ?>" class="btn btn-secondary mt-3 mb-5">Kembali ke Blog</a>
+
+    <!-- Form Pencarian -->
+    <div class="mb-4 d-flex align-items-center">
+        <input type="text" id="searchInput" class="form-control" placeholder="Cari berdasarkan judul atau isi konten...">
+        <i class="fas fa-search text-muted ms-2"></i>
+    </div>
+
+    <!-- Daftar Artikel -->
+    <div class="row" id="artikelList">
+        <?php if (!empty($artikel)) : ?>
+            <?php foreach ($artikel as $row) : ?>
+                <div class="col-md-4 col-sm-6 mb-4 artikel-item" data-aos="fade-up" data-aos-duration="300"
+                    data-title="<?= strtolower(esc($row['judul'])); ?>"
+                    data-content="<?= strtolower(strip_tags($row['konten'])); ?>">
+                    <div class="card card-blog shadow-md border-1" style="min-height: 500px;">
+                        <?php if (!empty($row['gambar'])) : ?>
+                            <img src="<?= base_url('uploads/' . esc($row['gambar'])); ?>"
+                                class="card-img-top img-fluid" style="height: 200px; object-fit: cover;"
+                                alt="<?= esc($row['judul']); ?>">
+                        <?php else : ?>
+                            <img src="<?= base_url('uploads/default.jpg'); ?>" class="card-img-top" alt="No Image">
+                        <?php endif; ?>
+
+                        <div class="card-body">
+                            <h5 class="card-title"><?= esc($row['judul']); ?></h5>
+                            <p class="card-text"><?= strip_tags($row['konten']); ?></p>
+                            <a href="<?= base_url('/' . esc($row['slug'])); ?>" class="btn btn-primary">Baca Selengkapnya</a>
+                        </div>
+
+                        <div class="card-footer text-muted text-center">
+                            <small>
+                                <i class="fas fa-folder"></i> <?= esc(ucfirst($row['kategori'])); ?> |
+                                <i class="fas fa-calendar"></i> <?= date('d M Y', strtotime($row['created_at'])); ?>
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        <?php else : ?>
+            <div class="col-12 text-center">
+                <p class="alert alert-warning">Belum ada artikel yang dipublikasikan.</p>
+            </div>
+        <?php endif; ?>
+    </div>
 </div>
-<!-- Tombol WhatsApp & Maps -->
-<div class="floating-buttons">
-    <a target="_blank" href="<?= esc('https://wa.me/' . $kontak['no_hp']) ?>" class="btn-floating btn-whatsapp" title='Hubungi Kami'>
-        <i class="ri-whatsapp-fill"></i>
-    </a>
-    <a target="_blank" href="https://maps.app.goo.gl/Cu246KuzoBk2Dvph8" class="btn-floating btn-shop" title="Shop">
-        <i class="ri-shopping-bag-fill"></i>
-    </a>
-</div>
+
+<script>
+    document.getElementById('searchInput').addEventListener('input', function() {
+        let searchValue = this.value.toLowerCase();
+        let articles = document.querySelectorAll('.artikel-item');
+
+        articles.forEach(article => {
+            let title = article.getAttribute('data-title');
+            let content = article.getAttribute('data-content');
+
+            if (title.includes(searchValue) || content.includes(searchValue)) {
+                article.style.display = 'block';
+            } else {
+                article.style.display = 'none';
+            }
+        });
+    });
+</script>
