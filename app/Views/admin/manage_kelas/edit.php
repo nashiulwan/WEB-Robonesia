@@ -67,8 +67,8 @@
         </div>
 
 
-        <button type="submit" class="btn btn-primary">Update Kelas</button>
-        <a href="<?= base_url('admin/manage_kelas') ?>" class="btn btn-warning" style="margin-left:10px; width:7rem">Kembali</a>
+        <button type="submit" class="btn btn-primary" style="width:7rem">Simpan</button>
+        <a href="<?= base_url('admin/manage_kelas') ?>" class="btn btn-warning" style="width:7rem">Kembali</a>
     </form>
 </div>
 

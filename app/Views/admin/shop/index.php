@@ -8,6 +8,17 @@ function convertOembedToIframe($content)
     return str_replace('[embed]', '<iframe>', str_replace('[/embed]', '</iframe>', $content));
 }
 ?>
+<style>
+    .text-ellipsis {
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal;
+        border: none;
+    }
+</style>
 
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -55,9 +66,16 @@ function convertOembedToIframe($content)
                             <td class="text-break">
                                 <img src="<?= base_url('uploads/shop/' . esc($row['gambar_produk'])); ?>" alt="Gambar Produk" class="img-fluid" width="100">
                             </td>
-                            <td class="text-break"><?= esc($row['nama_produk']); ?></td>
-                            <td class="text-break"><?= esc($row['harga']); ?></td>
-                            <td class="text-break"><?= convertOembedToIframe(html_entity_decode($row['deskripsi_produk'])) ?></td>
+                            <td>
+                                <div class="text-ellipsis"><?= esc($row['nama_produk']); ?> </div>
+                            </td>
+                            <td>
+                                <div class="text-ellipsis"><?= esc($row['harga']); ?></div>
+                            </td>
+                            <td class="text-ellipsis">
+                                <div class="text-ellipsis"> <?= convertOembedToIframe(html_entity_decode($row['deskripsi_produk'])) ?></div>
+
+                            </td>
 
                             <td>
                                 <div class="d-flex flex-wrap gap-2" style="justify-content: space-between;">
@@ -90,62 +108,14 @@ function convertOembedToIframe($content)
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     $(document).ready(function() {
-        // Update role user via AJAX (tetap sama)
-        $(".change-role").on("change", function() {
-            var userId = $(this).data("id");
-            var newRole = $(this).val();
-            var csrfToken = '<?= csrf_token() ?>';
-            var csrfHash = '<?= csrf_hash() ?>';
-
-            $.ajax({
-                url: "<?= base_url('admin/manage_akun/updateRole'); ?>",
-                type: "POST",
-                data: {
-                    id: userId,
-                    role: newRole
-                },
-                headers: {
-                    [csrfToken]: csrfHash
-                },
-                success: function(response) {
-                    if (response.status === 'success') {
-                        alert(response.message);
-                    } else {
-                        alert("Gagal mengubah role.");
-                    }
-                },
-                error: function(xhr, status, error) {
-                    alert("Terjadi kesalahan: " + error);
-                }
-            });
-        });
-
-        // Filter data berdasarkan role saat opsi dropdown diklik
-        $(document).on('click', '.filter-option', function(e) {
-            e.preventDefault();
-            var selectedRole = $(this).data('role'); // "all", "1", "3", "2", atau "0"
-            var newIcon = $(this).find('i').clone();
-            $('#filterRoleButton').html(newIcon);
-
-            $('tbody tr').each(function() {
-                var rowRole = $(this).find('.change-role').val();
-                if (selectedRole === 'all' || rowRole === String(selectedRole)) {
-                    $(this).show();
-                } else {
-                    $(this).hide();
-                }
-            });
-        });
-
         // Fitur pencarian: filter baris tabel berdasarkan username, email, atau fullname
         $("#searchInput").on("keyup", function() {
             var value = $(this).val().toLowerCase();
             $("table tbody tr").each(function() {
-                var username = $(this).find("td:nth-child(2)").text().toLowerCase();
-                var email = $(this).find("td:nth-child(3)").text().toLowerCase();
-                var fullname = $(this).find("td:nth-child(4)").text().toLowerCase();
+                var nama_produk = $(this).find("td:nth-child(3)").text().toLowerCase();
+                var harga_produk = $(this).find("td:nth-child(4)").text().toLowerCase();
 
-                if (username.includes(value) || email.includes(value) || fullname.includes(value)) {
+                if (nama_produk.includes(value) || harga_produk.includes(value)) {
                     $(this).show();
                 } else {
                     $(this).hide();

@@ -7,7 +7,6 @@
   <!-- Form Edit Kelas (termasuk level/sub level dan data gambar) -->
   <form action="<?= base_url('admin/grade_level/update_level/' . $kelas['id']) ?>" method="post" enctype="multipart/form-data">
     <?= csrf_field() ?>
-    <input type="hidden" name="user_id" value="<?= esc($user['id']) ?>">
     <!-- Field Level -->
     <div class="form-group">
       <label for="level">Level</label>
@@ -27,8 +26,8 @@
       <input type="text" name="sub_level" id="sub_level" class="form-control" placeholder="Masukkan sub-level" value="<?= $kelas['sub_level'] ?>">
     </div>
 
-    <button type="submit" class="btn btn-primary">Simpan</button>
-    <a href="<?= base_url('admin/grade_level') ?>" class="btn btn-warning ml-2">Kembali</a>
+    <button type="submit" class="btn btn-primary" style="width:7rem">Simpan</button>
+    <a href="<?= base_url('admin/grade_level') ?>" class="btn btn-warning" style="width:7rem">Kembali</a>
   </form>
 </div>
 

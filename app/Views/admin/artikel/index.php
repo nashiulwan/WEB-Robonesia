@@ -17,7 +17,7 @@
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1 class="h3 text-gray-800"><?= esc($title) ?></h1>
-        <a href="<?= base_url('admin/shop/tambah'); ?>" class="btn btn-primary">Tambahkan Artikel</a>
+        <a href="<?= base_url('admin/artikel/tambah'); ?>" class="btn btn-primary">Tambah Artikel</a>
     </div>
 
     <!-- Tampilkan Flash Message -->

@@ -78,7 +78,7 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary" style="width:7rem">Simpan</button>
-                <a href="<?= base_url('admin/pengaturan/tim') ?>" class="btn btn-warning" style="margin-left:10px; width:7rem">Kembali</a>
+                <a href="<?= base_url('admin/pengaturan/tim') ?>" class="btn btn-warning" style="width:7rem">Kembali</a>
             </form>
         </div>
     </div>

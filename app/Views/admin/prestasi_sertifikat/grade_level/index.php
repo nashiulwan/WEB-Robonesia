@@ -56,9 +56,9 @@
                 <tr>
                     <th style="width: 5%;">No</th>
                     <th style="width: 22%;">Nama Kelas</th>
-                    <th style="width: 10%;">Level</th>
+                    <th style="width: 15%;">Level</th>
                     <th style="width: 10%;">Sub Level</th>
-                    <th style="width: 35%;">Proyek Terbaru</th>
+                    <th style="width: 30%;">Proyek Terbaru</th>
                     <th style="width: 13%;">Aksi</th>
                 </tr>
             </thead>

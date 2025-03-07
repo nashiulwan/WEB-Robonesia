@@ -198,8 +198,8 @@
     <!-- Preview File Baru -->
     <div id="previewContainer" class="mt-3 mb-2"></div>
 
-    <button type="submit" class="btn btn-primary">Update</button>
-    <a href="<?= base_url('admin/sertifikat/akun/' . esc($user['id'])) ?>" class="btn btn-warning">Kembali</a>
+    <button type="submit" class="btn btn-primary" style="width:7rem">Simpan</button>
+    <a href="<?= base_url('admin/sertifikat/akun/' . esc($user['id'])) ?>" class="btn btn-warning" style="width:7rem">Kembali</a>
   </form>
 </div>
 

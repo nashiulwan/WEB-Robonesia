@@ -190,7 +190,7 @@
 
     <!-- Tambah File Baru -->
     <div class="form-group mb-3">
-      <label for="nama_file">Tambah File Baru (opsional)</label>
+      <label for="nama_file">Tambah File Baru</label>
       <input type="file" name="nama_file[]" id="nama_file" class="form-control custom_file" multiple>
       <small>Sertifikat dapat berupa file gambar dan PDF</small>
     </div>
@@ -198,8 +198,8 @@
     <!-- Preview File Baru -->
     <div id="previewContainer" class="mt-3 mb-3"></div>
 
-    <button type="submit" class="btn btn-primary">Update</button>
-    <a href="<?= base_url('admin/sertifikat/kelas/' . esc($kelas)) ?>" class="btn btn-warning">Kembali</a>
+    <button type="submit" class="btn btn-primary" style="width:7rem">Simpan</button>
+    <a href="<?= base_url('admin/sertifikat/kelas/' . esc($kelas)) ?>" class="btn btn-warning" style="width:7rem">Kembali</a>
   </form>
 </div>
 

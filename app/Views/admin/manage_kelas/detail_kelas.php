@@ -53,7 +53,7 @@
     <!-- Daftar Anggota Kelas -->
     <div class="d-flex justify-content-between align-items-center mb-3" style="padding-top: 1rem;">
         <h4 class="mb-2">Daftar Anggota Kelas</h4>
-        <a href="<?= base_url('admin/manage_kelas/kelola_anggota/tambah/' . esc($class['id'])); ?>" class="btn btn-primary">Tambahkan Anggota</a>
+        <a href="<?= base_url('admin/manage_kelas/kelola_anggota/tambah/' . esc($class['id'])); ?>" class="btn btn-primary">Tambah Anggota</a>
     </div>
 
     <!-- Search Box -->

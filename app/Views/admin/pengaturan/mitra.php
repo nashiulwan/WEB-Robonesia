@@ -8,7 +8,7 @@
     <!-- Button Tambah Partner -->
     <div class="mb-4 text-end">
         <a href="<?= base_url('admin/pengaturan/mitra/tambah'); ?>" class="btn btn-primary">
-            <i class="fas fa-plus"></i> Tambah Partner Baru
+            Tambah Partner Baru
         </a>
     </div>
 
