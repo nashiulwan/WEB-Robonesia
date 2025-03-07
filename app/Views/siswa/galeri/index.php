@@ -9,7 +9,7 @@
     <?php if (!empty($galeri)) : ?>
         <?php foreach ($galeri as $level => $subLevels) : ?>
             <div class="mb-3">
-                <button class="btn btn-primary w-100 text-start level-toggle" data-bs-toggle="collapse" data-bs-target="#level-<?= esc($level); ?>">
+                <button class="btn bg-primary bg-success w-100 text-start level-toggle" data-bs-toggle="collapse" data-bs-target="#level-<?= esc($level); ?>" style="color: white;">
                     📁 Level <?= esc($level); ?>
                 </button>
 
@@ -17,7 +17,7 @@
                     <!-- Looping Sub-Level -->
                     <?php foreach ($subLevels as $subLevel => $images) : ?>
                         <div class="mb-2">
-                            <button class="btn btn-secondary w-100 text-start sublevel-toggle" data-bs-toggle="collapse" data-bs-target="#sublevel-<?= esc($level) . '-' . esc($subLevel); ?>">
+                            <button class="btn btn-secondary bg-warning w-100 text-start sublevel-toggle" data-bs-toggle="collapse" data-bs-target="#sublevel-<?= esc($level) . '-' . esc($subLevel); ?>">
                                 📂 <?= esc($subLevel ?: 'Tanpa Sub-Level'); ?>
                             </button>
 
@@ -41,7 +41,7 @@
                                     </div>
                                 </div>
 
-                                <a href="<?= base_url('siswa/galeri/detail/' . esc($level) . '/' . esc($subLevel)); ?>" class="btn btn-link mt-2">Lihat Selengkapnya →</a>
+                                <a href="<?= base_url('siswa/galeri/detail/' . esc($level) . '/' . esc($subLevel)); ?>" class="btn bg-success mt-2" style="color: white;">Lihat Selengkapnya →</a>
                             </div>
                         </div>
                     <?php endforeach; ?>

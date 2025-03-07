@@ -227,7 +227,11 @@ $routes->group('siswa', ['filter' => 'auth'], function ($routes) {
     $routes->get('pengumuman/sekolah', 'SiswaController::pengumumanSekolah', ['filter' => 'role:siswa']);
     $routes->get('pengumuman/event', 'SiswaController::pengumumanEvent', ['filter' => 'role:siswa']);
 
+    // Galeri
     $routes->get('galeri', 'SiswaController::galeriKegiatan', ['filter' => 'role:siswa']);
+    $routes->get('galeri/detail/(:segment)', 'SiswaController::galeriDetail/$1', ['filter' => 'role:siswa']);
+    $routes->get('galeri/detail/(:segment)/(:segment)', 'SiswaController::galeriDetail/$1/$2', ['filter' => 'role:siswa']);
+
 
     $routes->get('hubungi', 'SiswaController::hubungi', ['filter' => 'role:siswa']);
 });

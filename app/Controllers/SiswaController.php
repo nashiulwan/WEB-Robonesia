@@ -123,7 +123,29 @@ class SiswaController extends BaseController
             'galeri' => $galeriData
         ];
 
-        $this->renderViewDashboardSiswa('siswa/galeri_kegiatan', $data);
+        $this->renderViewDashboardSiswa('siswa/galeri/index', $data);
+    }
+
+    public function galeriDetail($level, $subLevel = null)
+    {
+        $galeriModel = new GaleriSiswaModel();
+        $userId = $this->user->id;
+
+        // Ambil gambar berdasarkan level dan sublevel (jika ada)
+        if ($subLevel) {
+            $galeri = $galeriModel->where('level', $level)->where('sub_level', $subLevel)->findAll();
+        } else {
+            $galeri = $galeriModel->where('level', $level)->findAll();
+        }
+
+        $data = [
+            'title' => 'Galeri Kegiatan',
+            'galeri' => $galeri,
+            'level' => $level,
+            'subLevel' => $subLevel,
+        ];
+
+        $this->renderViewDashboardSiswa('siswa/galeri/detail', $data);
     }
 
 
