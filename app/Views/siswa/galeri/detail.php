@@ -3,7 +3,7 @@
 <?= $this->section('page-content'); ?>
 
 <div class="container mt-4">
-    <h2 class="text-center mb-4">
+    <h2 class="text-center mb-4 fw-bold">
         <?= esc($subLevel ? "Sublevel $subLevel" : "Level $level"); ?>
     </h2>
 
@@ -16,7 +16,7 @@
                     $imgDesc = esc($g['deskripsi']);
                 ?>
                 <div class="col-md-4 col-sm-6 mb-3">
-                    <div class="card shadow-sm">
+                    <div class="card shadow-lg">
                         <img src="<?= $imgPath; ?>" class="card-img-top preview-image"
                             data-img="<?= $imgPath; ?>" 
                             data-title="<?= $imgTitle; ?>" 

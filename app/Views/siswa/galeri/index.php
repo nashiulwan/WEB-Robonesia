@@ -9,19 +9,19 @@
     <?php if (!empty($galeri)) : ?>
         <?php foreach ($galeri as $level => $subLevels) : ?>
             <div class="mb-3">
-                <button class="btn bg-primary bg-success w-100 text-start level-toggle" data-bs-toggle="collapse" data-bs-target="#level-<?= esc($level); ?>" style="color: white;">
+                <button class="btn bg-primary bg-success w-100 text-start level-toggle" style="color: white;">
                     📁 Level <?= esc($level); ?>
                 </button>
 
-                <div id="level-<?= esc($level); ?>" class="collapse mt-2">
+                <div id="level-<?= esc($level); ?>" class="mt-2">
                     <!-- Looping Sub-Level -->
                     <?php foreach ($subLevels as $subLevel => $images) : ?>
                         <div class="mb-2">
-                            <button class="btn btn-secondary bg-warning w-100 text-start sublevel-toggle" data-bs-toggle="collapse" data-bs-target="#sublevel-<?= esc($level) . '-' . esc($subLevel); ?>">
+                            <button class="btn btn-secondary bg-warning w-100 text-start">
                                 📂 <?= esc($subLevel ?: 'Tanpa Sub-Level'); ?>
                             </button>
 
-                            <div id="sublevel-<?= esc($level) . '-' . esc($subLevel); ?>" class="collapse mt-2">
+                            <div id="sublevel-<?= esc($level) . '-' . esc($subLevel); ?>" class="mt-2">
                                 <!-- Swiper Gallery -->
                                 <div class="swiper-container">
                                     <div class="swiper-wrapper">
