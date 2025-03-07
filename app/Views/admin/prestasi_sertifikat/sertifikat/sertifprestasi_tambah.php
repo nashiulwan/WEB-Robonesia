@@ -143,8 +143,8 @@
       <textarea name="deskripsi" id="deskripsi" class="form-control" rows="3" placeholder="Masukkan deskripsi sertifikat" required><?= old('deskripsi') ?></textarea>
     </div>
 
-    <button type="submit" class="btn btn-primary">Simpan</button>
-    <a href="<?= base_url('admin/sertifikat/prestasi/' . esc($prestasi['id'])) ?>" class="btn btn-warning">Kembali</a>
+    <button type="submit" class="btn btn-primary" style="width:7rem">Tambah</button>
+    <a href="<?= base_url('admin/sertifikat/prestasi/' . esc($prestasi['id'])) ?>" class="btn btn-warning" style="width:7rem">Kembali</a>
   </form>
 </div>
 

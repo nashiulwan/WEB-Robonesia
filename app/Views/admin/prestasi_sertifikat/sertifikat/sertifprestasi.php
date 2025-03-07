@@ -39,7 +39,7 @@
       <i class="fas fa-search text-muted ms-2" id="iconSearch" style="margin-right:1rem"></i>
     </div>
     <!-- Tombol di sebelah kanan -->
-    <a href="<?= base_url('admin/sertifikat/'); ?>" class="btn btn-warning" id="tambahPrestasiBtn">Kembali</a>
+    <a href="<?= base_url('admin/sertifikat/'); ?>" class="btn btn-warning" id="tambahPrestasiBtn" style="width:7rem">Kembali</a>
   </div>
 
   <div class="table-responsive">

@@ -33,7 +33,7 @@
             <div id="collapseManage_akun" class="collapse" aria-labelledby="headingManage_akun" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item" href="<?= base_url('admin/manage_akun'); ?>">Daftar Akun</a>
-                    <a class="collapse-item" href="<?= base_url('admin/manage_akun/tambah'); ?>">Tambahkan Akun</a>
+                    <a class="collapse-item" href="<?= base_url('admin/manage_akun/tambah'); ?>">Tambah Akun</a>
                 </div>
             </div>
         </li>
@@ -47,7 +47,7 @@
             <div id="collapseArtikel" class="collapse" aria-labelledby="headingArtikel" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item" href="<?= base_url('admin/artikel'); ?>">Semua Artikel</a>
-                    <a class="collapse-item" href="<?= base_url('admin/artikel/tambah'); ?>">Tambahkan Artikel</a>
+                    <a class="collapse-item" href="<?= base_url('admin/artikel/tambah'); ?>">Tambah Artikel</a>
                 </div>
             </div>
         </li>

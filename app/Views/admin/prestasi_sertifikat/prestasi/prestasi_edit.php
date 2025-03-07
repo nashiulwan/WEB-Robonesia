@@ -164,8 +164,8 @@
       </div>
     </div>
 
-    <button type="submit" class="btn btn-primary">Simpan</button>
-    <a href="<?= base_url('admin/prestasi') ?>" class="btn btn-warning">Kembali</a>
+    <button type="submit" class="btn btn-primary" style="width:7rem">Simpan</button>
+    <a href="<?= base_url('admin/prestasi') ?>" class="btn btn-warning" style="width:7rem">Kembali</a>
   </form>
 </div>
 

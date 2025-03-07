@@ -20,7 +20,7 @@
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1 class="h3 text-gray-800"><?= esc($title) ?></h1>
-        <a href="<?= base_url('admin/manage_akun/tambah'); ?>" class="btn btn-primary">Tambahkan Akun</a>
+        <a href="<?= base_url('admin/manage_akun/tambah'); ?>" class="btn btn-primary">Tambah Akun</a>
     </div>
 
     <!-- Tampilkan Flash Message -->

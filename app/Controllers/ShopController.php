@@ -12,7 +12,8 @@ class ShopController extends BaseController
         $this->shopModel = new ShopModel();
     }
 
-    public function index() {
+    public function index()
+    {
 
         if (!logged_in()) {
             return redirect()->to('/login');
@@ -139,8 +140,9 @@ class ShopController extends BaseController
         $shopModel = new ShopModel();
         $shop = $shopModel->find($id);
 
+
         if (empty($shop)) {
-            throw \CodeIgniter\Exceptions\PageNotFoshopModel::forshopModel();
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
 
         $data = [
@@ -235,9 +237,4 @@ class ShopController extends BaseController
             return redirect()->back()->withInput()->with('error', 'Gagal menyimpan Produk, silakan coba lagi.');
         }
     }
-
-
 }
-
-
-    

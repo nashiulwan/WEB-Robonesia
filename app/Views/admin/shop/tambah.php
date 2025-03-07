@@ -48,8 +48,8 @@
 
         <div class="form-group">
             <label for="harga">Harga Produk</label>
-            <input type="text" name="harga" id="judul" class="form-control" placeholder="Masukkan harga produk" required>
-            
+            <input type="text" name="harga" id="harga" class="form-control" placeholder="Masukkan harga produk" required>
+
         </div>
 
         <div class="mb-3">
@@ -77,8 +77,8 @@
             <textarea name="deskripsi_produk" id="konten" class="form-control" rows="10" placeholder="Tulis deskripsi produk..."></textarea>
         </div>
 
-        <button type="submit" class="btn btn-primary">Tambah Produk</button>
-        <a href="<?= base_url('admin/artikel') ?>" class="btn btn-warning" style="margin-left:10px; width:7rem">Kembali</a>
+        <button type="submit" class="btn btn-primary" style="width:7rem">Tambah</button>
+        <a href="<?= base_url('admin/artikel') ?>" class="btn btn-warning" style="width:7rem">Kembali</a>
     </form>
 
 </div>

@@ -126,8 +126,8 @@
             </div>
         </div>
 
-        <button type="submit" class="btn btn-primary">Simpan</button>
-        <a href="<?= base_url('admin/galeri_siswa') ?>" class="btn btn-warning" style="margin-left:10px; width:7rem">Kembali</a>
+        <button type="submit" class="btn btn-primary" style="width:7rem">Tambah</button>
+        <a href="<?= base_url('admin/galeri_siswa') ?>" class="btn btn-warning" style="width:7rem">Kembali</a>
     </form>
 </div>
 <!-- Sertakan Cropper JS dari CDN -->

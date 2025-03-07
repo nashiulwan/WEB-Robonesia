@@ -197,7 +197,7 @@
 
         <br><br>
         <button type="submit" class="btn btn-primary" style="width:7rem">Simpan</button>
-        <a href="<?= base_url('admin/profil') ?>" class="btn btn-warning ms-2" style="margin-left:10px; width:7rem">Batal</a>
+        <a href="<?= base_url('admin/profil') ?>" class="btn btn-warning ms-2" style="width:7rem">Kembali</a>
     </form>
 </div>
 

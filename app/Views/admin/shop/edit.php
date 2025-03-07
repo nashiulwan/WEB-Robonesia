@@ -38,7 +38,7 @@
     <?php endif; ?>
 
     <!-- Form Tambah Artikel -->
-    <form action="<?= base_url('admin/shop/update/'. esc($shop['id'])) ?>" method="post" enctype="multipart/form-data">
+    <form action="<?= base_url('admin/shop/update/' . esc($shop['id'])) ?>" method="post" enctype="multipart/form-data">
         <?= csrf_field() ?>
 
         <div class="form-group">
@@ -49,7 +49,7 @@
         <div class="form-group">
             <label for="harga">Harga Produk</label>
             <input type="text" value="<?= old('harga', $shop['harga']) ?>" name="harga" id="judul" class="form-control" placeholder="Masukkan harga produk" required>
-            
+
         </div>
 
         <div class="mb-3">
@@ -57,11 +57,11 @@
             <input type="file" value="<?= old('gambar_produk', $shop['gambar_produk']) ?>" class="form-control custom_file" id="gambar" name="gambar" accept="image/*">
         </div>
         <?php if (!empty($shop['gambar_produk'])): ?>
-                <div class="me-3 shop-image-now">
-                    <img src="<?= base_url('/uploads/shop/' . $shop['gambar_produk']) ?>" alt="Gambar Produk" width="200" class="img-thumbnail">
-                    <label for="gambar_produk" class="form-label form-label-now-img">Foto Produk Sekarang</label>
-                </div>
-            <?php endif; ?>
+            <div class="me-3 shop-image-now">
+                <img src="<?= base_url('/uploads/shop/' . $shop['gambar_produk']) ?>" alt="Gambar Produk" width="200" class="img-thumbnail">
+                <label for="gambar_produk" class="form-label form-label-now-img">Foto Produk Sekarang</label>
+            </div>
+        <?php endif; ?>
 
         <!-- Preview Gambar Tercrop yang ditampilkan di bawah input file -->
         <div id="cropped-preview-container" style="display: none; margin-bottom: 1rem;">
@@ -83,8 +83,8 @@
             <textarea name="deskripsi_produk" value="> <?= esc($shop['deskripsi_produk']) ?>" id="konten" class="form-control" rows="10" placeholder="Tulis deskripsi produk..."><?= esc($shop['deskripsi_produk']) ?></textarea>
         </div>
 
-        <button type="submit" class="btn btn-primary">Simpan</button>
-        <a href="<?= base_url('admin/artikel') ?>" class="btn btn-warning" style="margin-left:10px; width:7rem">Kembali</a>
+        <button type="submit" class="btn btn-primary" style="width:7rem">Simpan</button>
+        <a href="<?= base_url('admin/artikel') ?>" class="btn btn-warning" style="width:7rem">Kembali</a>
     </form>
 
 </div>

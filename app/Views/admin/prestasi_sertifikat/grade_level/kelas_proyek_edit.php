@@ -82,8 +82,8 @@
       <textarea name="deskripsi" id="deskripsi" rows="3" class="form-control" placeholder="Masukkan deskripsi proyek" required></textarea>
     </div>
 
-    <button type="submit" class="btn btn-primary mt-3">Simpan Proyek</button>
-    <a href="<?= base_url('admin/grade_level/proyek/' . $kelas['id']) ?>" class="btn btn-warning mt-3">Kembali</a>
+    <button type="submit" class="btn btn-primary mt-3">Simpan</button>
+    <a href="<?= base_url('admin/grade_level/proyek/' . $kelas['id']) ?>" class="btn btn-warning mt-3" style="width:7rem">Kembali</a>
   </form>
 </div>
 

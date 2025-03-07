@@ -214,7 +214,7 @@
           ?>
         </div>
       </div>
-      <a href="<?= base_url('admin/sertifikat') ?>" class="btn btn-warning">Kembali</a>
+      <a href="<?= base_url('admin/sertifikat') ?>" class="btn btn-warning" style="width:7rem">Kembali</a>
     </div>
   </div>
 </div>

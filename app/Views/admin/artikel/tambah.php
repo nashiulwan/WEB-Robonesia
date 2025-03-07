@@ -80,8 +80,8 @@
             <textarea name="konten" id="konten" class="form-control" rows="10" placeholder="Tulis konten artikel..."></textarea>
         </div>
 
-        <button type="submit" class="btn btn-primary">Tambah Artikel</button>
-        <a href="<?= base_url('admin/artikel') ?>" class="btn btn-warning" style="margin-left:10px; width:7rem">Kembali</a>
+        <button type="submit" class="btn btn-primary" style="width:7rem">Tambah</button>
+        <a href="<?= base_url('admin/artikel') ?>" class="btn btn-warning" style="width:7rem">Kembali</a>
     </form>
 
 </div>

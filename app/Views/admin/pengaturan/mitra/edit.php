@@ -69,13 +69,13 @@
         <div id="image-preview-container" class="image-preview-cut-save-group" style="display: none;width: 400px;">
             <img id="image-preview" class="image-preview-cut-save">
             <div id="crop-buttons-container" style="display: flex; gap: 1rem; margin-top: 1rem; margin-bottom: 2rem">
-                    <button type="button" id="crop-button" class="btn btn-primary">Pangkas & Simpan</button>
-                    <button type="button" id="cancel-crop-button" class="btn btn-warning">Batal Pangkas</button>
+                <button type="button" id="crop-button" class="btn btn-primary">Pangkas & Simpan</button>
+                <button type="button" id="cancel-crop-button" class="btn btn-warning">Batal Pangkas</button>
             </div>
         </div>
 
-        <button type="submit" class="btn btn-primary">Update Partner</button>
-        <a href="<?= base_url('admin/pengaturan/mitra') ?>" class="btn btn-secondary">Batal</a>
+        <button type="submit" class="btn btn-primary" style="width:7rem">Simpan</button>
+        <a href="<?= base_url('admin/pengaturan/mitra') ?>" class="btn btn-secondary" style="width:7rem">Kembali</a>
     </form>
 </div>
 

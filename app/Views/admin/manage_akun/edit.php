@@ -170,8 +170,8 @@
             <label for="confirm_password">Konfirmasi Kata Sandi</label>
             <input type="password" name="confirm_password" id="confirm_password" class="form-control" placeholder="Masukkan kembali kata sandi baru" autocomplete="new-password">
         </div>
-        <button type="submit" class="btn btn-primary">Update Akun</button>
-        <a href="<?= base_url('admin/manage_akun') ?>" class="btn btn-warning" style="margin-left:10px; width:7rem">Kembali</a>
+        <button type="submit" class="btn btn-primary" style="width:7rem">Simpan</button>
+        <a href="<?= base_url('admin/manage_akun') ?>" class="btn btn-warning" style="width:7rem">Kembali</a>
 
     </form>
 </div>
