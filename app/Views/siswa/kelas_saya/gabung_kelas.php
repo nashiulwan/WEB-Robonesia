@@ -2,28 +2,24 @@
 
 <?= $this->section('content') ?>
 <style>
-  /* Untuk kelas anak-anak dengan warna lebih tajam */
+  /* Untuk kelas dengan warna lebih tajam */
   .border-left-kelas {
     border-left: 5px solid #2979FF;
-    /* Biru Elektrik */
   }
 
   .border-left-kelas-basic {
     border-left: 5px solid #2979FF;
-    /* Biru Elektrik */
   }
 
   .border-left-kelas-intermediate {
     border-left: 5px solid #FFD600;
-    /* Kuning Neon */
   }
 
   .border-left-kelas-advance {
     border-left: 5px solid #D50000;
-    /* Merah Terang */
   }
 
-  /* Top corner untuk label anak-anak dengan warna lebih tajam */
+  /* Top corner untuk label kelas */
   .toptight-corner-kelas {
     position: absolute;
     top: 0;
@@ -100,7 +96,6 @@
     height: 60px;
     background-repeat: repeat;
     background-size: 16px 16px;
-    /* Sesuaikan dengan ukuran asli SVG */
     transform: rotate(-90deg);
     background-image: url("data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 16 16'><path fill='%23FFD600' d='M6.7 16l9.3-9.3v-1.4l-10.7 10.7z'/><path fill='%23FFD600' d='M9.7 16l6.3-6.3v-1.4l-7.7 7.7z'/><path fill='%23FFD600' d='M12.7 16l3.3-3.3v-1.4l-4.7 4.7z'/><path fill='%23FFD600' d='M15.7 16l0.3-0.3v-1.4l-1.7 1.7z'/></svg>");
   }
@@ -121,7 +116,6 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    margin-bottom: 1rem;
   }
 
   .card-body {
@@ -139,7 +133,10 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     height: min-content;
-    gap: 1rem;
+  }
+
+  .container-card {
+    margin-right: 1rem;
   }
 
   @media (max-width: 1200px) {
@@ -157,6 +154,7 @@
   @media (max-width: 576px) {
     .card-deck {
       grid-template-columns: 1fr;
+      gap: 0.5rem;
     }
 
     .container-card {
@@ -167,8 +165,7 @@
   .card-content {
     font-size: 0.875rem;
     color: #555;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+    margin: 1rem 0;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
@@ -179,7 +176,7 @@
   .card-footer {
     display: flex;
     justify-content: flex-end;
-    bottom: 0;
+    background-color: white;
   }
 
   .card-text {
@@ -187,174 +184,100 @@
     text-overflow: ellipsis;
     white-space: normal;
     display: -webkit-box;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     z-index: 9;
-  }
-
-  @media (max-width: 760px) {
-    .d-flex {
-      justify-content: flex-start;
-      width: 100%;
-    }
-
-    .title {
-      text-align: left;
-    }
   }
 
   .card:hover {
     transform: translateY(-5px);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-    text-decoration: none;
   }
 
   .card a {
     text-decoration: none;
   }
-
-  .card:hover a {
-    text-decoration: none;
-  }
 </style>
 
 <div class="container-fluid">
+  <!-- Judul Halaman -->
   <div class="d-flex flex-column flex-md-row justify-content-between mb-3 title">
     <h1 class="h3 text-gray-800"><?= esc($title) ?></h1>
-    <div class="d-flex align-items-center w-100 w-md-auto mt-3 mt-md-0" style="max-width: 320px;">
-      <input type="text" id="searchInput" class="form-control" placeholder="Cari kelas berdasarkan nama" style="flex-grow: 1;">
-      <i class="fas fa-search text-muted" style="margin-left: 0.5rem;"></i>
-    </div>
   </div>
 
-  <!-- Show Flash Messages -->
-  <?php if (session()->getFlashdata('success')) : ?>
-    <div class="alert alert-success"><?= esc(session()->getFlashdata('success')) ?></div>
-  <?php endif; ?>
-  <?php if (session()->getFlashdata('error')) : ?>
-    <div class="alert alert-danger"><?= esc(session()->getFlashdata('error')) ?></div>
+  <!-- Form Pencarian Kode Kelas -->
+  <form method="GET" action="<?= base_url('siswa/kelas/search') ?>">
+    <div class="input-group">
+      <input type="text" name="kode" id="kodeKelas" class="form-control" placeholder="Masukkan kode kelas" value="<?= isset($_GET['kode']) ? esc($_GET['kode']) : '' ?>">
+      <div class="input-group-append">
+        <button class="btn btn-primary" type="submit">
+          <i class="fas fa-search"></i> Cari kelas
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <!-- Tampilkan Flash Message (hanya setelah pencarian dilakukan) -->
+  <?php if (isset($_GET['kode'])): ?>
+    <?php if (session()->getFlashdata('success')): ?>
+      <div class="alert alert-success mt-3"><?= esc(session()->getFlashdata('success')) ?></div>
+    <?php endif; ?>
+    <?php if (session()->getFlashdata('error')): ?>
+      <div class="alert alert-danger mt-3"><?= esc(session()->getFlashdata('error')) ?></div>
+    <?php endif; ?>
   <?php endif; ?>
 
-  <!-- Card Grid for Displaying Classes -->
-  <div class="container-card">
-    <div class="card-deck">
-      <?php if (!empty($kelasSaya)): ?>
-        <?php foreach ($kelasSaya as $kelas): ?>
+  <?php if (isset($_GET['kode'])): ?>
+    <?php if (!empty($kelas)): ?>
+      <div class="container-card mt-3">
+        <div class="card-deck ">
           <?php
-          // Ambil nilai grade level dan tentukan warna border-nya
+          // Tentukan warna berdasarkan level kelas
           $grade = strtolower($kelas['level'] ?? '');
           switch ($grade) {
             case 'basic':
               $borderColor = 'border-left-kelas-basic';
-              break;
-            case 'intermediate':
-              $borderColor = 'border-left-kelas-intermediate';
-              break;
-            case 'advance':
-              $borderColor = 'border-left-kelas-advance';
-              break;
-            default:
-              $borderColor = 'border-left-kelas';
-              break;
-          }
-          switch ($grade) {
-            case 'basic':
               $cornerColor = 'toptight-corner-kelas-basic';
-              break;
-            case 'intermediate':
-              $cornerColor = 'toptight-corner-kelas-intermediate';
-              break;
-            case 'advance':
-              $cornerColor = 'toptight-corner-kelas-advance';
-              break;
-            default:
-              $cornerColor = 'toptight-corner-kelas';
-              break;
-          }
-          switch ($grade) {
-            case 'basic':
               $cornerColorBack = 'toptightback-corner-kelas-basic';
               break;
             case 'intermediate':
+              $borderColor = 'border-left-kelas-intermediate';
+              $cornerColor = 'toptight-corner-kelas-intermediate';
               $cornerColorBack = 'toptightback-corner-kelas-intermediate';
               break;
             case 'advance':
+              $borderColor = 'border-left-kelas-advance';
+              $cornerColor = 'toptight-corner-kelas-advance';
               $cornerColorBack = 'toptightback-corner-kelas-advance';
               break;
             default:
+              $borderColor = 'border-left-kelas';
+              $cornerColor = 'toptight-corner-kelas';
               $cornerColorBack = 'toptightback-corner-kelas';
               break;
           }
-
           ?>
-
-          <div class="card border-left-kelas shadow mb-2 <?= $borderColor; ?> " style="position: relative; ">
-            <div class="<?= $cornerColorBack; ?>" style="position: absolute; top: 0; right: 0; width: 45px; height: 45px; "></div>
+          <div class="card shadow mb-2 <?= $borderColor; ?>" style="position: relative;">
+            <div class="<?= $cornerColorBack; ?>" style="position: absolute; top: 0; right: 0; width: 45px; height: 45px;"></div>
             <div class="<?= $cornerColor; ?>" style="position: absolute; top: 0; right: 0; width: 50px; height: 50px;"></div>
-            <!-- 
-                        <?php if (isset($kelas['sub_level']) && $kelas['sub_level'] > 0): ?>
-                            <div class="star-kelas">
-                                <?php for ($i = 0; $i < (int)$kelas['sub_level']; $i++): ?>
-                                    <svg fill="#ffd700" width="15px" height="15px" viewBox="0 0 24 24" class="icon star-icon">
-                                        <path d="M22,9.81a1,1,0,0,0-.83-.69l-5.7-.78L12.88,3.53a1,1,0,0,0-1.76,0L8.57,8.34l-5.7.78a1,1,0,0,0-.82.69,1,1,0,0,0,.28,1l4.09,3.73-1,5.24A1,1,0,0,0,6.88,20.9L12,18.38l5.12,2.52a1,1,0,0,0,.44.1,1,1,0,0,0,1-1.18l-1-5.24,4.09-3.73A1,1,0,0,0,22,9.81Z"></path>
-                                    </svg>
-                                <?php endfor; ?>
-                            </div>
-                        <?php endif; ?> -->
-
-            <div class=" card-body shadow d-flex flex-column py-1">
-              <a href="<?= base_url('siswa/kelas/detail/' . esc($kelas['id'])); ?>" class="stretched-link">
-
-                <div class="card-grow card-content">
-                  <h4 class="card-title font-weight-bold"><?= esc($kelas['nama_kelas']); ?></h4>
-                  <h6 class="card-subtitle mb-2 text-muted" style="margin-top: 10px;"><?= esc($kelas['kode_kelas']); ?></h6>
-                  <!-- Tambahan ikon bintang berdasarkan sub_level -->
-                  <?php if (isset($kelas['sub_level']) && $kelas['sub_level'] > 0): ?>
-                    <div class="star-kelas">
-                      <?php for ($i = 0; $i < (int)$kelas['sub_level']; $i++): ?>
-                        <svg fill="#ffd700" width="15px" height="15px" style="margin-right: -3px; margin-top:-1rem" viewBox="0 0 24 24" class="icon star-icon">
-                          <path d="M22,9.81a1,1,0,0,0-.83-.69l-5.7-.78L12.88,3.53a1,1,0,0,0-1.76,0L8.57,8.34l-5.7.78a1,1,0,0,0-.82.69,1,1,0,0,0,.28,1l4.09,3.73-1,5.24A1,1,0,0,0,6.88,20.9L12,18.38l5.12,2.52a1,1,0,0,0,.44.1,1,1,0,0,0,1-1.18l-1-5.24,4.09-3.73A1,1,0,0,0,22,9.81Z"></path>
-                        </svg>
-                      <?php endfor; ?>
-                    </div>
-                  <?php endif; ?>
-                  <p class="card-text"><?= esc($kelas['deskripsi']); ?></p>
-                </div>
+            <div class="card-body shadow d-flex flex-column py-1">
+              <div class="card-content">
+                <h4 class="card-title font-weight-bold"><?= esc($kelas['nama_kelas']) ?></h4>
+                <h6 class="card-subtitle mb-2 text-muted" style="margin-top: 10px;"><?= esc($kelas['kode_kelas']) ?></h6>
+                <p class="card-text"><?= esc($kelas['deskripsi']) ?></p>
+              </div>
+            </div>
+            <div class="card-footer p-0 d-flex justify-content-end">
+              <a href="<?= base_url('siswa/kelas/gabung/' . esc($kelas['id']) . '/' . esc($userId)) ?>" class="btn btn-primary m-2">
+                Gabung Kelas
               </a>
             </div>
-            <div class="card-footer p-0 d-flex justify-content-between align-items-center" style="background-color: white; margin-top:-1rem">
-
-              <small class="text-muted">
-              </small>
-              <small class="text-muted" style="margin-right: 1rem; margin-bottom: 5px;; margin-top: 5px;">
-                <?= esc($kelas['level']) ?> - <?= esc($kelas['sub_level']) ?>
-              </small>
-            </div>
           </div>
-        <?php endforeach; ?>
-      <?php else: ?>
-        <div class="alert alert-warning text-center">Anda belum bergabung di kelas manapun</div>
-      <?php endif; ?>
-    </div>
-  </div>
+        </div>
+      </div>
+    <?php else: ?>
+    <?php endif; ?>
+  <?php endif; ?>
 </div>
-<script>
-  // Ambil elemen input pencarian dan kartu
-  const searchInput = document.getElementById('searchInput');
-  const cards = document.querySelectorAll('.card');
-
-  // Fungsi untuk memfilter kelas
-  searchInput.addEventListener('input', function() {
-    const searchTerm = searchInput.value.toLowerCase();
-    cards.forEach(function(card) {
-      const className = card.querySelector('.card-title').textContent.toLowerCase();
-      if (className.includes(searchTerm)) {
-        card.style.removeProperty('display');
-      } else {
-        card.style.display = 'none';
-      }
-    });
-  });
-</script>
 
 <?= $this->endSection() ?>

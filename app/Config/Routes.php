@@ -219,6 +219,13 @@ $routes->group('siswa', ['filter' => 'auth'], function ($routes) {
     $routes->get('profil/edit', 'SiswaProfilController::edit', ['filter' => 'role:siswa']);
     $routes->post('profil/update', 'SiswaProfilController::update', ['filter' => 'role:siswa']);
 
+    $routes->get('kelas', 'SiswaController::kelasSaya', ['filter' => 'role:siswa']);
+    $routes->get('kelas/detail/(:num)', 'SiswaController::kelasSayaDetail/$1', ['filter' => 'role:siswa']);
+    $routes->get('gabung-kelas', 'SiswaController::gabungKelas', ['filter' => 'role:siswa']);
+    $routes->get('kelas/search', 'SiswaController::kelasSearch', ['filter' => 'role:siswa']);
+    $routes->get('kelas/gabung/(:num)/(:num)', 'SiswaController::kelasGabung/$1/$2', ['filter' => 'role:siswa']);
+    $routes->post('kelas/keluar/(:num)/(:num)', 'SiswaController::kelasKeluar/$1/$2', ['filter' => 'role:siswa']);
+
     $routes->get('project-dan-nilai', 'SiswaController::projectNilai', ['filter' => 'role:siswa']);
 
     $routes->get('sertifikat', 'SiswaController::sertifikat', ['filter' => 'role:siswa']);
