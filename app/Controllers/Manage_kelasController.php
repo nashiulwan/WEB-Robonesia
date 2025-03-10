@@ -20,7 +20,7 @@ class Manage_kelasController extends BaseController
     }
 
     // Daftar Kelas
-    public function index()
+   public function index()
     {
         if (!logged_in()) {
             return redirect()->to('/login');
@@ -409,5 +409,5 @@ class Manage_kelasController extends BaseController
         return $this->db->table('kelas_anggota')
             ->where(['kelas_id' => $kelas_id, 'user_id' => $user_id])
             ->delete();
-    }
+    } 
 }
