@@ -57,10 +57,10 @@ $routes->group('auth', function ($routes) {
 
 $routes->group('admin', ['filter' => 'auth'], function ($routes) {
     // Routes untuk admin area (protected dengan filter auth)
-    $routes->get('dashboard', 'GuruController::dashboard', ['filter' => 'role:admin']);
-    $routes->get('pengguna', 'GuruController::pengguna', ['filter' => 'role:admin']);
-    $routes->get('pengaturan', 'GuruController::pengaturan', ['filter' => 'role:admin']);
-    $routes->get('analytics', 'GuruController::analytics', ['filter' => 'role:admin']);
+    $routes->get('dashboard', 'AdminController::dashboard', ['filter' => 'role:admin']);
+    $routes->get('pengguna', 'AdminController::pengguna', ['filter' => 'role:admin']);
+    $routes->get('pengaturan', 'AdminController::pengaturan', ['filter' => 'role:admin']);
+    $routes->get('analytics', 'AdminController::analytics', ['filter' => 'role:admin']);
 
     // Routes untuk profil
     $routes->get('profil', 'ProfilController::index', ['filter' => 'role:admin']);
