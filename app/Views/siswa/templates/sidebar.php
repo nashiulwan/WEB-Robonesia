@@ -28,6 +28,20 @@
             </a>
         </li>
 
+        <!-- Menu Kelas Saya -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseKelasSaya" aria-expanded="true" aria-controls="collapseKelasSaya">
+                <i class="fas fa-chalkboard"></i>
+                <span>Kelas</span>
+            </a>
+            <div id="collapseKelasSaya" class="collapse" aria-labelledby="headingKelasSaya" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="<?= base_url('siswa/kelas'); ?>">Kelas Saya</a>
+                    <a class="collapse-item" href="<?= base_url('siswa/gabung-kelas'); ?>">Gabung Kelas</a>
+                </div>
+            </div>
+        </li>
+
         <!-- Menu Prestasi & Pencapaian -->
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePrestasi" aria-expanded="true" aria-controls="collapsePrestasi">
@@ -36,7 +50,6 @@
             </a>
             <div id="collapsePrestasi" class="collapse" aria-labelledby="headingPrestasi" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="<?= base_url('siswa/project-dan-nilai'); ?>">Project dan Nilai</a>
                     <a class="collapse-item" href="<?= base_url('siswa/sertifikat'); ?>">Sertifikat yang Diperoleh</a>
                     <a class="collapse-item" href="<?= base_url('siswa/prestasi'); ?>">Daftar Prestasi</a>
                 </div>

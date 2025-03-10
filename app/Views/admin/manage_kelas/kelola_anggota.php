@@ -152,10 +152,7 @@
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
         height: min-content;
-    }
-
-    .container-card {
-        margin-right: 1rem;
+        gap: 1rem;
     }
 
     @media (max-width: 1200px) {

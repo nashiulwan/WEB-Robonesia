@@ -8,6 +8,7 @@ use App\Models\PrestasiSertifikatModel;
 use App\Models\UserPrestasiModel;
 use App\Models\Manage_kelasModel;
 use App\Models\GaleriSiswaModel;
+use App\Models\SertifikatModel;
 use CodeIgniter\Shield\Authentication\Authenticators\Session;
 
 class SiswaController extends BaseController
@@ -17,6 +18,7 @@ class SiswaController extends BaseController
     protected $userPrestasiModel;
     protected $kelasModel;
     protected $user;
+    protected $sertifikatModel;
 
     public function __construct()
     {
@@ -24,15 +26,15 @@ class SiswaController extends BaseController
         $this->prestasiModel = new PrestasiSertifikatModel();
         $this->userPrestasiModel = new UserPrestasiModel();
         $this->kelasModel = new Manage_kelasModel();
+        $this->sertifikatModel = new SertifikatModel();
 
         // Mendapatkan user yang sedang login
         $auth = service('authentication');
         $this->user = $auth->user();
-                
+
         if (!$this->user) {
             return redirect()->to('auth/login')->send();
         }
-
     }
 
     public function dashboard()
@@ -76,6 +78,104 @@ class SiswaController extends BaseController
 
         $this->renderViewDashboardSiswa('siswa/pengumuman/sekolah', $data);
     }
+
+    public function kelasSaya()
+    {
+        $userId = $this->user->id;
+
+        $data = [
+            'title'         => 'Kelas Saya',
+            'kelasSaya'     => $this->kelasModel->getClassesByUserId($userId),
+        ];
+
+        $this->renderViewDashboardSiswa('siswa/kelas_saya/index', $data);
+    }
+
+    public function kelasSayaDetail($kelasId)
+    {
+        $userId = $this->user->id;
+        $members = $this->kelasModel->getAnggotaByKelas($kelasId);
+        $kelas = $this->kelasModel->getClassWithMemberCountById($kelasId);
+
+        $data = [
+            'title'         => 'Informasi Kelas',
+            'members' => $members,
+            'kelas'     => $kelas,
+            'userId'  => $userId,
+        ];
+
+        $this->renderViewDashboardSiswa('siswa/kelas_saya/detail', $data);
+    }
+
+    public function gabungKelas()
+    {
+        $userId = $this->user->id;
+
+        $data = [
+            'title'         => 'Gabung Kelas',
+        ];
+
+        $this->renderViewDashboardSiswa('siswa/kelas_saya/gabung_kelas', $data);
+    }
+
+    public function kelasSearch()
+    {
+
+        $userId = $this->user->id;
+
+        $kode = $this->request->getGet('kode');
+
+        if ($kode) {
+            // Gunakan metode explicit SQL untuk memastikan case-sensitive comparison
+            $db = \Config\Database::connect();
+            $query = $db->query("SELECT * FROM manage_kelas WHERE BINARY kode_kelas = ?", [$kode]);
+            $kelas = $query->getRowArray(); // Mengambil satu hasil dalam bentuk array
+
+            if (!$kelas) {
+                session()->setFlashdata('error', 'Kelas tidak ditemukan. Silahkan periksa kembali kode kelas Anda.');
+            }
+        } else {
+            $kelas = [];
+        }
+
+        $data = [
+            'title' => 'Gabung Kelas',
+            'kelas' => $kelas,
+            'userId'  => $userId,
+        ];
+
+        return view('siswa/kelas_saya/gabung_kelas', $data);
+    }
+
+    public function kelasGabung($kelasId, $userId)
+    {
+        $result = $this->kelasModel->addAnggota($kelasId, $userId);
+
+        if ($result === 'already_joined') {
+            session()->setFlashdata('error', 'Anda sudah bergabung di kelas ini.');
+        } elseif ($result === false) {
+            session()->setFlashdata('error', 'Gagal bergabung di kelas. Silahkan coba lagi.');
+        } else {
+            session()->setFlashdata('success', 'Berhasil bergabung di kelas.');
+        }
+
+        return redirect()->to(base_url('siswa/kelas'));
+    }
+
+    public function kelasKeluar($kelasId, $userId)
+    {
+        $result = $this->kelasModel->removeAnggota($kelasId, $userId);
+
+        if ($result) {
+            session()->setFlashdata('success', 'Anda berhasil keluar dari kelas.');
+        } else {
+            session()->setFlashdata('error', 'Gagal keluar dari kelas. Silahkan coba lagi.');
+        }
+
+        // Redirect ke halaman kelas siswa (sesuaikan URL redirect dengan alur aplikasi Anda)
+        return redirect()->to(base_url('siswa/kelas'));
+    }
+
 
     public function prestasi()
     {
@@ -159,7 +259,10 @@ class SiswaController extends BaseController
 
     public function sertifikat()
     {
-        $data = ['title' => 'Sertifikat dan Level'];
+        $data = [
+            'title' => 'Sertifikat dan Level',
+            'sertifikat' => $this->sertifikatModel->findAll(),
+        ];
         $this->renderViewDashboardSiswa('siswa/prestasi_nilai/sertifikat', $data);
     }
 }

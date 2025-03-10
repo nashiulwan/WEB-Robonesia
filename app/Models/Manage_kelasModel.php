@@ -61,8 +61,8 @@ class Manage_kelasModel extends Model
     public function removeAnggota($kelasId, $userId)
     {
         return $this->db->table($this->tableAnggota)
-            ->where('kelas_id', $kelasId)
-            ->where('user_id', $userId)
+            ->where('id_kelas', $kelasId)
+            ->where('id_user', $userId)
             ->delete();
     }
 
@@ -126,7 +126,7 @@ class Manage_kelasModel extends Model
             ->join('kelas_anggota', 'kelas_anggota.id_kelas = manage_kelas.id')
             ->where('kelas_anggota.id_user', $userId)
             ->get()
-            ->getRowArray();
+            ->getResultArray();
     }
 
     public function addAnggota($kelasId, $userId)

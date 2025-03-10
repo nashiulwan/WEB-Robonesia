@@ -56,47 +56,52 @@
 
 
 <!-- KELAS -->
+<!-- KELAS -->
 <div class="container mt-5">
-    <!-- Judul -->
     <h2 class="text-center mb-4 fw-bold">Informasi Kelas Saya</h2>
-    
     <div class="row justify-content-center">
         <?php if (!empty($kelasSaya)) : ?>
             <div class="col-md-8">
-                <div class="card shadow-lg border-0 p-4 rounded-4"
-                     style="border-left: 8px solid 
-                            <?= ($kelasSaya['level'] == 'Basic') ? '#1cc88a' : 
-                                (($kelasSaya['level'] == 'Intermediate') ? '#f6c23e' : '#e74a3b'); ?>;">
-                    
-                    <div class="card-body">
-                        
-                        
-                        <div class="row mt-4">
-                            <h4 class="card-title text-center fw-bold d-flex flex-column gap-2">
-                                <i class="fas fa-chalkboard-teacher me-2 text-primary" style="font-size: 1.8rem;"></i>
-                                <?= esc($kelasSaya['nama_kelas']); ?>
-                                <span class="badge bg-primary fs-6"><?= esc($kelasSaya['kode_kelas']); ?></span>
-                            </h4>
-                            <p class="text-muted text-center fst-italic py-4"><?= esc($kelasSaya['deskripsi']); ?></p>
-
-                            <div class="col-4 text-center p-2">
-                                <i class="fas fa-layer-group text-success" style="font-size: 2rem;"></i>
-                                <p class="mb-0"><strong>Level:</strong></p>
-                                <p class="fw-bold"><?= esc($kelasSaya['level']); ?></p>
+                <!-- Swiper Container -->
+                <div class="swiper swiperKelas">
+                    <div class="swiper-wrapper">
+                        <?php foreach ($kelasSaya as $kelas) : ?>
+                            <div class="swiper-slide">
+                                <div class="card shadow-lg border-0 p-4 rounded-4"
+                                     style="border-left: 8px solid 
+                                            <?= ($kelas['level'] == 'Basic') ? '#1cc88a' : 
+                                                (($kelas['level'] == 'Intermediate') ? '#f6c23e' : '#e74a3b'); ?>;">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <h4 class="card-title text-center fw-bold gap-2 d-flex flex-column gap-1 mb-2">
+                                                <i class="fas fa-chalkboard-teacher me-2 text-primary" style="font-size: 1.8rem;"></i>
+                                                    <?= esc($kelas['nama_kelas']); ?>
+                                                    <span class="badge bg-primary fs-6"><?= esc($kelas['kode_kelas']); ?></span>
+                                            </h4>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4 text-center p-2">
+                                                <i class="fas fa-layer-group text-success" style="font-size: 2rem;"></i>
+                                                <p class="mb-0"><strong>Level:</strong></p>
+                                                <p class="fw-bold"><?= esc($kelas['level']); ?></p>
+                                            </div>
+                                            <div class="col-4 text-center p-2">
+                                                <i class="fas fa-sitemap text-warning" style="font-size: 2rem;"></i>
+                                                <p class="mb-0"><strong>Sub-Level:</strong></p>
+                                                <p class="fw-bold"><?= esc($kelas['sub_level']); ?></p>
+                                            </div>
+                                            <div class="col-4 text-center p-2">
+                                                <i class="fas fa-toggle-on <?= ($kelas['status'] == '1') ? 'text-success' : 'text-danger'; ?>" style="font-size: 2rem;"></i>
+                                                <p class="mb-0"><strong>Status:</strong></p>
+                                                <span class="badge <?= ($kelas['status'] == '1') ? 'bg-success' : 'bg-danger'; ?> fs-6">
+                                                    <?= ($kelas['status'] == '1') ? 'Aktif' : 'Tidak Aktif'; ?>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-4 text-center p-2">
-                                <i class="fas fa-sitemap text-warning" style="font-size: 2rem;"></i>
-                                <p class="mb-0"><strong>Sub-Level:</strong></p>
-                                <p class="fw-bold"><?= esc($kelasSaya['sub_level']); ?></p>
-                            </div>
-                            <div class="col-4 text-center p-2">
-                                <i class="fas fa-toggle-on <?= ($kelasSaya['status'] == '1') ? 'text-success' : 'text-danger'; ?>" style="font-size: 2rem;"></i>
-                                <p class="mb-0"><strong>Status:</strong></p>
-                                <span class="badge <?= ($kelasSaya['status'] == '1') ? 'bg-success' : 'bg-danger'; ?> fs-6">
-                                    <?= ($kelasSaya['status'] == '1') ? 'Aktif' : 'Tidak Aktif'; ?>
-                                </span>
-                            </div>
-                        </div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
             </div>
@@ -171,6 +176,17 @@
             nextEl: ".swiper-button-next",
             prevEl: ".swiper-button-prev",
         },
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+        },
+    });
+
+
+    var swiper = new Swiper(".swiperKelas", {
+        slidesPerView: 1,
+        spaceBetween: 20,
+        loop: true,
         pagination: {
             el: ".swiper-pagination",
             clickable: true,
