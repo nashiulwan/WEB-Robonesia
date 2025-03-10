@@ -16,7 +16,6 @@ use App\Models\UserPrestasiModel;
 use App\Models\GradeImagesModel;
 use App\Models\SertifikatModel;
 use App\Models\GaleriSiswaModel;
-use App\Models\UserModel;
 
 
 class GuruController extends BaseController
@@ -69,7 +68,7 @@ class GuruController extends BaseController
         ];
 
 
-        return view('admin/dashboard', $data);
+        return view('guru/dashboard', $data);
     }
 
   public function indexProfil()
@@ -91,7 +90,7 @@ class GuruController extends BaseController
       'user'  => $user  // Perhatikan: kita mengirim data sebagai "user", bukan "users"
     ];
 
-    return view('admin/profil/index', $data);
+    return view('guru/profil/index', $data);
   }
 
   /**
@@ -116,7 +115,7 @@ class GuruController extends BaseController
       'user'  => $user
     ];
 
-    return view('admin/profil/edit', $data);
+    return view('guru/profil/edit', $data);
   }
 
   public function updateProfil()
@@ -227,7 +226,7 @@ class GuruController extends BaseController
     }
 
     if ($profilModel->update($userId, $data)) {
-      return redirect()->to('admin/profil')->with('success', 'Profil berhasil diperbarui!');
+      return redirect()->to('guru/profil')->with('success', 'Profil berhasil diperbarui!');
     } else {
       return redirect()->back()->withInput()->with('error', 'Gagal memperbarui profil, silakan coba lagi.');
     }
@@ -246,7 +245,7 @@ class GuruController extends BaseController
             'classes' => $classes,
         ];
 
-        return view('admin/manage_kelas/index', $data);
+        return view('guru/manage_kelas/index', $data);
     }
 
     // Form Tambah Kelas
@@ -260,7 +259,7 @@ class GuruController extends BaseController
             'title' => 'Tambah Kelas',
         ];
 
-        return view('admin/manage_kelas/tambah', $data);
+        return view('guru/manage_kelas/tambah', $data);
     }
 
     // Simpan Kelas
@@ -316,7 +315,7 @@ class GuruController extends BaseController
         $this->manageKelasModel->saveKelas($data);
 
         // Redirect ke halaman manage kelas
-        return redirect()->to('admin/manage_kelas')->with('success', 'Kelas berhasil disimpan.');
+        return redirect()->to('guru/manage_kelas')->with('success', 'Kelas berhasil disimpan.');
     }
 
     private function generateClassCode($kelas_nama)
@@ -364,7 +363,7 @@ class GuruController extends BaseController
             'kelas' => $kelas,
         ];
 
-        return view('admin/manage_kelas/edit', $data);
+        return view('guru/manage_kelas/edit', $data);
     }
 
     // Update Kelas
@@ -418,7 +417,7 @@ class GuruController extends BaseController
             $this->manageKelasModel->updateKelas($id, $data);
 
             // Redirect ke halaman manage kelas
-            return redirect()->to('admin/manage_kelas')->with('success', 'Kelas berhasil diupdate.');
+            return redirect()->to('guru/manage_kelas')->with('success', 'Kelas berhasil diupdate.');
         } catch (\Exception $e) {
             // Jika terjadi error saat update data, tampilkan error
             return redirect()->back()->with('error', 'Terjadi kesalahan saat mengupdate kelas: ' . $e->getMessage());
@@ -433,7 +432,7 @@ class GuruController extends BaseController
         }
 
         $this->manageKelasModel->deleteKelas($id);
-        return redirect()->to('admin/manage_kelas');
+        return redirect()->to('guru/manage_kelas');
     }
     public function kelola_anggotaManageKelas()
     {
@@ -454,7 +453,7 @@ class GuruController extends BaseController
             'classes' => $activeClasses,
         ];
 
-        return view('admin/manage_kelas/kelola_anggota', $data);
+        return view('guru/manage_kelas/kelola_anggota', $data);
     }
 
 
@@ -475,7 +474,7 @@ class GuruController extends BaseController
             'members' => $members,
         ];
 
-        return view('admin/manage_kelas/detail_kelas', $data);
+        return view('guru/manage_kelas/detail_kelas', $data);
     }
 
     public function tambah_anggotaManageKelas($id)
@@ -506,7 +505,7 @@ class GuruController extends BaseController
             'member_ids' => $member_ids,
         ];
 
-        return view('admin/manage_kelas/tambah_anggota', $data);
+        return view('guru/manage_kelas/tambah_anggota', $data);
     }
 
 
@@ -518,10 +517,10 @@ class GuruController extends BaseController
         $result = $this->manageKelasModel->addAnggota($kelasId, $userId);
 
         if ($result === 'already_joined') {
-            return redirect()->to('/admin/manage_kelas/kelola_anggota/tambah/' . $kelasId)
+            return redirect()->to('/guru/manage_kelas/kelola_anggota/tambah/' . $kelasId)
                 ->with('error', 'Akun telah bergabung di kelas ini.');
         } elseif ($result) {
-            return redirect()->to('/admin/manage_kelas/kelola_anggota/tambah/' . $kelasId)
+            return redirect()->to('/guru/manage_kelas/kelola_anggota/tambah/' . $kelasId)
                 ->with('success', 'Anggota berhasil ditambahkan.');
         } else {
             return redirect()->back()->with('error', 'Gagal menambahkan anggota.');
@@ -555,7 +554,7 @@ class GuruController extends BaseController
 
     // Hanya ambil user dengan role siswa (group_id = 2)
     $data['users']     = $this->prestasiSertifikatModel->getUsersByRole(2);
-    return view('admin/prestasi_sertifikat/prestasi/index', $data);
+    return view('guru/prestasi_sertifikat/prestasi/index', $data);
   }
 
   public function sertifikatDetail($sertifikatId)
@@ -575,7 +574,7 @@ class GuruController extends BaseController
       'sertifikat' => $sertifikat,
     ];
 
-    return view('admin/prestasi_sertifikat/sertifikat/detail', $data);
+    return view('guru/prestasi_sertifikat/sertifikat/detail', $data);
   }
 
   public function sertifikatEditPrestasi($sertifikatId)
@@ -595,7 +594,7 @@ class GuruController extends BaseController
       'sertifikat' => $sertifikat,
     ];
 
-    return view('admin/prestasi_sertifikat/sertifikat/edit', $data);
+    return view('guru/prestasi_sertifikat/sertifikat/edit', $data);
   }
 
   public function sertifikatUpdatePrestasi($sertifikatId)
@@ -672,7 +671,7 @@ class GuruController extends BaseController
     ];
 
     if ($model->update($sertifikatId, $updateData)) {
-      return redirect()->to('admin/sertifikat')
+      return redirect()->to('guru/sertifikat')
         ->with('success', 'Sertifikat berhasil diperbarui!');
     } else {
       return redirect()->back()->withInput()->with('error', 'Gagal memperbarui sertifikat.');
@@ -709,7 +708,7 @@ class GuruController extends BaseController
 
     // Hapus sertifikat dari database
     if ($model->delete($sertifikatId)) {
-      return redirect()->to('admin/sertifikat')
+      return redirect()->to('guru/sertifikat')
         ->with('success', 'Sertifikat berhasil dihapus.');
     } else {
       return redirect()->back()->with('error', 'Gagal menghapus sertifikat.');
@@ -741,7 +740,7 @@ class GuruController extends BaseController
       'prestasis' => $prestasis,
     ];
 
-    return view('admin/prestasi_sertifikat/prestasi/prestasi_user', $data);
+    return view('guru/prestasi_sertifikat/prestasi/prestasi_user', $data);
   }
 
 
@@ -766,7 +765,7 @@ class GuruController extends BaseController
       'users' => $users,
     ];
 
-    return view('admin/prestasi_sertifikat/prestasi/prestasi_user_tambah', $data);
+    return view('guru/prestasi_sertifikat/prestasi/prestasi_user_tambah', $data);
   }
 
   public function prestasiDetailSimpanPrestasi()
@@ -842,7 +841,7 @@ class GuruController extends BaseController
     }
 
     session()->setFlashdata('success', 'Prestasi berhasil ditambahkan.');
-    return redirect()->to(base_url('admin/prestasi/prestasi_detail/' . esc($post['user_id'])));
+    return redirect()->to(base_url('guru/prestasi/prestasi_detail/' . esc($post['user_id'])));
   }
 
   public function prestasiDetailInfoPrestasi($user_id, $prestasiId)
@@ -889,7 +888,7 @@ class GuruController extends BaseController
       'anggota'   => ($prestasi['jenis'] === 'Kelompok') ? $anggotaLainnya : []
     ];
 
-    return view('admin/prestasi_sertifikat/prestasi/prestasi_user_info', $data);
+    return view('guru/prestasi_sertifikat/prestasi/prestasi_user_info', $data);
   }
 
 
@@ -943,7 +942,7 @@ class GuruController extends BaseController
       'anggotaLainnya' => $anggotaLainnya
     ];
 
-    return view('admin/prestasi_sertifikat/prestasi/prestasi_user_edit', $data);
+    return view('guru/prestasi_sertifikat/prestasi/prestasi_user_edit', $data);
   }
 
   // Memproses update data prestasi (POST)
@@ -1026,7 +1025,7 @@ class GuruController extends BaseController
     }
 
     session()->setFlashdata('success', 'Prestasi berhasil diperbarui.');
-    return redirect()->to(base_url('admin/prestasi/prestasi_detail/' . esc($userId)));
+    return redirect()->to(base_url('guru/prestasi/prestasi_detail/' . esc($userId)));
   }
 
   // Menghapus prestasi dan data relasinya di pivot table
@@ -1080,7 +1079,7 @@ class GuruController extends BaseController
       'anggota'   => $anggota,
     ];
 
-    return view('admin/prestasi_sertifikat/prestasi/prestasi_info', $data);
+    return view('guru/prestasi_sertifikat/prestasi/prestasi_info', $data);
   }
   // Menampilkan form tambah prestasi untuk user tertentu
   public function prestasiTambahPrestasi()
@@ -1096,7 +1095,7 @@ class GuruController extends BaseController
       'users' => $users,
     ];
 
-    return view('admin/prestasi_sertifikat/prestasi/prestasi_tambah', $data);
+    return view('guru/prestasi_sertifikat/prestasi/prestasi_tambah', $data);
   }
   public function prestasiSimpanPrestasi()
   {
@@ -1172,7 +1171,7 @@ class GuruController extends BaseController
     }
 
     session()->setFlashdata('success', 'Prestasi berhasil ditambahkan.');
-    return redirect()->to(base_url('admin/prestasi'));
+    return redirect()->to(base_url('guru/prestasi'));
   }
 
 
@@ -1216,7 +1215,7 @@ class GuruController extends BaseController
       'anggota' => $anggota
     ];
 
-    return view('admin/prestasi_sertifikat/prestasi/prestasi_edit', $data);
+    return view('guru/prestasi_sertifikat/prestasi/prestasi_edit', $data);
   }
 
   public function prestasiUpdatePrestasi($prestasiId)
@@ -1324,7 +1323,7 @@ class GuruController extends BaseController
     }
 
     session()->setFlashdata('success', 'Prestasi berhasil diperbarui.');
-    return redirect()->to(base_url('admin/prestasi'));
+    return redirect()->to(base_url('guru/prestasi'));
   }
 
 
@@ -1365,7 +1364,7 @@ class GuruController extends BaseController
       'classes' => $classes,
     ];
 
-    return view('admin/prestasi_sertifikat/grade_level/index', $data);
+    return view('guru/prestasi_sertifikat/grade_level/index', $data);
   }
 
 
@@ -1386,7 +1385,7 @@ class GuruController extends BaseController
       'proyek' => $proyek,
     ];
 
-    return view('admin/prestasi_sertifikat/grade_level/kelas_detail', $data);
+    return view('guru/prestasi_sertifikat/grade_level/kelas_detail', $data);
   }
 
   public function gradeLevelPrestasi($id)
@@ -1402,7 +1401,7 @@ class GuruController extends BaseController
       'kelas'   => $class,
     ];
 
-    return view('admin/prestasi_sertifikat/grade_level/kelas_level', $data);
+    return view('guru/prestasi_sertifikat/grade_level/kelas_level', $data);
   }
 
 
@@ -1446,7 +1445,7 @@ class GuruController extends BaseController
       return redirect()->back()->with('error', 'Gagal memperbarui grade level.');
     }
 
-    return redirect()->to(base_url('admin/grade_level'))
+    return redirect()->to(base_url('guru/grade_level'))
       ->with('success', 'Level kelas berhasil diperbarui.');
   }
 
@@ -1466,7 +1465,7 @@ class GuruController extends BaseController
       'proyek' => $proyek,
     ];
 
-    return view('admin/prestasi_sertifikat/grade_level/kelas_proyek', $data);
+    return view('guru/prestasi_sertifikat/grade_level/kelas_proyek', $data);
   }
 
   // Menampilkan form tambah proyek berdasarkan ID kelas
@@ -1483,7 +1482,7 @@ class GuruController extends BaseController
       'kelas' => $kelas,
     ];
 
-    return view('admin/prestasi_sertifikat/grade_level/kelas_proyek_tambah', $data);
+    return view('guru/prestasi_sertifikat/grade_level/kelas_proyek_tambah', $data);
   }
 
   public function gradeProyekSimpanPrestasi($kelas_id)
@@ -1524,7 +1523,7 @@ class GuruController extends BaseController
     }
 
     if ($gradeImagesModel->insert($data)) {
-      return redirect()->to('admin/grade_level/proyek/' . $kelas_id)->with('success', 'Proyek berhasil ditambahkan!');
+      return redirect()->to('guru/grade_level/proyek/' . $kelas_id)->with('success', 'Proyek berhasil ditambahkan!');
     } else {
       return redirect()->back()->withInput()->with('error', 'Gagal menyimpan proyek.');
     }
@@ -1551,7 +1550,7 @@ class GuruController extends BaseController
       'proyek'  => $proyek,
     ];
 
-    return view('admin/prestasi_sertifikat/grade_level/kelas_proyek_edit', $data);
+    return view('guru/prestasi_sertifikat/grade_level/kelas_proyek_edit', $data);
   }
 
 
@@ -1593,7 +1592,7 @@ class GuruController extends BaseController
       ];
 
       if ($gradeImagesModel->insert($data)) {
-        return redirect()->to('admin/grade_level/proyek/' . $kelas_id)->with('success', 'Gambar berhasil diunggah!');
+        return redirect()->to('guru/grade_level/proyek/' . $kelas_id)->with('success', 'Gambar berhasil diunggah!');
       } else {
         return redirect()->back()->withInput()->with('error', 'Gagal menyimpan gambar ke database.');
       }
@@ -1612,10 +1611,10 @@ class GuruController extends BaseController
 
     if ($proyek) {
       $this->gradeImagesModel->delete($proyek_id);
-      return redirect()->to('admin/grade_level/proyek/' . $kelas_id)->with('success', 'Proyek berhasil dihapus');
+      return redirect()->to('guru/grade_level/proyek/' . $kelas_id)->with('success', 'Proyek berhasil dihapus');
     }
 
-    return redirect()->to('admin/grade_level/proyek/' . $kelas_id)->with('error', 'Proyek tidak ditemukan');
+    return redirect()->to('guru/grade_level/proyek/' . $kelas_id)->with('error', 'Proyek tidak ditemukan');
   }
 
   public function sertifikatIndexSertifikat()
@@ -1630,7 +1629,7 @@ class GuruController extends BaseController
     $data['kelas'] = $this->manageKelasModel->findAll();
     // Hanya ambil user dengan role siswa (group_id = 2)
     $data['users']     = $this->prestasiSertifikatModel->getUsersByRole(2);
-    return view('admin/prestasi_sertifikat/sertifikat/index', $data);
+    return view('guru/prestasi_sertifikat/sertifikat/index', $data);
   }
 
   public function sertifikatPrestasiDetailPrestasi($prestasiId)
@@ -1653,7 +1652,7 @@ class GuruController extends BaseController
       'sertifikat' => $sertifikat,
     ];
 
-    return view('admin/prestasi_sertifikat/sertifikat/sertifprestasi', $data);
+    return view('guru/prestasi_sertifikat/sertifikat/sertifprestasi', $data);
   }
 
 
@@ -1675,7 +1674,7 @@ class GuruController extends BaseController
       'prestasi'  => $prestasi,
     ];
 
-    return view('admin/prestasi_sertifikat/sertifikat/sertifprestasi_tambah', $data);
+    return view('guru/prestasi_sertifikat/sertifikat/sertifprestasi_tambah', $data);
   }
 
   public function sertifikatPrestasiSimpanSertifikat($prestasiId)
@@ -1752,7 +1751,7 @@ class GuruController extends BaseController
       $db = \Config\Database::connect();
       $builder = $db->table('sertifikat_recipients');
       if ($builder->insert($dataRecipient)) {
-        return redirect()->to('admin/sertifikat/prestasi/' . esc($prestasiId))->with('success', 'Sertifikat berhasil ditambahkan!');
+        return redirect()->to('guru/sertifikat/prestasi/' . esc($prestasiId))->with('success', 'Sertifikat berhasil ditambahkan!');
       } else {
         // Jika pivot gagal, hapus data sertifikat yang sudah tersimpan (opsional)
         $model->delete($sertifikatId);
@@ -1787,7 +1786,7 @@ class GuruController extends BaseController
       'prestasiId' => $prestasiId,
     ];
 
-    return view('admin/prestasi_sertifikat/sertifikat/sertifprestasi_edit', $data);
+    return view('guru/prestasi_sertifikat/sertifikat/sertifprestasi_edit', $data);
   }
 
   public function sertifikatPrestasiUpdateSertifikat($prestasiId, $sertifikatId)
@@ -1865,7 +1864,7 @@ class GuruController extends BaseController
     ];
 
     if ($model->update($sertifikatId, $updateData)) {
-      return redirect()->to('admin/sertifikat/prestasi/' . esc($prestasiId))
+      return redirect()->to('guru/sertifikat/prestasi/' . esc($prestasiId))
         ->with('success', 'Sertifikat berhasil diperbarui!');
     } else {
       return redirect()->back()->withInput()->with('error', 'Gagal memperbarui sertifikat.');
@@ -1903,7 +1902,7 @@ class GuruController extends BaseController
 
     // Hapus sertifikat dari database
     if ($model->delete($sertifikatId)) {
-      return redirect()->to('admin/sertifikat/prestasi/' . esc($prestasiId))
+      return redirect()->to('guru/sertifikat/prestasi/' . esc($prestasiId))
         ->with('success', 'Sertifikat berhasil dihapus.');
     } else {
       return redirect()->back()->with('error', 'Gagal menghapus sertifikat.');
@@ -1929,7 +1928,7 @@ class GuruController extends BaseController
       'sertifikat' => $sertifikat,
     ];
 
-    return view('admin/prestasi_sertifikat/sertifikat/sertifakun', $data);
+    return view('guru/prestasi_sertifikat/sertifikat/sertifakun', $data);
   }
 
   // Menampilkan Form Tambah Sertifikat untuk Akun
@@ -1949,7 +1948,7 @@ class GuruController extends BaseController
       'user'  => $user,
     ];
 
-    return view('admin/prestasi_sertifikat/sertifikat/sertifakun_tambah', $data);
+    return view('guru/prestasi_sertifikat/sertifikat/sertifakun_tambah', $data);
   }
 
   // Proses Simpan Sertifikat untuk Akun
@@ -2011,7 +2010,7 @@ class GuruController extends BaseController
       $db = \Config\Database::connect();
       $builder = $db->table('sertifikat_recipients');
       if ($builder->insert($dataRecipient)) {
-        return redirect()->to('admin/sertifikat/akun/' . esc($userId))
+        return redirect()->to('guru/sertifikat/akun/' . esc($userId))
           ->with('success', 'Sertifikat berhasil ditambahkan!');
       } else {
         // Jika pivot gagal, hapus data sertifikat yang sudah tersimpan (opsional)
@@ -2052,7 +2051,7 @@ class GuruController extends BaseController
       'user'       => $user,
     ];
 
-    return view('admin/prestasi_sertifikat/sertifikat/sertifakun_edit', $data);
+    return view('guru/prestasi_sertifikat/sertifikat/sertifakun_edit', $data);
   }
 
   // Proses Update Sertifikat untuk Akun
@@ -2130,7 +2129,7 @@ class GuruController extends BaseController
     ];
 
     if ($model->update($sertifikatId, $updateData)) {
-      return redirect()->to('admin/sertifikat/akun/' . esc($userId))
+      return redirect()->to('guru/sertifikat/akun/' . esc($userId))
         ->with('success', 'Sertifikat berhasil diperbarui!');
     } else {
       return redirect()->back()->withInput()->with('error', 'Gagal memperbarui sertifikat.');
@@ -2167,7 +2166,7 @@ class GuruController extends BaseController
 
     // Hapus sertifikat dari database
     if ($model->delete($sertifikatId)) {
-      return redirect()->to('admin/sertifikat/akun/' . esc($userId))
+      return redirect()->to('guru/sertifikat/akun/' . esc($userId))
         ->with('success', 'Sertifikat berhasil dihapus.');
     } else {
       return redirect()->back()->with('error', 'Gagal menghapus sertifikat.');
@@ -2205,7 +2204,7 @@ class GuruController extends BaseController
       'sertifikat' => $sertifikat,
     ];
 
-    return view('admin/prestasi_sertifikat/sertifikat/sertifkelas', $data);
+    return view('guru/prestasi_sertifikat/sertifikat/sertifkelas', $data);
   }
 
   // Menampilkan Form Tambah Sertifikat untuk Akun
@@ -2225,7 +2224,7 @@ class GuruController extends BaseController
       'kelas'  => $kelas,
     ];
 
-    return view('admin/prestasi_sertifikat/sertifikat/sertifkelas_tambah', $data);
+    return view('guru/prestasi_sertifikat/sertifikat/sertifkelas_tambah', $data);
   }
 
   // Proses Simpan Sertifikat untuk Kelas
@@ -2287,7 +2286,7 @@ class GuruController extends BaseController
       $db = \Config\Database::connect();
       $builder = $db->table('sertifikat_recipients');
       if ($builder->insert($dataRecipient)) {
-        return redirect()->to('admin/sertifikat/kelas/' . esc($kelasId))
+        return redirect()->to('guru/sertifikat/kelas/' . esc($kelasId))
           ->with('success', 'Sertifikat berhasil ditambahkan!');
       } else {
         // Jika pivot gagal, hapus data sertifikat yang sudah tersimpan (opsional)
@@ -2328,7 +2327,7 @@ class GuruController extends BaseController
       'kelas'       => $kelas,
     ];
 
-    return view('admin/prestasi_sertifikat/sertifikat/sertifkelas_edit', $data);
+    return view('guru/prestasi_sertifikat/sertifikat/sertifkelas_edit', $data);
   }
 
   // Proses Update Sertifikat untuk Kelas
@@ -2406,7 +2405,7 @@ class GuruController extends BaseController
     ];
 
     if ($model->update($sertifikatId, $updateData)) {
-      return redirect()->to('admin/sertifikat/kelas/' . esc($kelasId))
+      return redirect()->to('guru/sertifikat/kelas/' . esc($kelasId))
         ->with('success', 'Sertifikat berhasil diperbarui!');
     } else {
       return redirect()->back()->withInput()->with('error', 'Gagal memperbarui sertifikat.');
@@ -2454,7 +2453,7 @@ class GuruController extends BaseController
       return redirect()->back()->with('error', 'Gagal menghapus sertifikat.');
     }
 
-    return redirect()->to('admin/sertifikat/kelas/' . esc($kelasId))
+    return redirect()->to('guru/sertifikat/kelas/' . esc($kelasId))
       ->with('success', 'Sertifikat berhasil dihapus.');
   }
 
@@ -2466,7 +2465,7 @@ class GuruController extends BaseController
     $users = $this->userModel->getUsersByRole(2);
 
     if (!$users) {
-      return redirect()->to('admin/dashboard')->with('error', 'Akun tidak ditemukan.');
+      return redirect()->to('guru/dashboard')->with('error', 'Akun tidak ditemukan.');
     }
 
     $data = [
@@ -2474,7 +2473,7 @@ class GuruController extends BaseController
       'users' => $users
     ];
 
-    return view('admin/galeri_siswa/index', $data);
+    return view('guru/galeri_siswa/index', $data);
   }
 
   // Menampilkan seluruh galeri berdasarkan user
@@ -2492,7 +2491,7 @@ class GuruController extends BaseController
       'user' => $user
     ];
 
-    return view('admin/galeri_siswa/detail', $data);
+    return view('guru/galeri_siswa/detail', $data);
   }
 
   // Menampilkan form tambah
@@ -2511,7 +2510,7 @@ class GuruController extends BaseController
       'user' => $user
     ];
 
-    return view('admin/galeri_siswa/tambah', $data);
+    return view('guru/galeri_siswa/tambah', $data);
   }
 
   public function simpanGaleri($userId)
@@ -2576,7 +2575,7 @@ class GuruController extends BaseController
     $this->galeriSiswaModel->save($dataGaleri);
 
     session()->setFlashdata('success', 'Data galeri berhasil disimpan.');
-    return redirect()->to(base_url('admin/galeri/detail/' . $user_id));
+    return redirect()->to(base_url('guru/galeri/detail/' . $user_id));
   }
 
   // Method untuk menampilkan detail 1 record galeri (edit/view detail) berdasarkan user dan galeri
@@ -2597,7 +2596,7 @@ class GuruController extends BaseController
       'galeri' => $galeri
     ];
 
-    return view('admin/galeri_siswa/detail_galeri', $data);
+    return view('guru/galeri_siswa/detail_galeri', $data);
   }
 
   // (Opsional) Method untuk menampilkan form edit
@@ -2617,7 +2616,7 @@ class GuruController extends BaseController
       'user'   => $user,
       'galeri' => $galeri
     ];
-    return view('admin/galeri_siswa/edit', $data);
+    return view('guru/galeri_siswa/edit', $data);
   }
 
   // (Opsional) Method untuk mengupdate data edit
@@ -2685,7 +2684,7 @@ class GuruController extends BaseController
 
     $this->galeriSiswaModel->update($galeriId, $dataGaleri);
     session()->setFlashdata('success', 'Data galeri berhasil diperbarui.');
-    return redirect()->to(base_url('admin/galeri/detail/' . $userId));
+    return redirect()->to(base_url('guru/galeri/detail/' . $userId));
   }
 
 
@@ -2706,6 +2705,6 @@ class GuruController extends BaseController
     }
     $this->galeriSiswaModel->delete($galeriId);
     session()->setFlashdata('success', 'Data galeri berhasil dihapus.');
-    return redirect()->to(base_url('admin/galeri/detail/' . $userId));
+    return redirect()->to(base_url('guru/galeri/detail/' . $userId));
   }
 }
