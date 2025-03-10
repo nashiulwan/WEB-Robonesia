@@ -126,7 +126,7 @@ class Manage_kelasModel extends Model
             ->join('kelas_anggota', 'kelas_anggota.id_kelas = manage_kelas.id')
             ->where('kelas_anggota.id_user', $userId)
             ->get()
-            ->getRowArray();
+            ->getResultArray();
     }
 
     public function addAnggota($kelasId, $userId)

@@ -36,7 +36,6 @@
             </a>
             <div id="collapsePrestasi" class="collapse" aria-labelledby="headingPrestasi" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="<?= base_url('siswa/project-dan-nilai'); ?>">Project dan Nilai</a>
                     <a class="collapse-item" href="<?= base_url('siswa/sertifikat'); ?>">Sertifikat yang Diperoleh</a>
                     <a class="collapse-item" href="<?= base_url('siswa/prestasi'); ?>">Daftar Prestasi</a>
                 </div>

@@ -8,6 +8,7 @@ use App\Models\PrestasiSertifikatModel;
 use App\Models\UserPrestasiModel;
 use App\Models\Manage_kelasModel;
 use App\Models\GaleriSiswaModel;
+use App\Models\SertifikatModel;
 use CodeIgniter\Shield\Authentication\Authenticators\Session;
 
 class SiswaController extends BaseController
@@ -17,6 +18,7 @@ class SiswaController extends BaseController
     protected $userPrestasiModel;
     protected $kelasModel;
     protected $user;
+    protected $sertifikatModel;
 
     public function __construct()
     {
@@ -24,11 +26,12 @@ class SiswaController extends BaseController
         $this->prestasiModel = new PrestasiSertifikatModel();
         $this->userPrestasiModel = new UserPrestasiModel();
         $this->kelasModel = new Manage_kelasModel();
+        $this->sertifikatModel = new SertifikatModel();
 
         // Mendapatkan user yang sedang login
         $auth = service('authentication');
         $this->user = $auth->user();
-                
+
         if (!$this->user) {
             return redirect()->to('auth/login')->send();
         }
@@ -159,7 +162,10 @@ class SiswaController extends BaseController
 
     public function sertifikat()
     {
-        $data = ['title' => 'Sertifikat dan Level'];
+        $data = [
+            'title' => 'Sertifikat dan Level',
+            'sertifikat' => $this->sertifikatModel->findAll(),
+        ];
         $this->renderViewDashboardSiswa('siswa/prestasi_nilai/sertifikat', $data);
     }
 }
