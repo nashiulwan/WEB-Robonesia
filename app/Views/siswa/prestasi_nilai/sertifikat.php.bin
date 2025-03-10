@@ -1,0 +1,361 @@
+<?= $this->extend('admin/layout') ?>
+
+<?= $this->section('content') ?>
+<style>
+  .table-detail tbody tr:nth-of-type(odd) {
+    background-color: rgba(78, 115, 223, 0.1) !important;
+  }
+
+  .table-detail tbody tr:nth-of-type(even) {
+    background-color: white !important;
+  }
+
+  .table-account tbody tr:nth-of-type(odd) {
+    background-color: white !important;
+  }
+
+  .table-account tbody tr:nth-of-type(even) {
+    background-color: rgba(78, 115, 223, 0.1) !important;
+  }
+
+  #previewContainer,
+  #existingFilesContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+    justify-content: center;
+  }
+
+  .preview-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    max-width: 15rem;
+    height: 14rem;
+    padding: 4px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #f9f9f9;
+    cursor: pointer;
+  }
+
+  .preview-container img,
+  .preview-container embed {
+    max-width: 100%;
+    max-height: 13rem;
+    object-fit: contain;
+  }
+
+  .remove-existing-file {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    background: rgba(255, 0, 0, 0.8);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 1.5rem;
+    height: 1.5rem;
+    font-size: 0.8rem;
+    line-height: 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    z-index: 2;
+  }
+
+  /* Modal CSS */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+
+  .modal-content {
+    position: relative;
+    margin: 1rem auto;
+    padding: 0;
+    height: 90%;
+    width: 80%;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Container untuk PDF render */
+  #pdfViewer {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+  }
+
+  /* Gambar */
+  .modal-content img {
+    max-height: 90vh;
+    display: block;
+    margin: auto;
+    object-fit: contain;
+  }
+
+  #modalContent {
+    flex: 1;
+    position: relative;
+  }
+
+  .close {
+    position: absolute;
+    top: 4px;
+    right: 10px;
+    color: white;
+    background: black;
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 10001;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.9);
+  }
+
+  .btn-download {
+    position: absolute;
+    bottom: 4px;
+    left: 10px;
+  }
+
+  /* Responsive adjustments untuk mobile */
+  @media (max-width: 576px) {
+    .modal-content {
+      width: 95%;
+      height: 95%;
+      margin: 0.5rem auto;
+    }
+
+    .preview-container {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .preview-container img,
+    .preview-container embed {
+      max-height: 10rem;
+    }
+  }
+</style>
+
+<div class="container-fluid my-4">
+  <h1 class="h3 mb-4 text-gray-800">Detail Sertifikat</h1>
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <table class="table table-borderless table-striped table-detail" style="color: black;">
+        <tr>
+          <th style="width:35%;">Deskripsi</th>
+          <td><?= esc($sertifikat['deskripsi']) ?></td>
+        </tr>
+        <tr>
+          <th>Sasaran Sertifikat</th>
+          <td><?= esc($sertifikat['target_type']) ?></td>
+        </tr>
+        <tr>
+          <th>Penerima</th>
+          <td><?= esc($sertifikat['penerima']) ?></td>
+        </tr>
+      </table>
+
+      <!-- Modal -->
+      <div id="fileModal" class="modal">
+        <div class="modal-content">
+          <span id="closeModal" class="close">&times;</span>
+          <!-- Konten modal akan diisi dinamis via JS -->
+          <div id="modalContent"></div>
+        </div>
+      </div>
+
+      <!-- Daftar File -->
+      <div class="form-group mb-3">
+        <label>File Sertifikat:</label>
+        <div id="existingFilesContainer" class="mt-2">
+          <?php
+          $existingFiles = json_decode($sertifikat['nama_file'], true);
+          if (!empty($existingFiles)):
+            foreach ($existingFiles as $file):
+              $ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+              $fileUrl = base_url('uploads/sertifikat/' . $file);
+              $fileType = ($ext === 'pdf') ? 'application/pdf' : 'image/' . $ext;
+          ?>
+              <div class="preview-container" onclick="openModal('<?= $fileUrl ?>', '<?= $fileType ?>')">
+                <?php if (in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'svg'])): ?>
+                  <img src="<?= $fileUrl ?>" alt="Preview">
+                <?php elseif ($ext === 'pdf'): ?>
+                  <embed src="<?= $fileUrl ?>" type="application/pdf" style="height:13rem;">
+                <?php else: ?>
+                  <i class="fas fa-file"></i>
+                <?php endif; ?>
+                <p style="font-size:0.8rem; word-break: break-word; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding-top: 5px; margin-bottom: 2px; width: 90%;">
+                  <?= esc($file) ?>
+                </p>
+              </div>
+          <?php
+            endforeach;
+          endif;
+          ?>
+        </div>
+      </div>
+
+      <a href="<?= base_url('admin/sertifikat') ?>" class="btn btn-warning">Kembali</a>
+    </div>
+  </div>
+</div>
+<!-- CDN PDF.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.worker.min.js"></script>
+
+<!-- Jquery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+  // UTAMA: Buka modal atau tab baru berdasarkan ukuran layar
+  function openModal(dataUrl, fileType) {
+    const isMobile = (window.innerWidth <= 768); // batas layar mobile
+
+    // Jika PDF
+    if (fileType === "application/pdf") {
+      if (isMobile) {
+        // Render PDF di modal dengan PDF.js
+        showPdfModal(dataUrl);
+      } else {
+        // Desktop -> Buka di tab baru
+        window.open(dataUrl, "_blank");
+      }
+    }
+    // Jika gambar
+    else if (fileType.startsWith("image/")) {
+      showImageModal(dataUrl);
+    }
+    // File lain
+    else {
+      alert("Preview tidak tersedia untuk file ini. Silakan unduh langsung.");
+    }
+  }
+
+  // =========== MODAL UNTUK GAMBAR ==============
+  function showImageModal(imgUrl) {
+    const modal = document.getElementById("fileModal");
+    const modalContent = document.getElementById("modalContent");
+    modalContent.innerHTML = "";
+
+    // Buat elemen gambar
+    const img = document.createElement("img");
+    img.src = imgUrl;
+    img.style.height = "100%";
+    img.style.width = "auto";
+    img.style.display = "block";
+    img.style.margin = "auto";
+    modalContent.appendChild(img);
+
+    // Tombol unduh
+    const downloadButton = document.createElement("a");
+    downloadButton.href = imgUrl;
+    downloadButton.download = "image_download";
+    downloadButton.textContent = "Download Gambar";
+    downloadButton.className = "btn-download btn btn-primary download-btn";
+    modalContent.appendChild(downloadButton);
+
+    modal.style.display = "block";
+  }
+
+  // =========== MODAL UNTUK PDF (MOBILE) MENGGUNAKAN PDF.js ==============
+  function showPdfModal(pdfUrl) {
+    const modal = document.getElementById("fileModal");
+    const modalContent = document.getElementById("modalContent");
+    modalContent.innerHTML = `
+      <div id="pdfViewer" style="width: 100%; height: 100%; overflow: auto;"></div>
+    `;
+
+    // Tombol unduh PDF
+    const downloadButton = document.createElement("a");
+    downloadButton.href = pdfUrl;
+    downloadButton.download = "sertifikat.pdf";
+    downloadButton.textContent = "Download PDF";
+    downloadButton.className = "btn-download btn btn-primary download-btn";
+    modalContent.appendChild(downloadButton);
+
+    // Render PDF dengan PDF.js
+    renderPDF(pdfUrl);
+
+    modal.style.display = "block";
+  }
+
+  // =========== FUNGSI RENDER PDF.js ============
+  async function renderPDF(pdfUrl) {
+    // Akses library PDF.js
+    const pdfjsLib = window['pdfjs-dist/build/pdf'];
+
+    // Set lokasi worker PDF.js (wajib)
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+      "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.worker.min.js";
+
+    try {
+      // Memuat dokumen PDF
+      const pdf = await pdfjsLib.getDocument(pdfUrl).promise;
+      const viewer = document.getElementById("pdfViewer");
+      viewer.innerHTML = ""; // Bersihkan isi
+
+      // Loop semua halaman
+      for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+        const page = await pdf.getPage(pageNum);
+        const scale = 1.0; // Zoom 100%
+        const viewport = page.getViewport({
+          scale
+        });
+
+        // Buat canvas untuk render
+        const canvas = document.createElement("canvas");
+        const context = canvas.getContext("2d");
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+
+        // Render halaman PDF ke canvas
+        await page.render({
+          canvasContext: context,
+          viewport
+        }).promise;
+
+        // Tambahkan canvas ke viewer
+        viewer.appendChild(canvas);
+      }
+    } catch (err) {
+      console.error("Error rendering PDF:", err);
+      const viewer = document.getElementById("pdfViewer");
+      viewer.innerHTML = "<p style='color:red;'>Gagal memuat PDF. Silakan unduh saja.</p>";
+    }
+  }
+
+  // =========== TUTUP MODAL =============
+  function closeModal() {
+    document.getElementById("fileModal").style.display = "none";
+  }
+
+  document.getElementById("closeModal").addEventListener("click", closeModal);
+  window.addEventListener("click", function(event) {
+    const modal = document.getElementById("fileModal");
+    if (event.target === modal) {
+      closeModal();
+    }
+  });
+</script>
+<?= $this->endSection() ?>
