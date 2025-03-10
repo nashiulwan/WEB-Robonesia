@@ -28,17 +28,24 @@
             </a>
         </li>
 
+        <!-- Nav Item - Profil -->
+        <li class="nav-item">
+            <a class="nav-link" href="<?= base_url('siswa/kelas'); ?>">
+                <i class="fas fa-chalkboard"></i>         
+                <span>Kelas Saya</span>
+            </a>
+        </li>
+
         <!-- Menu Prestasi & Pencapaian -->
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePrestasi" aria-expanded="true" aria-controls="collapsePrestasi">
                 <i class="fas fa-fw fa-award"></i>
-                <span>Prestasi dan Nilai</span>
+                <span>Prestasi dan Sertifikat</span>
             </a>
             <div id="collapsePrestasi" class="collapse" aria-labelledby="headingPrestasi" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="<?= base_url('siswa/project-dan-nilai'); ?>">Project dan Nilai</a>
-                    <a class="collapse-item" href="<?= base_url('siswa/sertifikat'); ?>">Sertifikat yang Diperoleh</a>
                     <a class="collapse-item" href="<?= base_url('siswa/prestasi'); ?>">Daftar Prestasi</a>
+                    <a class="collapse-item" href="<?= base_url('siswa/sertifikat'); ?>">Sertifikat yang Diperoleh</a>
                 </div>
             </div>
         </li>
