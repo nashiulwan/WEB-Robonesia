@@ -1,4 +1,4 @@
-<?= $this->extend('admin/layout') ?>
+<?= $this->extend('guru/layout') ?>
 
 <?= $this->section('content') ?>
 <style>
@@ -317,7 +317,7 @@
                         <?php endif; ?> -->
 
                         <div class=" card-body shadow d-flex flex-column py-1">
-                            <a href="<?= base_url('admin/manage_kelas/kelola_anggota/detail/' . esc($kelas['id'])); ?>" class="stretched-link">
+                            <a href="<?= base_url('guru/manage_kelas/kelola_anggota/detail/' . esc($kelas['id'])); ?>" class="stretched-link">
 
                                 <div class="card-grow card-content">
                                     <h4 class="card-title font-weight-bold"><?= esc($kelas['nama_kelas']); ?></h4>

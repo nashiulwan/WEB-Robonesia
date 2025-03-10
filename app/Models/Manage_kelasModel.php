@@ -61,8 +61,8 @@ class Manage_kelasModel extends Model
     public function removeAnggota($kelasId, $userId)
     {
         return $this->db->table($this->tableAnggota)
-            ->where('kelas_id', $kelasId)
-            ->where('user_id', $userId)
+            ->where('id_kelas', $kelasId)
+            ->where('id_user', $userId)
             ->delete();
     }
 
