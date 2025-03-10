@@ -18,6 +18,7 @@ class SiswaController extends BaseController
     protected $userPrestasiModel;
     protected $kelasModel;
     protected $user;
+    protected $galeriSiswaModel;
     protected $sertifikatModel;
 
     public function __construct()
@@ -27,6 +28,7 @@ class SiswaController extends BaseController
         $this->userPrestasiModel = new UserPrestasiModel();
         $this->kelasModel = new Manage_kelasModel();
         $this->sertifikatModel = new SertifikatModel();
+        $this->galeriSiswaModel = new GaleriSiswaModel();
 
         // Mendapatkan user yang sedang login
         $auth = service('authentication');
@@ -228,7 +230,7 @@ class SiswaController extends BaseController
 
     public function galeriDetail($level, $subLevel = null)
     {
-        $galeriModel = new GaleriSiswaModel();
+        $galeriModel = $this->galeriSiswaModel;
         $userId = $this->user->id;
 
         // Ambil gambar berdasarkan level dan sublevel (jika ada)
@@ -259,10 +261,51 @@ class SiswaController extends BaseController
 
     public function sertifikat()
     {
+        $userId = $this->user->id;
+
+        // Sertifikat Berdasarkan User
+        $sertifikatUser = $this->sertifikatModel->getSertifikatByUser($userId);
+
+        // Sertifikat Berdasarkan Prestasi
+        $prestasiUser = $this->userPrestasiModel
+            ->select('prestasi.id, prestasi.nama_kegiatan')
+            ->join('prestasi', 'prestasi.id = user_prestasi.prestasi_id')
+            ->where('user_prestasi.user_id', $userId)
+            ->findAll();
+        $sertifikatPrestasi = [];
+        foreach ($prestasiUser as $prestasi) {
+            $sertifikatPrestasi[$prestasi['nama_kegiatan']] = $this->sertifikatModel->getSertifikatByPrestasi($prestasi['id']);
+        }
+
+        // Sertifikat Berdasarkan Kelas
+        $kelasUser = $this->kelasModel->getClassesByUserId($userId);
+        $sertifikatKelas = [];
+        foreach ($kelasUser as $kelas) {
+            $sertifikatKelas[$kelas['nama_kelas']] = $this->sertifikatModel->getSertifikatByKelas($kelas['id']);
+        }
+
         $data = [
-            'title' => 'Sertifikat dan Level',
-            'sertifikat' => $this->sertifikatModel->findAll(),
+            'title' => 'Sertifikat',
+            'sertifikatUser' => $sertifikatUser,
+            'sertifikatPrestasi' => $sertifikatPrestasi,
+            'sertifikatKelas' => $sertifikatKelas,
         ];
+
         $this->renderViewDashboardSiswa('siswa/prestasi_nilai/sertifikat', $data);
     }
+
+<<<<<<< HEAD
+    public function kelasSaya()
+    {
+        $userId = $this->user->id;
+
+        $data = [
+            'title'         => 'Kelas Saya',
+            'kelasSaya'     => $this->kelasModel->getClassesByUserId($userId),
+        ];
+
+        $this->renderViewDashboardSiswa('siswa/kelas_saya/index', $data);
+    }
+=======
+>>>>>>> a9521ec81ebb769cf9a9ae44f0f74b80148e4926
 }

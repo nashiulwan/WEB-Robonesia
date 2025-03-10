@@ -57,10 +57,10 @@ $routes->group('auth', function ($routes) {
 
 $routes->group('admin', ['filter' => 'auth'], function ($routes) {
     // Routes untuk admin area (protected dengan filter auth)
-    $routes->get('dashboard', 'GuruController::dashboard', ['filter' => 'role:admin']);
-    $routes->get('pengguna', 'GuruController::pengguna', ['filter' => 'role:admin']);
-    $routes->get('pengaturan', 'GuruController::pengaturan', ['filter' => 'role:admin']);
-    $routes->get('analytics', 'GuruController::analytics', ['filter' => 'role:admin']);
+    $routes->get('dashboard', 'AdminController::dashboard', ['filter' => 'role:admin']);
+    $routes->get('pengguna', 'AdminController::pengguna', ['filter' => 'role:admin']);
+    $routes->get('pengaturan', 'AdminController::pengaturan', ['filter' => 'role:admin']);
+    $routes->get('analytics', 'AdminController::analytics', ['filter' => 'role:admin']);
 
     // Routes untuk profil
     $routes->get('profil', 'ProfilController::index', ['filter' => 'role:admin']);
@@ -220,11 +220,14 @@ $routes->group('siswa', ['filter' => 'auth'], function ($routes) {
     $routes->post('profil/update', 'SiswaProfilController::update', ['filter' => 'role:siswa']);
 
     $routes->get('kelas', 'SiswaController::kelasSaya', ['filter' => 'role:siswa']);
+<<<<<<< Updated upstream
     $routes->get('kelas/detail/(:num)', 'SiswaController::kelasSayaDetail/$1', ['filter' => 'role:siswa']);
     $routes->get('gabung-kelas', 'SiswaController::gabungKelas', ['filter' => 'role:siswa']);
     $routes->get('kelas/search', 'SiswaController::kelasSearch', ['filter' => 'role:siswa']);
     $routes->get('kelas/gabung/(:num)/(:num)', 'SiswaController::kelasGabung/$1/$2', ['filter' => 'role:siswa']);
     $routes->post('kelas/keluar/(:num)/(:num)', 'SiswaController::kelasKeluar/$1/$2', ['filter' => 'role:siswa']);
+=======
+>>>>>>> Stashed changes
 
     $routes->get('project-dan-nilai', 'SiswaController::projectNilai', ['filter' => 'role:siswa']);
 

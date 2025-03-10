@@ -86,7 +86,11 @@ class PagesController extends BaseController
 
     public function shop()
     {
-        $data = ['title' => 'Robonesia | Shop',];
+        $data = [
+            'title' => 'Robonesia | Shop',
+            'shop' => $this->shopModel->findAll(),
+            'kontak' => $this->kontakModel->findAll()
+        ];
         $this->renderView('pages/shop', $data);
     }
 }
