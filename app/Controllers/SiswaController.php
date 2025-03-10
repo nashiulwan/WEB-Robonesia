@@ -293,19 +293,4 @@ class SiswaController extends BaseController
 
         $this->renderViewDashboardSiswa('siswa/prestasi_nilai/sertifikat', $data);
     }
-
-<<<<<<< HEAD
-    public function kelasSaya()
-    {
-        $userId = $this->user->id;
-
-        $data = [
-            'title'         => 'Kelas Saya',
-            'kelasSaya'     => $this->kelasModel->getClassesByUserId($userId),
-        ];
-
-        $this->renderViewDashboardSiswa('siswa/kelas_saya/index', $data);
-    }
-=======
->>>>>>> a9521ec81ebb769cf9a9ae44f0f74b80148e4926
 }
