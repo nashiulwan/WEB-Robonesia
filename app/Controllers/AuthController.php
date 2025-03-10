@@ -93,6 +93,9 @@ class AuthController extends Controller
             $redirectURL = site_url('/admin/dashboard');
         } elseif ($authz->inGroup('siswa', $userId)) {
             $redirectURL = site_url('/siswa/dashboard');
+        }
+            elseif ($authz->inGroup('guru', $userId)) {
+                $redirectURL = site_url('/guru/dashboard');
         } else {
             $redirectURL = site_url('/'); // Redirect ke halaman utama jika role tidak dikenal
         }

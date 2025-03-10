@@ -70,7 +70,7 @@
   <div id="wrapper">
 
     <!-- Sidebar -->
-    <?= $this->include('admin/templates/sidebar'); ?>
+    <?= $this->include('guru/templates/sidebar'); ?>
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
@@ -80,7 +80,7 @@
       <div id="content">
 
         <!-- Topbar -->
-        <?= $this->include('admin/templates/topbar'); ?>
+        <?= $this->include('guru/templates/topbar'); ?>
         <!-- End of Topbar -->
 
         <!-- Begin Page Content -->

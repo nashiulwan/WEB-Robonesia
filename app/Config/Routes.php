@@ -334,12 +334,12 @@ $routes->group('guru', ['filter' => 'auth'], function ($routes) {
     $routes->post('sertifikat/kelas/delete/(:num)/(:num)', 'GuruController::sertifikatKelasDeleteSertifikat/$1/$2', ['filter' => 'role:guru']);
 
     //Routes untuk Galeri Siswa
-    $routes->get('galeri', 'GuruController::indexGaleri', ['filter' => 'role:guru']);
-    $routes->get('galeri/detail/(:num)', 'GuruController::detailGaleri/$1', ['filter' => 'role:guru']);
-    $routes->get('galeri/tambah/(:num)', 'GuruController::tambahGaleri/$1', ['filter' => 'role:guru']);
-    $routes->post('galeri/simpan/(:num)', 'GuruController::simpanGaleri/$1', ['filter' => 'role:guru']);
-    $routes->get('galeri/edit/(:num)/(:num)', 'GuruController::editGaleri/$1/$2', ['filter' => 'role:guru']);
-    $routes->post('galeri/update/(:num)/(:num)', 'GuruController::updateGaleri/$1/$2', ['filter' => 'role:guru']);
-    $routes->post('galeri/delete/(:num)/(:num)', 'GuruController::deleteGaleri/$1/$2', ['filter' => 'role:guru']);
+    $routes->get('galeri', 'GuruGaleriSiswaController::indexGaleri', ['filter' => 'role:guru']);
+    $routes->get('galeri/detail/(:num)', 'GuruGaleriSiswaController::detailGaleri/$1', ['filter' => 'role:guru']);
+    $routes->get('galeri/tambah/(:num)', 'GuruGaleriSiswaController::tambahGaleri/$1', ['filter' => 'role:guru']);
+    $routes->post('galeri/simpan/(:num)', 'GuruGaleriSiswaController::simpanGaleri/$1', ['filter' => 'role:guru']);
+    $routes->get('galeri/edit/(:num)/(:num)', 'GuruGaleriSiswaController::editGaleri/$1/$2', ['filter' => 'role:guru']);
+    $routes->post('galeri/update/(:num)/(:num)', 'GuruGaleriSiswaController::updateGaleri/$1/$2', ['filter' => 'role:guru']);
+    $routes->post('galeri/delete/(:num)/(:num)', 'GuruGaleriSiswaController::deleteGaleri/$1/$2', ['filter' => 'role:guru']);
 
 });
