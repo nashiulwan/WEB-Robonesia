@@ -65,9 +65,10 @@
             <thead style="color: black; background-color:#2222">
                 <tr>
                     <th style="width: 5%;">No</th>
-                    <th style="width: 25%;">Username</th>
-                    <th style="width: 35%;">Nama</th>
-                    <th style="width: 30%;">Email</th>
+                    <th style="width: 20%;">Username</th>
+                    <th style="width: 20%;">Email</th>
+                    <th style="width: 25%;">Nama</th>
+                    <th style="width: 25%;">Asal Sekolah</th>
                     <th style="width: 5%;">Aksi</th>
                 </tr>
             </thead>
@@ -78,8 +79,9 @@
                         <tr class="bg-green">
                             <td><?= $no++; ?></td>
                             <td><?= esc($member['username']); ?></td>
-                            <td><?= esc($member['fullname']); ?></td>
                             <td><?= esc($member['email']); ?></td>
+                            <td><?= esc($member['fullname']); ?></td>
+                            <td><?= esc($member['asal_sekolah']); ?></td>
                             <td>
                                 <form action="<?= base_url('guru/manage_kelas/kelola_anggota/hapus/' . esc($member['anggota_id'])); ?>" method="post" style="display:inline;" onsubmit="return confirm('Hapus anggota ini?');">
                                     <?= csrf_field(); ?>

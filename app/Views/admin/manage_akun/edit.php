@@ -143,6 +143,15 @@
         </div>
 
         <div class="form-group">
+            <label for="asal_sekolah">Asal Sekolah</label>
+            <input type="text" name="asal_sekolah" id="asal_sekolah" class="form-control" value="<?= old('asal_sekolah', $users['asal_sekolah']) ?>">
+        </div>
+
+        <div class="form-group">
+            <label for="kelas">Kelas</label>
+            <input type="text" name="kelas" id="kelas" class="form-control" value="<?= old('kelas', $users['kelas']) ?>">
+        </div>
+        <div class="form-group">
             <label for="role">Hak Akses</label>
             <select class="custom-select" name="role" required>
                 <option value="1" <?= ($role == '1') ? 'selected' : '' ?>>Admin</option>

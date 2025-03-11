@@ -47,9 +47,10 @@
                 <tr>
                     <th style="width: 5%;">No</th>
                     <th style="width: 15%;">Nama pengguna</th>
-                    <th style="width: 28%;">Email</th>
-                    <th style="width: 30%;">Nama Lengkap</th>
-                    <th style="width: 12%;">
+                    <th style="width: 21%;">Email</th>
+                    <th style="width: 20%;">Nama Lengkap</th>
+                    <th style="width: 20%;">Asal Sekolah</th>
+                    <th style="width: 14%;">
                         Hak Akses
                         <!-- Filter Hak Akses dengan button dropdown -->
                         <div class="dropdown d-inline">
@@ -90,7 +91,7 @@
                             </ul>
                         </div>
                     </th>
-                    <th style="width: 10%;">Aksi</th>
+                    <th style="width: 5%;">Aksi</th>
                 </tr>
             </thead>
             <tbody class="table-group-divider" style="color: black;">
@@ -101,6 +102,7 @@
                             <td class="text-break"><?= esc($row['username']); ?></td>
                             <td class="text-break"><?= esc($row['email']); ?></td>
                             <td class="text-break"><?= esc($row['fullname']); ?></td>
+                            <td class="text-break"><?= esc($row['asal_sekolah']); ?></td>
                             <td class="text-break">
                                 <!-- Update role per baris via AJAX -->
                                 <select class="form-select form-select-sm change-role" data-id="<?= $row['id']; ?>">

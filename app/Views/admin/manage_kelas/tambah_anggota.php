@@ -65,9 +65,10 @@
                         <thead class="table" style="color: black; background-color:#2222">
                             <tr>
                                 <th style="width: 5%;">No</th>
-                                <th style="width: 25%;">Nama Pengguna</th>
-                                <th style="width: 35%;">Email</th>
-                                <th style="width: 35%;">Nama Lengkap</th>
+                                <th style="width: 20%;">Nama Pengguna</th>
+                                <th style="width: 25%;">Email</th>
+                                <th style="width: 25%;">Nama Lengkap</th>
+                                <th style="width: 25%;">Asal Sekolah</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -78,6 +79,7 @@
                                     <td><?= esc($row['username']); ?></td>
                                     <td><?= esc($row['email']); ?></td>
                                     <td><?= esc($row['fullname']); ?></td>
+                            <td><?= esc($row['asal_sekolah']); ?></td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
@@ -110,9 +112,10 @@
             <thead class="table" style="color: black; background-color:#2222">
                 <tr>
                     <th style="width: 5%;">No</th>
-                    <th style="width: 25%;">Nama Pengguna</th>
-                    <th style="width: 30%;">Email</th>
-                    <th style="width: 35%;">Nama Lengkap</th>
+                    <th style="width: 20%;">Nama Pengguna</th>
+                    <th style="width: 25%;">Email</th>
+                    <th style="width: 25%;">Nama Lengkap</th>
+                    <th style="width: 20%;">Asal Sekolah</th>
                     <th style="width: 5%;">Aksi</th>
                 </tr>
             </thead>
@@ -125,6 +128,7 @@
                             <td><?= esc($row['username']); ?></td>
                             <td><?= esc($row['email']); ?></td>
                             <td><?= esc($row['fullname']); ?></td>
+                            <td><?= esc($row['asal_sekolah']); ?></td>
                             <td>
                                 <!-- Form untuk menambahkan anggota ke kelas -->
                                 <form action="<?= base_url('admin/manage_kelas/kelola_anggota/tambah_anggota'); ?>" method="post" onsubmit="return confirm('Tambah akun ini ke kelas?')">

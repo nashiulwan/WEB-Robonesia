@@ -69,7 +69,7 @@ class Manage_kelasModel extends Model
     public function getAnggotaByKelas($kelasId)
     {
         return $this->db->table($this->tableAnggota)
-            ->select('kelas_anggota.id as anggota_id, kelas_anggota.id_user, users.username, users.fullname, users.email')
+            ->select('kelas_anggota.id as anggota_id, kelas_anggota.id_user, users.username, users.fullname, users.email, users.asal_sekolah, users.kelas, users.alamat, users.nomor_telepon')
             ->join('users', 'users.id = kelas_anggota.id_user')
             ->where('kelas_anggota.id_kelas', $kelasId)
             ->get()

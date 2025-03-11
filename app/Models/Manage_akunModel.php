@@ -8,12 +8,12 @@ class Manage_akunModel extends Model
 {
     protected $table = 'users';
     protected $primaryKey = 'id';
-    protected $allowedFields = ['email', 'username', 'fullname', 'password_hash', 'user_image', 'created_at', 'updated_at', 'active'];
+    protected $allowedFields = ['email', 'username', 'fullname', 'password_hash', 'user_image', 'created_at', 'updated_at', 'active',  'asal_sekolah',  'kelas',  'alamat',  'nomor_telepon'];
 
     public function getAllUsersWithRoles()
     {
         return $this->db->table('users')
-            ->select("users.id, users.username, users.email, users.fullname, auth_groups_users.group_id AS role")
+            ->select("users.id, users.username, users.email, users.fullname, users.asal_sekolah, users.kelas, users.alamat, users.nomor_telepon, auth_groups_users.group_id AS role")
             ->join('auth_groups_users', 'auth_groups_users.user_id = users.id', 'left')
             ->get()
             ->getResultArray();

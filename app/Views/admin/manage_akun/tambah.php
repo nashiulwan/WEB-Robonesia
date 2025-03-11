@@ -77,6 +77,26 @@
         </div>
 
         <div class="form-group">
+            <label for="asal_sekolah">Asal Sekolah</label>
+            <input type="text" name="asal_sekolah" id="asal_sekolah" class="form-control <?= (session()->getFlashdata('errors') && array_key_exists('asal_sekolah', session()->getFlashdata('errors'))) ? 'is-invalid' : '' ?>" value="<?= old('asal_sekolah') ?>" placeholder="Masukkan asal sekolah" autocomplete="off">
+            <?php if (session()->getFlashdata('errors') && array_key_exists('asal_sekolah', session()->getFlashdata('errors'))) : ?>
+                <div class="invalid-feedback">
+                    <?= session()->getFlashdata('errors')['asal_sekolah'] ?>
+                </div>
+            <?php endif; ?>
+        </div>
+
+        <div class="form-group">
+            <label for="kelas">Kelas</label>
+            <input type="text" name="kelas" id="kelas" class="form-control <?= (session()->getFlashdata('errors') && array_key_exists('kelas', session()->getFlashdata('errors'))) ? 'is-invalid' : '' ?>" value="<?= old('kelas') ?>" placeholder="Masukkan kelas" autocomplete="off">
+            <?php if (session()->getFlashdata('errors') && array_key_exists('kelas', session()->getFlashdata('errors'))) : ?>
+                <div class="invalid-feedback">
+                    <?= session()->getFlashdata('errors')['kelas'] ?>
+                </div>
+            <?php endif; ?>
+        </div>
+
+        <div class="form-group">
             <label for="role">Hak Akses</label>
             <select class="custom-select" name="role">
                 <option value="" disabled selected>Pilih Role</option>
