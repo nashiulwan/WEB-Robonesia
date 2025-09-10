@@ -1,6 +1,6 @@
 <ul class="navbar-nav bg-gradient-info sidebar sidebar-dark accordion" id="accordionSidebar">
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= base_url('admin/dashboard'); ?>">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= base_url('siswa/dashboard'); ?>">
         <div class="sidebar-brand-icon rotate-n-15">
             <img src="/image/logo-robonesia.png" alt="logo">
         </div>
@@ -46,7 +46,7 @@
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePrestasi" aria-expanded="true" aria-controls="collapsePrestasi">
                 <i class="fas fa-fw fa-award"></i>
-                <span>Prestasi dan Nilai</span>
+                <span>Prestasi dan Sertifikat</span>
             </a>
             <div id="collapsePrestasi" class="collapse" aria-labelledby="headingPrestasi" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
@@ -95,3 +95,13 @@
         </div>
     </li>
 </ul>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Cek lebar layar saat halaman dimuat
+  if (window.innerWidth < 500) {
+    // Collapse sidebar dengan menambahkan class 'toggled'
+    document.querySelector('.sidebar').classList.add('toggled');
+  }
+});
+</script>

@@ -62,12 +62,29 @@
         transition: transform 0.2s ease;
         width: 100%;
     }
+        @media (max-width: 440px) {
+      /* Mengatur jarak antartombol */
+      .category-buttons {
+        gap: 0.3rem !important; /* Silakan atur sesuai kebutuhan */
+      }
+    
+      /* Mengatur ukuran tombol */
+      .category-buttons a.btn {
+        font-size: 0.8rem;      /* Perkecil ukuran teks */
+        padding: 0.3rem 0.6rem; /* Perkecil padding */
+      }
+    
+      /* Mengatur ukuran ikon jika diperlukan */
+      .category-buttons i {
+        font-size: 0.9rem; /* Sesuaikan jika ikon terlalu besar */
+      }
+    }
 </style>
 <div class="container mt-5">
-    <h1 class="text-center mb-4" data-aos="fade-up" data-aos-duration="1000" style="margin-top: 8rem;"><?= esc($title) ?></h1>
+    <h1 class="text-center mb-4" data-aos="fade-up" data-aos-duration="1000" style="margin-top: 6rem;"><?= esc($title) ?></h1>
 
     <!-- Daftar Kategori -->
-    <div class="d-flex flex-wrap justify-content-center gap-2 mb-4"
+    <div class="category-buttons d-flex flex-wrap justify-content-center gap-2 mb-4"
         data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
         <!-- Tombol "Semua" selalu muncul -->
         <a href="<?= base_url('blog'); ?>" class="btn btn-outline-dark">

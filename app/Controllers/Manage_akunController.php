@@ -18,7 +18,8 @@ class Manage_akunController extends BaseController
     public function index()
     {
         if (!logged_in()) {
-            return redirect()->to('/login');
+                  return redirect()->to('/auth/login');
+
         }
 
         $manage_akunModel = new Manage_akunModel();
@@ -34,25 +35,26 @@ class Manage_akunController extends BaseController
 
     public function updateRole()
     {
-        if ($this->request->isAJAX()) {
+        //if ($this->request->isAJAX()) {
             $userId = $this->request->getPost('id');
-            $newRole = $this->request->getPost('role');
+            $role = $this->request->getPost('role');
 
             $manage_akunModel = new Manage_akunModel();
-            $update = $manage_akunModel->updateUserRole($userId, $newRole);
+            $update = $manage_akunModel->assignUserRole($userId, $role);
 
             if ($update) {
                 return $this->response->setJSON(['status' => 'success', 'message' => 'Role berhasil diperbarui']);
             } else {
                 return $this->response->setJSON(['status' => 'error', 'message' => 'Gagal memperbarui role']);
             }
-        }
+     //   }
     }
 
     public function tambah()
     {
         if (!logged_in()) {
-            return redirect()->to('/login');
+                  return redirect()->to('/auth/login');
+
         }
 
         $data = [
@@ -65,7 +67,8 @@ class Manage_akunController extends BaseController
     public function simpan()
     {
         if (!logged_in()) {
-            return redirect()->to('/login');
+                  return redirect()->to('/auth/login');
+
         }
 
         $manage_akunModel = new Manage_akunModel();
@@ -131,6 +134,7 @@ class Manage_akunController extends BaseController
             'updated_at'     => date('Y-m-d H:i:s'),
         ];
 
+        
         // Simpan user baru ke database
         if ($manage_akunModel->insert($data)) {
             $userId = $manage_akunModel->insertID(); // Ambil ID user yang baru disimpan
@@ -147,7 +151,8 @@ class Manage_akunController extends BaseController
     public function edit($id)
     {
         if (!logged_in()) {
-            return redirect()->to('/login');
+                  return redirect()->to('/auth/login');
+
         }
 
         $manage_akunmodel = new Manage_akunModel();
@@ -162,7 +167,7 @@ class Manage_akunController extends BaseController
         $data = [
             'title' => 'Edit Akun',
             'users' => $users,
-            'role'  => $role, // Kirim role ke view
+            'role'  => $role,
         ];
 
         return view('admin/manage_akun/edit', $data);
@@ -171,7 +176,8 @@ class Manage_akunController extends BaseController
     public function update($id)
     {
         if (!logged_in()) {
-            return redirect()->to('/login');
+                  return redirect()->to('/auth/login');
+
         }
 
         $manageAkunModel = new Manage_akunModel();
@@ -202,7 +208,7 @@ class Manage_akunController extends BaseController
                 'errors' => ['required' => 'Nama lengkap wajib diisi.']
             ],
             'role' => [
-                'rules' => 'required|in_list[1,2,3,0]',
+                'rules' => 'required',
                 'errors' => [
                     'required' => 'Hak akses harus dipilih.',
                     'in_list' => 'Hak akses tidak valid.'
@@ -229,17 +235,22 @@ class Manage_akunController extends BaseController
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
 
+        $role = $this->request->getPost('role') ?? '';
+
         // Ambil input password baru dari form
         $newPassword = $this->request->getPost('password');
         // Jika password tidak diisi, gunakan password lama
         $hashedPassword = !empty($newPassword) ? Password::hash($newPassword) : $user['password_hash'];
-
+        
+        $validRoles = ['1', '2', '3'];
+        $role = in_array($role, $validRoles) ? (int)$role : 2;
+        
         // Data yang akan diperbarui
         $data = [
             'username'      => $this->request->getPost('username'),
             'email'         => $this->request->getPost('email'),
             'fullname'      => $this->request->getPost('fullname'),
-            'role'          => $this->request->getPost('role'),
+            'role'          => $role,
             'asal_sekolah'  => $this->request->getPost('asal_sekolah'),
             'kelas'         => $this->request->getPost('kelas'),
             'password_hash' => $hashedPassword,
@@ -260,8 +271,9 @@ class Manage_akunController extends BaseController
             $data['user_image'] = $newFileName; // Update nama file baru di database
         }
 
-        // Jalankan update
         if ($manageAkunModel->update($id, $data)) {
+            $manageAkunModel->assignUserRole($id, $role);
+
             return redirect()->to('/admin/manage_akun')->with('success', 'Akun berhasil diperbarui!');
         } else {
             return redirect()->back()->withInput()->with('error', 'Gagal memperbarui akun, silakan coba lagi.');
@@ -273,7 +285,8 @@ class Manage_akunController extends BaseController
     public function delete($id)
     {
         if (!logged_in()) {
-            return redirect()->to('/login');
+                  return redirect()->to('/auth/login');
+
         }
 
         $manageModel = new Manage_akunModel();

@@ -16,10 +16,11 @@ class GuruGaleriSiswaController extends BaseController
     $this->userModel        = new UserModel();
   }
 
-  public function indexGaleri()
+  public function index()
   {
     if (!logged_in()) {
-      return redirect()->to('auth/login');
+                 return redirect()->to('/auth/login');
+
     }
     $users = $this->userModel->getUsersByRole(2);
 
@@ -36,10 +37,11 @@ class GuruGaleriSiswaController extends BaseController
   }
 
   // Menampilkan seluruh galeri berdasarkan user
-  public function detailGaleri($userId)
+  public function detail($userId)
   {
     if (!logged_in()) {
-      return redirect()->to('auth/login');
+                 return redirect()->to('/auth/login');
+
     }
     $user = $this->userModel->getUserById($userId);
     $galeri = $this->galeriSiswaModel->getGaleryByUserId($userId);
@@ -54,10 +56,11 @@ class GuruGaleriSiswaController extends BaseController
   }
 
   // Menampilkan form tambah
-  public function tambahGaleri($userId)
+  public function tambah($userId)
   {
     if (!logged_in()) {
-      return redirect()->to('auth/login');
+                 return redirect()->to('/auth/login');
+
     }
 
     $user = $this->userModel->getUserById($userId);
@@ -72,11 +75,12 @@ class GuruGaleriSiswaController extends BaseController
     return view('guru/galeri_siswa/tambah', $data);
   }
 
-  public function simpanGaleri($userId)
+  public function simpan($userId)
   {
     // Pastikan user sudah login
     if (!logged_in()) {
-      return redirect()->to('auth/login');
+                 return redirect()->to('/auth/login');
+
     }
 
     // Aturan validasi untuk input form
@@ -138,10 +142,11 @@ class GuruGaleriSiswaController extends BaseController
   }
 
   // Method untuk menampilkan detail 1 record galeri (edit/view detail) berdasarkan user dan galeri
-  public function detailGaleriGaleri($userId, $galeriId)
+  public function detailGaleri($userId, $galeriId)
   {
     if (!logged_in()) {
-      return redirect()->to('auth/login');
+                 return redirect()->to('/auth/login');
+
     }
     $user = $this->userModel->getUserById($userId);
     $galeri = $this->galeriSiswaModel->find($galeriId);
@@ -160,10 +165,11 @@ class GuruGaleriSiswaController extends BaseController
 
   // (Opsional) Method untuk menampilkan form edit
   // Jika Anda ingin menampilkan form edit dengan data yang sudah ada
-  public function editGaleri($userId, $galeriId)
+  public function edit($userId, $galeriId)
   {
     if (!logged_in()) {
-      return redirect()->to('auth/login');
+                 return redirect()->to('/auth/login');
+
     }
     $user = $this->userModel->getUserById($userId);
     $galeri = $this->galeriSiswaModel->find($galeriId);
@@ -179,10 +185,11 @@ class GuruGaleriSiswaController extends BaseController
   }
 
   // (Opsional) Method untuk mengupdate data edit
-  public function updateGaleri($userId, $galeriId)
+  public function update($userId, $galeriId)
   {
     if (!logged_in()) {
-      return redirect()->to('auth/login');
+                 return redirect()->to('/auth/login');
+
     }
 
     // Aturan validasi (gambar tidak wajib diunggah ulang)
@@ -248,10 +255,11 @@ class GuruGaleriSiswaController extends BaseController
 
 
   // Method untuk menghapus record galeri
-  public function deleteGaleri($userId, $galeriId)
+  public function delete($userId, $galeriId)
   {
     if (!logged_in()) {
-      return redirect()->to('auth/login');
+                 return redirect()->to('/auth/login');
+
     }
     $galeri = $this->galeriSiswaModel->find($galeriId);
     if (!$galeri) {

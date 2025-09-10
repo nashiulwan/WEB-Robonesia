@@ -7,6 +7,7 @@ use App\Models\Manage_akunModel;
 use App\Models\Manage_kelasModel;
 use App\Models\PrestasiSertifikatModel;
 use CodeIgniter\Controller;
+//use App\Libraries\GoogleAnalytics;
 
 
 class AdminController extends BaseController
@@ -32,9 +33,9 @@ class AdminController extends BaseController
         $prestasi = $this->prestasiSertifikatModel->findAll();
         $classes = $this->manageKelasModel->getAllClassesWithMemberCount();
 
-        $data = [
-            'title' => 'Daftar Kelas',
-        ];
+        // $data = [
+        //     'title' => 'Daftar Kelas',
+        // ];
         $data = [
             'title' => 'Dashboard',
             'jumlahArtikel' => $this->artikelModel->countAll(),
@@ -51,18 +52,17 @@ class AdminController extends BaseController
     // Method untuk Analytics
     public function analytics()
     {
-        $data['title'] = 'Analytics';
+        //$analytics = new GoogleAnalytics();
+        
+        $data = [
+            'title' => 'Analytics',
+            //'report' => $analytics->getReport(),
+        ];
+        
         // Bisa tambahkan data yang berhubungan dengan analitik
         return view('admin/analytics', $data);
     }
 
-    // Method untuk SEO
-    public function seo()
-    {
-        $data['title'] = 'SEO Settings';
-        // Bisa tambahkan data atau form terkait pengaturan SEO
-        return view('admin/seo', $data);
-    }
 
     // Method untuk Profil Pengguna
     public function pengguna()

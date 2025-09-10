@@ -1,4 +1,8 @@
 <style>
+.artikel-container-beranda{
+  padding: 2rem;
+}
+
   .text-truncate-custom {
     display: -webkit-box;
     -webkit-line-clamp: 4;
@@ -8,7 +12,18 @@
     text-overflow: ellipsis;
   }
 
-
+@media(max-width:760px){
+    
+.swiper-button-prev{
+    display: inline!important;
+}
+.swiper-button-next{
+    display: inline !important;
+}
+    .swipper-slide-button{
+        display: inline !important;
+    }
+}
   /* Grid Container */
   .grid-container {
     display: grid;
@@ -163,9 +178,10 @@
     .versi-610 {
       display: inline;
     }
+    
   }
 
-  @media (max-width: 575) {
+  @media (max-width: 575px) {
 
     .versi-normal,
     .versi-1100,
@@ -178,7 +194,30 @@
     .versi-575 {
       display: inline;
     }
+    
+      .judul-line1 {
+
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    /* Batasi ke 2 baris */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* Pastikan tinggi baris sesuai */
+    white-space: normal;
+    font-size: 1rem;
+
   }
+  .text-line1{
+      font-size: 0.9rem;
+  }
+  }
+  
+  @media (max-width:500px) {
+  .galleryimage {
+    height: 10rem !important;
+  }
+}
 
   .card-hover {
     cursor: pointer;
@@ -243,6 +282,8 @@
     transition: transform 0.2s ease;
     width: 100%;
   }
+}
+
 </style>
 
 <section>
@@ -302,9 +343,9 @@
   </header>
 
   <!-- ARTIKEL MULAI -->
-  <div class="artikel-container">
+  <div class="artikel-container-beranda">
 
-    <div class="row p-3">
+    <div class="row p-3 artikel_card">
       <?php if (!empty($artikel)) : ?>
         <!-- Line Pertama -->
         <div class="col-12 ">
@@ -328,7 +369,7 @@
 
                     <div class="card-body" style="height:200px;">
                       <h5 class="card-title judul-line1"><?= esc($row['judul']); ?></h5>
-                      <p class="card-text text-truncate-custom">
+                      <p class="card-text text-truncate-custom text-line1">
                         <?= esc(strip_tags($row['konten'])); ?>
                       </p>
                     </div>
@@ -729,63 +770,63 @@
     <div class="testimoni-card-wrapper">
       <ul class="testimoni-card-list swiper-wrapper">
         <li class="testimoni-card-item swiper-slide">
-          <a href="#" class="testimoni-card-link">
+          <div href="#" class="testimoni-card-link">
             <img src="image/testimoni-2.jpg" alt="" class="testimoni-card-image">
             <h5 class="testimoni-card-title" style="color:black">Peluang Emas bagi Lulusan & PKL SMK untuk Berkembang di Dunia Robotik</h5>
             <p class="testimoni-badge">Guru SMKN 11 Bandung</p>
             <p class="testimoni-card-text" style="color:black">Alhamdulillah, Robonesia membuka peluang untuk siswa/i lulusan atau PKL SMK untuk menjadi bagian dari pendidikan robotik, membuka peluang untuk berkembang dan berinovasi sesuai perkembangan teknologi yang berjalan pesat</p>
-            <button class="testimoni-card-button material-symbols-rounded">arrow_forward</button>
-          </a>
+            <!--<button class="testimoni-card-button material-symbols-rounded">arrow_forward</button>-->
+          </div>
         </li>
 
         <li class="testimoni-card-item swiper-slide">
-          <a href="#" class="testimoni-card-link">
+          <div href="#" class="testimoni-card-link">
             <img src="image/testimoni-3.jpg" alt="" class="testimoni-card-image">
             <h5 class="testimoni-card-title" style="color:black">Dari Hobi Ngoprek hingga Prestasi Internasional bersama Robonesia</h5>
             <p class="testimoni-badge">Orangtua Siswa</p>
             <p class="testimoni-card-text" style="color:black">Alhamdulillah bisa kenal dengan Robonesia. Anak saya bisa menyalurkan hobinya yang suka "ngoprek" apalagi sering diadain lomba, jadi terus terasah. Alhamdulillah juga bisa menambah pengalaman di kancah internasional. Semoga bisa terus berkembang dan maju</p>
-            <button class="testimoni-card-button material-symbols-rounded">arrow_forward</button>
-          </a>
+            <!--<button class="testimoni-card-button material-symbols-rounded">arrow_forward</button>-->
+          </div>
         </li>
 
         <li class="testimoni-card-item swiper-slide">
-          <a href="#" class="testimoni-card-link">
+          <div href="#" class="testimoni-card-link">
             <img src="image/testimoni-1.jpg" alt="" class="testimoni-card-image">
             <h5 class="testimoni-card-title" style="color:black">Belajar Coding Seru Bersama Kakak Mentor</h5>
             <p class="testimoni-badge">Siswa</p>
             <p class="testimoni-card-text" style="color:black">Aku senang sekali bisa belajar robotik di Robonesia. Bisa belajar coding dari kecil dan kakak-kakak pengajarannya seru. Terutama KaK Ali dan Kak Susan. Semoga aku bisa ikut lomba di Rusia.</p>
-            <button class="testimoni-card-button material-symbols-rounded">arrow_forward</button>
-          </a>
+            <!--<button class="testimoni-card-button material-symbols-rounded">arrow_forward</button>-->
+          </div>
         </li>
 
         <li class="testimoni-card-item swiper-slide">
-          <a href="#" class="testimoni-card-link">
+          <div href="#" class="testimoni-card-link">
             <img src="image/testimoni-4.jpg" alt="" class="testimoni-card-image">
             <h5 class="testimoni-card-title" style="color:black">Ekskul Robotik di Roboneisa: Seru, Interaktif, dan Dinantikan!</h5>
             <p class="testimoni-badge">Penanggung Jawab Ekskul Sekolah Alasba</p>
             <p class="testimoni-card-text" style="color:black">Kami sekolah sangat berterimakasih kepada Robonesia, ekskul ini sangat bagus sekali terutama untuk anak yang memang senang dunia robotik. Untuk materinya juga sangat bagus. anak tidak bosan. Sangat ditunggu sekali kalau robotik ekskulnya offline.</p>
-            <button class="testimoni-card-button material-symbols-rounded">arrow_forward</button>
-          </a>
+            <!--<button class="testimoni-card-button material-symbols-rounded">arrow_forward</button>-->
+          </div>
         </li>
 
         <li class="testimoni-card-item swiper-slide">
-          <a href="#" class="testimoni-card-link">
+          <div href="#" class="testimoni-card-link">
             <img src="image/testimoni-5.jpg" alt="" class="testimoni-card-image">
             <h5 class="testimoni-card-title" style="color:black">Ekskul Robotic telah sampai ke Lomba Internasional</h5>
             <p class="testimoni-badge">Penanggung Jawab Ekskul Sekolah Alam Gaharu</p>
             <p class="testimoni-card-text" style="color:black">Ekskul robotika di SAG berjalan dengan baik dan peserta setiap tahun selalu bertambah, kegiatan ekskul dikemas menarik melalui proyek bervariatif. Anak anak berkesempatan mengikuti lomba Internasional IYRC 2018 Thailand.</p>
-            <button class="testimoni-card-button material-symbols-rounded">arrow_forward</button>
-          </a>
+            <!--<button class="testimoni-card-button material-symbols-rounded">arrow_forward</button>-->
+          </div>
         </li>
 
         <li class="testimoni-card-item swiper-slide">
-          <a href="#" class="testimoni-card-link">
+          <div href="#" class="testimoni-card-link">
             <img src="image/testimoni-6.jpg" alt="" class="testimoni-card-image">
             <h5 class="testimoni-card-title" style="color:black">Belajar Robotik Seru, Bermimpi ke Rusia!</h5>
             <p class="testimoni-badge">Siswa</p>
             <p class="testimoni-card-text" style="color:black">Aku senang sekali bisa belajar robotik di Robonesia. Bisa belajar coding dari kecil dan kakak-kakak pengajarnya seru. Harapannya bisa mengikuti lomba di Rusia</p>
-            <button class="testimoni-card-button material-symbols-rounded">arrow_forward</button>
-          </a>
+            <!--<button class="testimoni-card-button material-symbols-rounded">arrow_forward</button>-->
+          </div>
         </li>
 
 
@@ -793,6 +834,7 @@
       <div class="swiper-pagination"></div>
       <div class="swipper-slide-button swiper-button-prev" style="margin-left: 1rem;"></div>
       <div class="swipper-slide-button swiper-button-next" style="margin-right: 1rem;"></div>
+      
     </div>
   </div>
 </section>

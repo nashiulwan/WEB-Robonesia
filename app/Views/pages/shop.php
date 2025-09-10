@@ -104,7 +104,7 @@
 </style>
 
 <div class="container mt-5">
-  <h1 class="text-center mb-4" data-aos="fade-up" data-aos-duration="1000" style="margin-top: 8rem;">SHOP</h1>
+  <h1 class="text-center mb-4" data-aos="fade-up" data-aos-duration="1000" style="margin-top: 6rem;">SHOP</h1>
 
   <!-- Form Pencarian -->
   <div class="mb-4 d-flex align-items-center">
@@ -136,8 +136,9 @@
             <div class="card-body-shop2">
               <div class="card-bottom">
                 <a href="<?= base_url('/shop/' . esc($row['nama_produk'])); ?>" class="btn">Selengkapnya</a>
-                <a target="_blank" href="<?= esc('https://api.whatsapp.com/send?phone=' . $kontak['no_hp'] . '&text=' . urlencode('Halo, saya tertarik dengan produk ' . $row['nama_produk'] . '. Apakah produk ini masih tersedia?')) ?>" class="btn-shop-wa">
-                  <i class="fas fa-cart-arrow-down"></i>
+               <a target="_blank" href="<?= esc('https://api.whatsapp.com/send?phone=' . $kontak['no_hp'] . '&text=' . urlencode('Halo, saya tertarik dengan produk ' . $row['nama_produk'] . '. Apakah produk ini masih tersedia? ' . base_url('shop/' . $row['nama_produk']))) ?>" class="btn-shop-wa">
+    <i class="fas fa-cart-arrow-down"></i>
+</a>
                 </a>
                 <!-- <a target="_blank" href="<?= esc('https://api.whatsapp.com/send?phone=' .  esc($kontak['no_hp']) . '&text=' . urlencode('Halo, saya tertarik dengan produk ' . $row['nama_produk'] . '. Apakah produk ini masih tersedia?' . ('uploads/shop/' . $row['gambar_produk']))) ?>" class="btn-shop-wa">
                   <i class="fas fa-cart-arrow-down"></i>

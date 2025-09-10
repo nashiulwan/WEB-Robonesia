@@ -14,7 +14,8 @@ class ProfilController extends BaseController
   public function index()
   {
     if (!logged_in()) {
-      return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
     }
 
     $userId = user_id();
@@ -22,7 +23,7 @@ class ProfilController extends BaseController
     $user = $profilModel->getUserById($userId);
 
     if (!$user) {
-      return redirect()->to('/login')->with('error', 'Akun tidak ditemukan.');
+      return redirect()->to('/auth/login')->with('error', 'Akun tidak ditemukan.');
     }
 
     $data = [
@@ -39,7 +40,8 @@ class ProfilController extends BaseController
   public function edit()
   {
     if (!logged_in()) {
-      return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
     }
 
     $userId = user_id();
@@ -67,7 +69,8 @@ class ProfilController extends BaseController
   public function update()
   {
     if (!logged_in()) {
-      return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
     }
 
     $userId = user_id();

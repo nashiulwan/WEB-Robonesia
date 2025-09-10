@@ -61,13 +61,13 @@
     <h2 class="text-center mb-4 fw-bold">Informasi Kelas Saya</h2>
     <div class="row justify-content-center">
         <?php if (!empty($kelasSaya)) : ?>
-            <div class="col-md-8">
+            <div class="col-md-8" style="z-index:0">
                 <!-- Swiper Container -->
-                <div class="swiper swiperKelas">
+                <div class="swiper swiperKelas" >
                     <div class="swiper-wrapper">
                         <?php foreach ($kelasSaya as $kelas) : ?>
                             <div class="swiper-slide">
-                                <div class="card shadow-lg border-0 p-4 rounded-4"
+                                <div class="card shadow-sm border-0 p-4"
                                      style="border-left: 8px solid 
                                             <?= ($kelas['level'] == 'Basic') ? '#1cc88a' : 
                                                 (($kelas['level'] == 'Intermediate') ? '#f6c23e' : '#e74a3b'); ?>;">
@@ -107,7 +107,7 @@
             </div>
         <?php else : ?>
             <div class="col-md-6">
-                <div class="alert alert-warning text-center p-4 rounded-4">
+                <div class="alert alert-warning text-center p-4 ">
                     <i class="fas fa-exclamation-triangle text-danger" style="font-size: 2.5rem;"></i>
                     <h5 class="mt-3">Anda belum terdaftar dalam kelas.</h5>
                 </div>
@@ -124,7 +124,7 @@
         <div class="swiper-wrapper">
             <?php foreach ($event_artikel as $artikel) : ?>
                 <div class="swiper-slide">
-                    <div class="card shadow-sm border-0 rounded-4">
+                    <div class="card shadow-sm border-0">
                         <?php if (!empty($artikel['gambar'])) : ?>
                             <img src="<?= base_url('uploads/' . esc($artikel['gambar'])); ?>" 
                                  class="card-img-top img-fluid rounded-top-4" 

@@ -37,17 +37,17 @@ if ($hour >= 5 && $hour < 12) {
       </a>
       <!-- Dropdown - User Information -->
       <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-        <a class="dropdown-item" href="#">
+        <a class="dropdown-item" href="<?= base_url('/admin/profil'); ?>">
           <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
           Profile
         </a>
-        <a class="dropdown-item" href="#">
-          <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-          Settings
+        <a class="dropdown-item" href="<?= base_url('/admin/artikel'); ?>">
+          <i class="fas fa-book fa-sm fa-fw mr-2 text-gray-400"></i>
+          Artikel
         </a>
-        <a class="dropdown-item" href="#">
-          <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-          Activity Log
+        <a class="dropdown-item" href="<?= base_url('/admin/shop'); ?>">
+          <i class="fas fa-store fa-sm fa-fw mr-2 text-gray-400"></i>
+          Shop
         </a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="<?= base_url('/logout'); ?>" data-toggle="modal" data-target="#logoutModal">

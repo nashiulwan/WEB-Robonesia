@@ -137,48 +137,48 @@ function scrollToTop() {
 }
 
 
-// HALAMAN TIM
-// ==================================================
-document.addEventListener('DOMContentLoaded', function () {
-  fetch('/api/tim')
-      .then(response => response.json())
-      .then(data => {
-          populateTeam(data);
-      })
-      .catch(error => console.error('Error fetching team data:', error));
-});
+// // HALAMAN TIM
+// // ==================================================
+// document.addEventListener('DOMContentLoaded', function () {
+//   fetch('/api/tim')
+//       .then(response => response.json())
+//       .then(data => {
+//           populateTeam(data);
+//       })
+//       .catch(error => console.error('Error fetching team data:', error));
+// });
 
-let teamMembers = [];
+// let teamMembers = [];
 
-function populateTeam(data) {
-  teamMembers = data;
-  updateTopSection(teamMembers[0]); // Tampilkan anggota pertama
+// function populateTeam(data) {
+//   teamMembers = data;
+//   updateTopSection(teamMembers[0]); // Tampilkan anggota pertama
 
-  const bottomPhotosContainer = document.getElementById('timContainerBottom');
-  bottomPhotosContainer.innerHTML = ''; // Hapus isi sebelumnya
+//   const bottomPhotosContainer = document.getElementById('timContainerBottom');
+//   bottomPhotosContainer.innerHTML = ''; // Hapus isi sebelumnya
 
-  teamMembers.forEach((member, index) => {
-      const img = document.createElement('img');
-      img.src = 'uploads/tim/' + member.foto;
-      img.alt = `Foto ${member.nama}`;
-      img.addEventListener('click', () => updateTopSection(teamMembers[index]));
-      bottomPhotosContainer.appendChild(img);
-  });
-}
+//   teamMembers.forEach((member, index) => {
+//       const img = document.createElement('img');
+//       img.src = 'uploads/tim/' + member.foto;
+//       img.alt = `Foto ${member.nama}`;
+//       img.addEventListener('click', () => updateTopSection(teamMembers[index]));
+//       bottomPhotosContainer.appendChild(img);
+//   });
+// }
 
-function updateTopSection(member) {
-  document.getElementById('timPhoto').src = 'uploads/tim/' + member.foto;
-  document.getElementById('timTopName').textContent = member.nama;
-  document.getElementById('timTopRole').textContent = member.peran;
+// function updateTopSection(member) {
+//   document.getElementById('timPhoto').src = 'uploads/tim/' + member.foto;
+//   document.getElementById('timTopName').textContent = member.nama;
+//   document.getElementById('timTopRole').textContent = member.peran;
 
-  const socialIcons = document.getElementById('timSocialIcon');
-  socialIcons.children[0].href = member.facebook;
-  socialIcons.children[1].href = member.whatsapp;
-  socialIcons.children[2].href = member.twitter;
-  socialIcons.children[3].href = member.instagram;
-}
+//   const socialIcons = document.getElementById('timSocialIcon');
+//   socialIcons.children[0].href = member.facebook;
+//   socialIcons.children[1].href = member.whatsapp;
+//   socialIcons.children[2].href = member.twitter;
+//   socialIcons.children[3].href = member.instagram;
+// }
 
-// ==================================================
+// // ==================================================
 
 
 

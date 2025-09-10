@@ -34,7 +34,7 @@
   }
 
   .preview-container img,
-  .preview-container embed {
+  .preview-container iframe {
     max-width: 100%;
     max-height: 13rem;
     object-fit: contain;
@@ -82,7 +82,7 @@
     flex-direction: column;
   }
 
-  .modal-content embed {
+  .modal-content iframe {
     width: 100%;
     height: 100%;
     flex-grow: 1;
@@ -172,7 +172,7 @@
               <?php if (in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'svg'])): ?>
                 <img src="<?= $fileUrl ?>" alt="Preview">
               <?php elseif ($ext === 'pdf'): ?>
-                <embed src="<?= $fileUrl ?>" type="application/pdf" style="height:13rem;">
+                    <iframe src="<?= $fileUrl ?>" width="100%" height="200px"></iframe>
               <?php else: ?>
                 <i class="fas fa-file"></i>
               <?php endif; ?>
@@ -214,108 +214,131 @@
 <!-- JQuery dan Script -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-  $(document).ready(function() {
+  // Fungsi untuk menghapus file existing
+  function removeExistingFile(button) {
+    $(button).closest('.preview-container').remove();
+  }
 
-    function openModal(dataUrl, fileType) {
-      var modal = document.getElementById("fileModal");
-      var modalContent = document.getElementById("modalContent");
-      modalContent.innerHTML = "";
-      if (fileType.startsWith("image/")) {
-        var img = document.createElement("img");
-        img.src = dataUrl;
-        img.style.height = "100%";
-        img.style.width = "auto";
-        img.style.display = "block";
-        img.style.margin = "auto";
-        modalContent.appendChild(img);
-        var downloadButton = document.createElement("a");
-        downloadButton.href = dataUrl;
-        downloadButton.download = "image_download";
-        downloadButton.textContent = "Download Gambar";
-        downloadButton.className = "btn-download btn btn-primary download-btn";
-        modalContent.appendChild(downloadButton);
-      } else if (fileType === "application/pdf") {
-        var embed = document.createElement("embed");
-        embed.src = dataUrl;
-        embed.type = "application/pdf";
-        embed.style.width = "100%";
-        embed.style.height = "100%";
-        modalContent.appendChild(embed);
-        var downloadButton = document.createElement("a");
-        downloadButton.href = dataUrl;
-        downloadButton.download = "sertifikat.pdf";
-        downloadButton.textContent = "Download PDF";
-        downloadButton.className = "btn-download btn btn-primary download-btn";
-        modalContent.appendChild(downloadButton);
-      } else {
-        modalContent.innerHTML = "<p class='text-center p-3'>Preview tidak tersedia untuk file ini.</p>";
-      }
-      modal.style.display = "block";
+  function openModal(dataUrl, fileType) {
+    var modal = document.getElementById("fileModal");
+    var modalContent = document.getElementById("modalContent");
+    modalContent.innerHTML = "";
+
+    if (fileType.startsWith("image/")) {
+      var img = document.createElement("img");
+      img.src = dataUrl;
+      img.style.height = "100%";
+      img.style.width = "auto";
+      img.style.display = "block";
+      img.style.margin = "auto";
+      modalContent.appendChild(img);
+
+      var downloadButton = document.createElement("a");
+      downloadButton.href = dataUrl;
+      downloadButton.download = "image_download";
+      downloadButton.textContent = "Download Gambar";
+      downloadButton.className = "btn-download btn btn-primary download-btn";
+      modalContent.appendChild(downloadButton);
+    }  else if (fileType === "application/pdf") {
+                        var iframe = document.createElement("iframe");
+                        iframe.src = dataUrl;
+                        iframe.style.width = "100%";
+                        iframe.style.height = "100%";
+                        iframe.style.border = "none";
+                        // Jika gagal memuat PDF, fallback ke Google Docs Viewer
+                        iframe.onerror = function() {
+                          iframe.src = "https://docs.google.com/viewer?url=" + encodeURIComponent(dataUrl) + "&embedded=true";
+                        };
+                        modalContent.appendChild(iframe);
+                        
+                        // Fallback text jika PDF tidak muncul
+                        var fallbackText = document.createElement("p");
+                        fallbackText.style.padding = "1rem";
+                        fallbackText.innerText = "Jika PDF tidak muncul, silakan unduh terlebih dahulu";
+                        modalContent.appendChild(fallbackText);
+                        
+                        // Tombol download
+                        var downloadButton = document.createElement("a");
+                        downloadButton.href = dataUrl;
+                        downloadButton.download = "sertifikat.pdf";
+                        downloadButton.textContent = "Download PDF";
+                        downloadButton.className = "btn-download btn btn-primary download-btn";
+                        modalContent.appendChild(downloadButton);
+                      
+    } else {
+      modalContent.innerHTML = "<p class='text-center p-3'>Preview tidak tersedia untuk file ini.</p>";
     }
 
-    function closeModal() {
-      document.getElementById("fileModal").style.display = "none";
+    modal.style.display = "block";
+  }
+
+  function closeModal() {
+    document.getElementById("fileModal").style.display = "none";
+  }
+
+  document.getElementById("closeModal").addEventListener("click", closeModal);
+  window.addEventListener("click", function(event) {
+    var modal = document.getElementById("fileModal");
+    if (event.target === modal) {
+      closeModal();
     }
+  });
 
-    document.getElementById("closeModal").addEventListener("click", closeModal);
-    window.addEventListener("click", function(event) {
-      var modal = document.getElementById("fileModal");
-      if (event.target == modal) {
-        closeModal();
-      }
-    });
+  // Preview file baru saat input file berubah
+  document.getElementById('nama_file').addEventListener('change', function() {
+    const previewContainer = document.getElementById('previewContainer');
+    previewContainer.innerHTML = '';
+    const files = this.files;
 
-    // Preview file baru saat input file berubah
-    document.getElementById('nama_file').addEventListener('change', function() {
-      const previewContainer = document.getElementById('previewContainer');
-      previewContainer.innerHTML = '';
-      const files = this.files;
-      for (let i = 0; i < files.length; i++) {
-        let file = files[i];
-        let container = document.createElement('div');
-        container.className = 'preview-container';
-        let dataUrl = '';
-        let reader = new FileReader();
-        reader.onload = function(e) {
-          dataUrl = e.target.result;
-          let previewElement;
-          if (file.type.startsWith('image/')) {
-            previewElement = document.createElement('img');
-            previewElement.src = dataUrl;
-          } else if (file.type === 'application/pdf') {
-            previewElement = document.createElement('embed');
-            previewElement.src = dataUrl;
-            previewElement.type = 'application/pdf';
-            previewElement.style.height = "13rem";
+    for (let i = 0; i < files.length; i++) {
+      let file = files[i];
+      let container = document.createElement('div');
+      container.className = 'preview-container';
+      let dataUrl = '';
+      let reader = new FileReader();
+
+      reader.onload = function(e) {
+        dataUrl = e.target.result;
+        let previewElement;
+        if (file.type.startsWith('image/')) {
+          previewElement = document.createElement('img');
+          previewElement.src = dataUrl;
+        } else if (file.type === 'application/pdf') {
+          previewElement = document.createElement('embed');
+          previewElement.src = dataUrl;
+          previewElement.type = 'application/pdf';
+          previewElement.style.height = "13rem";
+        } else {
+          previewElement = document.createElement('i');
+          previewElement.className = 'fas fa-file';
+          previewElement.style.height = "13rem";
+        }
+        container.insertBefore(previewElement, container.firstChild);
+        container.addEventListener('click', function() {
+          if (dataUrl) {
+            openModal(dataUrl, file.type);
           } else {
-            previewElement = document.createElement('i');
-            previewElement.className = 'fas fa-file';
-            previewElement.style.height = "13rem";
+            alert('File belum siap untuk preview.');
           }
-          container.insertBefore(previewElement, container.firstChild);
-          container.addEventListener('click', function() {
-            if (dataUrl) {
-              openModal(dataUrl, file.type);
-            } else {
-              alert('File belum siap untuk preview.');
-            }
-          });
-        };
-        reader.readAsDataURL(file);
-        let fileName = document.createElement('p');
-        fileName.textContent = file.name;
-        fileName.style.fontSize = '0.8rem';
-        fileName.style.wordBreak = 'break-word';
-        fileName.style.overflow = 'hidden';
-        fileName.style.textOverflow = 'ellipsis';
-        fileName.style.whiteSpace = 'nowrap';
-        fileName.style.paddingTop = '5px';
-        fileName.style.marginBottom = '2px';
-        fileName.style.width = '90%';
-        container.appendChild(fileName);
-        previewContainer.appendChild(container);
-      }
-    });
+        });
+      };
+
+      reader.readAsDataURL(file);
+
+      let fileName = document.createElement('p');
+      fileName.textContent = file.name;
+      fileName.style.fontSize = '0.8rem';
+      fileName.style.wordBreak = 'break-word';
+      fileName.style.overflow = 'hidden';
+      fileName.style.textOverflow = 'ellipsis';
+      fileName.style.whiteSpace = 'nowrap';
+      fileName.style.paddingTop = '5px';
+      fileName.style.marginBottom = '2px';
+      fileName.style.width = '90%';
+      container.appendChild(fileName);
+
+      previewContainer.appendChild(container);
+    }
   });
 </script>
 <?= $this->endSection() ?>

@@ -33,7 +33,7 @@
   }
 
   .preview-container img,
-  .preview-container embed {
+  .preview-container iframe {
     max-width: 100%;
     max-height: 13rem;
     object-fit: contain;
@@ -63,7 +63,7 @@
     flex-direction: column;
   }
 
-  .modal-content embed {
+  .modal-content iframe {
     width: 100%;
     height: 100%;
     flex-grow: 1;
@@ -179,21 +179,32 @@
       downloadButton.textContent = "Download Gambar";
       downloadButton.className = "btn-download btn btn-primary download-btn";
       modalContent.appendChild(downloadButton);
-    } else if (fileType === "application/pdf") {
-      var embed = document.createElement("embed");
-      embed.src = dataUrl;
-      embed.type = "application/pdf";
-      embed.style.width = "100%";
-      embed.style.height = "100%";
-      modalContent.appendChild(embed);
-
-      // Tambahkan tombol download untuk PDF
-      var downloadButton = document.createElement("a");
-      downloadButton.href = dataUrl;
-      downloadButton.download = "sertifikat.pdf"; // Nama default file
-      downloadButton.textContent = "Download PDF";
-      downloadButton.className = "btn-download btn btn-primary download-btn";
-      modalContent.appendChild(downloadButton);
+    }   else if (fileType === "application/pdf") {
+                        var iframe = document.createElement("iframe");
+                        iframe.src = dataUrl;
+                        iframe.style.width = "100%";
+                        iframe.style.height = "100%";
+                        iframe.style.border = "none";
+                        // Jika gagal memuat PDF, fallback ke Google Docs Viewer
+                        iframe.onerror = function() {
+                          iframe.src = "https://docs.google.com/viewer?url=" + encodeURIComponent(dataUrl) + "&embedded=true";
+                        };
+                        modalContent.appendChild(iframe);
+                        
+                        // Fallback text jika PDF tidak muncul
+                        var fallbackText = document.createElement("p");
+                        fallbackText.style.padding = "1rem";
+                        fallbackText.innerText = "Jika PDF tidak muncul, silakan unduh terlebih dahulu";
+                        modalContent.appendChild(fallbackText);
+                        
+                        // Tombol download
+                        var downloadButton = document.createElement("a");
+                        downloadButton.href = dataUrl;
+                        downloadButton.download = "sertifikat.pdf";
+                        downloadButton.textContent = "Download PDF";
+                        downloadButton.className = "btn-download btn btn-primary download-btn";
+                        modalContent.appendChild(downloadButton);
+                      
     } else {
       modalContent.innerHTML = "<p class='text-center p-3'>Preview tidak tersedia untuk file ini.</p>";
     }
@@ -245,8 +256,8 @@
           previewElement = document.createElement('img');
           previewElement.src = dataUrl;
         } else if (file.type === 'application/pdf') {
-          // Jika file PDF, tampilkan preview embed kecil
-          previewElement = document.createElement('embed');
+          // Jika file PDF, tampilkan preview kecil
+          previewElement = document.createElement('iframe');
           previewElement.src = dataUrl;
           previewElement.type = 'application/pdf';
           previewElement.style.height = "13rem";

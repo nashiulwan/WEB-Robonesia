@@ -83,3 +83,13 @@
         </div>
     </li>
 </ul>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Cek lebar layar saat halaman dimuat
+  if (window.innerWidth < 500) {
+    // Collapse sidebar dengan menambahkan class 'toggled'
+    document.querySelector('.sidebar').classList.add('toggled');
+  }
+});
+</script>

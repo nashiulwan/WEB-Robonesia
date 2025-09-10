@@ -45,9 +45,42 @@ class CaptchaLib
       imagesetpixel($image, rand(0, $width), rand(0, $height), $dotColor);
     }
 
-    // Tampilkan soal CAPTCHA
-    $question = "$num1 + $num2 = ?";
-    imagestring($image, 5, 25, 10, $question, $textColor);
+    // Set path ke file font TrueType (.ttf)
+    // Pastikan file font tersedia dan path-nya sudah benar
+    $fontPath = 'font/arial.ttf'; // Ubah path sesuai dengan lokasi file font di server Anda
+    $fontSize = 16; // Ukuran font
+    $x = 10;      // Koordinat x awal
+    $y = 30;      // Koordinat y sebagai baseline teks
+
+    /*
+      Komponen soal CAPTCHA:
+      - Angka dan tanda tanya akan dirotasi dengan sudut acak antara -15 dan 15 derajat.
+      - Tanda '+' dan '=' tidak dirotasi (sudut 0 derajat).
+    */
+    $components = [
+      ['text' => $num1,  'rotate' => true],
+      ['text' => ' + ',  'rotate' => false],
+      ['text' => $num2,  'rotate' => true],
+      ['text' => ' = ',  'rotate' => false],
+      ['text' => '?',   'rotate' => true],
+    ];
+
+    // Gambar masing-masing komponen dengan atau tanpa rotasi
+    foreach ($components as $component) {
+      // Jika 'rotate' true, pilih sudut acak antara -15 dan 15 derajat,
+      // jika tidak, gunakan sudut 0 derajat.
+      $angle = $component['rotate'] ? rand(-15, 15) : 0;
+
+      // Dapatkan bounding box untuk menentukan lebar teks
+      $bbox = imagettfbbox($fontSize, $angle, $fontPath, $component['text']);
+      $textWidth = abs($bbox[2] - $bbox[0]);
+
+      // Gambar teks dengan rotasi
+      imagettftext($image, $fontSize, $angle, $x, $y, $textColor, $fontPath, $component['text']);
+
+      // Perbarui posisi x untuk komponen selanjutnya (tambahkan spasi ekstra 5 piksel)
+      $x += $textWidth + 5;
+    }
 
     // Simpan gambar CAPTCHA dalam bentuk base64
     ob_start();
@@ -74,7 +107,6 @@ class CaptchaLib
     log_message('debug', 'Input CAPTCHA: ' . $input);
 
     // Pastikan input valid dan sesuai dengan CAPTCHA yang disimpan di session
-    // Menggunakan intval untuk memastikan bahwa input yang diberikan adalah angka
     if (intval($input) === intval($sessionCaptcha)) {
       $this->clearCaptcha(); // Hapus CAPTCHA setelah valid
       return true;
@@ -82,7 +114,6 @@ class CaptchaLib
 
     return false;
   }
-
 
   // Hapus CAPTCHA dari session setelah digunakan
   public function clearCaptcha()

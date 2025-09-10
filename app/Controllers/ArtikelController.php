@@ -18,7 +18,7 @@ class ArtikelController extends BaseController
     {
 
         if (!logged_in()) {
-            return redirect()->to('/login');
+            return redirect()->to('/auth/login');
         }
 
         $artikelModel = new ArtikelModel();
@@ -33,7 +33,8 @@ class ArtikelController extends BaseController
     public function tambah()
     {
         if (!logged_in()) {
-            return redirect()->to('/login');
+                        return redirect()->to('/auth/login');
+
         }
 
         $kategoriList = ['Berita', 'Kompetisi', 'Event', 'Belajar', 'Lainnya'];
@@ -49,7 +50,8 @@ class ArtikelController extends BaseController
     public function simpan()
     {
         if (!logged_in()) {
-            return redirect()->to('/login');
+                        return redirect()->to('/auth/login');
+
         }
 
         $artikelModel = new ArtikelModel();
@@ -121,7 +123,8 @@ class ArtikelController extends BaseController
     public function edit($id)
     {
         if (!logged_in()) {
-            return redirect()->to('/login');
+                        return redirect()->to('/auth/login');
+
         }
 
         $artikelModel = new ArtikelModel();
@@ -145,7 +148,8 @@ class ArtikelController extends BaseController
     public function update($id)
     {
         if (!logged_in()) {
-            return redirect()->to('/login');
+                        return redirect()->to('/auth/login');
+
         }
 
         $artikelModel = new ArtikelModel();
@@ -225,7 +229,8 @@ class ArtikelController extends BaseController
     public function delete($id)
     {
         if (!logged_in()) {
-            return redirect()->to('/login');
+                        return redirect()->to('/auth/login');
+
         }
 
         $artikelModel = new ArtikelModel();

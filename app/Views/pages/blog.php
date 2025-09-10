@@ -62,12 +62,31 @@
         transition: transform 0.2s ease;
         width: 100%;
     }
+    /* Contoh CSS tambahan untuk merapikan tombol kategori di bawah 440px */
+    
+    @media (max-width: 440px) {
+      /* Mengatur jarak antartombol */
+      .category-buttons {
+        gap: 0.3rem !important; /* Silakan atur sesuai kebutuhan */
+      }
+    
+      /* Mengatur ukuran tombol */
+      .category-buttons a.btn {
+        font-size: 0.8rem;      /* Perkecil ukuran teks */
+        padding: 0.3rem 0.6rem; /* Perkecil padding */
+      }
+    
+      /* Mengatur ukuran ikon jika diperlukan */
+      .category-buttons i {
+        font-size: 0.9rem; /* Sesuaikan jika ikon terlalu besar */
+      }
+    }
 </style>
 <div class="container mt-5">
-    <h1 class="text-center mb-4" data-aos="fade-up" data-aos-duration="1000" style="margin-top: 8rem;">BLOG</h1>
+    <h1 class="text-center mb-4" data-aos="fade-up" data-aos-duration="1000" style="margin-top: 6rem;">BLOG</h1>
 
     <!-- Daftar Kategori -->
-    <div class="d-flex flex-wrap justify-content-center gap-2 mb-4"
+    <div class="category-buttons d-flex flex-wrap justify-content-center gap-2 mb-4"
         data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
         <a href="<?= base_url('blog/kategori/berita'); ?>" class="btn btn-outline-primary">
             <i class="fas fa-newspaper"></i> Berita

@@ -23,7 +23,8 @@ class Manage_kelasController extends BaseController
    public function index()
     {
         if (!logged_in()) {
-            return redirect()->to('/login');
+                  return redirect()->to('/auth/login');
+
         }
 
         // Mengambil semua kelas beserta jumlah anggota
@@ -40,7 +41,8 @@ class Manage_kelasController extends BaseController
     public function tambah()
     {
         if (!logged_in()) {
-            return redirect()->to('/login');
+                  return redirect()->to('/auth/login');
+
         }
 
         $data = [
@@ -54,7 +56,8 @@ class Manage_kelasController extends BaseController
     public function simpan()
     {
         if (!logged_in()) {
-            return redirect()->to('/login');
+                  return redirect()->to('/auth/login');
+
         }
 
         // Validasi input
@@ -142,7 +145,8 @@ class Manage_kelasController extends BaseController
     public function edit($id)
     {
         if (!logged_in()) {
-            return redirect()->to('/login');
+                  return redirect()->to('/auth/login');
+
         }
 
         $kelas = $this->manageKelasModel->find($id);
@@ -158,7 +162,8 @@ class Manage_kelasController extends BaseController
     public function update($id)
     {
         if (!logged_in()) {
-            return redirect()->to('/login');
+                  return redirect()->to('/auth/login');
+
         }
 
         // Validasi input
@@ -216,7 +221,8 @@ class Manage_kelasController extends BaseController
     public function delete($id)
     {
         if (!logged_in()) {
-            return redirect()->to('/login');
+                  return redirect()->to('/auth/login');
+
         }
 
         $this->manageKelasModel->deleteKelas($id);
@@ -225,7 +231,8 @@ class Manage_kelasController extends BaseController
     public function kelola_anggota()
     {
         if (!logged_in()) {
-            return redirect()->to('/login');
+                  return redirect()->to('/auth/login');
+
         }
 
         // Mengambil semua kelas beserta jumlah anggota
@@ -248,7 +255,8 @@ class Manage_kelasController extends BaseController
     public function detail($id)
     {
         if (!logged_in()) {
-            return redirect()->to('/login');
+                  return redirect()->to('/auth/login');
+
         }
 
         // Ambil detail kelas (termasuk jumlah anggota)

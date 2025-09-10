@@ -13,7 +13,8 @@ class PengaturanController extends BaseController
     public function index()
     {
         if (!logged_in()) {
-            return redirect()->to('/login');
+                  return redirect()->to('/auth/login');
+
         }   
 
         $data = [
@@ -27,7 +28,8 @@ class PengaturanController extends BaseController
     public function kontak()
     {
         if (!logged_in()) {
-            return redirect()->to('/login');
+                  return redirect()->to('/auth/login');
+
         }   
 
         $model = new KontakModel();
@@ -42,7 +44,8 @@ class PengaturanController extends BaseController
     public function updateKontak()
     {
         if (!logged_in()) {
-            return redirect()->to('/login');
+                  return redirect()->to('/auth/login');
+
         }   
 
         $model = new KontakModel();
@@ -69,7 +72,8 @@ class PengaturanController extends BaseController
     public function galeri()
     {
         if (!logged_in()) {
-            return redirect()->to('/login');
+                  return redirect()->to('/auth/login');
+
         }   
 
         $data = [
@@ -83,7 +87,8 @@ class PengaturanController extends BaseController
     public function mitra()
     {
         if (!logged_in()) {
-            return redirect()->to('/login');
+                  return redirect()->to('/auth/login');
+
         }   
 
         $model = new PartnerModel();
@@ -99,7 +104,8 @@ class PengaturanController extends BaseController
     public function editMitra($id = null)
     {
         if (!logged_in()) {
-            return redirect()->to('/login');
+                  return redirect()->to('/auth/login');
+
         }   
 
         if ($id === null) {
@@ -123,7 +129,8 @@ class PengaturanController extends BaseController
     public function tambahMitra()
     {
         if (!logged_in()) {
-            return redirect()->to('/login');
+                  return redirect()->to('/auth/login');
+
         }   
 
         $model = new PartnerModel();
@@ -139,7 +146,8 @@ class PengaturanController extends BaseController
     public function simpanMitra()
     {
         if (!logged_in()) {
-            return redirect()->to('/login');
+                  return redirect()->to('/auth/login');
+
         }  
 
         $model = new PartnerModel();
@@ -205,7 +213,8 @@ class PengaturanController extends BaseController
     public function hapusMitra($id)
     {
         if (!logged_in()) {
-            return redirect()->to('/login');
+                  return redirect()->to('/auth/login');
+
         }
     
         $model = new PartnerModel();
@@ -235,7 +244,8 @@ class PengaturanController extends BaseController
     public function tim()
     {
         if (!logged_in()) {
-            return redirect()->to('/login');
+                  return redirect()->to('/auth/login');
+
         }   
         $model = new TimModel();
         $tim = $model->findAll();
@@ -250,7 +260,8 @@ class PengaturanController extends BaseController
     public function tambahTim() 
     {
         if (!logged_in()) {
-            return redirect()->to('/login');
+                  return redirect()->to('/auth/login');
+
         }   
 
         $model = new TimModel();
@@ -266,7 +277,8 @@ class PengaturanController extends BaseController
     public function editTim($id = null)
     {
         if (!logged_in()) {
-            return redirect()->to('/login');
+                  return redirect()->to('/auth/login');
+
         }   
 
         if ($id === null) {
@@ -291,7 +303,8 @@ class PengaturanController extends BaseController
     public function simpanTim()
     {
         if (!logged_in()) {
-            return redirect()->to('/login');
+                  return redirect()->to('/auth/login');
+
         }
 
         if (!$this->validate([
@@ -334,7 +347,8 @@ class PengaturanController extends BaseController
     public function updateTim($id)
     {
         if (!logged_in()) {
-            return redirect()->to('/login');
+                  return redirect()->to('/auth/login');
+
         }
 
         $model = new TimModel();
@@ -413,7 +427,8 @@ class PengaturanController extends BaseController
     public function hapusTim($id)
     {
         if (!logged_in()) {
-            return redirect()->to('/login');
+                  return redirect()->to('/auth/login');
+
         }   
 
         $model = new TimModel();
@@ -438,7 +453,8 @@ class PengaturanController extends BaseController
     public function prestasi()
     {
         if (!logged_in()) {
-            return redirect()->to('/login');
+                  return redirect()->to('/auth/login');
+
         }   
 
         $data = [

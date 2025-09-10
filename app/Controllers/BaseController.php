@@ -30,28 +30,29 @@ abstract class BaseController extends Controller
         $db = \Config\Database::connect();
 
         // Cek apakah tabel masih kosong
-        $artikelCount   = $db->table('artikel')->countAllResults();
-        $kontakCount    = $db->table('pengaturan_kontak')->countAllResults();
-        $partnerCount   = $db->table('pengaturan_partner')->countAllResults();
-        $timCount       = $db->table('pengaturan_tim')->countAllResults();
+        // $artikelCount   = $db->table('artikel')->countAllResults();
+        // $kontakCount    = $db->table('pengaturan_kontak')->countAllResults();
+        // $partnerCount   = $db->table('pengaturan_partner')->countAllResults();
+        // $timCount       = $db->table('pengaturan_tim')->countAllResults();
+
 
         // Jalankan seeder jika tabel kosong
-        if ($artikelCount == 0 || $kontakCount == 0 || $partnerCount == 0 || $timCount == 0) {
-            $db->transStart();
-            $seeder = \Config\Database::seeder();
+        // if ($artikelCount == 0 || $kontakCount == 0 || $partnerCount == 0 || $timCount == 0) {
+        //     $db->transStart();
+        //     $seeder = \Config\Database::seeder();
 
-            if (class_exists('App\Database\Seeds\DatabaseSeeder')) {
-                $seeder->call('DatabaseSeeder');
-            } else {
-                log_message('error', 'Seeder DatabaseSeeder tidak ditemukan.');
-            }
+        //     if (class_exists('App\Database\Seeds\DatabaseSeeder')) {
+        //         $seeder->call('DatabaseSeeder');
+        //     } else {
+        //         log_message('error', 'Seeder DatabaseSeeder tidak ditemukan.');
+        //     }
 
-            $db->transComplete();
+        //     $db->transComplete();
 
-            if ($db->transStatus() === false) {
-                log_message('error', 'Gagal menjalankan seeder.');
-            }
-        }
+        //     if ($db->transStatus() === false) {
+        //         log_message('error', 'Gagal menjalankan seeder.');
+        //     }
+        // }
 
         // Inisialisasi data global untuk views
         $this->kontak = $this->getKontakModel()->first();

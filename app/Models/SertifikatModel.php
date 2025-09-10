@@ -76,6 +76,49 @@ class SertifikatModel extends Model
             ->get()
             ->getResultArray();
     }
+    
+    public function getSertifikatByKelasDanUser($userId, $username)
+    {
+        // Ambil semua sertifikat kategori "manage_kelas"
+        $sertifikatList = $this->db->table('sertifikat')
+            ->select('sertifikat.id, sertifikat.nama_file, sertifikat.deskripsi, manage_kelas.nama_kelas')
+            ->join('sertifikat_recipients', 'sertifikat_recipients.sertifikat_id = sertifikat.id')
+            ->join('manage_kelas', 'manage_kelas.id = sertifikat_recipients.target_id')
+            ->where('sertifikat_recipients.target_type', 'manage_kelas')
+            ->get()
+            ->getResultArray();
+    
+        $filteredSertifikat = [];
+    
+        // Loop melalui semua sertifikat dan cek apakah nama file cocok dengan user
+        foreach ($sertifikatList as $sertifikat) {
+            // Coba decode JSON, jika gagal anggap sebagai string biasa
+            $files = json_decode($sertifikat['nama_file'], true);
+    
+            // Jika gagal decode atau bukan array, ubah menjadi array dengan satu elemen
+            if (!is_array($files)) {
+                $files = [$sertifikat['nama_file']];
+            }
+    
+            // Filter file yang mengandung nama user di depannya
+            $matchingFiles = array_filter($files, function ($file) use ($username) {
+                return strpos($file, $username . "_") === 0; // Cek apakah file diawali dengan nama user
+            });
+    
+            if (!empty($matchingFiles)) {
+                $filteredSertifikat[$sertifikat['nama_kelas']][] = [
+                    'deskripsi' => $sertifikat['deskripsi'],
+                    'nama_file' => array_values($matchingFiles), // Reset array index
+                ];
+            }
+        }
+    
+        return $filteredSertifikat;
+    }
+
+
+
+
 
     public function getAllSertifikats()
     {

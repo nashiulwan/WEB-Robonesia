@@ -47,11 +47,12 @@ $routes->group('', function ($routes) {
     $routes->get('/login', 'AuthController::login');
 });
 
+
 $routes->group('auth', function ($routes) {
     // Routes untuk otentikasi
     $routes->get('login', 'AuthController::login');
     $routes->post('login', 'AuthController::attemptLogin');
-    $routes->get('register', 'AuthController::register');
+    // $routes->get('register', 'AuthController::register');
     $routes->get('logout', 'AuthController::logout');
 });
 
@@ -60,7 +61,13 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
     $routes->get('dashboard', 'AdminController::dashboard', ['filter' => 'role:admin']);
     $routes->get('pengguna', 'AdminController::pengguna', ['filter' => 'role:admin']);
     $routes->get('pengaturan', 'AdminController::pengaturan', ['filter' => 'role:admin']);
+    
+    // Routes untuk analytics
     $routes->get('analytics', 'AdminController::analytics', ['filter' => 'role:admin']);
+    $routes->get('analytics/getTotalVisitors', 'AnalyticsController::getTotalVisitors', ['filter' => 'role:admin']);
+    $routes->get('analytics/getStatistics', 'AnalyticsController::getStatistics', ['filter' => 'role:admin']);
+    $routes->get('analytics/getDetailedStatistics', 'AnalyticsController::getDetailedStatistics', ['filter' => 'role:admin']);
+    $routes->get('analytics/getTopPages', 'AnalyticsController::getTopPages', ['filter' => 'role:admin']);
 
     // Routes untuk profil
     $routes->get('profil', 'ProfilController::index', ['filter' => 'role:admin']);
@@ -230,6 +237,7 @@ $routes->group('siswa', ['filter' => 'auth'], function ($routes) {
     $routes->get('project-dan-nilai', 'SiswaController::projectNilai', ['filter' => 'role:siswa']);
 
     $routes->get('sertifikat', 'SiswaController::sertifikat', ['filter' => 'role:siswa']);
+    //$routes->get('sertifikat/view/(:any)', 'SiswaController::viewPdf/$1', ['filter' => 'role:siswa']);
 
     $routes->get('prestasi', 'SiswaController::prestasi', ['filter' => 'role:siswa']);
 
@@ -248,99 +256,113 @@ $routes->group('siswa', ['filter' => 'auth'], function ($routes) {
 
 $routes->group('guru', ['filter' => 'auth'], function ($routes) {
 
+   // Routes untuk guru area (protected dengan filter auth)
     $routes->get('dashboard', 'GuruController::dashboard', ['filter' => 'role:guru']);
+    $routes->get('pengguna', 'GuruController::pengguna', ['filter' => 'role:guru']);
+    $routes->get('analytics/getTotalVisitors', 'AnalyticsController::getTotalVisitors', ['filter' => 'role:guru']);
+
 
     // Routes untuk profil
-    $routes->get('profil', 'GuruController::indexProfil', ['filter' => 'role:guru']);
-    $routes->get('profil/edit', 'GuruController::editProfil', ['filter' => 'role:guru']);
-    $routes->post('profil/update', 'GuruController::updateProfil', ['filter' => 'role:guru']);
+    $routes->get('profil', 'GuruProfilController::index', ['filter' => 'role:guru']);
+    $routes->get('profil/edit', 'GuruProfilController::edit', ['filter' => 'role:guru']);
+    $routes->post('profil/update', 'GuruProfilController::update', ['filter' => 'role:guru']);
 
     // Routes untuk manage kelas
     // Manage kelas (daftar kelas & tambah kelas)
-    $routes->get('manage_kelas', 'GuruController::indexManageKelas', ['filter' => 'role:guru']);
-    $routes->get('manage_kelas/tambah', 'GuruController::tambahManageKelas', ['filter' => 'role:guru']);
-    $routes->post('manage_kelas/simpan', 'GuruController::simpanManageKelas', ['filter' => 'role:guru']);
-    $routes->get('manage_kelas/edit/(:num)', 'GuruController::editManageKelas/$1', ['filter' => 'role:guru']);
-    $routes->post('manage_kelas/update/(:num)', 'GuruController::updateManageKelas/$1', ['filter' => 'role:guru']);
-    $routes->post('manage_kelas/delete/(:num)', 'GuruController::deleteManageKelas/$1', ['filter' => 'role:guru']);
+    $routes->get('manage_kelas', 'GuruManage_kelasController::index', ['filter' => 'role:guru']);
+    $routes->get('manage_kelas/tambah', 'GuruManage_kelasController::tambah', ['filter' => 'role:guru']);
+    $routes->post('manage_kelas/simpan', 'GuruManage_kelasController::simpan', ['filter' => 'role:guru']);
+    $routes->get('manage_kelas/edit/(:num)', 'GuruManage_kelasController::edit/$1', ['filter' => 'role:guru']);
+    $routes->post('manage_kelas/update/(:num)', 'GuruManage_kelasController::update/$1', ['filter' => 'role:guru']);
+    $routes->post('manage_kelas/delete/(:num)', 'GuruManage_kelasController::delete/$1', ['filter' => 'role:guru']);
 
     //  Manage kelas (kelola anggota)
-    $routes->get('manage_kelas/kelola_anggota', 'GuruController::kelola_anggotaManageKelas', ['filter' => 'role:guru']);
-    $routes->get('manage_kelas/kelola_anggota/detail/(:num)', 'GuruController::detailManageKelas/$1', ['filter' => 'role:guru']);
-    $routes->get('manage_kelas/kelola_anggota/tambah/(:num)', 'GuruController::tambah_anggotaManageKelas/$1', ['filter' => 'role:guru']);
-    $routes->post('manage_kelas/kelola_anggota/simpan', 'GuruController::simpan_anggotaManageKelas', ['filter' => 'role:guru']);
-    $routes->post('manage_kelas/kelola_anggota/tambah_anggota', 'GuruController::addMemberToClassManageKelas', ['filter' => 'role:guru']);
-    $routes->post('manage_kelas/kelola_anggota/hapus/(:num)', 'GuruController::hapus_anggotaManageKelas/$1', ['filter' => 'role:guru']);
-    $routes->post('manage_kelas/kelola_anggota/hapus_anggota/(:num)/(:num)', 'GuruController::hapus_anggota_kelasManageKelas/$1/$2', ['filter' => 'role:guru']);
+    $routes->get('manage_kelas/kelola_anggota', 'GuruManage_kelasController::kelola_anggota', ['filter' => 'role:guru']);
+    $routes->get('manage_kelas/kelola_anggota/detail/(:num)', 'GuruManage_kelasController::detail/$1', ['filter' => 'role:guru']);
+    $routes->get('manage_kelas/kelola_anggota/tambah/(:num)', 'GuruManage_kelasController::tambah_anggota/$1', ['filter' => 'role:guru']);
+    $routes->post('manage_kelas/kelola_anggota/simpan', 'GuruManage_kelasController::simpan_anggota', ['filter' => 'role:guru']);
+    $routes->post('manage_kelas/kelola_anggota/tambah_anggota', 'GuruManage_kelasController::addMemberToClass', ['filter' => 'role:guru']);
+    $routes->post('manage_kelas/kelola_anggota/hapus/(:num)', 'GuruManage_kelasController::hapus_anggota/$1', ['filter' => 'role:guru']);
+    $routes->post('manage_kelas/kelola_anggota/hapus_anggota/(:num)/(:num)', 'GuruManage_kelasController::hapus_anggota_kelas/$1/$2', ['filter' => 'role:guru']);
 
     // Routes untuk Prestasi & Sertifikat
     // Routes untuk Prestasi
-    $routes->get('prestasi', 'GuruController::indexPrestasi', ['filter' => 'role:guru']);
+    $routes->get('prestasi', 'GuruPrestasiSertifikatController::index', ['filter' => 'role:guru']);
     //Prestasi Perorangan
-    $routes->get('prestasi/prestasi_detail/(:num)', 'GuruController::prestasiDetailPrestasi/$1', ['filter' => 'role:guru']);
-    $routes->get('prestasi/tambah_prestasi/(:num)', 'GuruController::prestasiDetailTambahPrestasi/$1', ['filter' => 'role:guru']);
-    $routes->post('prestasi/tambah_prestasi/simpan', 'GuruController::prestasiDetailSimpanPrestasi', ['filter' => 'role:guru']);
-    $routes->get('prestasi/prestasi_detail/info/(:num)/(:num)', 'GuruController::prestasiDetailInfoPrestasi/$1/$2', ['filter' => 'role:guru']);
-    $routes->get('prestasi/prestasi_detail/edit/(:num)/(:num)', 'GuruController::prestasiDetailEditPrestasi/$1/$2', ['filter' => 'role:guru']);
-    $routes->post('prestasi/prestasi_detail/update/(:num)/(:num)', 'GuruController::prestasiDetailUpdatePrestasi/$1/$2', ['filter' => 'role:guru']);
-    $routes->post('prestasi/prestasi_detail/delete/(:num)', 'GuruController::prestasiDetailDeletePrestasi/$1', ['filter' => 'role:guru']);
+    $routes->get('prestasi/prestasi_detail/(:num)', 'GuruPrestasiSertifikatController::prestasiDetail/$1', ['filter' => 'role:guru']);
+    $routes->get('prestasi/tambah_prestasi/(:num)', 'GuruPrestasiSertifikatController::prestasiDetailTambah/$1', ['filter' => 'role:guru']);
+    $routes->post('prestasi/tambah_prestasi/simpan', 'GuruPrestasiSertifikatController::prestasiDetailSimpan', ['filter' => 'role:guru']);
+    $routes->get('prestasi/prestasi_detail/info/(:num)/(:num)', 'GuruPrestasiSertifikatController::prestasiDetailInfo/$1/$2', ['filter' => 'role:guru']);
+    $routes->get('prestasi/prestasi_detail/edit/(:num)/(:num)', 'GuruPrestasiSertifikatController::prestasiDetailEdit/$1/$2', ['filter' => 'role:guru']);
+    $routes->post('prestasi/prestasi_detail/update/(:num)/(:num)', 'GuruPrestasiSertifikatController::prestasiDetailUpdate/$1/$2', ['filter' => 'role:guru']);
+    $routes->post('prestasi/prestasi_detail/delete/(:num)', 'GuruPrestasiSertifikatController::prestasiDetailDelete/$1', ['filter' => 'role:guru']);
 
     //Prestasi Umum
-    $routes->get('prestasi/detail/(:num)', 'GuruController::prestasiInfoPrestasi/$1', ['filter' => 'role:guru']);
-    $routes->get('prestasi/tambah', 'GuruController::prestasiTambahPrestasi', ['filter' => 'role:guru']);
-    $routes->post('prestasi/simpan', 'GuruController::prestasiSimpanPrestasi', ['filter' => 'role:guru']);
-    $routes->get('prestasi/edit/(:num)', 'GuruController::prestasiEditPrestasi/$1', ['filter' => 'role:guru']);
-    $routes->post('prestasi/update/(:num)', 'GuruController::prestasiUpdatePrestasi/$1', ['filter' => 'role:guru']);
-    $routes->post('prestasi/delete/(:num)', 'GuruController::prestasiDeletePrestasi/$1', ['filter' => 'role:guru']);
+    $routes->get('prestasi/detail/(:num)', 'GuruPrestasiSertifikatController::prestasiInfo/$1', ['filter' => 'role:guru']);
+    $routes->get('prestasi/tambah', 'GuruPrestasiSertifikatController::prestasiTambah', ['filter' => 'role:guru']);
+    $routes->post('prestasi/simpan', 'GuruPrestasiSertifikatController::prestasiSimpan', ['filter' => 'role:guru']);
+    $routes->get('prestasi/edit/(:num)', 'GuruPrestasiSertifikatController::prestasiEdit/$1', ['filter' => 'role:guru']);
+    $routes->post('prestasi/update/(:num)', 'GuruPrestasiSertifikatController::prestasiUpdate/$1', ['filter' => 'role:guru']);
+    $routes->post('prestasi/delete/(:num)', 'GuruPrestasiSertifikatController::prestasiDelete/$1', ['filter' => 'role:guru']);
 
     // Routes untuk Grade/Kelas
-    $routes->get('grade_level', 'GuruController::gradeIndexPrestasi', ['filter' => 'role:guru']);
-    $routes->get('grade_level/detail/(:num)', 'GuruController::gradeDetailPrestasi/$1', ['filter' => 'role:guru']);
-    $routes->get('grade_level/level/(:num)', 'GuruController::gradeLevelPrestasi/$1', ['filter' => 'role:guru']);
-    $routes->post('grade_level/update_level/(:num)', 'GuruController::gradeLevelUpdatePrestasi/$1', ['filter' => 'role:guru']);
-    $routes->get('grade_level/proyek/(:num)', 'GuruController::gradeProyekPrestasi/$1', ['filter' => 'role:guru']);
-    $routes->get('grade_level/proyek/tambah/(:num)', 'GuruController::gradeProyekTambahPrestasi/$1', ['filter' => 'role:guru']);
-    $routes->post('grade_level/proyek/simpan/(:num)', 'GuruController::gradeProyekSimpanPrestasi/$1', ['filter' => 'role:guru']);
-    $routes->get('grade_level/proyek/edit/(:num)/(:num)', 'GuruController::gradeProyekEditPrestasi/$1/$2', ['filter' => 'role:guru']);
-    $routes->post('grade_level/proyek/update/(:num)/(:num)', 'GuruController::gradeProyekUpdatePrestasi/$1/$2', ['filter' => 'role:guru']);
-    $routes->get('grade_level/proyek/delete/(:num)/(:num)', 'GuruController::gradeProyekDeletePrestasi/$1/$2', ['filter' => 'role:guru']);
+    $routes->get('grade_level', 'GuruPrestasiSertifikatController::gradeIndex', ['filter' => 'role:guru']);
+    $routes->get('grade_level/detail/(:num)', 'GuruPrestasiSertifikatController::gradeDetail/$1', ['filter' => 'role:guru']);
+    $routes->get('grade_level/level/(:num)', 'GuruPrestasiSertifikatController::gradeLevel/$1', ['filter' => 'role:guru']);
+    $routes->post('grade_level/update_level/(:num)', 'GuruPrestasiSertifikatController::gradeLevelUpdate/$1', ['filter' => 'role:guru']);
+    $routes->get('grade_level/proyek/(:num)', 'GuruPrestasiSertifikatController::gradeProyek/$1', ['filter' => 'role:guru']);
+    $routes->get('grade_level/proyek/tambah/(:num)', 'GuruPrestasiSertifikatController::gradeProyekTambah/$1', ['filter' => 'role:guru']);
+    $routes->post('grade_level/proyek/simpan/(:num)', 'GuruPrestasiSertifikatController::gradeProyekSimpan/$1', ['filter' => 'role:guru']);
+    $routes->get('grade_level/proyek/edit/(:num)/(:num)', 'GuruPrestasiSertifikatController::gradeProyekEdit/$1/$2', ['filter' => 'role:guru']);
+    $routes->post('grade_level/proyek/update/(:num)/(:num)', 'GuruPrestasiSertifikatController::gradeProyekUpdate/$1/$2', ['filter' => 'role:guru']);
+    $routes->get('grade_level/proyek/delete/(:num)/(:num)', 'GuruPrestasiSertifikatController::gradeProyekDelete/$1/$2', ['filter' => 'role:guru']);
 
     // Routes untuk Sertifikat
-    $routes->get('sertifikat', 'GuruController::sertifikatIndexSertifikat', ['filter' => 'role:guru']);
+    $routes->get('sertifikat', 'GuruPrestasiSertifikatController::sertifikatIndex', ['filter' => 'role:guru']);
     // Routes untuk Sertifikat umum
-    $routes->get('sertifikat/detail/(:num)', 'GuruController::sertifikatDetailSertifikat/$1', ['filter' => 'role:guru']);
-    $routes->get('sertifikat/edit/(:num)', 'GuruController::sertifikatEditSertifikat/$1', ['filter' => 'role:guru']);
-    $routes->post('sertifikat/update/(:num)', 'GuruController::sertifikatUpdateSertifikat/$1', ['filter' => 'role:guru']);
-    $routes->post('sertifikat/delete/(:num)', 'GuruController::sertifikatDeleteSertifikat/$1', ['filter' => 'role:guru']);
+    $routes->get('sertifikat/detail/(:num)', 'GuruPrestasiSertifikatController::sertifikatDetail/$1', ['filter' => 'role:guru']);
+    $routes->get('sertifikat/edit/(:num)', 'GuruPrestasiSertifikatController::sertifikatEdit/$1', ['filter' => 'role:guru']);
+    $routes->post('sertifikat/update/(:num)', 'GuruPrestasiSertifikatController::sertifikatUpdate/$1', ['filter' => 'role:guru']);
+    $routes->post('sertifikat/delete/(:num)', 'GuruPrestasiSertifikatController::sertifikatDelete/$1', ['filter' => 'role:guru']);
     // Routes untuk Sertifikat berdasarkan prestasi
-    $routes->get('sertifikat/prestasi/(:num)', 'GuruController::sertifikatPrestasiDetailSertifikat/$1', ['filter' => 'role:guru']);
-    $routes->get('sertifikat/prestasi/tambah/(:num)', 'GuruController::sertifikatPrestasiTambahSertifikat/$1', ['filter' => 'role:guru']);
-    $routes->post('sertifikat/prestasi/simpan/(:num)', 'GuruController::sertifikatPrestasiSimpanSertifikat/$1/$2', ['filter' => 'role:guru']);
-    $routes->get('sertifikat/prestasi/edit/(:num)/(:num)', 'GuruController::sertifikatPrestasiEditSertifikat/$1/$2', ['filter' => 'role:guru']);
-    $routes->post('sertifikat/prestasi/update/(:num)/(:num)', 'GuruController::sertifikatPrestasiUpdateSertifikat/$1/$2', ['filter' => 'role:guru']);
-    $routes->post('sertifikat/prestasi/delete/(:num)/(:num)', 'GuruController::sertifikatPrestasiDeleteSertifikat/$1/$2', ['filter' => 'role:guru']);
+    $routes->get('sertifikat/prestasi/(:num)', 'GuruPrestasiSertifikatController::sertifikatPrestasiDetail/$1', ['filter' => 'role:guru']);
+    $routes->get('sertifikat/prestasi/tambah/(:num)', 'GuruPrestasiSertifikatController::sertifikatPrestasiTambah/$1', ['filter' => 'role:guru']);
+    $routes->post('sertifikat/prestasi/simpan/(:num)', 'GuruPrestasiSertifikatController::sertifikatPrestasiSimpan/$1/$2', ['filter' => 'role:guru']);
+    $routes->get('sertifikat/prestasi/edit/(:num)/(:num)', 'GuruPrestasiSertifikatController::sertifikatPrestasiEdit/$1/$2', ['filter' => 'role:guru']);
+    $routes->post('sertifikat/prestasi/update/(:num)/(:num)', 'GuruPrestasiSertifikatController::sertifikatPrestasiUpdate/$1/$2', ['filter' => 'role:guru']);
+    $routes->post('sertifikat/prestasi/delete/(:num)/(:num)', 'GuruPrestasiSertifikatController::sertifikatPrestasiDelete/$1/$2', ['filter' => 'role:guru']);
     // Routes untuk Sertifikat berdasarkan akun
-    $routes->get('sertifikat/akun/(:num)', 'GuruController::sertifikatAkunDetailSertifikat/$1', ['filter' => 'role:guru']);
-    $routes->get('sertifikat/akun/tambah/(:num)', 'GuruController::sertifikatAkunTambahSertifikat/$1', ['filter' => 'role:guru']);
-    $routes->post('sertifikat/akun/simpan/(:num)', 'GuruController::sertifikatAkunSimpanSertifikat/$1/$2', ['filter' => 'role:guru']);
-    $routes->get('sertifikat/akun/edit/(:num)/(:num)', 'GuruController::sertifikatAkunEditSertifikat/$1/$2', ['filter' => 'role:guru']);
-    $routes->post('sertifikat/akun/update/(:num)/(:num)', 'GuruController::sertifikatAkunUpdateSertifikat/$1/$2', ['filter' => 'role:guru']);
-    $routes->post('sertifikat/akun/delete/(:num)/(:num)', 'GuruController::sertifikatAkunDeleteSertifikat/$1/$2', ['filter' => 'role:guru']);
+    $routes->get('sertifikat/akun/(:num)', 'GuruPrestasiSertifikatController::sertifikatAkunDetail/$1', ['filter' => 'role:guru']);
+    $routes->get('sertifikat/akun/tambah/(:num)', 'GuruPrestasiSertifikatController::sertifikatAkunTambah/$1', ['filter' => 'role:guru']);
+    $routes->post('sertifikat/akun/simpan/(:num)', 'GuruPrestasiSertifikatController::sertifikatAkunSimpan/$1/$2', ['filter' => 'role:guru']);
+    $routes->get('sertifikat/akun/edit/(:num)/(:num)', 'GuruPrestasiSertifikatController::sertifikatAkunEdit/$1/$2', ['filter' => 'role:guru']);
+    $routes->post('sertifikat/akun/update/(:num)/(:num)', 'GuruPrestasiSertifikatController::sertifikatAkunUpdate/$1/$2', ['filter' => 'role:guru']);
+    $routes->post('sertifikat/akun/delete/(:num)/(:num)', 'GuruPrestasiSertifikatController::sertifikatAkunDelete/$1/$2', ['filter' => 'role:guru']);
     // Routes untuk Sertifikat berdasarkan kelas
-    $routes->get('sertifikat/kelas/(:num)', 'GuruController::sertifikatKelasDetailSertifikat/$1', ['filter' => 'role:guru']);
-    $routes->get('sertifikat/kelas/tambah/(:num)', 'GuruController::sertifikatKelasTambahSertifikat/$1', ['filter' => 'role:guru']);
-    $routes->post('sertifikat/kelas/simpan/(:num)', 'GuruController::sertifikatKelasSimpanSertifikat/$1/$2', ['filter' => 'role:guru']);
-    $routes->get('sertifikat/kelas/edit/(:num)/(:num)', 'GuruController::sertifikatKelasEditSertifikat/$1/$2', ['filter' => 'role:guru']);
-    $routes->post('sertifikat/kelas/update/(:num)/(:num)', 'GuruController::sertifikatKelasUpdateSertifikat/$1/$2', ['filter' => 'role:guru']);
-    $routes->post('sertifikat/kelas/delete/(:num)/(:num)', 'GuruController::sertifikatKelasDeleteSertifikat/$1/$2', ['filter' => 'role:guru']);
+    $routes->get('sertifikat/kelas/(:num)', 'GuruPrestasiSertifikatController::sertifikatKelasDetail/$1', ['filter' => 'role:guru']);
+    $routes->get('sertifikat/kelas/tambah/(:num)', 'GuruPrestasiSertifikatController::sertifikatKelasTambah/$1', ['filter' => 'role:guru']);
+    $routes->post('sertifikat/kelas/simpan/(:num)', 'GuruPrestasiSertifikatController::sertifikatKelasSimpan/$1/$2', ['filter' => 'role:guru']);
+    $routes->get('sertifikat/kelas/edit/(:num)/(:num)', 'GuruPrestasiSertifikatController::sertifikatKelasEdit/$1/$2', ['filter' => 'role:guru']);
+    $routes->post('sertifikat/kelas/update/(:num)/(:num)', 'GuruPrestasiSertifikatController::sertifikatKelasUpdate/$1/$2', ['filter' => 'role:guru']);
+    $routes->post('sertifikat/kelas/delete/(:num)/(:num)', 'GuruPrestasiSertifikatController::sertifikatKelasDelete/$1/$2', ['filter' => 'role:guru']);
+
+    // Routes untuk pengaturan
+    $routes->get('pengaturan', 'GuruPengaturanController::index', ['filter' => 'role:guru']);
+
+    // Pengaturan mitra
+    $routes->get('pengaturan/mitra', 'GuruPengaturanController::mitra', ['filter' => 'role:guru']);
+    $routes->get('pengaturan/mitra/tambah', 'GuruPengaturanController::tambahMitra', ['filter' => 'role:guru']);
+    $routes->post('pengaturan/mitra/simpan', 'GuruPengaturanController::simpanMitra', ['filter' => 'role:guru']);
+    $routes->get('pengaturan/mitra/edit/(:num)', 'GuruPengaturanController::editMitra/$1', ['filter' => 'role:guru']);
+    $routes->post('pengaturan/mitra/update/(:num)', 'GuruPengaturanController::updateMitra/$1', ['filter' => 'role:guru']);
+    $routes->get('pengaturan/mitra/hapus/(:num)', 'GuruPengaturanController::hapusMitra/$1', ['filter' => 'role:guru']);
 
     //Routes untuk Galeri Siswa
-    $routes->get('galeri', 'GuruGaleriSiswaController::indexGaleri', ['filter' => 'role:guru']);
-    $routes->get('galeri/detail/(:num)', 'GuruGaleriSiswaController::detailGaleri/$1', ['filter' => 'role:guru']);
-    $routes->get('galeri/tambah/(:num)', 'GuruGaleriSiswaController::tambahGaleri/$1', ['filter' => 'role:guru']);
-    $routes->post('galeri/simpan/(:num)', 'GuruGaleriSiswaController::simpanGaleri/$1', ['filter' => 'role:guru']);
-    $routes->get('galeri/edit/(:num)/(:num)', 'GuruGaleriSiswaController::editGaleri/$1/$2', ['filter' => 'role:guru']);
-    $routes->post('galeri/update/(:num)/(:num)', 'GuruGaleriSiswaController::updateGaleri/$1/$2', ['filter' => 'role:guru']);
-    $routes->post('galeri/delete/(:num)/(:num)', 'GuruGaleriSiswaController::deleteGaleri/$1/$2', ['filter' => 'role:guru']);
-
+    $routes->get('galeri', 'GuruGaleriSiswaController::index', ['filter' => 'role:guru']);
+    $routes->get('galeri/detail/(:num)', 'GuruGaleriSiswaController::detail/$1', ['filter' => 'role:guru']);
+    $routes->get('galeri/tambah/(:num)', 'GuruGaleriSiswaController::tambah/$1', ['filter' => 'role:guru']);
+    $routes->post('galeri/simpan/(:num)', 'GuruGaleriSiswaController::simpan/$1', ['filter' => 'role:guru']);
+    $routes->get('galeri/edit/(:num)/(:num)', 'GuruGaleriSiswaController::edit/$1/$2', ['filter' => 'role:guru']);
+    $routes->post('galeri/update/(:num)/(:num)', 'GuruGaleriSiswaController::update/$1/$2', ['filter' => 'role:guru']);
+    $routes->post('galeri/delete/(:num)/(:num)', 'GuruGaleriSiswaController::delete/$1/$2', ['filter' => 'role:guru']);
 });

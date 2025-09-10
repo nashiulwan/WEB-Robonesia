@@ -1,5 +1,146 @@
+<style>
+    .header__tentang {
+  padding: 0 8rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.tentang__container {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  max-width: 100%;
+  gap: 2rem;
+}
+
+.tentang__container section {
+  flex: 1 1 40%;
+  gap: 1rem;
+  text-align: center;
+  box-sizing: border-box; /* Untuk memastikan padding tidak melebihi lebar elemen */
+}
+
+.tentang__container section p {
+  text-align: justify;
+  line-height: 2;
+  margin-bottom: 2rem;
+}
+
+.tentang__container section p span {
+  font-weight: 400;
+  font-family: var(--header-font);
+  font-size: 1.5rem;
+  margin-right: 0.5rem;
+}
+
+.tentang__container img {
+  min-width: 50%;
+  height: 50vh;
+  object-fit: cover;
+  margin-bottom: 2rem;
+  width: 100%;
+}
+
+/*.header__tentang h1 {*/
+/*  margin-bottom: 1rem;*/
+/*  font-size: 3rem;*/
+/*  font-weight: 400;*/
+/*  font-family: var(--header-font);*/
+/*  color: var(--text-dark);*/
+/*  line-height: 5rem;*/
+/*  text-align: center;*/
+/*}*/
+/* DESKRIPSI DAN GAMBAR END */
+
+/* VISI MISI */
+.tentang__visi-misi {
+  margin: 0 5rem;
+  border: 2px solid var(--text-dark);
+  margin-bottom: 3rem;
+  padding: 3rem 5rem;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.tentang__visi-misi ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+  /*.header__tentang h1 {*/
+  /*  font-size: 2rem;*/
+  /*}*/
+
+  .header__tentang p {
+    font-size: 1rem;
+  }
+
+/* VISI MISI END */
+
+/* SEJARAH */
+.sejarah__container {
+  margin: 8rem 0;
+  padding: 0 8rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  /* max-width: 80%; */
+}
+
+.sejarah__container img {
+  max-width: 30%;
+  margin: 2rem 0;
+}
+
+.sejarah__container p {
+  text-align: justify;
+  line-height: 2;
+  margin-bottom: 2rem;
+}
+
+@media screen and (max-width: 800px) {
+    .header__tentang{
+        padding: 0 2rem;
+
+    }
+    .tentang__container {
+    flex-direction: column; /* Ubah dari row ke column */
+    align-items: center;
+    padding: 0; /* Hilangkan padding */
+  }
+
+  .tentang__container section {
+    flex: none;
+    width: 100%; /* Gunakan seluruh lebar */
+    padding: 0; /* Hilangkan padding */
+  }
+
+  .tentang__container img {
+    min-width: 100%;
+    height: auto; /* Agar gambar menyesuaikan proporsi */
+  }
+  .sejarah__container {
+    padding: 0 2rem;
+  }
+}
+  
+  @media screen and (max-width: 480px) {
+    .tentang__visi-misi {
+      margin: 0 2rem;
+      padding: 1rem;
+    }
+}
+
+</style>
+
 <!-- Header -->
-<header class="header__tentang" style="margin-top: 10%;">
+<header class="header__tentang" style="margin-top: 6rem;">
   <h1 data-aos="fade-up" data-aos-duration="1000">Tentang Kami</h1>
   <div class="tentang__container">
     <section>

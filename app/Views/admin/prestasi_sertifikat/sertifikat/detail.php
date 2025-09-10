@@ -45,7 +45,7 @@
   }
 
   .preview-container img,
-  .preview-container embed {
+  .preview-container iframe {
     max-width: 100%;
     max-height: 13rem;
     object-fit: contain;
@@ -152,7 +152,7 @@
     }
 
     .preview-container img,
-    .preview-container embed {
+    .preview-container iframe {
       max-height: 10rem;
     }
   }
@@ -194,17 +194,18 @@
           if (!empty($existingFiles)):
             foreach ($existingFiles as $file):
               $ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+              // Gunakan base_url() dengan path relatif ke folder uploads
               $fileUrl = base_url('uploads/sertifikat/' . $file);
               // Tentukan tipe file untuk modal (PDF atau image)
               $fileType = ($ext === 'pdf') ? 'application/pdf' : 'image/' . $ext;
           ?>
               <div class="preview-container" data-filename="<?= esc($file) ?>" onclick="openModal('<?= $fileUrl ?>', '<?= $fileType ?>')">
                 <?php if (in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'svg'])): ?>
-                  <img src="<?= $fileUrl ?>" alt="Preview">
+                    <img src="<?= $fileUrl ?>" alt="Preview">
                 <?php elseif ($ext === 'pdf'): ?>
-                  <embed src="<?= $fileUrl ?>" type="application/pdf" style="height:13rem;">
+                    <iframe src="<?= $fileUrl ?>" width="100%" height="200px"></iframe>
                 <?php else: ?>
-                  <i class="fas fa-file"></i>
+                     <i class="fas fa-file"></i>
                 <?php endif; ?>
                 <p style="font-size:0.8rem; word-break: break-word; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding-top: 5px; margin-bottom: 2px; width: 90%;"><?= esc($file) ?></p>
               </div>
@@ -243,47 +244,50 @@
       downloadButton.textContent = "Download Gambar";
       downloadButton.className = "btn-download btn btn-primary download-btn";
       modalContent.appendChild(downloadButton);
+} else if (fileType === "application/pdf") {
+  var iframe = document.createElement("iframe");
+  iframe.src = dataUrl;
+  iframe.style.width = "100%";
+  iframe.style.height = "100%";
+  iframe.style.border = "none";
+  // Jika gagal memuat PDF, fallback ke Google Docs Viewer
+  iframe.onerror = function() {
+    iframe.src = "https://docs.google.com/viewer?url=" + encodeURIComponent(dataUrl) + "&embedded=true";
+  };
+  modalContent.appendChild(iframe);
+  
+  // Fallback text jika PDF tidak muncul
+  var fallbackText = document.createElement("p");
+  fallbackText.style.padding = "1rem";
+  fallbackText.innerText = "Jika PDF tidak muncul, silakan unduh terlebih dahulu";
+  modalContent.appendChild(fallbackText);
+  
+  // Tombol download
+  var downloadButton = document.createElement("a");
+  downloadButton.href = dataUrl;
+  downloadButton.download = "sertifikat.pdf";
+  downloadButton.textContent = "Download PDF";
+  downloadButton.className = "btn-download btn btn-primary download-btn";
+  modalContent.appendChild(downloadButton);
 
-    } else if (fileType === "application/pdf") {
-      // Gunakan <object> dengan fallback
-      var objectEl = document.createElement("object");
-      objectEl.data = dataUrl;
-      objectEl.type = "application/pdf";
-      objectEl.style.width = "100%";
-      objectEl.style.height = "100%";
-      modalContent.appendChild(objectEl);
-
-      // Fallback text jika PDF tidak muncul
-      var fallbackText = document.createElement("p");
-      fallbackText.style.padding = "1rem";
-      fallbackText.innerText = "Jika PDF tidak muncul, silakan unduh melalui tombol di bawah:";
-      modalContent.appendChild(fallbackText);
-
-      var downloadButton = document.createElement("a");
-      downloadButton.href = dataUrl;
-      downloadButton.download = "sertifikat.pdf";
-      downloadButton.textContent = "Download PDF";
-      downloadButton.className = "btn-download btn btn-primary download-btn";
-      modalContent.appendChild(downloadButton);
-
-    } else {
-      // Jika bukan gambar atau PDF
-      modalContent.innerHTML = "<p class='text-center p-3'>Preview tidak tersedia untuk file ini.</p>";
-    }
+} else {
+     modalContent.innerHTML = "<p class='text-center p-3'>Preview tidak tersedia untuk file ini.</p>";
+}
 
     modal.style.display = "block";
-  }
-
-  function closeModal() {
-    document.getElementById("fileModal").style.display = "none";
-  }
-
-  document.getElementById("closeModal").addEventListener("click", closeModal);
-  window.addEventListener("click", function(event) {
-    var modal = document.getElementById("fileModal");
-    if (event.target == modal) {
-      closeModal();
+        
     }
+    
+    function closeModal() {
+        document.getElementById("fileModal").style.display = "none";
+    }
+    
+      document.getElementById("closeModal").addEventListener("click", closeModal);
+      window.addEventListener("click", function(event) {
+        var modal = document.getElementById("fileModal");
+        if (event.target == modal) {
+          closeModal();
+        }
   });
 </script>
 

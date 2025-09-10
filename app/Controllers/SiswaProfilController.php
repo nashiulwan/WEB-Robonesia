@@ -14,7 +14,7 @@ class SiswaProfilController extends BaseController
   public function index()
   {
     if (!logged_in()) {
-      return redirect()->to('/login');
+      return redirect()->to('/auth/login');
     }
 
     $userId = user_id();
@@ -23,7 +23,7 @@ class SiswaProfilController extends BaseController
     $this->kelasModel = new Manage_kelasModel();    
 
     if (!$user) {
-      return redirect()->to('/login')->with('error', 'Akun tidak ditemukan.');
+      return redirect()->to('/auth/login')->with('error', 'Akun tidak ditemukan.');
     }
 
     $data = [
@@ -41,7 +41,7 @@ class SiswaProfilController extends BaseController
   public function edit()
   {
     if (!logged_in()) {
-      return redirect()->to('/login');
+      return redirect()->to('/auth/login');
     }
 
     $userId = user_id();
@@ -69,7 +69,7 @@ class SiswaProfilController extends BaseController
   public function update()
   {
     if (!logged_in()) {
-      return redirect()->to('/login');
+      return redirect()->to('/auth/login');
     }
 
     $userId = user_id();

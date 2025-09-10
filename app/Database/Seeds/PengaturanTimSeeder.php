@@ -11,7 +11,7 @@ class PengaturanTimSeeder extends Seeder
         $data = [
             'nama' => 'Hanif',
             'peran' => 'Founder',
-            'foto' => 'pp_hanif.jpg', // Gunakan gambar default jika belum ada
+            'foto' => 'pp_hanif.jpg',
             'facebook' => 'https://facebook.com/',
             'whatsapp' => 'https://wa.me/6282118032898',
             'twitter' => 'https://twitter.com/',

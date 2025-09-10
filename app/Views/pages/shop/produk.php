@@ -57,6 +57,12 @@
         font-size: 1.3rem;
         display: inline-block;
     }
+    
+    @media(max-width:500px){
+         .atas-btn{
+           display: none;
+         }
+    }
 </style>
 
 <?php
@@ -72,7 +78,7 @@ function convertOembedToIframe($content)
             <div class="title-container">
                 <h1 class="mb-4"><?= esc($produk['nama_produk']) ?></h1>
                 <!-- Button di sebelah kanan title -->
-                <a target="_blank" href="<?= esc('https://api.whatsapp.com/send?phone=' .  esc($kontak['no_hp']) . '&text=' . urlencode('Halo, saya tertarik dengan produk ' . $produk['nama_produk'] . '. Apakah produk ini masih tersedia? ')) ?>" class="btn btn-shop-produk">
+                <a target="_blank" href="<?= esc('https://api.whatsapp.com/send?phone=' .  esc($kontak['no_hp']) . '&text=' . urlencode('Halo, saya tertarik dengan produk ' . $produk['nama_produk'] . '. Apakah produk ini masih tersedia?' . base_url('shop/' . $produk['nama_produk']))) ?>" class="btn btn-shop-produk atas-btn">
                     <i class="fas fa-cart-arrow-down"></i>
                 </a>
             </div>
@@ -87,7 +93,7 @@ function convertOembedToIframe($content)
             </div>
 
             <a href="<?= base_url('shop') ?>" class="btn btn-secondary mt-3 mb-5" data-aos="fade-up" data-aos-duration="500">Kembali ke Shop</a>
-            <a target="_blank" class="btn btn-shop-produk mt-3 mb-5 mx-2" data-aos="fade-up" data-aos-duration="500" href="<?= esc('https://api.whatsapp.com/send?phone=' . $kontak['no_hp'] . '&text=' . urlencode('Halo, saya tertarik dengan produk ' . $produk['nama_produk'] . '. Apakah produk ini masih tersedia?')) ?>">
+            <a target="_blank" class="btn btn-shop-produk mt-3 mb-5 mx-2" data-aos="fade-up" data-aos-duration="500" href="<?= esc('https://api.whatsapp.com/send?phone=' . $kontak['no_hp'] . '&text=' . urlencode('Halo, saya tertarik dengan produk ' . $produk['nama_produk'] . '. Apakah produk ini masih tersedia?' . base_url('shop/' . $produk['nama_produk']))) ?>">
                 <i class="fas fa-cart-arrow-down"></i>
             </a>
         </div>

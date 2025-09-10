@@ -117,9 +117,6 @@
     background-image: url("data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 16 16'><path fill='%23D50000' d='M6.7 16l9.3-9.3v-1.4l-10.7 10.7z'/><path fill='%23D50000' d='M9.7 16l6.3-6.3v-1.4l-7.7 7.7z'/><path fill='%23D50000' d='M12.7 16l3.3-3.3v-1.4l-4.7 4.7z'/><path fill='%23D50000' d='M15.7 16l0.3-0.3v-1.4l-1.7 1.7z'/></svg>");
   }
 
-<<<<<<< Updated upstream
-=======
-  /* 
 
     .star-kelas {
         position: absolute;
@@ -131,17 +128,13 @@
 
     .star-kelas .star-icon {
         margin-left: -4px;
-    } */
-
->>>>>>> Stashed changes
+    }
+    
   .card {
     display: flex;
     flex-direction: column;
     height: 100%;
-<<<<<<< Updated upstream
     margin-bottom: 1rem;
-=======
->>>>>>> Stashed changes
   }
 
   .card-body {
@@ -184,10 +177,7 @@
   @media (max-width: 576px) {
     .card-deck {
       grid-template-columns: 1fr;
-<<<<<<< Updated upstream
-=======
       gap: 0.5rem;
->>>>>>> Stashed changes
     }
 
     .container-card {
@@ -253,11 +243,8 @@
   <div class="d-flex flex-column flex-md-row justify-content-between mb-3 title">
     <h1 class="h3 text-gray-800"><?= esc($title) ?></h1>
     <div class="d-flex align-items-center w-100 w-md-auto mt-3 mt-md-0" style="max-width: 320px;">
-<<<<<<< Updated upstream
-      <input type="text" id="searchInput" class="form-control" placeholder="Cari kelas berdasarkan nama" style="flex-grow: 1;">
-=======
+
       <input type="text" id="searchInput" class="form-control" placeholder="Cari kelas" style="flex-grow: 1;">
->>>>>>> Stashed changes
       <i class="fas fa-search text-muted" style="margin-left: 0.5rem;"></i>
     </div>
   </div>
@@ -324,11 +311,7 @@
           ?>
 
           <div class="card border-left-kelas shadow mb-2 <?= $borderColor; ?> " style="position: relative; ">
-<<<<<<< Updated upstream
-            <div class="<?= $cornerColorBack; ?>" style="position: absolute; top: 0; right: 0; width: 45px; height: 45px; "></div>
-=======
             <div class="<?= $cornerColorBack; ?>" style="position: absolute; top: 0; right: 0; width: 45px; height: 45px;"></div>
->>>>>>> Stashed changes
             <div class="<?= $cornerColor; ?>" style="position: absolute; top: 0; right: 0; width: 50px; height: 50px;"></div>
             <!-- 
                         <?php if (isset($kelas['sub_level']) && $kelas['sub_level'] > 0): ?>
@@ -342,11 +325,7 @@
                         <?php endif; ?> -->
 
             <div class=" card-body shadow d-flex flex-column py-1">
-<<<<<<< Updated upstream
-              <a href="<?= base_url('siswa/kelas/detail/' . esc($kelas['id'])); ?>" class="stretched-link">
-=======
-              <a href="<?= base_url('admin/manage_kelas/kelola_anggota/detail/' . esc($kelas['id'])); ?>" class="stretched-link">
->>>>>>> Stashed changes
+                <a href="<?= base_url('siswa/kelas/detail/' . esc($kelas['id'])); ?>" class="stretched-link">
 
                 <div class="card-grow card-content">
                   <h4 class="card-title font-weight-bold"><?= esc($kelas['nama_kelas']); ?></h4>
@@ -361,10 +340,9 @@
                       <?php endfor; ?>
                     </div>
                   <?php endif; ?>
-                  <p class="card-text"><?= esc($kelas['deskripsi']); ?></p>
+                  <p style="z-index:0" class="card-text"><?= esc($kelas['deskripsi']); ?></p>
                 </div>
               </a>
-<<<<<<< Updated upstream
             </div>
             <div class="card-footer p-0 d-flex justify-content-between align-items-center" style="background-color: white; margin-top:-1rem">
 
@@ -373,27 +351,11 @@
               <small class="text-muted" style="margin-right: 1rem; margin-bottom: 5px;; margin-top: 5px;">
                 <?= esc($kelas['level']) ?> - <?= esc($kelas['sub_level']) ?>
               </small>
-=======
-
-
-            </div>
-            <div class="card-footer p-0 d-flex justify-content-between align-items-center" style="background-color: white; margin-top:-1rem">
-              <small class="text-muted" style="margin-left: 1rem; margin-bottom: 5px;; margin-top: 5px;">
-                <?= esc($kelas['level']) ?> - <?= esc($kelas['sub_level']) ?>
-              </small>
-              <small class="text-muted" style="margin-right: 1rem; margin-bottom: 5px;">
-                <?= esc($kelas['jumlah_anggota'] ?? '0') ?> anggota
-              </small>
->>>>>>> Stashed changes
             </div>
           </div>
         <?php endforeach; ?>
       <?php else: ?>
-<<<<<<< Updated upstream
         <div class="alert alert-warning text-center">Anda belum bergabung di kelas manapun</div>
-=======
-        <div class="alert alert-warning text-center">Tidak ada data kelas ditemukan</div>
->>>>>>> Stashed changes
       <?php endif; ?>
     </div>
   </div>

@@ -16,7 +16,8 @@ class ShopController extends BaseController
     {
 
         if (!logged_in()) {
-            return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
         }
         $data = [
             'title' => 'Daftar Produk',
@@ -29,7 +30,8 @@ class ShopController extends BaseController
     public function tambah()
     {
         if (!logged_in()) {
-            return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
         }
 
         $data = [
@@ -42,7 +44,8 @@ class ShopController extends BaseController
     public function simpan()
     {
         if (!logged_in()) {
-            return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
         }
 
         $shopModel = new ShopModel();
@@ -110,7 +113,8 @@ class ShopController extends BaseController
     public function delete($id)
     {
         if (!logged_in()) {
-            return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
         }
 
         $shopModel = new ShopModel();
@@ -128,13 +132,14 @@ class ShopController extends BaseController
         // Hapus shop
         $shopModel->delete($id);
 
-        return redirect()->to('/admin/shop')->with('success', 'Artikel berhasil dihapus!');
+        return redirect()->to('/admin/shop')->with('success', 'Produk berhasil dihapus!');
     }
 
     public function edit($id)
     {
         if (!logged_in()) {
-            return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
         }
 
         $shopModel = new ShopModel();
@@ -155,7 +160,8 @@ class ShopController extends BaseController
     public function update($id)
     {
         if (!logged_in()) {
-            return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
         }
 
         $shopModel = new ShopModel();

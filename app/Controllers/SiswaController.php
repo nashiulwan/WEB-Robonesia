@@ -262,6 +262,9 @@ class SiswaController extends BaseController
     public function sertifikat()
     {
         $userId = $this->user->id;
+        $nama = $this->user->username ?? fullname;
+        
+        
 
         // Sertifikat Berdasarkan User
         $sertifikatUser = $this->sertifikatModel->getSertifikatByUser($userId);
@@ -277,12 +280,9 @@ class SiswaController extends BaseController
             $sertifikatPrestasi[$prestasi['nama_kegiatan']] = $this->sertifikatModel->getSertifikatByPrestasi($prestasi['id']);
         }
 
-        // Sertifikat Berdasarkan Kelas
-        $kelasUser = $this->kelasModel->getClassesByUserId($userId);
-        $sertifikatKelas = [];
-        foreach ($kelasUser as $kelas) {
-            $sertifikatKelas[$kelas['nama_kelas']] = $this->sertifikatModel->getSertifikatByKelas($kelas['id']);
-        }
+        // Ambil sertifikat berdasarkan kelas & user
+        $sertifikatKelas = $this->sertifikatModel->getSertifikatByKelasDanUser($userId, $nama);
+        
 
         $data = [
             'title' => 'Sertifikat',
@@ -293,4 +293,21 @@ class SiswaController extends BaseController
 
         $this->renderViewDashboardSiswa('siswa/prestasi_nilai/sertifikat', $data);
     }
+    
+    /**
+    public function viewPdf($filename)
+    {
+        $filepath = WRITEPATH . 'uploads/' . $filename;
+    
+        if (file_exists($filepath)) {
+            return $this->response
+                ->setHeader('Content-Type', 'application/pdf')
+                ->setHeader('Content-Disposition', 'inline; filename="' . $filename . '"')
+                ->setBody(file_get_contents($filepath));
+        }
+    
+        return $this->response->setStatusCode(404, 'File Not Found');
+    }
+    **/
+
 }

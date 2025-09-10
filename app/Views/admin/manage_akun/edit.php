@@ -157,7 +157,6 @@
                 <option value="1" <?= ($role == '1') ? 'selected' : '' ?>>Admin</option>
                 <option value="3" <?= ($role == '3') ? 'selected' : '' ?>>Guru</option>
                 <option value="2" <?= ($role == '2') ? 'selected' : '' ?>>Siswa</option>
-                <option value="0" <?= ($role == '0') ? 'selected' : '' ?>>-</option>
             </select>
         </div>
 

@@ -53,7 +53,7 @@
         <ul class="footer-list">
           <li><a target="_blank" href="<?= esc($kontak['maps']) ?>" class="footer-link">Maps</a></li>
           <li><a target="_blank" href="/program" class="footer-link">Program Belajar</a></li>
-          <li><a target="_blank" href="/faq" class="footer-link">Shop</a></li>
+          <li><a target="_blank" href="/shop" class="footer-link">Shop</a></li>
         </ul>
       </div>
     </div>

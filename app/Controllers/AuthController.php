@@ -9,6 +9,8 @@ use Myth\Auth\Config\Auth as AuthConfig;
 use App\Libraries\CaptchaLib;
 use Myth\Auth\Controllers\AuthController as MythAuthController;
 use Myth\Auth\Authorization\GroupModel;
+use App\Models\KontakModel;
+
 
 class AuthController extends Controller
 {
@@ -38,10 +40,12 @@ class AuthController extends Controller
     {
         $captchaLib = new CaptchaLib();
         $captchaImage = $captchaLib->generateCaptcha();
-
+        $model = new KontakModel();
+        $kontak = $model->first();
         $data = [
             'title' => 'Robonesia | Login',
             'captcha_image' => $captchaImage,
+            'kontak' => $kontak,
         ];
 
         return view('auth/login', $data);
@@ -97,7 +101,7 @@ class AuthController extends Controller
             elseif ($authz->inGroup('guru', $userId)) {
                 $redirectURL = site_url('/guru/dashboard');
         } else {
-            $redirectURL = site_url('/'); // Redirect ke halaman utama jika role tidak dikenal
+            $redirectURL = site_url('/auth/'); // Redirect ke halaman utama jika role tidak dikenal
         }
     
         unset($_SESSION['redirect_url']);
@@ -115,11 +119,11 @@ class AuthController extends Controller
         return redirect()->to('auth/login')->with('success', 'Anda berhasil logout.');
     }
 
-    public function register(): string
-    {
-        // Menampilkan halaman registrasi, pastikan view register ada
-        return view('auth/register');
-    }
+    // public function register(): string
+    // {
+    //     // Menampilkan halaman registrasi, pastikan view register ada
+    //     return view('auth/register');
+    // }
 
     public function admin(): string
     {

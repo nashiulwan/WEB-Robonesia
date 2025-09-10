@@ -1,3 +1,5 @@
+
+
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= base_url('admin/dashboard'); ?>">
@@ -91,7 +93,7 @@
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item" href="<?= base_url('admin/prestasi'); ?>">Prestasi</a>
                     <a class="collapse-item" href="<?= base_url('admin/grade_level'); ?>">Grade/Level</a>
-                    <a class="collapse-item" href="<?= base_url('admin/sertifikat'); ?>">Sertfikat</a>
+                    <a class="collapse-item" href="<?= base_url('admin/sertifikat'); ?>">Sertifikat</a>
                 </div>
             </div>
         </li>
@@ -149,3 +151,13 @@
         </div>
     </li>
 </ul>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Cek lebar layar saat halaman dimuat
+  if (window.innerWidth < 500) {
+    // Collapse sidebar dengan menambahkan class 'toggled'
+    document.querySelector('.sidebar').classList.add('toggled');
+  }
+});
+</script>
+

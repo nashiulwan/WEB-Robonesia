@@ -21,26 +21,26 @@ class Manage_akunModel extends Model
 
     public function updateUserRole($userId, $newRole)
     {
-        // Pastikan nilai role yang dikirim benar
-        if (!in_array($newRole, [0, 1, 2, 3])) {
+        // Pastikan nilai group_id benar (1 = Admin, 2 = Siswa, 3 = Guru)
+        if (!in_array($groupId, [1, 2, 3])) {
             return false;
         }
 
-        // Cek apakah user sudah ada di auth_groups_users
+        // Periksa apakah user sudah memiliki role
         $existing = $this->db->table('auth_groups_users')
             ->where('user_id', $userId)
             ->get()
             ->getRow();
 
         if ($existing) {
-            // Jika user sudah ada, update group_id
+            // Jika sudah ada, update role
             return $this->db->table('auth_groups_users')
                 ->where('user_id', $userId)
-                ->update(['group_id' => $newRole]);
+                ->update(['group_id' => $groupId]);
         } else {
-            // Jika user belum ada di tabel auth_groups_users, tambahkan baru
+            // Jika belum ada, tambahkan role baru
             return $this->db->table('auth_groups_users')
-                ->insert(['user_id' => $userId, 'group_id' => $newRole]);
+                ->insert(['user_id' => $userId, 'group_id' => $groupId]);
         }
     }
 

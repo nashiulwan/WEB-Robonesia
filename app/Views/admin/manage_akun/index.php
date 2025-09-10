@@ -82,12 +82,6 @@
                                         Siswa
                                     </a>
                                 </li>
-                                <li>
-                                    <a class="dropdown-item filter-option" href="#" data-role="0">
-                                        <i class="fas fa-question-circle" style="font-size: 1em; margin-right: 0.5rem;"></i>
-                                        Lainnya
-                                    </a>
-                                </li>
                             </ul>
                         </div>
                     </th>
@@ -109,7 +103,6 @@
                                     <option value="1" <?= ($row['role'] == '1') ? 'selected' : '' ?>>Admin</option>
                                     <option value="3" <?= ($row['role'] == '3') ? 'selected' : '' ?>>Guru</option>
                                     <option value="2" <?= ($row['role'] == '2') ? 'selected' : '' ?>>Siswa</option>
-                                    <option value="0" <?= (!in_array($row['role'], ['3', '1', '2'])) ? 'selected' : '' ?>>-</option>
                                 </select>
                             </td>
                             <td>
@@ -158,7 +151,7 @@
                     role: newRole
                 },
                 headers: {
-                    [csrfToken]: csrfHash
+                    'X-CSRF-TOKEN': csrfHash
                 },
                 success: function(response) {
                     if (response.status === 'success') {
@@ -171,6 +164,7 @@
                     alert("Terjadi kesalahan: " + error);
                 }
             });
+
         });
 
         // Filter data berdasarkan role saat opsi dropdown diklik
@@ -189,7 +183,7 @@
                 }
             });
         });
-
+        
         // Fitur pencarian: filter baris tabel berdasarkan username, email, atau fullname
         $("#searchInput").on("keyup", function() {
             var value = $(this).val().toLowerCase();
@@ -197,8 +191,10 @@
                 var username = $(this).find("td:nth-child(2)").text().toLowerCase();
                 var email = $(this).find("td:nth-child(3)").text().toLowerCase();
                 var fullname = $(this).find("td:nth-child(4)").text().toLowerCase();
+                var asal_sekolah = $(this).find("td:nth-child(5)").text().toLowerCase();
 
-                if (username.includes(value) || email.includes(value) || fullname.includes(value)) {
+
+                if (username.includes(value) || email.includes(value) || fullname.includes(value)|| asal_sekolah.includes(value)) {
                     $(this).show();
                 } else {
                     $(this).hide();

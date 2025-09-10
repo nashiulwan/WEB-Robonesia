@@ -12,7 +12,20 @@
         white-space: normal;
         border: none;
     }
+    .content {
+    max-width: 200px;
+    word-wrap: break-word;
+    overflow: hidden;
+    white-space: normal;
+}
 </style>
+<?php
+function convertOembedToIframe($content)
+{
+    return str_replace('[embed]', '<iframe>', str_replace('[/embed]', '</iframe>', $content));
+}
+?>
+  
 
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -45,13 +58,11 @@
                     <th style="width: 5%;">NO</th>
                     <th style="width: 15%;">Judul</th>
                     <th style="width: 10%;">Slug</th>
-                    <th style="width: 20%;">Konten</th>
+                    <th style="width: 20%; max-width:20px">Konten</th>
                     <th style="width: 10%;">Kategori</th>
-                    <!-- <th style="width: 10%;">Penulis</th>
-                    <th style="width: 8%;">Status</th> -->
                     <th style="width: 12%;">Created At</th>
                     <th style="width: 12%;">Updated At</th>
-                    <th style="width: 12%;">Gambar</th>
+                    <th style="width: 11%;">Gambar</th>
                     <th style="width: 5%;">Aksi</th>
                 </tr>
             </thead>
@@ -68,7 +79,9 @@
                                 <div class="limited-text"><?= esc($row['slug']); ?></div>
                             </td>
                             <td>
-                                <div class="limited-text"><?= esc(strip_tags($row['konten'])); ?></div>
+            <div class="content lh-lg limited-text">
+                <?= convertOembedToIframe(html_entity_decode($row['konten'])) ?>
+            </div>
                             </td>
                             <td><?= esc($row['kategori']); ?></td>
                             <!-- <td><?= esc($row['penulis_id']); ?></td>

@@ -28,8 +28,16 @@ function convertOembedToIframe($content)
                 <?= convertOembedToIframe(html_entity_decode($artikel['konten'])) ?>
             </div>
 
-            <a href="<?= base_url('blog') ?>" class="btn btn-secondary mt-3 mb-5" data-aos="fade-up" data-aos-duration="500">Kembali ke Blog</a>
-            <a target="_blank" href="https://wa.me/<?= esc($kontak['no_hp'])?>" class="btn mt-3 mb-5 mx-2" data-aos="fade-up" data-aos-duration="500" style="background-color: #25D366;">Hubungi Kami</a>
+            <div class="d-flex align-items-center mt-3">
+                <a target="_blank" href="https://wa.me/<?= esc($kontak['no_hp'])?>" class="btn mx-2" data-aos="fade-up" data-aos-duration="500" style="background-color: #007bff; color: white;">Hubungi Kami</a>
+                
+                <button class="btn mx-2" onclick="shareArticle()" data-aos="fade-up" data-aos-duration="500" style="background-color: #25D366; color: white;">
+                    Bagikan
+                </button>
+            </div>
+
+            <a href="<?= base_url('blog') ?>" class="btn btn-secondary mt-3 mb-3 mx-2" data-aos="fade-up" data-aos-duration="500">Kembali ke Blog</a>
+            
         </div>
 
         <!-- Sidebar -->
@@ -85,5 +93,29 @@ function convertOembedToIframe($content)
                 </ul>
             </div>
         </div>
+        <!-- end sidebar -->
     </div>
 </div>
+
+
+<script>
+function shareArticle() {
+    const url = window.location.href;
+    
+    if (navigator.userAgent.match(/Android|iPhone|iPad|iPod/i) && navigator.share) {
+        // Jika di perangkat mobile dan Web Share API tersedia
+        navigator.share({
+            title: document.title,
+            url: url
+        }).then(() => console.log('Berhasil dibagikan'))
+        .catch((error) => console.log('Gagal membagikan', error));
+    } else {
+        // Jika di desktop atau Web Share API tidak tersedia
+        navigator.clipboard.writeText(url).then(() => {
+            alert('Link telah disalin!');
+        }).catch(err => {
+            console.error('Gagal menyalin link', err);
+        });
+    }
+}
+</script>

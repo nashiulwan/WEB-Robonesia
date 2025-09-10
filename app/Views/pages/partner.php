@@ -1,4 +1,4 @@
-    <div class="kontak__container__top" style="margin-top: 10%;">
+    <div class="kontak__container__top" style="margin-top: 0rem;">
       <!-- Foto dokumentasi -->
       <img src="/image/partner.png" alt="Robonesia" class="full-image">
     </div>

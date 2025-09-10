@@ -1,3 +1,36 @@
+<style>
+    @media (max-width: 440px) {
+  /* Sembunyikan header tabel */
+  .kontak__container__bottom th {
+    display: none;
+  }
+  /* Setiap baris tampil sebagai blok */
+  .kontak__container__bottom table tr {
+    display: block;
+    margin-bottom: 1rem;
+    border-bottom: 0.2px solid #ccc;
+  }
+  /* Setiap sel di dalam baris ditampilkan sebagai blok */
+  .kontak__container__bottom table td {
+    display: block;
+    text-align: left;
+    padding: 0.3rem 0;
+  }
+  /* Sel pertama (label) diberi gaya tebal */
+  .kontak__container__bottom table td:first-child {
+    font-weight: bold;
+    margin-bottom: 0.2rem;
+  }
+  .kontak__container__bottom table,
+  .kontak__container__bottom table tr,
+  .kontak__container__bottom table th,
+  .kontak__container__bottom table td {
+    border: none;
+  }
+}
+
+</style>
+
 <!-- HUBUNGI PAGE CONTENT -->
 <div class="kontak__container__top">
   <!-- Foto dokumentasi -->

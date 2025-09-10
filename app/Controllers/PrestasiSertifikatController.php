@@ -37,7 +37,8 @@ class PrestasiSertifikatController extends BaseController
   public function index()
   {
     if (!logged_in()) {
-      return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
     }
     $data['title']     = 'Kelola Prestasi';
     $data['prestasis'] = $this->prestasiSertifikatModel->findAll();
@@ -50,7 +51,8 @@ class PrestasiSertifikatController extends BaseController
   public function sertifikatDetail($sertifikatId)
   {
     if (!logged_in()) {
-      return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
     }
 
     $sertifikat = $this->sertifikatModel->getSertifikatDetailById($sertifikatId);
@@ -70,7 +72,8 @@ class PrestasiSertifikatController extends BaseController
   public function sertifikatEdit($sertifikatId)
   {
     if (!logged_in()) {
-      return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
     }
 
     // Ambil sertifikat berdasarkan ID
@@ -90,7 +93,8 @@ class PrestasiSertifikatController extends BaseController
   public function sertifikatUpdate($sertifikatId)
   {
     if (!logged_in()) {
-      return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
     }
 
     $model = new SertifikatModel();
@@ -171,7 +175,8 @@ class PrestasiSertifikatController extends BaseController
   public function sertifikatDelete($sertifikatId)
   {
     if (!logged_in()) {
-      return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
     }
 
     $model = new SertifikatModel();
@@ -214,7 +219,8 @@ class PrestasiSertifikatController extends BaseController
   public function prestasiDetail($user_id)
   {
     if (!logged_in()) {
-      return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
     }
 
     // Ambil data user berdasarkan user_id
@@ -244,7 +250,8 @@ class PrestasiSertifikatController extends BaseController
   public function prestasiDetailTambah($userId)
   {
     if (!logged_in()) {
-      return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
     }
 
     // Ambil data user berdasarkan ID
@@ -343,7 +350,8 @@ class PrestasiSertifikatController extends BaseController
   public function prestasiDetailInfo($user_id, $prestasiId)
   {
     if (!logged_in()) {
-      return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
     }
 
     // Gunakan $user_id yang dikirim sebagai owner
@@ -393,7 +401,8 @@ class PrestasiSertifikatController extends BaseController
   {
     // Pastikan user sudah login
     if (!logged_in()) {
-      return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
     }
 
     // Ambil data user
@@ -528,7 +537,8 @@ class PrestasiSertifikatController extends BaseController
   public function prestasiDetailDelete($prestasi_id)
   {
     if (!logged_in()) {
-      return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
     }
 
     // Hapus relasi di pivot table
@@ -557,7 +567,8 @@ class PrestasiSertifikatController extends BaseController
   public function prestasiInfo($prestasiId)
   {
     if (!logged_in()) {
-      return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
     }
 
     // Ambil data prestasi
@@ -594,7 +605,8 @@ class PrestasiSertifikatController extends BaseController
   public function prestasiTambah()
   {
     if (!logged_in()) {
-      return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
     }
 
     $users = $this->prestasiSertifikatModel->getUsersByRole('2');
@@ -689,7 +701,8 @@ class PrestasiSertifikatController extends BaseController
   {
     // Pastikan user sudah login
     if (!logged_in()) {
-      return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
     }
 
     // Ambil data prestasi
@@ -839,7 +852,8 @@ class PrestasiSertifikatController extends BaseController
   public function prestasiDelete($prestasiId)
   {
     if (!logged_in()) {
-      return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
     }
 
     // Hapus relasi di pivot table
@@ -867,7 +881,8 @@ class PrestasiSertifikatController extends BaseController
   public function gradeIndex()
   {
     if (!logged_in()) {
-      return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
     }
 
     $classes = $this->manageKelasModel->getAllClassesWithMemberCount();
@@ -893,7 +908,8 @@ class PrestasiSertifikatController extends BaseController
   public function gradeDetail($id)
   {
     if (!logged_in()) {
-      return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
     }
 
     // Ambil detail kelas (termasuk jumlah anggota)
@@ -912,7 +928,8 @@ class PrestasiSertifikatController extends BaseController
   public function gradeLevel($id)
   {
     if (!logged_in()) {
-      return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
     }
 
     $class = $this->manageKelasModel->getClassWithMemberCountById($id);
@@ -930,7 +947,8 @@ class PrestasiSertifikatController extends BaseController
   public function gradeLevelUpdate($id)
   {
     if (!logged_in()) {
-      return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
     }
 
     // Validasi input dasar
@@ -974,7 +992,8 @@ class PrestasiSertifikatController extends BaseController
   public function gradeProyek($kelas_id)
   {
     if (!logged_in()) {
-      return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
     }
 
     $kelas = $this->manageKelasModel->find($kelas_id);
@@ -993,7 +1012,8 @@ class PrestasiSertifikatController extends BaseController
   public function gradeProyekTambah($kelas_id)
   {
     if (!logged_in()) {
-      return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
     }
 
     $kelas = $this->manageKelasModel->find($kelas_id);
@@ -1009,7 +1029,8 @@ class PrestasiSertifikatController extends BaseController
   public function gradeProyekSimpan($kelas_id)
   {
     if (!logged_in()) {
-      return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
     }
 
     $validationRules = [
@@ -1053,7 +1074,8 @@ class PrestasiSertifikatController extends BaseController
   public function gradeProyekEdit($kelas_id, $proyek_id)
   {
     if (!logged_in()) {
-      return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
     }
 
     // Ambil data kelas
@@ -1078,7 +1100,8 @@ class PrestasiSertifikatController extends BaseController
   public function gradeProyekUpdate($kelas_id)
   {
     if (!logged_in()) {
-      return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
     }
 
     // Validasi file gambar
@@ -1125,7 +1148,8 @@ class PrestasiSertifikatController extends BaseController
   public function gradeProyekDelete($kelas_id, $proyek_id)
   {
     if (!logged_in()) {
-      return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
     }
 
     $proyek = $this->gradeImagesModel->where(['id' => $proyek_id, 'kelas_id' => $kelas_id])->first();
@@ -1148,7 +1172,8 @@ class PrestasiSertifikatController extends BaseController
   public function sertifikatIndex()
   {
     if (!logged_in()) {
-      return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
     }
     $data['title']     = 'Kelola Sertifikat';
     $data['sertifikats'] = $this->sertifikatModel->getAllSertifikats();
@@ -1170,7 +1195,8 @@ class PrestasiSertifikatController extends BaseController
   public function sertifikatPrestasiDetail($prestasiId)
   {
     if (!logged_in()) {
-      return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
     }
     // Ambil data user berdasarkan user_id
 
@@ -1196,7 +1222,8 @@ class PrestasiSertifikatController extends BaseController
   public function sertifikatPrestasiTambah($prestasiId)
   {
     if (!logged_in()) {
-      return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
     }
 
     $prestasi = $this->prestasiSertifikatModel->findPrestasiById($prestasiId);
@@ -1216,7 +1243,8 @@ class PrestasiSertifikatController extends BaseController
   {
     // Pastikan user sudah login
     if (!logged_in()) {
-      return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
     }
 
     // Validasi input:
@@ -1300,7 +1328,8 @@ class PrestasiSertifikatController extends BaseController
   public function sertifikatPrestasiEdit($prestasiId, $sertifikatId)
   {
     if (!logged_in()) {
-      return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
     }
 
     $model = new SertifikatModel();
@@ -1327,7 +1356,8 @@ class PrestasiSertifikatController extends BaseController
   public function sertifikatPrestasiUpdate($prestasiId, $sertifikatId)
   {
     if (!logged_in()) {
-      return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
     }
 
     $model = new SertifikatModel();
@@ -1441,7 +1471,8 @@ class PrestasiSertifikatController extends BaseController
   public function sertifikatPrestasiDelete($prestasiId, $sertifikatId)
   {
     if (!logged_in()) {
-      return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
     }
 
     $model = new SertifikatModel();
@@ -1491,7 +1522,8 @@ class PrestasiSertifikatController extends BaseController
   public function sertifikatAkunDetail($userId)
   {
     if (!logged_in()) {
-      return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
     }
 
     $user = $this->userModel->find($userId);
@@ -1514,7 +1546,8 @@ class PrestasiSertifikatController extends BaseController
   public function sertifikatAkunTambah($userId)
   {
     if (!logged_in()) {
-      return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
     }
 
     $user = $this->userModel->find($userId);
@@ -1534,7 +1567,8 @@ class PrestasiSertifikatController extends BaseController
   public function sertifikatAkunSimpan($userId)
   {
     if (!logged_in()) {
-      return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
     }
 
     $validationRules = [
@@ -1605,7 +1639,8 @@ class PrestasiSertifikatController extends BaseController
   public function sertifikatAkunEdit($userId, $sertifikatId)
   {
     if (!logged_in()) {
-      return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
     }
 
     $user = $this->userModel->find($userId);
@@ -1637,7 +1672,8 @@ class PrestasiSertifikatController extends BaseController
   public function sertifikatAkunUpdate($userId, $sertifikatId)
   {
     if (!logged_in()) {
-      return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
     }
 
     $model = new SertifikatModel();
@@ -1751,7 +1787,8 @@ class PrestasiSertifikatController extends BaseController
   public function sertifikatAkunDelete($userId, $sertifikatId)
   {
     if (!logged_in()) {
-      return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
     }
 
     $model = new SertifikatModel();
@@ -1801,7 +1838,8 @@ class PrestasiSertifikatController extends BaseController
   public function sertifikatKelasDetail($kelasId)
   {
     if (!logged_in()) {
-      return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
     }
 
     $kelas = $this->manageKelasModel->getClassById($kelasId);
@@ -1824,7 +1862,8 @@ class PrestasiSertifikatController extends BaseController
   public function sertifikatKelasTambah($kelasId)
   {
     if (!logged_in()) {
-      return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
     }
 
     $kelas = $this->manageKelasModel->find($kelasId);
@@ -1844,7 +1883,8 @@ class PrestasiSertifikatController extends BaseController
   public function sertifikatKelasSimpan($kelasId)
   {
     if (!logged_in()) {
-      return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
     }
 
     $validationRules = [
@@ -1915,7 +1955,8 @@ class PrestasiSertifikatController extends BaseController
   public function sertifikatKelasEdit($kelasId, $sertifikatId)
   {
     if (!logged_in()) {
-      return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
     }
 
     $kelas = $this->manageKelasModel->find($kelasId);
@@ -1947,7 +1988,8 @@ class PrestasiSertifikatController extends BaseController
   public function sertifikatKelasUpdate($kelasId, $sertifikatId)
   {
     if (!logged_in()) {
-      return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
     }
 
     $model = new SertifikatModel();
@@ -2077,7 +2119,8 @@ class PrestasiSertifikatController extends BaseController
   public function sertifikatKelasDelete($kelasId, $sertifikatId)
   {
     if (!logged_in()) {
-      return redirect()->to('/login');
+            return redirect()->to('/auth/login');
+
     }
 
     $sertifikatModel = new SertifikatModel();

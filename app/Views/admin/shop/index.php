@@ -11,7 +11,7 @@ function convertOembedToIframe($content)
 <style>
     .text-ellipsis {
         display: -webkit-box;
-        -webkit-line-clamp: 4;
+        -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -72,9 +72,8 @@ function convertOembedToIframe($content)
                             <td>
                                 <div class="text-ellipsis"><?= esc($row['harga']); ?></div>
                             </td>
-                            <td class="text-ellipsis">
+                            <td >
                                 <div class="text-ellipsis"> <?= convertOembedToIframe(html_entity_decode($row['deskripsi_produk'])) ?></div>
-
                             </td>
 
                             <td>

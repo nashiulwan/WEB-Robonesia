@@ -4,7 +4,28 @@
 
 use Myth\Auth\Config\Auth; ?>
 <?php $config = new Auth(); ?>
-
+<style>
+ @media (max-width: 500px) {
+    .col-md-5{
+        padding-top: 1rem;
+    }
+    .p-5{
+        padding: 1rem !important;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+    h1.loginheader__content{
+        padding: 0;
+    }
+    /*img.captcha{*/
+    /*    height: 4rem;*/
+    /*}*/
+    .captcha{
+        padding-top:-1rem;
+        padding-bottom:-1rem;
+    }
+}
+</style>
 <section>
   <div class="login__container">
     <div class="row">
@@ -25,13 +46,13 @@ use Myth\Auth\Config\Auth; ?>
       </div>
 
       <div class="col-md-5">
-        <div class="card o-hidden border-0 shadow-lg my-4">
+        <div class="card o-hidden border-0 shadow-lg my-2">
           <div class="card-body p-0">
             <div class="row">
               <div class="col-lg">
                 <div class="p-5">
                   <div class="text-center" style="margin-top: -10px;">
-                    <h2 class="mb-4" style="color:black">Masuk</h2>
+                    <h2 class="mb-4 masuk" style="color:black">Masuk</h2>
                   </div>
                   <?= view('Myth\Auth\Views\_message_block') ?>
                   <form class="user" action="<?= url_to('auth/login') ?>" method="post">
@@ -66,7 +87,7 @@ use Myth\Auth\Config\Auth; ?>
 
 
                     <div class="form-group captcha-container">
-                      <img src="<?= $captcha_image; ?>" alt="Captcha">
+                      <img class="captcha" src="<?= $captcha_image; ?>" alt="Captcha">
                       <input type="text" name="captcha_answer" class="form-control form-control-user" autocomplete="off" placeholder="Jawaban" required>
                       <div class="invalid-feedback">
                         <?= session('errors.captcha_answer') ?>
@@ -76,7 +97,7 @@ use Myth\Auth\Config\Auth; ?>
                     <button type="submit" class="btn btn-primary btn-user btn-block"><?= lang('Auth.loginAction') ?></button>
                     <hr>
                     <div class="text-center">
-                      <a class="small" target="_blank" href="https://wa.me/082118032898">Hubungi admin?</a>
+                      <a class="small" target="_blank" href="<?= esc('https://wa.me/' . $kontak['no_hp']) ?>">Hubungi admin?</a>
                     </div>
                     <div class="text-center" style="margin-bottom: -10px;">
                       <a class="small" href="<?= url_to('/') ?>">Kembali ke beranda</a>
